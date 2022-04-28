@@ -1,0 +1,21 @@
+From 00d08359a5efd87254f566ef511cfe3adfc67436 Mon Sep 17 00:00:00 2001
+From: Krzysztof Burghardt <krzysztof.burghardt@inter.ikea.com>
+Date: Fri, 16 Apr 2021 11:35:44 +0000
+Subject: [PATCH] [HSPP-1337] FTBFS fix for Cypress patches on Linux 5.4.x
+
+---
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/bus.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bus.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bus.h
+index ea0524b8f..96ce9dba2 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bus.h
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bus.h
+@@ -6,6 +6,7 @@
+ #ifndef BRCMFMAC_BUS_H
+ #define BRCMFMAC_BUS_H
+ 
++#include <linux/version.h>
+ #include "debug.h"
+ 
+ /* IDs of the 6 default common rings of msgbuf protocol */

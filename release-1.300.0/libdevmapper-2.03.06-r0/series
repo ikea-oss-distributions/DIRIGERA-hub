@@ -1,0 +1,6 @@
+0001-implement-libc-specific-reopen_stream.patch -p1
+0002-Guard-use-of-mallinfo-with-__GLIBC__.patch -p1
+0004-tweak-MODPROBE_CMD-for-cross-compile.patch -p1
+0001-Avoid-bashisms-in-init-scripts.patch -p1
+0005-do-not-build-manual.patch -p1
+0006-start-lvm2-monitor.service-after-tmp.mount.patch -p1

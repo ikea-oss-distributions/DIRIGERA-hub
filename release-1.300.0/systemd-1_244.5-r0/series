@@ -1,0 +1,5 @@
+0001-binfmt-Don-t-install-dependency-links-at-install-tim.patch -p1
+0003-implment-systemd-sysv-install-for-OE.patch -p1
+core-allow-overriding-the-system-hostname-with-systemd.hostname-on-the-cmdline.patch -p1
+0001-Let-datad-user-have-read-permissions-to-coredumps.patch -p1
+0002-Remove-checking-not-needed-rules-files-from-meson-sc.patch -p1
