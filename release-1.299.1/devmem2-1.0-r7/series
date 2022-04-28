@@ -1,0 +1,2 @@
+devmem2-fixups-2.patch -p0
+0001-devmem.c-ensure-word-is-32-bit-and-add-support-for-6.patch -p1

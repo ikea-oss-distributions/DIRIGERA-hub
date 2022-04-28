@@ -1,0 +1,7 @@
+SUBSYSTEM=="tty", KERNEL=="ttySTM0", SYMLINK+="ttySerialConsole"
+SUBSYSTEM=="tty", KERNEL=="ttySTM1", MODE="0660", GROUP="zigbd", SYMLINK+="ttyZigbeePTI"
+SUBSYSTEM=="tty", KERNEL=="ttySTM2", SYMLINK+="ttyBluetooth"
+SUBSYSTEM=="tty", KERNEL=="ttySTM3", MODE="0660", GROUP="chipd", SYMLINK+="ttyThreadPTI"
+SUBSYSTEM=="tty", KERNEL=="ttySTM6", MODE="0660", GROUP="zigbd", SYMLINK+="ttyZigbee"
+SUBSYSTEM=="tty", KERNEL=="ttySTM7", MODE="0660", GROUP="chipd", SYMLINK+="ttyThread"
+SUBSYSTEM=="tty", KERNEL=="ttyRPMSG0", MODE="0660", GROUP="gatewayd"
