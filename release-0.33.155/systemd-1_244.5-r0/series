@@ -1,0 +1,3 @@
+0001-binfmt-Don-t-install-dependency-links-at-install-tim.patch -p1
+0003-implment-systemd-sysv-install-for-OE.patch -p1
+core-allow-overriding-the-system-hostname-with-systemd.hostname-on-the-cmdline.patch -p1

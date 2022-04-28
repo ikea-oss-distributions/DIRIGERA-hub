@@ -1,0 +1,26 @@
+From a022a9109a1531e48d3f543bf4170be9ea2865a0 Mon Sep 17 00:00:00 2001
+From: Ronnie Olsson <ronnie.olsson@inter.ikea.com>
+Date: Tue, 2 Mar 2021 13:09:08 +0100
+Subject: [PATCH 2/2] [HSPP-3252] Add .verity file format support
+
+Add .verity support so that dm-verity-img class can be used for
+generating rootfs which goes into raucb update packages.
+---
+ src/update_handler.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/update_handler.c b/src/update_handler.c
+index c9576a2..a297ddd 100644
+--- a/src/update_handler.c
++++ b/src/update_handler.c
+@@ -1708,6 +1708,7 @@ RaucUpdatePair updatepairs[] = {
+ 	{"*.ext4.caibx", "ext4", img_to_fs_handler},
+ 	{"*.ext4.caibx", "raw", img_to_raw_handler},
+ 	{"*.stm32", "raw", img_to_raw_handler},
++	{"*.verity", "raw", img_to_raw_handler},
+ 	{"*.vfat.caibx", "raw", img_to_raw_handler},
+ 	{"*.ubifs.caibx", "ubivol", img_to_ubivol_handler},
+ 	{"*.ubifs.caibx", "ubifs", img_to_ubifs_handler},
+-- 
+2.17.1
+

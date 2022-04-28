@@ -1,0 +1,141 @@
+From 4444dae0a3a463bac0c8ef332da5d5503e36bb72 Mon Sep 17 00:00:00 2001
+From: Michal Frynas <michal.frynas@sigma.se>
+Date: Tue, 6 Oct 2020 13:06:00 +0200
+Subject: [PATCH] Make it possible to have different instrumented and feedback
+ builds without copying gcda files around [pr93401]
+
+Hi,
+in GCC 8 we changed -fprofile-generate=<path> to use mangled absolute paths in
+the <path> directory. This was necessary to avoid clashes of files when gcc is
+executed from different directories to build different sources of same
+filename.
+
+However this made it difficult to build projects on setups where instrumented
+build is done in one directory, feedback build in different and possibly
+training happens in yet another directory structure.  This happens i.e. for
+Firefox builds for month or two.
+
+This patch adds -fprofile-prefix-path that can be used to inform gcc where the
+root of build directory is and strip it form the gcda filenames.
+This is similar to exisitng debug-prefix-map but without the map feature since
+it seems useless for profile data.
+
+We spent quite some time with Maritn Liska discussing options and found no
+better solution.  I was looking how this work on LLVM and they produce single
+profdata file which is then transformed into kind of simple database by
+llvmprofdata tool.  This database keys functions by filename and symbol name.
+If you arrane two files with same name define static variable with same symbol
+name this gets messedup and result in wrong info. So I think this is not very
+good solution and preffer the extra option.
+
+Bootstrapped/regtested x86_64-linux. I plan to commit it later today if there
+are no complains.
+
+I suppose our manual could have some central section on profile feedback
+explaining the whole setup at one place.
+
+Honza
+
+	PR gcov-profile/93401
+	* common.opt (profile-prefix-path): New option.
+	* coverae.c: Include diagnostics.h.
+	(coverage_init): Strip profile prefix path.
+	* doc/invoke.texi (-fprofile-prefix-path): Document.
+---
+ gcc/ChangeLog       |  8 ++++++++
+ gcc/common.opt      |  4 ++++
+ gcc/coverage.c      | 13 +++++++++++++
+ gcc/doc/invoke.texi | 15 +++++++++++++++
+ 4 files changed, 40 insertions(+)
+
+diff --git a/gcc/ChangeLog b/gcc/ChangeLog
+index d8e53874e..c13a96343 100644
+--- a/gcc/ChangeLog
++++ b/gcc/ChangeLog
+@@ -1,3 +1,11 @@
++2020-04-16  Jan Hubicka  <hubicka@ucw.cz>
++	
++	PR gcov-profile/93401
++	* common.opt (profile-prefix-path): New option.
++	* coverae.c: Include diagnostics.h.
++	(coverage_init): Strip profile prefix path.
++	* doc/invoke.texi (-fprofile-prefix-path): Document.
++
+ 2020-03-12  Release Manager
+ 
+ 	* GCC 9.3.0 released.
+diff --git a/gcc/common.opt b/gcc/common.opt
+index c64fd4a6c..02ee9df1d 100644
+--- a/gcc/common.opt
++++ b/gcc/common.opt
+@@ -2124,6 +2124,10 @@ Enum(profile_update) String(atomic) Value(PROFILE_UPDATE_ATOMIC)
+ EnumValue
+ Enum(profile_update) String(prefer-atomic) Value(PROFILE_UPDATE_PREFER_ATOMIC)
+ 
++fprofile-prefix-path=
++Common Joined RejectNegative Var(profile_prefix_path)
++Remove prefix from absolute path before manging name for -fprofile-generate= and -fprofile-use=.
++
+ fprofile-generate
+ Common
+ Enable common options for generating profile info for profile feedback directed optimizations.
+diff --git a/gcc/coverage.c b/gcc/coverage.c
+index 1ffefd5f4..d61b6aae8 100644
+--- a/gcc/coverage.c
++++ b/gcc/coverage.c
+@@ -1223,6 +1223,19 @@ coverage_init (const char *filename)
+ 	  const char *separator = "/";
+ #endif
+ 	  filename = concat (getpwd (), separator, filename, NULL);
++	  if (profile_prefix_path)
++	  {
++	    if (!strncmp (filename, profile_prefix_path,
++	      strlen (profile_prefix_path)))
++	    {
++	      filename += strlen (profile_prefix_path);
++	      while (*filename == *separator)
++	        filename++;
++	    }
++	    else
++	      warning (0, "filename %qs does not start with profile "
++	        "prefix %qs", filename, profile_prefix_path);
++	  }
+ 	  filename = mangle_path (filename);
+ 	  len = strlen (filename);
+ 	}
+diff --git a/gcc/doc/invoke.texi b/gcc/doc/invoke.texi
+index 2f7ffe456..863afb127 100644
+--- a/gcc/doc/invoke.texi
++++ b/gcc/doc/invoke.texi
+@@ -495,6 +495,7 @@ Objective-C and Objective-C++ Dialects}.
+ @gccoptlist{-p  -pg  -fprofile-arcs  --coverage  -ftest-coverage @gol
+ -fprofile-abs-path @gol
+ -fprofile-dir=@var{path}  -fprofile-generate  -fprofile-generate=@var{path} @gol
++-fprofile-prefix-path=@var{path} @gol
+ -fprofile-update=@var{method}  -fprofile-filter-files=@var{regex} @gol
+ -fprofile-exclude-files=@var{regex} @gol
+ -fsanitize=@var{style}  -fsanitize-recover  -fsanitize-recover=@var{style} @gol
+@@ -12371,6 +12372,20 @@ the profile feedback data files. See @option{-fprofile-dir}.
+ To optimize the program based on the collected profile information, use
+ @option{-fprofile-use}.  @xref{Optimize Options}, for more information.
+ 
++@item -fprofile-prefix-path=@var{path}
++
++This option can be used in combination with
++@option{profile-generate=}@var{profile_dir} and
++@option{profile-use=}@var{profile_dir} to inform GCC where is the base
++directory of built source tree.  By default @var{profile_dir} will contain
++files with mangled absolute paths of all object files in the built project.
++This is not desirable when directory used to build the instrumented binary
++differs from the directory used to build the binary optimized with profile
++feedback because the profile data will not be found during the optimized build.
++In such setups @option{-fprofile-prefix-path=}@var{path} with @var{path}
++pointing to the base directory of the build can be used to strip the irrelevant
++part of the path and keep all file names relative to the main build directory.
++
+ @item -fprofile-update=@var{method}
+ @opindex fprofile-update
+ 
+-- 
+2.25.1
+

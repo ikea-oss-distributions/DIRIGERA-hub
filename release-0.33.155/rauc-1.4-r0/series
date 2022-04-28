@@ -1,0 +1,4 @@
+0001-support-stm32-extension.patch -p1
+0001-Mandatory-slots-verification.patch -p1
+0002-HSPP-3252-Add-.verity-file-format-support.patch -p1
+0003-Add-.bin-as-raw-type.patch -p1

@@ -1,0 +1,2 @@
+ptest.patch -p1
+gdbm-fix-link-failure-against-gcc-10.patch -p1
