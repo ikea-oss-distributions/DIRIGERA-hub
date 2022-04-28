@@ -1,0 +1,65 @@
+#!/bin/sh
+
+# An example hook script to verify what is about to be pushed.  Called by "git
+# push" after it has checked the remote status, but before anything has been
+# pushed.  If this script exits with a non-zero status nothing will be pushed.
+#
+# This hook is called with the following parameters:
+#
+# $1 -- Name of the remote to which the push is being done
+# $2 -- URL to which the push is being done
+#
+# If pushing without using a named remote those arguments will be equal.
+#
+# Information about the commits which are being pushed is supplied as lines to
+# the standard input in the form:
+#
+#   <local ref> <local sha1> <remote ref> <remote sha1>
+#
+# run checkpath before to push on existing branch !iso !topic
+GREEN_BOLD="\033[1;32m"
+RED_BOLD="\033[1;31m"
+NC='\033[0m' # No Color
+
+remote="$1"
+url="$2"
+
+z40=0000000000000000000000000000000000000000
+
+echo "remote:$remote url:$url"
+topdir=$(git rev-parse --show-toplevel)
+checkpatch="$topdir/scripts/checkpatch.pl"
+checkp_opt=" --strict --show-types - "
+checkscore="$topdir/.git/hooks/checkscore.py"
+
+while read local_ref local_sha remote_ref remote_sha
+do
+	master=$(echo $remote_ref |cut -d '/' -f3)
+	echo "remote_ref:$remote_ref local_ref:$local_ref master:$master"
+	[ "$local_sha" = $z40 ] && exit 0 # Handle delete
+#	[ "$remote_sha" = $z40 ] && exit 0 # New branch, don't check
+
+	# don't check iso & topic branch
+	# the remote_sha could be egal to z40
+	remote_b=`echo "$remote_ref" | grep -v "iso" | grep -v "topic"`
+	if [ -n "$remote_b" ]
+	then
+		[ ! -f $checkpatch ] || [ ! -f $checkscore ] && exit 0
+		if [ "$remote_sha" = $z40 ]
+		then
+			#remote_sha null
+			range="$(git for-each-ref --format='%(refname)' refs/remotes/*/$master) $local_ref"
+		else
+			# Update to existing branch, examine new commits
+			range="$remote_sha..$local_sha"
+		fi
+
+		exec git diff $range | $checkpatch $checkp_opt | $checkscore
+		score=$?
+		[ 0 -eq $score ] && echo -e "${GREEN_BOLD}checkpatch: OK${NC}" && exit 0
+		echo -e "${RED_BOLD}checkpatch: KO${NC}"
+		exit $score
+	fi
+done
+
+exit 0

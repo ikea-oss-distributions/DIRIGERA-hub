@@ -1,0 +1,30 @@
+From a33df841579054394dcfe5ea8782c3a684e54ae5 Mon Sep 17 00:00:00 2001
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Date: Fri, 9 Oct 2020 17:30:59 +0200
+Subject: [PATCH 3/9] rtc: rv3028: fix trickle resistor values
+
+Version 1.0 of the application manual had the wrong resistor values. Fix
+them according to version 1.1
+
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Link: https://lore.kernel.org/r/20201009153101.721149-2-alexandre.belloni@bootlin.com
+---
+ drivers/rtc/rtc-rv3028.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/rtc/rtc-rv3028.c b/drivers/rtc/rtc-rv3028.c
+index 654326ba2f1f..3161fd315ede 100644
+--- a/drivers/rtc/rtc-rv3028.c
++++ b/drivers/rtc/rtc-rv3028.c
+@@ -86,7 +86,7 @@ struct rv3028_data {
+ 	enum rv3028_type type;
+ };
+ 
+-static u16 rv3028_trickle_resistors[] = {1000, 3000, 6000, 11000};
++static u16 rv3028_trickle_resistors[] = {3000, 5000, 9000, 15000};
+ 
+ static ssize_t timestamp0_store(struct device *dev,
+ 				struct device_attribute *attr,
+-- 
+2.30.2
+
