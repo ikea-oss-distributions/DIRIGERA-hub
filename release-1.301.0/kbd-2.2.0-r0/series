@@ -1,0 +1,3 @@
+0001-analyze.l-add-missing-string-format.patch -p1
+0001-Use-DATADIR-and-append-i386-to-fix-libkbdfile-test08.patch -p1
+fix_cflags.patch -p1

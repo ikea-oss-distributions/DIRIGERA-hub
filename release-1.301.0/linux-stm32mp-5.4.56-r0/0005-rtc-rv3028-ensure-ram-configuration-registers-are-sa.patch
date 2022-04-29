@@ -1,0 +1,130 @@
+From 0f0aa9e68cd5e79964306e6254c2827dc32721da Mon Sep 17 00:00:00 2001
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Date: Fri, 9 Oct 2020 17:31:01 +0200
+Subject: [PATCH 5/9] rtc: rv3028: ensure ram configuration registers are saved
+
+If RV3028_CTRL1_EERD is not set (this is the default), the RTC will refresh
+the RAM configuration registers from the EEPROM at midnight. It is
+necessary to save the RAM registers back to EEPROM after modifying them.
+
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Link: https://lore.kernel.org/r/20201009153101.721149-4-alexandre.belloni@bootlin.com
+---
+ drivers/rtc/rtc-rv3028.c | 72 ++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 65 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/rtc/rtc-rv3028.c b/drivers/rtc/rtc-rv3028.c
+index 9a75a4dc9e7c..72a78e5e10d3 100644
+--- a/drivers/rtc/rtc-rv3028.c
++++ b/drivers/rtc/rtc-rv3028.c
+@@ -65,6 +65,7 @@
+ 
+ #define RV3028_EVT_CTRL_TSR		BIT(2)
+ 
++#define RV3028_EEPROM_CMD_UPDATE	0x11
+ #define RV3028_EEPROM_CMD_WRITE		0x21
+ #define RV3028_EEPROM_CMD_READ		0x22
+ 
+@@ -200,6 +201,50 @@ static int rv3028_enter_eerd(struct rv3028_data *rv3028, u32 *eerd)
+ 	return 0;
+ }
+ 
++static int rv3028_update_eeprom(struct rv3028_data *rv3028, u32 eerd)
++{
++	u32 status;
++	int ret;
++
++	ret = regmap_write(rv3028->regmap, RV3028_EEPROM_CMD, 0x0);
++	if (ret)
++		goto exit_eerd;
++
++	ret = regmap_write(rv3028->regmap, RV3028_EEPROM_CMD, RV3028_EEPROM_CMD_UPDATE);
++	if (ret)
++		goto exit_eerd;
++
++	usleep_range(63000, RV3028_EEBUSY_TIMEOUT);
++
++	ret = regmap_read_poll_timeout(rv3028->regmap, RV3028_STATUS, status,
++				       !(status & RV3028_STATUS_EEBUSY),
++				       RV3028_EEBUSY_POLL, RV3028_EEBUSY_TIMEOUT);
++
++exit_eerd:
++	rv3028_exit_eerd(rv3028, eerd);
++
++	return ret;
++}
++
++static int rv3028_update_cfg(struct rv3028_data *rv3028, unsigned int reg,
++			     unsigned int mask, unsigned int val)
++{
++	u32 eerd;
++	int ret;
++
++	ret = rv3028_enter_eerd(rv3028, &eerd);
++	if (ret)
++		return ret;
++
++	ret = regmap_update_bits(rv3028->regmap, reg, mask, val);
++	if (ret) {
++		rv3028_exit_eerd(rv3028, eerd);
++		return ret;
++	}
++
++	return rv3028_update_eeprom(rv3028, eerd);
++}
++
+ static irqreturn_t rv3028_handle_irq(int irq, void *dev_id)
+ {
+ 	struct rv3028_data *rv3028 = dev_id;
+@@ -433,17 +478,32 @@ static int rv3028_read_offset(struct device *dev, long *offset)
+ static int rv3028_set_offset(struct device *dev, long offset)
+ {
+ 	struct rv3028_data *rv3028 = dev_get_drvdata(dev);
++	u32 eerd;
+ 	int ret;
+ 
+ 	offset = clamp(offset, -244141L, 243187L) * 1000;
+ 	offset = DIV_ROUND_CLOSEST(offset, OFFSET_STEP_PPT);
+ 
++	ret = rv3028_enter_eerd(rv3028, &eerd);
++	if (ret)
++		return ret;
++
+ 	ret = regmap_write(rv3028->regmap, RV3028_OFFSET, offset >> 1);
+ 	if (ret < 0)
+-		return ret;
++		goto exit_eerd;
++
++	ret = regmap_update_bits(rv3028->regmap, RV3028_BACKUP, BIT(7),
++				 offset << 7);
++	if (ret < 0)
++		goto exit_eerd;
++
++	return rv3028_update_eeprom(rv3028, eerd);
++
++exit_eerd:
++	rv3028_exit_eerd(rv3028, eerd);
++
++	return ret;
+ 
+-	return regmap_update_bits(rv3028->regmap, RV3028_BACKUP, BIT(7),
+-				  offset << 7);
+ }
+ 
+ static int rv3028_ioctl(struct device *dev, unsigned int cmd, unsigned long arg)
+@@ -668,10 +728,8 @@ static int rv3028_probe(struct i2c_client *client)
+ 				break;
+ 
+ 		if (i < ARRAY_SIZE(rv3028_trickle_resistors)) {
+-			ret = regmap_update_bits(rv3028->regmap, RV3028_BACKUP,
+-						 RV3028_BACKUP_TCE |
+-						 RV3028_BACKUP_TCR_MASK,
+-						 RV3028_BACKUP_TCE | i);
++			ret = rv3028_update_cfg(rv3028, RV3028_BACKUP, RV3028_BACKUP_TCE |
++						 RV3028_BACKUP_TCR_MASK, RV3028_BACKUP_TCE | i);
+ 			if (ret)
+ 				return ret;
+ 		} else {
+-- 
+2.30.2
+

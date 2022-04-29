@@ -1,0 +1,3 @@
+python.patch -p1
+0001-configure.ac-add-library-if-header-found.patch -p1
+0002-Wrap-pthread_atfork-usage-in-HAVE_PTHREAD_H.patch -p1
