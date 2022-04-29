@@ -1,4 +1,0 @@
-00_arches.patch -p1
-destdir.patch -p1
-libaio_fix_for_mips_syscalls.patch -p1
-system-linkage.patch -p1

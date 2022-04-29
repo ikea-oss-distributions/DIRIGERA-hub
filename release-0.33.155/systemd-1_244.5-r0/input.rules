@@ -1,1 +1,0 @@
-SUBSYSTEMS=="input", ATTRS{name}=="user_keys", MODE="0660", GROUP="gatewayd"

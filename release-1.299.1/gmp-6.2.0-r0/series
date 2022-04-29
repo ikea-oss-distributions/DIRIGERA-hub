@@ -1,3 +1,0 @@
-use-includedir.patch -p1
-0001-Append-the-user-provided-flags-to-the-auto-detected-.patch -p1
-0001-confiure.ac-Believe-the-cflags-from-environment.patch -p1
