@@ -1,0 +1,2 @@
+0001-do-not-strip-pdata_tools-at-do_install.patch -p1
+use-sh-on-path.patch -p1

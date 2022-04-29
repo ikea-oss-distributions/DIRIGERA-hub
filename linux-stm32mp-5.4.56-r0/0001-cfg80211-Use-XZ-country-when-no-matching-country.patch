@@ -1,0 +1,51 @@
+From 6be9f4e85cef830269064d76d9c14957a8f2b9d1 Mon Sep 17 00:00:00 2001
+From: Paulo Neves <ptsneves@gmail.com>
+Date: Mon, 28 Jun 2021 19:04:07 +0200
+Subject: [PATCH 1/1] cfg80211: Use XZ country when no matching country.
+
+There are cases where there is a special chip country code
+which should be used when we do not know about a specific
+user input country. For our case it is XZ. Let's fallback
+to it.
+---
+ .../broadcom/brcm80211/brcmfmac/cfg80211.c    | 20 +++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 2a127440a7cfb8b25af8b47ef6e352ba9fc46063..6f6a76419559a742812ebc98cf0effb9743d3953 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -7780,18 +7780,22 @@ static s32 brcmf_translate_country_code(struct brcmf_pub *drvr, char alpha2[2],
+ 			break;
+ 		}
+ 	}
+-	if (found_index == -1) {
+-		brcmf_dbg(TRACE, "No country code match found\n");
+-		return -EINVAL;
+-	}
+ 	memset(ccreq, 0, sizeof(*ccreq));
+-	ccreq->rev = cpu_to_le32(country_codes->table[found_index].rev);
+-	memcpy(ccreq->ccode, country_codes->table[found_index].cc,
+-	       BRCMF_COUNTRY_BUF_SZ);
+ 	ccreq->country_abbrev[0] = alpha2[0];
+ 	ccreq->country_abbrev[1] = alpha2[1];
+-	ccreq->country_abbrev[2] = 0;
+ 
++	if (found_index == -1) {
++		ccreq->ccode[0] = 'X';
++		ccreq->ccode[1] = 'Z';
++		printk("No country code match found. Defaulting to XZ\n");
++	}
++	else {
++		ccreq->rev = cpu_to_le32(country_codes->table[found_index].rev);
++		memcpy(ccreq->ccode, country_codes->table[found_index].cc,
++					 BRCMF_COUNTRY_BUF_SZ);
++	}
++
++	ccreq->country_abbrev[2] = 0;
+ 	return 0;
+ }
+ 
+-- 
+2.25.1
+

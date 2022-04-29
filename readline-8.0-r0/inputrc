@@ -1,0 +1,12 @@
+# /etc/inputrc - global inputrc for libreadline
+# See readline(3readline) and `info rluserman' for more information.
+
+set input-meta on
+set output-meta on
+
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word
+"\e[1;5A": beginning-of-line
+"\e[1;5B": end-of-line
+"\e[1;6D": backward-kill-word
+"\e[1;6C": kill-word

@@ -1,0 +1,171 @@
+From 918893935c70647fd3dab538a9ccd01680eb42ed Mon Sep 17 00:00:00 2001
+From: Michal Frynas <michal.frynas@sigma.se>
+Date: Mon, 9 Nov 2020 19:39:56 +0100
+Subject: [PATCH] Mandatory slots verification
+
+---
+ include/config_file.h |  1 +
+ include/manifest.h    |  4 ++--
+ src/config_file.c     | 10 ++++++++
+ src/install.c         | 11 ++++++++-
+ src/manifest.c        | 56 +++++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 79 insertions(+), 3 deletions(-)
+
+diff --git a/include/config_file.h b/include/config_file.h
+index d68fc0f..804e961 100644
+--- a/include/config_file.h
++++ b/include/config_file.h
+@@ -47,6 +47,7 @@ typedef struct {
+ 	gchar *tmp_path;
+ 	gboolean activate_installed;
+ 	gchar *statusfile_path;
++	gchar *mandatory_slots;
+ 	gchar *keyring_path;
+ 	gchar *keyring_directory;
+ 	gboolean keyring_check_crl;
+diff --git a/include/manifest.h b/include/manifest.h
+index 3b56d8a..a587b7f 100644
+--- a/include/manifest.h
++++ b/include/manifest.h
+@@ -12,6 +12,7 @@ GQuark r_manifest_error_quark(void);
+ #define R_MANIFEST_ERROR_COMPATIBLE	2
+ #define R_MANIFEST_PARSE_ERROR		3
+ #define R_MANIFEST_EMPTY_STRING		4
++#define R_MANIFEST_ERROR_MANDATORY_SLOTS	5
+ 
+ typedef struct {
+ 	gboolean install_check;
+@@ -120,7 +121,6 @@ gboolean update_manifest(const gchar *dir, gboolean signature, GError **error);
+  * The manifest itself must be named 'manifest.raucm'.
+  * An optional signature file must be named 'manifest.raucm.sig'
+  *
+- * @param dir Directory the manifest is located in
+  * @param output Returns newly allocated manifest if RaucManifest pointerpointer
+  *        is provided.
+  *        If output is NULL, manifest will be freed an nothing returned.
+@@ -128,7 +128,7 @@ gboolean update_manifest(const gchar *dir, gboolean signature, GError **error);
+  *
+  * @return TRUE on success, FALSE if an error occurred
+  */
+-gboolean verify_manifest(const gchar *dir, RaucManifest **output, GError **error);
++gboolean verify_manifest(RaucManifest *manifest, GError **error);
+ 
+ /**
+  * Frees a rauc image
+diff --git a/src/config_file.c b/src/config_file.c
+index e907ffa..0755fe3 100644
+--- a/src/config_file.c
++++ b/src/config_file.c
+@@ -287,6 +287,16 @@ gboolean load_config(const gchar *filename, RaucConfig **config, GError **error)
+ 		g_message("Using central status file %s", c->statusfile_path);
+ 	}
+ 
++	c->mandatory_slots = key_file_consume_string(key_file, "system", "mandatoryslots", &ierror);
++	if (g_error_matches(ierror, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_KEY_NOT_FOUND)) {
++		c->mandatory_slots = NULL;
++		g_clear_error(&ierror);
++	} else if (ierror) {
++		g_propagate_error(error, ierror);
++		res = FALSE;
++		goto free;
++	}
++
+ 	if (!check_remaining_keys(key_file, "system", &ierror)) {
+ 		g_propagate_error(error, ierror);
+ 		res = FALSE;
+diff --git a/src/install.c b/src/install.c
+index 008de96..4b04c27 100644
+--- a/src/install.c
++++ b/src/install.c
+@@ -1006,7 +1006,7 @@ gboolean do_install_bundle(RaucInstallArgs *args, GError **error)
+ 	g_assert_nonnull(bundlefile);
+ 	g_assert_null(r_context()->install_info->mounted_bundle);
+ 
+-	r_context_begin_step("do_install_bundle", "Installing", 5);
++	r_context_begin_step("do_install_bundle", "Installing", 6);
+ 
+ 	r_context_begin_step("determine_slot_states", "Determining slot states", 0);
+ 	res = determine_slot_states(&ierror);
+@@ -1046,6 +1046,15 @@ gboolean do_install_bundle(RaucInstallArgs *args, GError **error)
+ 		goto umount;
+ 	}
+ 
++	res = verify_manifest(manifest, &ierror);
++	if (!res) {
++		g_propagate_prefixed_error(
++				error,
++				ierror,
++				"Failed manifest verification: ");
++		goto umount;
++	}
++
+ 	target_group = determine_target_install_group();
+ 	if (!target_group) {
+ 		g_set_error_literal(error, R_INSTALL_ERROR, R_INSTALL_ERROR_TARGET_GROUP, "Could not determine target group");
+diff --git a/src/manifest.c b/src/manifest.c
+index 58a5039..cee0645 100644
+--- a/src/manifest.c
++++ b/src/manifest.c
+@@ -541,3 +541,59 @@ gboolean update_manifest(const gchar *dir, gboolean signature, GError **error)
+ out:
+ 	return res;
+ }
++
++gboolean verify_manifest(RaucManifest *manifest, GError **error)
++{
++	gboolean res = FALSE;
++	gchar** mandatory_slots;
++	gchar *missing_slots = NULL;
++
++	g_assert_nonnull(manifest);
++	g_assert_nonnull(r_context()->config);
++
++	r_context_begin_step("verifying_manifest", "Verifying manifest", 0);
++
++	if (r_context()->config->mandatory_slots == NULL) {
++		res = TRUE;
++		goto out;
++	}
++
++	mandatory_slots = g_strsplit(r_context()->config->mandatory_slots, " ", 0);
++	if (mandatory_slots == NULL || g_strv_length(mandatory_slots) < 1) {
++		g_strfreev(mandatory_slots);
++		goto out;
++	}
++
++	for (gchar **slot_name = mandatory_slots; *slot_name; slot_name++) {
++		gboolean found = FALSE;
++		for (GList *elem = manifest->images; elem != NULL; elem = elem->next) {
++			RaucImage *image = elem->data;
++			if (g_strcmp0(image->slotclass, *slot_name) == 0) {
++				found = TRUE;
++				break;
++			}
++		}
++		if (!found) {
++			if (missing_slots) {
++				missing_slots = g_strconcat(missing_slots, " ", *slot_name, NULL);
++			}
++			else {
++				missing_slots = g_strdup(*slot_name);
++			}
++		}
++	}
++
++	g_strfreev(mandatory_slots);
++
++	if (missing_slots) {
++		g_set_error(error, R_MANIFEST_ERROR, R_MANIFEST_ERROR_MANDATORY_SLOTS,
++			"Missing mandatory slots: %s", missing_slots);
++		goto out;
++	}
++
++	res = TRUE;
++
++out:
++	r_context_end_step("verifying_manifest", res);
++	return res;
++}
+-- 
+2.27.0
+

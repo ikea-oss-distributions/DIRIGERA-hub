@@ -1,0 +1,28 @@
+From d678468e4f399c102deed61ac64ec888602b990c Mon Sep 17 00:00:00 2001
+From: Krzysztof Burghardt <krzysztof.burghardt@inter.ikea.com>
+Date: Fri, 19 Jun 2020 14:39:03 +0200
+Subject: [PATCH] [HSPP-1356] Do not gate MCO1 clock for WiFi module.
+
+This is minimalistic patch to achieve what Ronnie want to change in Change-Id
+I690081e06f20a41486ee9069e9c1f9162fe4cb05 titled "Enable MCO1 clock for WiFi".
+
+This clock is disabled by Linux during boot-up and requires the patch to stay
+enabled.
+---
+ drivers/clk/clk-stm32mp1.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/clk/clk-stm32mp1.c b/drivers/clk/clk-stm32mp1.c
+index 4a282bfd2..e92e72a45 100644
+--- a/drivers/clk/clk-stm32mp1.c
++++ b/drivers/clk/clk-stm32mp1.c
+@@ -2139,6 +2139,7 @@ static const struct clock_config stm32mp1_clock_cfg[] = {
+ 
+ 	/* MCO clocks */
+ 	COMPOSITE(CK_MCO1, "ck_mco1", mco1_src,
++		  CLK_IS_CRITICAL |
+ 		  CLK_OPS_PARENT_ENABLE | CLK_SET_RATE_NO_REPARENT,
+ 		  _GATE(RCC_MCO1CFGR, 12, 0),
+ 		  _MUX(RCC_MCO1CFGR, 0, 3, 0),
+-- 
+2.27.0

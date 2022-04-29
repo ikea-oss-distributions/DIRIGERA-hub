@@ -1,0 +1,27 @@
+From edd241a2360d4c7751ceaf0ea070186198be923c Mon Sep 17 00:00:00 2001
+From: Paulo Neves <ptsneves@gmail.com>
+Date: Fri, 1 Oct 2021 12:10:59 +0200
+Subject: [PATCH 1/1] Let datad user have read permissions to coredumps.
+
+This way we do not need to create an intermediary service
+that would run as root and change the permissions for data
+daemon to access the coredumps.
+---
+ src/coredump/coredump.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/coredump/coredump.c b/src/coredump/coredump.c
+index 916dfdc3f055d6df39dac715da64296cad4b40ac..3f9152ccc4f0b3a1d20d601a48fab1d1e3915841 100644
+--- a/src/coredump/coredump.c
++++ b/src/coredump/coredump.c
+@@ -269,6 +269,7 @@ static int fix_permissions(
+         /* Ignore errors on these */
+         (void) fchmod(fd, 0640);
+         (void) fix_acl(fd, uid);
++        (void) fix_acl(fd, 1021);
+         (void) fix_xattr(fd, context);
+ 
+         if (fsync(fd) < 0)
+-- 
+2.25.1
+
