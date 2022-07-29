@@ -1,0 +1,5 @@
+remove.ldconfig.call.patch -p1
+ptest.patch -p1
+mkdir_p.patch -p1
+0001-configure.ac-correct-AM_GNU_GETTEXT.patch -p1
+0001-intl-do-not-try-to-use-gettext-defines-that-no-longe.patch -p1

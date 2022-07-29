@@ -1,0 +1,56 @@
+From a7db56b8d4121b4c21dff9bd79cdede5e76e0903 Mon Sep 17 00:00:00 2001
+From: Christer Fletcher <christer.fletcher@inter.ikea.com>
+Date: Tue, 23 Feb 2021 15:43:50 +0100
+Subject: [PATCH] Write TAMP_BKP_19 and enable boot counter if dm-verity fail.
+
+Write a bit to TAMP_BKP_19 so we can detect in the next boot that
+dm-verity failed. Also enable the boot counter if not already enabled.
+Signed-off-by: Christer Fletcher <christer.fletcher@inter.ikea.com>
+---
+ drivers/md/dm-verity-target.c | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/md/dm-verity-target.c b/drivers/md/dm-verity-target.c
+index 808a98ef6..ec86f3d25 100644
+--- a/drivers/md/dm-verity-target.c
++++ b/drivers/md/dm-verity-target.c
+@@ -34,6 +34,9 @@
+ #define DM_VERITY_OPT_IGN_ZEROES	"ignore_zero_blocks"
+ #define DM_VERITY_OPT_AT_MOST_ONCE	"check_at_most_once"
+ 
++#define DM_VERITY_TAMP_FAIL_FLAG (1 << 0)
++#define DM_VERITY_BOOT_COUNT_MAGIC 0xb0010000
++
+ #define DM_VERITY_OPTS_MAX		(3 + DM_VERITY_OPTS_FEC + \
+ 					 DM_VERITY_ROOT_HASH_VERIFICATION_OPTS)
+ 
+@@ -252,8 +255,26 @@ static int verity_handle_err(struct dm_verity *v, enum verity_block_type type,
+ 	if (v->mode == DM_VERITY_MODE_LOGGING)
+ 		return 0;
+ 
+-	if (v->mode == DM_VERITY_MODE_RESTART)
++	if (v->mode == DM_VERITY_MODE_RESTART) {
++		volatile uint32_t *tamp_addr;
++		uint32_t value;
++
++		/* Write verity failed to TAMP_BKP_19 */
++		tamp_addr = (volatile uint32_t *)ioremap(0x5c00a14c, 4);
++		value = readl(tamp_addr);
++		value |= DM_VERITY_TAMP_FAIL_FLAG;
++		writel(value, tamp_addr);
++
++		DMINFO("0x%08X written to TAMP_BKP_19\n", value);
++
++		/* Enable the boot counter if not already active */
++		tamp_addr = (volatile uint32_t *)ioremap(0x5c00a154, 4);
++		value = readl(tamp_addr);
++		if ((value & DM_VERITY_BOOT_COUNT_MAGIC) == 0)
++			writel(DM_VERITY_BOOT_COUNT_MAGIC, tamp_addr);
++
+ 		kernel_restart("dm-verity device corrupted");
++	}
+ 
+ 	if (v->mode == DM_VERITY_MODE_PANIC)
+ 		panic("dm-verity device corrupted");
+-- 
+2.27.0

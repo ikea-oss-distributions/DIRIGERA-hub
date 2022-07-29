@@ -7,8 +7,9 @@
 # or duplicated in any form, in whole or in part, without the prior
 # written permission of © Inter IKEA Systems B.V.
 #
+
 #Disable bootcount
-devmem2 0x5c00a154 w 0
+/usr/sbin/boot-count.sh disable
 
 #Check verity
 if [ -f "/usr/local/gw/.verity_ota_ongoing" ]; then
@@ -17,6 +18,5 @@ if [ -f "/usr/local/gw/.verity_ota_ongoing" ]; then
 else
     devmem2 0x5c00a14c w 0
 fi
-
 
 /usr/bin/rauc status mark-good

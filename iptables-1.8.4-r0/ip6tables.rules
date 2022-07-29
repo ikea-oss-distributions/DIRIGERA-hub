@@ -1,0 +1,22 @@
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -i lo -j ACCEPT
+-A INPUT -i wpan+ -p udp -m udp --dport 53 -m conntrack --ctstate NEW -j ACCEPT
+-A INPUT -i wpan+ -p udp -m udp --dport 67 -m conntrack --ctstate NEW -j ACCEPT
+-A INPUT -p icmpv6 -j ACCEPT
+-A INPUT -p udp -m udp --dport 1900 -m conntrack --ctstate NEW -j ACCEPT
+-A INPUT -p udp -m udp --dport 5353 -m conntrack --ctstate NEW -j ACCEPT
+-A INPUT -p udp -m udp --dport 5540 -m conntrack --ctstate NEW -j ACCEPT
+-A INPUT -p udp -m udp --dport 49153 -m conntrack --ctstate NEW -j ACCEPT
+-A INPUT -p udp -m udp --dport 61631 -m conntrack --ctstate NEW -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 8000 --tcp-flags FIN,SYN,RST,ACK SYN -m conntrack --ctstate NEW -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 8081 --tcp-flags FIN,SYN,RST,ACK SYN -m conntrack --ctstate NEW -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 8082 --tcp-flags FIN,SYN,RST,ACK SYN -m conntrack --ctstate NEW -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 8443 --tcp-flags FIN,SYN,RST,ACK SYN -m conntrack --ctstate NEW -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 9000 --tcp-flags FIN,SYN,RST,ACK SYN -m conntrack --ctstate NEW -j ACCEPT
+-A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp -m udp --dport 5540 -m conntrack --ctstate NEW -j ACCEPT
+COMMIT

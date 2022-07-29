@@ -33,10 +33,6 @@ set_next_rauc_slot() {
     esac
 }
 
-set_boot_counter() {
-    devmem2 0x5c00a154 w 0xb0010000
-}
-
 clear_ota_ongoing() {
     devmem2 0x5c00a14c w $(( $(devmem2 0x5c00a14c | tail -n 1 | grep -oE '\S+$') & ~0x00000002 ))
     rm -f /usr/local/gw/.verity_ota_ongoing
@@ -44,4 +40,4 @@ clear_ota_ongoing() {
 
 clear_ota_ongoing
 set_next_rauc_slot
-set_boot_counter
+/usr/sbin/boot-count.sh enable

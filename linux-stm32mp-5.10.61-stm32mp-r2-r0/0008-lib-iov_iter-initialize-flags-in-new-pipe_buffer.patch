@@ -1,0 +1,33 @@
+From e92f8f99de763f79f9f25a3ad44e81a8d0bd0c1d Mon Sep 17 00:00:00 2001
+From: Wiktor Bogacki <wiktor.bogacki@inter.ikea.com>
+Date: Tue, 8 Mar 2022 12:16:00 +0100
+Subject: [PATCH] lib/iov_iter: initialize "flags" in new pipe_buffer "Dirty
+ Pipe" Fix
+
+---
+ lib/iov_iter.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/lib/iov_iter.c b/lib/iov_iter.c
+index 537bfdc8c..1b05d2896 100644
+--- a/lib/iov_iter.c
++++ b/lib/iov_iter.c
+@@ -407,6 +407,7 @@ static size_t copy_page_to_iter_pipe(struct page *page, size_t offset, size_t by
+ 		return 0;
+ 
+ 	buf->ops = &page_cache_pipe_buf_ops;
++	buf->flags = 0;
+ 	get_page(page);
+ 	buf->page = page;
+ 	buf->offset = offset;
+@@ -543,6 +544,7 @@ static size_t push_pipe(struct iov_iter *i, size_t size,
+ 			break;
+ 
+ 		buf->ops = &default_pipe_buf_ops;
++		buf->flags = 0;
+ 		buf->page = page;
+ 		buf->offset = 0;
+ 		buf->len = min_t(ssize_t, left, PAGE_SIZE);
+-- 
+2.32.0
+
