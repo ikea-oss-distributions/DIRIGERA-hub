@@ -40,6 +40,7 @@
 	};
 
 	aliases {
+		rtc0 = &rv3028;
 		serial0 = &uart4;
 		serial1 = &usart1;
 		serial2 = &usart2;
@@ -482,11 +483,13 @@
 	status = "okay";
 
 	/*RV-3028*/
-	rtc2: rtc@52 {
+	rv3028: rtc@52 {
 		compatible = "microcrystal,rv3028";
 		reg = <0x52 2>;
 		status = "okay";
 		interrupts-extended = <&gpiod 8 GPIO_ACTIVE_HIGH>;
+		clocks = <&rtcclkout>;
+		clock-output-names = "rv3028-clkout";
 	};
 
 	pmic: stpmic@33 {
