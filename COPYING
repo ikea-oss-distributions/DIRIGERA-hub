@@ -1,6 +1,6 @@
 ﻿Copyright 2022
 
-[HomeSmart/Node.js : master]
+[HomeSmart/Node.js : 2.96]
 
 
 Components: 
@@ -3794,7 +3794,7 @@ PYTHON SOFTWARE FOUNDATION LICENSE VERSION 2
 
 Copyright 2022
 
-[HomeSmart/Go : master]
+[HomeSmart/Go : 2.96]
 
 
 Components: 
@@ -3835,15 +3835,18 @@ gogo-protobuf v1.3.2 : BSD 3-clause "New" or "Revised" License
 golang protobuf v1.5.2 : BSD 3-clause "New" or "Revised" License
 golang-github-docker-go-connections-dev 0.4.0 : Apache License 2.0
 golang-github-spf13-pflag-dev v1.0.5 : BSD 3-clause "New" or "Revised" License
+golang.org/x/crypto 20210502-snapshot-e9a32991 : BSD 3-clause "New" or "Revised" License
 golang.org/x/net 20211105-snapshot-69e39bad : BSD 3-clause "New" or "Revised" License
 golang.org/x/net 20220126-snapshot-cd36cc07 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sync 20210219-snapshot-036812b2 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys 20200216-snapshot-d5e6a3e2 : BSD 3-clause "New" or "Revised" License
+golang.org/x/sys 20210510-snapshot-b0526f3d : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys 20210614-snapshot-665e8c73 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys 20210620-snapshot-63515b42 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys 20210806-snapshot-e5e7981a : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys 20211215-snapshot-1d35b9e2 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys 20220208-snapshot-3681064d : BSD 3-clause "New" or "Revised" License
+golang.org/x/text 20210430-snapshot-5c7c50eb : BSD 3-clause "New" or "Revised" License
 golang.org/x/text v0.3.7 : BSD 3-clause "New" or "Revised" License
 golang.org/x/time 20220411-snapshot-583f2d63 : BSD 3-clause "New" or "Revised" License
 golang.org/x/xerrors 20190719-snapshot-9bdfabe6 : BSD 3-clause "New" or "Revised" License
@@ -4518,7 +4521,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 ---
 
 BSD 3-clause "New" or "Revised" License
-(golang.org/x/net 20211105-snapshot-69e39bad, golang.org/x/net 20220126-snapshot-cd36cc07, golang.org/x/sync 20210219-snapshot-036812b2, golang.org/x/sys 20200216-snapshot-d5e6a3e2, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys 20210620-snapshot-63515b42, golang.org/x/sys 20210806-snapshot-e5e7981a, golang.org/x/sys 20211215-snapshot-1d35b9e2, golang.org/x/sys 20220208-snapshot-3681064d, golang.org/x/time 20220411-snapshot-583f2d63, golang.org/x/xerrors 20190719-snapshot-9bdfabe6, golang.org/x/xerrors 20200804-snapshot-5ec99f83, google/go-cmp v0.5.8, hybridgroup/ble 20210519-snapshot-b055c211)
+(golang.org/x/crypto 20210502-snapshot-e9a32991, golang.org/x/net 20211105-snapshot-69e39bad, golang.org/x/net 20220126-snapshot-cd36cc07, golang.org/x/sync 20210219-snapshot-036812b2, golang.org/x/sys 20200216-snapshot-d5e6a3e2, golang.org/x/sys 20210510-snapshot-b0526f3d, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys 20210620-snapshot-63515b42, golang.org/x/sys 20210806-snapshot-e5e7981a, golang.org/x/sys 20211215-snapshot-1d35b9e2, golang.org/x/sys 20220208-snapshot-3681064d, golang.org/x/text 20210430-snapshot-5c7c50eb, golang.org/x/time 20220411-snapshot-583f2d63, golang.org/x/xerrors 20190719-snapshot-9bdfabe6, golang.org/x/xerrors 20200804-snapshot-5ec99f83, google/go-cmp v0.5.8, hybridgroup/ble 20210519-snapshot-b055c211)
 
 Copyright (c) <YEAR>, <OWNER>
 All rights reserved.
@@ -5548,7 +5551,7 @@ For more information, please refer to http://unlicense.org/
 
 Copyright 2022
 
-[HomeSmart/Ikeix/runtime : master]
+[HomeSmart/Ikeix/runtime : 2.96]
 
 
 Components: 
