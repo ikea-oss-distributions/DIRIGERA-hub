@@ -183,6 +183,7 @@ statuses 2.0.1 : MIT License
 stream-shift 1.0.1 : MIT License
 string-width 4.2.3 : MIT License
 Strip ANSI 6.0.1 : MIT License
+swagger-ui 4.14.1 : Apache License 2.0
 tar 6.1.11 : ISC License
 toidentifier 1.0.0 : MIT License
 toidentifier 1.0.1 : MIT License
@@ -204,7 +205,7 @@ yallist 4.0.0 : ISC License
 Licenses: 
 
 Apache License 2.0
-(detect-libc 2.0.1, ecdsa-sig-formatter v1.0.11)
+(detect-libc 2.0.1, ecdsa-sig-formatter v1.0.11, swagger-ui 4.14.1)
 
 Apache License
 Version 2.0, January 2004
