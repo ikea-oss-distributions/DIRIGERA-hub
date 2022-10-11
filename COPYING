@@ -4737,7 +4737,6 @@ methods 1.1.2 : MIT License
 mime 1.6.0 : MIT License
 mime-db 1.52.0 : MIT License
 minimatch 3.1.2 : ISC License
-minimist 1.2.6 : MIT License
 minipass 3.3.4 : ISC License
 minizlib v2.1.2 : MIT License
 mqtt-packet v6.10.0 : MIT License
@@ -4807,7 +4806,6 @@ statuses 2.0.1 : MIT License
 stream-shift 1.0.1 : MIT License
 string-width 4.2.3 : MIT License
 Strip ANSI 6.0.1 : MIT License
-swagger-ui 4.14.2 : Apache License 2.0
 tar 6.1.11 : ISC License
 toidentifier 1.0.0 : MIT License
 toidentifier 1.0.1 : MIT License
@@ -4829,7 +4827,7 @@ yallist 4.0.0 : ISC License
 Licenses: 
 
 Apache License 2.0
-(detect-libc 2.0.1, ecdsa-sig-formatter v1.0.11, swagger-ui 4.14.2)
+(detect-libc 2.0.1, ecdsa-sig-formatter v1.0.11)
 
 Apache License
 Version 2.0, January 2004
@@ -7990,7 +7988,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ---
 
 MIT License
-(minimist 1.2.6, node-concat-map 0.0.1)
+(node-concat-map 0.0.1)
 
 This software is released under the MIT license:
 
