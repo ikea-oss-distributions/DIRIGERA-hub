@@ -1,0 +1,43 @@
+From 30f4524d18c0ac53736399d1fc5f1202dae13d3d Mon Sep 17 00:00:00 2001
+From: Manish V Badarkhe <Manish.Badarkhe@arm.com>
+Date: Sun, 20 Jun 2021 21:04:49 +0100
+Subject: [PATCH 03/18] feat(fwu): introduce FWU platform-specific functions
+ declarations
+
+Added FWU platform specific functions declarations in common
+platform header.
+
+Change-Id: I637e61753ea3dc7f7e7f3159ae1b43ab6780aef2
+Signed-off-by: Manish V Badarkhe <Manish.Badarkhe@arm.com>
+---
+ include/plat/common/platform.h | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/include/plat/common/platform.h b/include/plat/common/platform.h
+index ab05be1ae..bbcadd1f6 100644
+--- a/include/plat/common/platform.h
++++ b/include/plat/common/platform.h
+@@ -13,6 +13,7 @@
+ #if defined(SPD_spmd)
+  #include <services/spm_core_manifest.h>
+ #endif
++#include <drivers/fwu/fwu_metadata.h>
+ 
+ /*******************************************************************************
+  * Forward declarations
+@@ -353,4 +354,12 @@ int32_t plat_get_soc_revision(void);
+  */
+ int32_t plat_is_smccc_feature_available(u_register_t fid);
+ 
++/*******************************************************************************
++ * FWU platform specific functions
++ ******************************************************************************/
++int plat_fwu_set_metadata_image_source(unsigned int image_id,
++				       uintptr_t *dev_handle,
++				       uintptr_t *image_spec);
++void plat_fwu_set_images_source(struct fwu_metadata *metadata);
++
+ #endif /* PLATFORM_H */
+-- 
+2.17.1
+

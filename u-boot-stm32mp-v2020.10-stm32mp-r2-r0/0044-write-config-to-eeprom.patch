@@ -1,0 +1,50 @@
+From 917ff263664ec6a3c3f5017e2c0f5b794a3f0c70 Mon Sep 17 00:00:00 2001
+From: Ronnie Olsson <ronnie.olsson@inter.ikea.com>
+Date: Wed, 8 Dec 2021 12:42:23 +0100
+Subject: [PATCH] [HSPP-8753] Write config to EEPROM
+
+Make config permanent by writing it to eeprom.
+---
+ drivers/fastboot/fb_command.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
+
+diff --git a/drivers/fastboot/fb_command.c b/drivers/fastboot/fb_command.c
+index ccfbafa3fb..17c6c4a312 100644
+--- a/drivers/fastboot/fb_command.c
++++ b/drivers/fastboot/fb_command.c
+@@ -650,6 +650,32 @@ static void oem_settime(char *cmd_parameter, char *response)
+ 		return;
+ 	}
+ 
++	/* Write to EEPROM */
++	snprintf(cmdbuf, sizeof(cmdbuf), "i2c mw 0x52 0x27 0x00 1");
++	printf("settime command \"%s\"\n", cmdbuf);
++
++	if (run_command(cmdbuf, 0)) {
++		fastboot_fail("Failed to write to rtc", response);
++		return;
++	}
++
++	snprintf(cmdbuf, sizeof(cmdbuf), "i2c mw 0x52 0x27 0x11 1");
++	printf("settime command \"%s\"\n", cmdbuf);
++
++	if (run_command(cmdbuf, 0)) {
++		fastboot_fail("Failed to write to rtc", response);
++		return;
++	}
++
++	/* Clear PORF */
++	snprintf(cmdbuf, sizeof(cmdbuf), "i2c mw 0x52 0xe 0x30 1");
++	printf("settime command \"%s\"\n", cmdbuf);
++
++	if (run_command(cmdbuf, 0)) {
++		fastboot_fail("Failed to write to rtc", response);
++		return;
++	}
++
+ 	/* Set a year */
+ 	snprintf(cmdbuf, sizeof(cmdbuf), "i2c mw 0x52 6 %s 1",
+ 			cmd_parameter ? cmd_parameter:"20");
+-- 
+2.17.1
+

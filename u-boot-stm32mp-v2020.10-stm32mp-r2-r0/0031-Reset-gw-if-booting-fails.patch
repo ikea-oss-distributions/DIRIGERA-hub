@@ -1,0 +1,76 @@
+From 8b3a9408498debca3cb1b5134e8413ff87f06d1f Mon Sep 17 00:00:00 2001
+From: Christer Fletcher <christer.fletcher@inter.ikea.com>
+Date: Wed, 7 Jul 2021 11:10:16 +0200
+Subject: [PATCH] Reset the device if it fails to boot.
+
+And hopefully bootcount will push it over to the other slot...
+
+Also enforce check for signature.
+---
+ cmd/ikeixboot.c        | 4 ++++
+ common/image-fit-sig.c | 2 +-
+ tools/image-host.c     | 6 ------
+ 3 files changed, 5 insertions(+), 7 deletions(-)
+
+diff --git a/cmd/ikeixboot.c b/cmd/ikeixboot.c
+index 4ed0cd3475..2f2c53a7fb 100644
+--- a/cmd/ikeixboot.c
++++ b/cmd/ikeixboot.c
+@@ -14,6 +14,7 @@
+ #include <common.h>
+ #include <fs.h>
+ #include <mapmem.h>
++#include <linux/delay.h>
+ 
+ static int getfile(struct cmd_tbl *cmdtp, char *partition, char *file_addr)
+ {
+@@ -66,6 +67,9 @@ int do_ikeixboot(struct cmd_tbl *cmdtp, int flag, int argc, char * const argv[])
+ 
+ 	// We should not get here...
+ 	unmap_sysmem(buf);
++	printf("\n### Boot failed ###\n\n");
++	mdelay(2000);
++	run_command("reset", 0);
+ 
+ 	return CMD_RET_FAILURE;
+ }
+diff --git a/common/image-fit-sig.c b/common/image-fit-sig.c
+index cc1967109e..5846f675af 100644
+--- a/common/image-fit-sig.c
++++ b/common/image-fit-sig.c
+@@ -422,7 +422,7 @@ int fit_config_verify_required_sigs(const void *fit, int conf_noffset,
+ 	if (sig_node < 0) {
+ 		debug("%s: No signature node found: %s\n", __func__,
+ 		      fdt_strerror(sig_node));
+-		return 0;
++		return -1;
+ 	}
+ 
+ 	fdt_for_each_subnode(noffset, sig_blob, sig_node) {
+diff --git a/tools/image-host.c b/tools/image-host.c
+index 3d52593e36..4ff3847ae5 100644
+--- a/tools/image-host.c
++++ b/tools/image-host.c
+@@ -232,9 +232,6 @@ static int fit_image_process_sig(const char *keydir, void *keydest,
+ 		printf("Failed to sign '%s' signature node in '%s' image node: %d\n",
+ 		       node_name, image_name, ret);
+ 
+-		/* We allow keys to be missing */
+-		if (ret == -ENOENT)
+-			return 0;
+ 		return -1;
+ 	}
+ 
+@@ -886,9 +883,6 @@ static int fit_config_process_sig(const char *keydir, void *keydest,
+ 		printf("Failed to sign '%s' signature node in '%s' conf node\n",
+ 		       node_name, conf_name);
+ 
+-		/* We allow keys to be missing */
+-		if (ret == -ENOENT)
+-			return 0;
+ 		return -1;
+ 	}
+ 
+-- 
+2.35.1
+

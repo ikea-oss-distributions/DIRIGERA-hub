@@ -1,0 +1,41 @@
+From cf2fdc04290d45b0a6f0b5200160ddd06f967606 Mon Sep 17 00:00:00 2001
+From: Christer Fletcher <christer.fletcher@inter.ikea.com>
+Date: Fri, 26 Mar 2021 13:51:25 +0100
+Subject: [PATCH] Use correct bootfs and print which slot we are booting from.
+
+---
+ cmd/mmc.c                       | 5 +++++
+ include/config_distro_bootcmd.h | 2 +-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/cmd/mmc.c b/cmd/mmc.c
+index 02cb73a7bc..4e2a0e6eec 100644
+--- a/cmd/mmc.c
++++ b/cmd/mmc.c
+@@ -750,6 +750,11 @@ static int mmc_partconf_print(struct mmc *mmc)
+ 		"BOOT_PARTITION_ENABLE: 0x%x\n"
+ 		"PARTITION_ACCESS: 0x%x\n", ack, part, access);
+ 	env_set_ulong("bootpart", part);
++	if (part == 1) {
++		printf("## Boot from A ##\n");
++	} else {
++		printf("## Boot from B ##\n");
++	}
+ 
+ 	return CMD_RET_SUCCESS;
+ }
+diff --git a/include/config_distro_bootcmd.h b/include/config_distro_bootcmd.h
+index d1b12b827f..cddde9239a 100644
+--- a/include/config_distro_bootcmd.h
++++ b/include/config_distro_bootcmd.h
+@@ -498,7 +498,7 @@
+ 		"run set_bootargs; "                                      \
+ 		"echo bootargs = ${bootargs}; "                           \
+ 		"env exists devplist || setenv devplist 1; "              \
+-		"if test ${altboot} = 1;then setenv devplist A;else setenv devplist 9; fi;" \
++		"if test ${bootpart} = 1;then setenv devplist 9;else setenv devplist A; fi;" \
+ 		"for distro_bootpart in ${devplist}; do "                 \
+ 			"if fstype ${devtype} "                           \
+ 					"${devnum}:${distro_bootpart} "   \
+-- 
+2.31.1

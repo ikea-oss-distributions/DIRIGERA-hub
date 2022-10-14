@@ -1,0 +1,57 @@
+From 67c7224acadde084b2c27ed08b76506f35b072bb Mon Sep 17 00:00:00 2001
+From: Christer Fletcher <christer.fletcher@inter.ikea.com>
+Date: Mon, 8 Feb 2021 11:43:14 +0100
+Subject: [PATCH] Add reset reason to kernel cmdline.
+
+---
+ arch/arm/mach-stm32mp/cpu.c     | 9 +++++++++
+ include/config_distro_bootcmd.h | 1 +
+ 2 files changed, 10 insertions(+)
+
+diff --git a/arch/arm/mach-stm32mp/cpu.c b/arch/arm/mach-stm32mp/cpu.c
+index f1a78de5c3..cd8cf19334 100644
+--- a/arch/arm/mach-stm32mp/cpu.c
++++ b/arch/arm/mach-stm32mp/cpu.c
+@@ -26,6 +26,7 @@
+ #define RCC_BDCR		(STM32_RCC_BASE + 0x0140)
+ #define RCC_MP_APB5ENSETR	(STM32_RCC_BASE + 0x0208)
+ #define RCC_MP_AHB5ENSETR	(STM32_RCC_BASE + 0x0210)
++#define RCC_RESET_REASON	(STM32_RCC_BASE + 0x408)
+ #define RCC_BDCR_VSWRST		BIT(31)
+ #define RCC_BDCR_RTCSRC		GENMASK(17, 16)
+ #define RCC_DBGCFGR_DBGCKEN	BIT(8)
+@@ -655,12 +656,20 @@ static void get_longpress_ponkey(void)
+ 	}
+ }
+ 
++static void get_reset_reason(void)
++{
++	char buf[24] = {0};
++	snprintf(buf, sizeof(buf), "reset_reason=0x%08X", readl(RCC_RESET_REASON));
++	env_set("reset_reason", buf);
++}
++
+ int arch_misc_init(void)
+ {
+ 	setup_boot_mode();
+ 	setup_mac_address();
+ 	setup_serial_number();
+ 	get_longpress_ponkey();
++	get_reset_reason();
+ 
+ 	return 0;
+ }
+diff --git a/include/config_distro_bootcmd.h b/include/config_distro_bootcmd.h
+index b63add7fdb..9a85b28f8c 100644
+--- a/include/config_distro_bootcmd.h
++++ b/include/config_distro_bootcmd.h
+@@ -524,6 +524,7 @@
+ 			"root=/dev/mmcblk${devnum}p${rootpart} "          \
+ 			"rootwait ro console=ttySTM0,115200 "             \
+ 			"rauc.slot=${rauc_slot} "                         \
++			"${reset_reason} "                                \
+ 			"${factory_reset} \0"                             \
+ 
+ #ifndef CONFIG_BOOTCOMMAND
+-- 
+2.27.0

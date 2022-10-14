@@ -1,0 +1,38 @@
+From 3f910561061bdea9050abf0363aac3e02f45375c Mon Sep 17 00:00:00 2001
+From: Andrzej Gendek <andrzej.gendek@inter.ikea.com>
+Date: Tue, 30 Mar 2021 09:47:14 +0200
+Subject: [PATCH] [HSPP-4500] Passing reset reason to M4
+
+This patch writes 0x00000001 to first word
+of the M4 IPC region when factory reset is detected.
+When normal boot is executed 0x00000000 is written.
+The M4 coprocessor can use this variable location
+to detect factory reset state.
+---
+ include/config_distro_bootcmd.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/include/config_distro_bootcmd.h b/include/config_distro_bootcmd.h
+index fc63ce7e19..bd5b954181 100644
+--- a/include/config_distro_bootcmd.h
++++ b/include/config_distro_bootcmd.h
+@@ -468,10 +468,16 @@
+ 		"done\0"                                                  \
+ 	\
+ 	"coprofile=m4-firmware\0"                                         \
++	"m4_ipc_start=0x10040000\0"                                       \
+ 	"scan_dev_for_copro_firmware="                                    \
+ 		"if ext4load mmc ${devnum}:${distro_bootpart} ${kernel_addr_r} ${coprofile}; then " \
+ 			"rproc init; "                                    \
+ 			"rproc load 0 ${kernel_addr_r} ${filesize}; "     \
++			"if test -n \"$factory_reset\"; then "            \
++			    "mw.l ${m4_ipc_start} 1; "                    \
++			"else "                                           \
++			    "mw.l ${m4_ipc_start} 0; "                    \
++			"fi; "                                            \
+ 			"rproc start 0; "                                 \
+ 		"fi\0"                                                    \
+ 	\
+-- 
+2.25.1
+

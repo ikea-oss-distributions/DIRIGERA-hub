@@ -1,0 +1,50 @@
+From 5ed2f80677621795d2c686c05362172ff873abdc Mon Sep 17 00:00:00 2001
+From: Christer Fletcher <christer.fletcher@inter.ikea.com>
+Date: Wed, 9 Feb 2022 16:12:18 +0100
+Subject: [PATCH] Use mmc LUN to determine which slot to boot.
+
+---
+ bl2/bl2_main.c                  | 2 +-
+ plat/st/common/bl2_io_storage.c | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/bl2/bl2_main.c b/bl2/bl2_main.c
+index d2de1350d..2ceba82bc 100644
+--- a/bl2/bl2_main.c
++++ b/bl2/bl2_main.c
+@@ -90,7 +90,7 @@ void bl2_main(void)
+ 	bl2_arch_setup();
+ 
+ #if PSA_FWU_SUPPORT
+-	fwu_init();
++//	fwu_init();
+ #endif /* PSA_FWU_SUPPORT */
+ 
+ #if TRUSTED_BOARD_BOOT
+diff --git a/plat/st/common/bl2_io_storage.c b/plat/st/common/bl2_io_storage.c
+index 3481ef3ca..8b64dad00 100644
+--- a/plat/st/common/bl2_io_storage.c
++++ b/plat/st/common/bl2_io_storage.c
+@@ -48,7 +48,7 @@ static uint32_t nand_bkp_offset;
+ 
+ #if STM32MP_SDMMC || STM32MP_EMMC
+ #if PSA_FWU_SUPPORT
+-static const char * const fip_part_names[] = {"FIP_A", "FIP_B"};
++static const char * const fip_part_names[] = {"ssbl1", "ssbl2"};
+ static uint32_t active_idx;
+ #endif
+ 
+@@ -452,8 +452,8 @@ int bl2_plat_handle_pre_image_load(unsigned int image_id)
+ 
+ 			partition_init(GPT_IMAGE_ID);
+ #if PSA_FWU_SUPPORT
+-			active_fip = stm32mp_get_fip_part_index();
+-			stm32_save_boot_mode((active_fip == 1U) ? BOOT_RECOVERY : BOOT_NORMAL);
++			active_fip = mmc_get_ext_csd_bootpart() - 1;
++			stm32_save_boot_mode(BOOT_NORMAL);
+ 			entry = get_partition_entry(fip_part_names[active_fip]);
+ 			INFO("Use %s partition\n", fip_part_names[active_fip]);
+ #else
+-- 
+2.35.1
+

@@ -1,0 +1,92 @@
+From fae46bda0db48beb5b0364730ee42aaa99f95fd4 Mon Sep 17 00:00:00 2001
+From: Ronnie Olsson <ronnie.olsson@inter.ikea.com>
+Date: Mon, 8 Mar 2021 13:29:16 +0100
+Subject: [PATCH] Fuse WiFi Mac
+
+WiFi MAC will be fused in register 69-70
+---
+ drivers/fastboot/fb_command.c | 31 +++++++++++++++++++++++++------
+ include/fastboot.h            |  3 ++-
+ 2 files changed, 27 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/fastboot/fb_command.c b/drivers/fastboot/fb_command.c
+index 24aed3ff10..2b9c75c40c 100644
+--- a/drivers/fastboot/fb_command.c
++++ b/drivers/fastboot/fb_command.c
+@@ -49,7 +49,9 @@ static void oem_partconf(char *, char *);
+ static void oem_bootbus(char *, char *);
+ #endif
+ #if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_FUSEMAC)
+-static void oem_fusemac(char *, char *);
++static void oem_fusewifimac(char *, char *);
++static void oem_fuseethmac(char *, char *);
++static void oem_fusemac(char *, char *, int);
+ #endif
+ 
+ static const struct {
+@@ -121,9 +123,13 @@ static const struct {
+ 	},
+ #endif
+ #if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_FUSEMAC)
+-	[FASTBOOT_COMMAND_OEM_FUSEMAC] = {
+-		.command = "oem fusemac",
+-		.dispatch = oem_fusemac,
++	[FASTBOOT_COMMAND_OEM_FUSEETHMAC] = {
++		.command = "oem fuseethmac",
++		.dispatch = oem_fuseethmac,
++	},
++	[FASTBOOT_COMMAND_OEM_FUSEWIFIMAC] = {
++		.command = "oem fusewifimac",
++		.dispatch = oem_fusewifimac,
+ 	},
+ #endif
+ };
+@@ -458,17 +464,30 @@ static void oem_bootbus(char *cmd_parameter, char *response)
+ #endif
+ 
+ #if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_FUSEMAC)
++
++static void oem_fusewifimac(char *cmd_parameter, char *response)
++{
++	/* WiFi MAC address in upper OTP register 69-70 */
++	oem_fusemac(cmd_parameter, response, 69);
++}
++
++static void oem_fuseethmac(char *cmd_parameter, char *response)
++{
++	/* ETH MAC address in upper OTP register 57-58 */
++	oem_fusemac(cmd_parameter, response, 57);
++}
++
+ /**
+  * oem_fusemac() - Execute the OEM fuse property command
+  *
+  * @cmd_parameter: Pointer to command parameter
+  * @response: Pointer to fastboot response buffer
++ * @fuse_address: Integer with register to fuse
+  */
+-static void oem_fusemac(char *cmd_parameter, char *response)
++static void oem_fusemac(char *cmd_parameter, char *response, int fuse_address)
+ {
+ 	char cmdbuf[64];
+ 	int bank = 0;
+-	int fuse_address = 57;
+ 	uint32_t squashed_mac[2];
+ 	unsigned char* squashed_mac_ptr = (unsigned char*) squashed_mac;
+ 	char* cmd_copy = NULL;
+diff --git a/include/fastboot.h b/include/fastboot.h
+index 4801623270..131a7b1a36 100644
+--- a/include/fastboot.h
++++ b/include/fastboot.h
+@@ -45,7 +45,8 @@ enum {
+ 	FASTBOOT_COMMAND_OEM_BOOTBUS,
+ #endif
+ #if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_FUSEMAC)
+-	FASTBOOT_COMMAND_OEM_FUSEMAC,
++	FASTBOOT_COMMAND_OEM_FUSEETHMAC,
++	FASTBOOT_COMMAND_OEM_FUSEWIFIMAC,
+ #endif
+ 
+ 	FASTBOOT_COMMAND_COUNT
+-- 
+2.27.0

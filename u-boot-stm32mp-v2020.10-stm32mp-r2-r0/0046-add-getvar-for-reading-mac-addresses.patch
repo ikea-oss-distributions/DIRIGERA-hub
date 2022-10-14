@@ -1,0 +1,111 @@
+From 70a537d6c0ac3ec11a6fbea09333672aa57833b5 Mon Sep 17 00:00:00 2001
+From: Ronnie Olsson <ronnie.olsson@inter.ikea.com>
+Date: Thu, 21 Apr 2022 11:06:12 +0200
+Subject: [PATCH] [HSPP-12097] Add getvars for MAC:s
+
+Added following getvars:
+getvar ethmac
+getvar wifimac
+---
+ drivers/fastboot/fb_getvar.c | 64 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 64 insertions(+)
+
+diff --git a/drivers/fastboot/fb_getvar.c b/drivers/fastboot/fb_getvar.c
+index d266801cd9..761eef180e 100644
+--- a/drivers/fastboot/fb_getvar.c
++++ b/drivers/fastboot/fb_getvar.c
+@@ -12,6 +12,8 @@
+ #include <fs.h>
+ #include <part.h>
+ #include <version.h>
++#include <command.h>
++#include <fuse.h>
+ 
+ static void getvar_version(char *var_parameter, char *response);
+ static void getvar_version_bootloader(char *var_parameter, char *response);
+@@ -34,6 +36,8 @@ static void getvar_is_userspace(char *var_parameter, char *response);
+ static void getvar_gateway_id(char *gateway_id, char *response);
+ static void getvar_rtc(char *gateway_id, char *response);
+ static void getvar_hwconf(char *gateway_id, char *response);
++static void getvar_ethmac(char *var_parameter, char *response);
++static void getvar_wifimac(char *var_parameter, char *response);
+ 
+ static const struct {
+ 	const char *variable;
+@@ -93,6 +97,12 @@ static const struct {
+ 	}, {
+ 		.variable = "hw-conf",
+ 		.dispatch = getvar_hwconf
++	}, {
++		.variable = "ethmac",
++		.dispatch = getvar_ethmac
++	}, {
++		.variable = "wifimac",
++		.dispatch = getvar_wifimac
+ 	}
+ };
+ 
+@@ -310,6 +320,60 @@ static void getvar_hwconf(char *gateway_id, char *response)
+ 		fastboot_response("OKAY", response, "%d", 2);
+ }
+ 
++static void getvar_ethmac(char *var_parameter, char *response)
++{
++	int res;
++	u32 val[2];
++	uint8_t *p;
++
++	res = fuse_read(0, 57, &val[0]);
++	if (res) {
++		printf("Failed read ETH MAC [57] (%d)\n", res);
++		return;
++	}
++	res = fuse_read(0, 58, &val[1]);
++	if (res) {
++		printf("Failed read ETH MAC [58] (%d)\n", res);
++		return;
++	}
++
++	p = (uint8_t *)val;
++	if (!res) {
++		fastboot_response("OKAY", response, "%02x:%02x:%02x:%02x:%02x:%02x",
++			p[0], p[1], p[2], p[3], p[4], p[5]);
++		printf("%s\n", &response[strlen("OKAY")]);
++	} else {
++		fastboot_fail("Value not set", response);
++	}
++}
++
++static void getvar_wifimac(char *var_parameter, char *response)
++{
++	int res;
++	u32 val[2];
++	uint8_t *p;
++
++	res = fuse_read(0, 69, &val[0]);
++	if (res) {
++		printf("Failed read WIFI MAC [69] (%d)\n", res);
++		return;
++	}
++	res = fuse_read(0, 70, &val[1]);
++	if (res) {
++		printf("Failed read WIFI MAC [70] (%d)\n", res);
++		return;
++	}
++
++	p = (uint8_t *)val;
++	if (!res) {
++		fastboot_response("OKAY", response, "%02x:%02x:%02x:%02x:%02x:%02x",
++			p[0], p[1], p[2], p[3], p[4], p[5]);
++		printf("%s\n", &response[strlen("OKAY")]);
++	} else {
++		fastboot_fail("Value not set", response);
++	}
++}
++
+ /**
+  * fastboot_getvar() - Writes variable indicated by cmd_parameter to response.
+  *
+-- 
+2.25.1
+

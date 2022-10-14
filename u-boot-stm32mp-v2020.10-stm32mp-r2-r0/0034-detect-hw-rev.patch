@@ -1,0 +1,61 @@
+From cc91a7708231d647da913a5369991907642302bc Mon Sep 17 00:00:00 2001
+From: Ronnie Olsson <ronnie.olsson@inter.ikea.com>
+Date: Fri, 17 Sep 2021 13:33:11 +0200
+Subject: [PATCH] [HSPP-6769] Detect hw-rev
+
+Based on location of MFI chip we can determine hw-rev.
+---
+ cmd/ikeixboot.c                 |  4 ++--
+ include/config_distro_bootcmd.h | 15 +++++++++++++++
+ 2 files changed, 17 insertions(+), 2 deletions(-)
+
+diff --git a/cmd/ikeixboot.c b/cmd/ikeixboot.c
+index cc0607cefe..bdadad8f9f 100644
+--- a/cmd/ikeixboot.c
++++ b/cmd/ikeixboot.c
+@@ -58,8 +58,8 @@ int do_ikeixboot(struct cmd_tbl *cmdtp, int flag, int argc, char * const argv[])
+ 	bootm_argv[1] = NULL;
+ 	char image_conf[64];
+ 
+-	hwrev = env_get_hex("board_hwrev", 0x1);
+-	if (hwrev == 0x2)
++	hwrev = env_get_hex("rtc_vendor", 0);
++	if (hwrev == 0x3028)
+ 		sprintf(image_conf, "%s#conf-stm32gw20-ev2.dtb", argv[2]);
+ 	else
+ 		sprintf(image_conf, "%s", argv[2]);
+diff --git a/include/config_distro_bootcmd.h b/include/config_distro_bootcmd.h
+index eb3ad99575..e7a9ea3b2b 100644
+--- a/include/config_distro_bootcmd.h
++++ b/include/config_distro_bootcmd.h
+@@ -539,6 +539,19 @@
+ 	"rauc_slot=A\0"                                                   \
+ 	\
+ 	"set_bootargs="                                                   \
++		"i2c dev 2;"                                              \
++		"env set rtc_vendor unknown;"                             \
++		"if i2c probe 0x32; then "                                \
++			"env set rtc_vendor 0x8130;"                      \
++		"fi;"                                                     \
++		"if i2c probe 0x52; then "                                \
++			"env set rtc_vendor 0x3028;"                      \
++		"fi;"                                                     \
++		"if i2c probe 0x10; then "                                \
++			"env set hw_conf 2;"                              \
++		"else "                                                   \
++			"env set hw_conf 1;"                              \
++		"fi;"                                                     \
+ 		"env set bootargs "                                       \
+ 			"root=/dev/mmcblk${devnum}p${rootpart} "          \
+ 			"rootwait ro "                                    \
+@@ -552,6 +565,8 @@
+ 			"${factory_hash} "                                \
+ 			"${cmdline_secure} "                              \
+ 			"${factory_reset} "                               \
++			"hw_conf=${hw_conf} "                             \
++			"rtc_vendor=${rtc_vendor} "                       \
+ 			"${provision_stsafe} \0"                          \
+ 
+ #ifndef CONFIG_BOOTCOMMAND
+-- 
+2.27.0

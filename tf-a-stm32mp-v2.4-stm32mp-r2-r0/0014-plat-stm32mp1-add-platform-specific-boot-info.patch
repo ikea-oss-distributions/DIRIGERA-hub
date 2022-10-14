@@ -1,0 +1,168 @@
+From 5ea30edee932376bf31277be004109f4856b1143 Mon Sep 17 00:00:00 2001
+From: Lionel Debieve <lionel.debieve@foss.st.com>
+Date: Tue, 24 Aug 2021 19:13:57 +0200
+Subject: [PATCH 14/18] plat: stm32mp1: add platform specific boot info
+
+Add management of a boot index and boot trial counter
+to inform update agent about the current boot state.
+
+Signed-off-by: Lionel Debieve <lionel.debieve@foss.st.com>
+Change-Id: I683c1a7c1cdb184a12a4af807cf2a59ab39d7ee7
+
+%% original patch: 0014-plat-stm32mp1-add-platform-specific-boot-info.patch
+---
+ plat/st/common/bl2_io_storage.c             |  1 +
+ plat/st/common/stm32mp_fwu_metadata.c       | 15 +++++-
+ plat/st/stm32mp1/include/stm32mp1_private.h |  7 +++
+ plat/st/stm32mp1/stm32mp1_def.h             |  1 +
+ plat/st/stm32mp1/stm32mp1_private.c         | 59 +++++++++++++++++++++
+ 5 files changed, 82 insertions(+), 1 deletion(-)
+
+diff --git a/plat/st/common/bl2_io_storage.c b/plat/st/common/bl2_io_storage.c
+index 7b9875d1d..3d0dd34c3 100644
+--- a/plat/st/common/bl2_io_storage.c
++++ b/plat/st/common/bl2_io_storage.c
+@@ -424,6 +424,7 @@ int bl2_plat_handle_pre_image_load(unsigned int image_id)
+ #if PSA_FWU_SUPPORT
+ 			active_fip = stm32mp_get_fip_part_index();
+ 			entry = get_partition_entry(fip_part_names[active_fip]);
++			INFO("Use %s partition\n", fip_part_names[active_fip]);
+ #else
+ 			entry = get_partition_entry(FIP_IMAGE_NAME);
+ #endif
+diff --git a/plat/st/common/stm32mp_fwu_metadata.c b/plat/st/common/stm32mp_fwu_metadata.c
+index d8381eac2..5d07015ee 100644
+--- a/plat/st/common/stm32mp_fwu_metadata.c
++++ b/plat/st/common/stm32mp_fwu_metadata.c
+@@ -18,7 +18,20 @@
+ 
+ void plat_fwu_set_images_source(struct fwu_metadata *metadata)
+ {
+-	stm32mp_set_fip_part_index(metadata->active_index);
++	uint32_t index = metadata->active_index;
++
++	if (metadata->active_index != metadata->previous_active_index) {
++		stm32mp_inc_boot_attempt();
++	}
++
++	if (stm32mp_achieve_max_attemps()) {
++		index = metadata->previous_active_index;
++		stm32mp_reset_boot_attempt();
++	}
++
++	stm32mp_update_fwu_boot_index(index);
++
++	stm32mp_set_fip_part_index(index);
+ }
+ 
+ static int get_fwu_from_gpt(unsigned int image_id, const char *part_name,
+diff --git a/plat/st/stm32mp1/include/stm32mp1_private.h b/plat/st/stm32mp1/include/stm32mp1_private.h
+index cbcd2c8bd..be03b226f 100644
+--- a/plat/st/stm32mp1/include/stm32mp1_private.h
++++ b/plat/st/stm32mp1/include/stm32mp1_private.h
+@@ -50,6 +50,13 @@ void stm32mp1_init_scmi_server(void);
+ void stm32mp1_pm_save_scmi_state(uint8_t *state, size_t size);
+ void stm32mp1_pm_restore_scmi_state(uint8_t *state, size_t size);
+ 
++#if PSA_FWU_SUPPORT
++void stm32mp_inc_boot_attempt(void);
++void stm32mp_reset_boot_attempt(void);
++void stm32mp_update_fwu_boot_index(uint32_t idx);
++bool stm32mp_achieve_max_attemps(void);
++#endif
++
+ #if defined(IMAGE_BL32) && DEBUG
+ void stm32mp_dump_core_registers(bool fcore);
+ #endif
+diff --git a/plat/st/stm32mp1/stm32mp1_def.h b/plat/st/stm32mp1/stm32mp1_def.h
+index 780d124d1..5fc79be76 100644
+--- a/plat/st/stm32mp1/stm32mp1_def.h
++++ b/plat/st/stm32mp1/stm32mp1_def.h
+@@ -587,6 +587,7 @@ enum ddr_type {
+ #define TAMP_BASE			U(0x5C00A000)
+ #define TAMP_BKP_REGISTER_BASE		(TAMP_BASE + U(0x100))
+ #define TAMP_BKP_SEC_NUMBER		U(10)
++#define PLAT_MAX_BOOT_TRIAL		U(5)
+ 
+ 
+ #if !(defined(__LINKER__) || defined(__ASSEMBLER__))
+diff --git a/plat/st/stm32mp1/stm32mp1_private.c b/plat/st/stm32mp1/stm32mp1_private.c
+index 0451efe72..c57795b20 100644
+--- a/plat/st/stm32mp1/stm32mp1_private.c
++++ b/plat/st/stm32mp1/stm32mp1_private.c
+@@ -45,6 +45,11 @@
+ #define TAMP_BOOT_ITF_BACKUP_REG_ID	U(20)
+ #define TAMP_BOOT_ITF_MASK		U(0x0000FF00)
+ #define TAMP_BOOT_ITF_SHIFT		8
++#define TAMP_BOOTCOUNT_REG_ID		U(19)
++#define TAMP_BOOT_INDEX_MASK		GENMASK(23, 16)
++#define TAMP_BOOT_INDEX_SHIFT		16
++#define TAMP_BOOT_TRIAL_MASK		GENMASK(31, 24)
++#define TAMP_BOOT_TRIAL_SHIFT		24
+ 
+ #if defined(IMAGE_BL2)
+ #define MAP_SEC_SYSRAM	MAP_REGION_FLAT(STM32MP_SYSRAM_BASE, \
+@@ -796,6 +801,60 @@ bool stm32_boot_is_serial(void)
+ 	return false;
+ }
+ 
++#if PSA_FWU_SUPPORT
++void stm32mp_inc_boot_attempt(void)
++{
++	uint32_t bkpr_itf_idx = tamp_bkpr(TAMP_BOOTCOUNT_REG_ID);
++	uint32_t attempt = 0U;
++
++	clk_enable(RTCAPB);
++	attempt = (mmio_read_32(bkpr_itf_idx) & TAMP_BOOT_TRIAL_MASK) >>
++		TAMP_BOOT_TRIAL_SHIFT;
++
++	attempt++;
++	mmio_clrsetbits_32(bkpr_itf_idx, TAMP_BOOT_TRIAL_MASK,
++			   (attempt << TAMP_BOOT_TRIAL_SHIFT) &
++			   TAMP_BOOT_TRIAL_MASK);
++
++	clk_disable(RTCAPB);
++}
++
++void stm32mp_reset_boot_attempt(void)
++{
++	uint32_t bkpr_itf_idx = tamp_bkpr(TAMP_BOOTCOUNT_REG_ID);
++
++	clk_enable(RTCAPB);
++	mmio_clrbits_32(bkpr_itf_idx, TAMP_BOOT_TRIAL_MASK);
++	clk_disable(RTCAPB);
++}
++
++void stm32mp_update_fwu_boot_index(uint32_t idx)
++{
++	uint32_t bkpr_itf_idx = tamp_bkpr(TAMP_BOOTCOUNT_REG_ID);
++
++	clk_enable(RTCAPB);
++	mmio_clrsetbits_32(bkpr_itf_idx, TAMP_BOOT_INDEX_MASK,
++			   (idx << TAMP_BOOT_INDEX_SHIFT) &
++			   TAMP_BOOT_INDEX_MASK);
++	clk_disable(RTCAPB);
++}
++
++bool stm32mp_achieve_max_attemps(void)
++{
++	uint32_t bkpr_itf_idx = tamp_bkpr(TAMP_BOOTCOUNT_REG_ID);
++	uint32_t attempt = 0;
++
++	clk_enable(RTCAPB);
++	attempt = (mmio_read_32(bkpr_itf_idx) & TAMP_BOOT_TRIAL_MASK) >>
++		TAMP_BOOT_TRIAL_SHIFT;
++
++	if (attempt >= PLAT_MAX_BOOT_TRIAL)
++		return true;
++
++	return false;
++}
++#endif
++
+ #if defined(IMAGE_BL32) && DEBUG
+ static const char *const dump_table[] = {
+ 	"sp_usr  ",
+-- 
+2.17.1
+

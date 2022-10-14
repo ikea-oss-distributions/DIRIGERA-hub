@@ -1,0 +1,24 @@
+From 880f3b466f808a445f6678ed9fdec36de3b22955 Mon Sep 17 00:00:00 2001
+From: Christer Fletcher <christer.fletcher@inter.ikea.com>
+Date: Fri, 24 Sep 2021 13:42:21 +0200
+Subject: [PATCH] Explicitly set configuration instead of using default
+
+---
+ cmd/ikeixboot.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/cmd/ikeixboot.c b/cmd/ikeixboot.c
+index bdadad8f9f..f061863d6f 100644
+--- a/cmd/ikeixboot.c
++++ b/cmd/ikeixboot.c
+@@ -62,7 +62,7 @@ int do_ikeixboot(struct cmd_tbl *cmdtp, int flag, int argc, char * const argv[])
+ 	if (hwrev == 0x3028)
+ 		sprintf(image_conf, "%s#conf-stm32gw20-ev2.dtb", argv[2]);
+ 	else
+-		sprintf(image_conf, "%s", argv[2]);
++		sprintf(image_conf, "%s#conf-stm32gw20-ev1.dtb", argv[2]);
+ 
+ 	bootm_argv[0] = (char *) malloc(sizeof(char) * (strlen(image_conf) + 1));
+ 	if ( bootm_argv[0] == 0 ) {
+-- 
+2.27.0

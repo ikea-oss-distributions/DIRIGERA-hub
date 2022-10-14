@@ -1,0 +1,201 @@
+From ab3c7fb3b14b129ad582bb1e189771e28f5e4437 Mon Sep 17 00:00:00 2001
+From: Christer Fletcher <christer.fletcher@inter.ikea.com>
+Date: Thu, 25 Mar 2021 16:45:45 +0100
+Subject: [PATCH] [HSPP-2886] Expose WiFi mac, factoryfs hash & closed device
+ on cmdline.
+
+Read from OTP and expose as cmdline arguments:
+* WiFi Mac (wifimac=<...>)
+* Factoryfs hash for dm-verity (factory_rootHash=<...>)
+* Closed device bit (secure=<0/1>)
+---
+ arch/arm/mach-stm32mp/cpu.c                | 116 ++++++++++++++++++++-
+ arch/arm/mach-stm32mp/include/mach/stm32.h |  13 ++-
+ include/config_distro_bootcmd.h            |   3 +
+ 3 files changed, 126 insertions(+), 6 deletions(-)
+
+diff --git a/arch/arm/mach-stm32mp/cpu.c b/arch/arm/mach-stm32mp/cpu.c
+index ba31c221e3..19f9a86eac 100644
+--- a/arch/arm/mach-stm32mp/cpu.c
++++ b/arch/arm/mach-stm32mp/cpu.c
+@@ -598,7 +598,7 @@ __weak int setup_mac_address(void)
+ 		pr_err("invalid MAC address in OTP %pM\n", enetaddr);
+ 		return -EINVAL;
+ 	}
+-	pr_debug("OTP MAC address = %pM\n", enetaddr);
++	printf("OTP MAC address = %pM\n", enetaddr);
+ 	ret = eth_env_set_enetaddr("ethaddr", enetaddr);
+ 	if (ret)
+ 		pr_err("Failed to set mac address %pM from OTP: %d\n",
+@@ -608,6 +608,117 @@ __weak int setup_mac_address(void)
+ 	return 0;
+ }
+ 
++static int setup_wifi_mac_address(void)
++{
++	char envvar[26] = {0};
++	struct udevice *dev;
++	uchar addr[6];
++	u32 otp[2];
++	int ret;
++	int i;
++
++	ret = uclass_get_device_by_driver(UCLASS_MISC,
++					  DM_GET_DRIVER(stm32mp_bsec),
++					  &dev);
++	if (ret)
++		return ret;
++
++	ret = misc_read(dev, STM32_BSEC_SHADOW(BSEC_OTP_WIFI),
++			otp, sizeof(otp));
++	if (ret < 0)
++		return ret;
++
++	for (i = 0; i < 6; i++)
++		addr[i] = ((uint8_t *)&otp)[i];
++
++	if (!is_valid_ethaddr(addr)) {
++		pr_err("Invalid WiFi MAC address in OTP %pM\n", addr);
++		env_set("wifimac", "wifimac=");
++		return -EINVAL;
++	}
++
++	ret = snprintf(envvar, sizeof(envvar), "wifimac=%pM", addr);
++	if (ret > (sizeof(envvar) - 1))
++		return -EINVAL;
++
++	printf("%s\n", envvar);
++	env_set("wifimac", envvar);
++
++	return 0;
++}
++
++static int setup_factory_rootfs_hash(void)
++{
++	bool written = false;
++	struct udevice *dev;
++	char envvar[78];
++	u32 otp[8];
++	u8* sha256;
++	int ret;
++	int i;
++
++	ret = uclass_get_device_by_driver(UCLASS_MISC,
++					  DM_GET_DRIVER(stm32mp_bsec),
++					  &dev);
++	if (ret)
++		return ret;
++
++	ret = misc_read(dev, STM32_BSEC_SHADOW(BSEC_OTP_FACTORY_HASH),
++			otp, sizeof(otp));
++	if (ret < 0)
++		return ret;
++
++	for (i = 0; i < sizeof(otp)/sizeof(otp[0]); i++) {
++		if (otp[i] != 0) {
++			written = true;
++			break;
++		}
++	}
++
++	if (!written) {
++		printf("No factory hash fused.\n");
++		env_set("factory_hash", "factory_hash=");
++		return -EINVAL;
++	}
++
++	sprintf(envvar, "%s", "factory_hash=");
++
++	sha256 = (u8*)otp;
++	for (i = 0; i < sizeof(otp); i++) {
++		sprintf(envvar + 13 + (2 * i), "%02X", *(sha256 + i));
++	}
++
++	printf("%s\n", envvar);
++	env_set("factory_hash", envvar);
++
++	return 0;
++}
++
++static int setup_secure_device(void) {
++	struct udevice *dev;
++	char envvar[10];
++	u32 otp;
++	int ret;
++
++	ret = uclass_get_device_by_driver(UCLASS_MISC,
++					  DM_GET_DRIVER(stm32mp_bsec),
++					  &dev);
++	if (ret)
++		return ret;
++
++	ret = misc_read(dev, STM32_BSEC_SHADOW(BSEC_OTP_CFG0),
++			&otp, sizeof(otp));
++	if (ret < 0)
++		return ret;
++
++	sprintf(envvar, "%s=%u", "secure", (otp & (1 << 6)) >> 6);
++
++	printf("%s\n", envvar);
++	env_set("cmdline_secure", envvar);
++
++	return 0;
++}
++
+ static int setup_serial_number(void)
+ {
+ 	char serial_string[25];
+@@ -682,10 +793,13 @@ int arch_misc_init(void)
+ {
+ 	setup_boot_mode();
+ 	setup_mac_address();
++	setup_wifi_mac_address();
+ 	setup_serial_number();
+ 	get_longpress_ponkey();
+ 	get_reset_reason();
+ 	get_verity_status();
++	setup_factory_rootfs_hash();
++	setup_secure_device();
+ 
+ 	return 0;
+ }
+diff --git a/arch/arm/mach-stm32mp/include/mach/stm32.h b/arch/arm/mach-stm32mp/include/mach/stm32.h
+index a40c1babf5..df610319b3 100644
+--- a/arch/arm/mach-stm32mp/include/mach/stm32.h
++++ b/arch/arm/mach-stm32mp/include/mach/stm32.h
+@@ -133,11 +133,14 @@ enum forced_boot_mode {
+ #define STM32_BSEC_LOCK(id)		(STM32_BSEC_LOCK_OFFSET + (id) * 4)
+ 
+ /* BSEC OTP index */
+-#define BSEC_OTP_RPN	1
+-#define BSEC_OTP_SERIAL	13
+-#define BSEC_OTP_PKG	16
+-#define BSEC_OTP_MAC	57
+-#define BSEC_OTP_BOARD	59
++#define BSEC_OTP_CFG0			0
++#define BSEC_OTP_RPN			1
++#define BSEC_OTP_SERIAL			13
++#define BSEC_OTP_PKG			16
++#define BSEC_OTP_MAC			57
++#define BSEC_OTP_BOARD			59
++#define BSEC_OTP_WIFI			69
++#define BSEC_OTP_FACTORY_HASH	71
+ 
+ #endif /* __ASSEMBLY__ */
+ #endif /* _MACH_STM32_H_ */
+diff --git a/include/config_distro_bootcmd.h b/include/config_distro_bootcmd.h
+index ef3b4fc6f0..84e400a6d3 100644
+--- a/include/config_distro_bootcmd.h
++++ b/include/config_distro_bootcmd.h
+@@ -526,6 +526,9 @@
+ 			"rauc.slot=${rauc_slot} "                         \
+ 			"${reset_reason} "                                \
+ 			"${verity_fail} "                                 \
++			"${wifimac} "                                     \
++			"${factory_hash} "                                \
++			"${cmdline_secure} "                              \
+ 			"${factory_reset} \0"                             \
+ 
+ #ifndef CONFIG_BOOTCOMMAND
+-- 
+2.27.0

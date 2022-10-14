@@ -1,0 +1,42 @@
+From 674260485ce2c35f2a432920bb1125f74ea599a6 Mon Sep 17 00:00:00 2001
+From: Michal Frynas <michal.frynas@sigma.se>
+Date: Fri, 18 Dec 2020 13:35:55 +0100
+Subject: [PATCH] i
+
+---
+ core/arch/arm/plat-stm32mp1/conf.mk | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/core/arch/arm/plat-stm32mp1/conf.mk b/core/arch/arm/plat-stm32mp1/conf.mk
+index 6beef4635..0ab90c6e9 100644
+--- a/core/arch/arm/plat-stm32mp1/conf.mk
++++ b/core/arch/arm/plat-stm32mp1/conf.mk
+@@ -11,9 +11,13 @@ flavor_dts_file-157D_EV1 = stm32mp157d-ev1.dts
+ flavor_dts_file-157F_DK2 = stm32mp157f-dk2.dts
+ flavor_dts_file-157F_ED1 = stm32mp157f-ed1.dts
+ flavor_dts_file-157F_EV1 = stm32mp157f-ev1.dts
++flavor_dts_file-GW20_EV1 = stm32gw20-ev1.dts
++flavor_dts_file-GW20_EV2 = stm32gw20-ev2.dts
+ 
+ flavorlist-cryp-512M = $(flavor_dts_file-157C_DK2) \
+-		       $(flavor_dts_file-157F_DK2)
++		       $(flavor_dts_file-157F_DK2) \
++		       $(flavor_dts_file-GW20_EV1) \
++		       $(flavor_dts_file-GW20_EV2)
+ 
+ flavorlist-no_cryp-512M = $(flavor_dts_file-157A_DK1) \
+ 			  $(flavor_dts_file-157D_DK1)
+@@ -32,7 +36,9 @@ flavorlist-no_cryp = $(flavorlist-no_cryp-512M) \
+ 		     $(flavorlist-no_cryp-1G)
+ 
+ flavorlist-512M = $(flavorlist-cryp-512M) \
+-		  $(flavorlist-no_cryp-512M)
++		  $(flavorlist-no_cryp-512M) \
++		  $(flavor_dts_file-GW20_EV1) \
++		  $(flavor_dts_file-GW20_EV2)
+ 
+ flavorlist-1G = $(flavorlist-cryp-1G) \
+ 		$(flavorlist-no_cryp-1G)
+-- 
+2.27.0
+

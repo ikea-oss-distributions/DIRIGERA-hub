@@ -1,0 +1,125 @@
+From e68142cee9fde16cee49712fd53a7d0974cd0047 Mon Sep 17 00:00:00 2001
+From: Marcin Goluch <Marcin.Goluch@sigmaconnectivity.se>
+Date: Mon, 29 Mar 2021 14:17:35 +0200
+Subject: [PATCH] [HSPP-4194] Enable ethernet in u-boot.
+
+---
+ arch/arm/dts/stm32mp15-pinctrl.dtsi | 42 +++++++++++++++++++++++++++++
+ arch/arm/dts/stm32mp151.dtsi        |  8 ++++--
+ arch/arm/dts/stm32mp15xx-evx.dtsi   | 12 ++++-----
+ 3 files changed, 53 insertions(+), 9 deletions(-)
+
+diff --git a/arch/arm/dts/stm32mp15-pinctrl.dtsi b/arch/arm/dts/stm32mp15-pinctrl.dtsi
+index a0b76e238c..505043d14e 100644
+--- a/arch/arm/dts/stm32mp15-pinctrl.dtsi
++++ b/arch/arm/dts/stm32mp15-pinctrl.dtsi
+@@ -344,6 +344,48 @@
+ 		};
+ 	};
+ 
++	ethernet0_rmii_pins_a: rmii-0 {
++		pins1 {
++			pinmux = <STM32_PINMUX('B', 12, AF11)>, /* ETH_RGMII_TXD0 */
++				 <STM32_PINMUX('B', 13, AF11)>, /* ETH_RGMII_TXD1 */
++				 <STM32_PINMUX('B', 11, AF11)>, /* ETH_RGMII_TX_CTL */
++				 <STM32_PINMUX('C', 1, AF11)>, /* ETH_MDC */
++				 <STM32_PINMUX('G', 12, AF11)>; /* ETH_INTn */
++			bias-disable;
++			drive-push-pull;
++			slew-rate = <2>;
++		};
++		pins2 {
++			pinmux = <STM32_PINMUX('A', 2, AF11)>; /* ETH_MDIO */
++			bias-disable;
++			drive-push-pull;
++			slew-rate = <1>;
++		};
++		pins3 {
++			pinmux = <STM32_PINMUX('C', 4, AF11)>, /* ETH_RGMII_RXD0 */
++				 <STM32_PINMUX('C', 5, AF11)>, /* ETH_RGMII_RXD1 */
++				 <STM32_PINMUX('A', 1, AF0)>, /* ETH_RGMII_RX_CLK */
++				 <STM32_PINMUX('A', 7, AF11)>; /* ETH_RGMII_RX_CTL */
++			bias-disable;
++			slew-rate = <1>;
++		};
++	};
++
++	ethernet0_rmii_pins_sleep_a: rmii-sleep-0 {
++		pins1 {
++			pinmux = <STM32_PINMUX('B', 12, ANALOG)>, /* ETH_RGMII_TXD0 */
++				 <STM32_PINMUX('B', 13, ANALOG)>, /* ETH_RGMII_TXD1 */
++				 <STM32_PINMUX('B', 11, ANALOG)>, /* ETH_RGMII_TX_CTL */
++				 <STM32_PINMUX('A', 2, ANALOG)>, /* ETH_MDIO */
++				 <STM32_PINMUX('C', 1, ANALOG)>, /* ETH_MDC */
++				 <STM32_PINMUX('C', 4, ANALOG)>, /* ETH_RGMII_RXD0 */
++				 <STM32_PINMUX('C', 5, ANALOG)>, /* ETH_RGMII_RXD1 */
++				 <STM32_PINMUX('A', 1, ANALOG)>, /* ETH_RGMII_RX_CLK */
++				 <STM32_PINMUX('A', 7, ANALOG)>, /* ETH_RGMII_RX_CTL */
++				 <STM32_PINMUX('G', 12, ANALOG)>; /* ETH_INTn */
++		};
++	};
++
+ 	fmc_pins_a: fmc-0 {
+ 		pins1 {
+ 			pinmux = <STM32_PINMUX('D', 4, AF12)>, /* FMC_NOE */
+diff --git a/arch/arm/dts/stm32mp151.dtsi b/arch/arm/dts/stm32mp151.dtsi
+index ca71139f3a..98c03ce0e4 100644
+--- a/arch/arm/dts/stm32mp151.dtsi
++++ b/arch/arm/dts/stm32mp151.dtsi
+@@ -1632,10 +1632,13 @@
+ 			reg = <0x5800a000 0x2000>;
+ 			reg-names = "stmmaceth";
+ 			interrupts-extended = <&intc GIC_SPI 61 IRQ_TYPE_LEVEL_HIGH>,
+-					      <&exti 70 IRQ_TYPE_LEVEL_HIGH>;
++					      <&intc GIC_SPI 62 IRQ_TYPE_LEVEL_HIGH>,
++					      <&exti 70 1>;
+ 			interrupt-names = "macirq",
+-					  "eth_wake_irq";
++					  "eth_wake_irq",
++					  "stm32_pwr_wakeup";
+ 			clock-names = "stmmaceth",
++				      "eth-ck",
+ 				      "mac-clk-tx",
+ 				      "mac-clk-rx",
+ 				      "eth-ck",
+@@ -1649,6 +1652,7 @@
+ 			snps,mixed-burst;
+ 			snps,pbl = <2>;
+ 			snps,en-tx-lpi-clockgating;
++			st,eth_ref_clk_sel;
+ 			snps,axi-config = <&stmmac_axi_config_0>;
+ 			snps,tso;
+ 			power-domains = <&pd_core>;
+diff --git a/arch/arm/dts/stm32mp15xx-evx.dtsi b/arch/arm/dts/stm32mp15xx-evx.dtsi
+index 47a2c8e5ea..ce20c732b8 100644
+--- a/arch/arm/dts/stm32mp15xx-evx.dtsi
++++ b/arch/arm/dts/stm32mp15xx-evx.dtsi
+@@ -300,21 +300,19 @@
+ 
+ &ethernet0 {
+ 	status = "okay";
+-	pinctrl-0 = <&ethernet0_rgmii_pins_a>;
+-	pinctrl-1 = <&ethernet0_rgmii_sleep_pins_a>;
++	pinctrl-0 = <&ethernet0_rmii_pins_a>;
++	pinctrl-1 = <&ethernet0_rmii_pins_sleep_a>;
+ 	pinctrl-names = "default", "sleep";
+-	phy-mode = "rgmii-id";
+-	max-speed = <1000>;
++	phy-mode = "rmii";
++	max-speed = <100>;
+ 	phy-handle = <&phy0>;
+-	nvmem-cells = <&ethernet_mac_address>;
+-	nvmem-cell-names = "mac-address";
+ 
+ 	mdio0 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		compatible = "snps,dwmac-mdio";
+ 		phy0: ethernet-phy@0 {
+-			reg = <0>;
++			reg = <1>;
+ 		};
+ 	};
+ };
+-- 
+2.27.0

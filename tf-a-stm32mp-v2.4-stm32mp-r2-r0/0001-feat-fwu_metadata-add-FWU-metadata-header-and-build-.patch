@@ -1,0 +1,144 @@
+From 1148c0e8099533f276940f5cc7003c5d4fd8b1e4 Mon Sep 17 00:00:00 2001
+From: Manish V Badarkhe <Manish.Badarkhe@arm.com>
+Date: Tue, 16 Mar 2021 10:01:27 +0000
+Subject: [PATCH 01/18] feat(fwu_metadata): add FWU metadata header and build
+ options
+
+Added a firmware update metadata structure as per section 4.1
+in the specification document[1].
+
+Also, added the build options used in defining the firmware
+update metadata structure.
+
+[1]: https://developer.arm.com/documentation/den0118/a/
+
+Change-Id: I8f43264a46fde777ceae7fd2a5bb0326f1711928
+Signed-off-by: Manish V Badarkhe <Manish.Badarkhe@arm.com>
+---
+ Makefile                           |  4 ++
+ include/drivers/fwu/fwu_metadata.h | 74 ++++++++++++++++++++++++++++++
+ make_helpers/defaults.mk           |  8 ++++
+ 3 files changed, 86 insertions(+)
+ create mode 100644 include/drivers/fwu/fwu_metadata.h
+
+diff --git a/Makefile b/Makefile
+index db60400b8..c8576c345 100644
+--- a/Makefile
++++ b/Makefile
+@@ -925,6 +925,8 @@ $(eval $(call assert_numerics,\
+         ARM_ARCH_MINOR \
+         BRANCH_PROTECTION \
+         FW_ENC_STATUS \
++        NR_OF_FW_BANKS \
++        NR_OF_IMAGES_IN_FW_BANK \
+ )))
+ 
+ ifdef KEY_SIZE
+@@ -1007,6 +1009,8 @@ $(eval $(call add_defines,\
+         COT_DESC_IN_DTB \
+         USE_SP804_TIMER \
+         AARCH32_EXCEPTION_DEBUG \
++        NR_OF_FW_BANKS \
++        NR_OF_IMAGES_IN_FW_BANK \
+ )))
+ 
+ ifeq (${SANITIZE_UB},trap)
+diff --git a/include/drivers/fwu/fwu_metadata.h b/include/drivers/fwu/fwu_metadata.h
+new file mode 100644
+index 000000000..2e88de5ec
+--- /dev/null
++++ b/include/drivers/fwu/fwu_metadata.h
+@@ -0,0 +1,74 @@
++/*
++ * Copyright (c) 2021, Arm Limited. All rights reserved.
++ *
++ * SPDX-License-Identifier: BSD-3-Clause
++ *
++ * FWU metadata information as per the specification section 4.1:
++ * https://developer.arm.com/documentation/den0118/a/
++ *
++ */
++
++#ifndef FWU_METADATA_H
++#define FWU_METADATA_H
++
++#include <stdint.h>
++#include <tools_share/uuid.h>
++
++/* Properties of image in a bank */
++struct fwu_image_properties {
++
++	/* UUID of the image in this bank */
++	uuid_t img_uuid;
++
++	/* [0]: bit describing the image acceptance status –
++	 *      1 means the image is accepted
++	 * [31:1]: MBZ
++	 */
++	uint32_t accepted;
++
++	/* reserved (MBZ) */
++	uint32_t reserved;
++
++} __packed;
++
++/* Image entry information */
++struct fwu_image_entry {
++
++	/* UUID identifying the image type */
++	uuid_t img_type_uuid;
++
++	/* UUID of the storage volume where the image is located */
++	uuid_t location_uuid;
++
++	/* Properties of images with img_type_uuid in the different FW banks */
++	struct fwu_image_properties img_props[NR_OF_FW_BANKS];
++
++} __packed;
++
++/*
++ * FWU metadata filled by the updater and consumed by TF-A for
++ * various purposes as below:
++ * 1. Get active FW bank.
++ * 2. Rollback to previous working FW bank.
++ * 3. Get properties of all images present in all banks.
++ */
++struct fwu_metadata {
++
++	/* Metadata CRC value */
++	uint32_t crc_32;
++
++	/* Metadata version */
++	uint32_t version;
++
++	/* Bank index with which device boots */
++	uint32_t active_index;
++
++	/* Previous bank index with which device booted successfully */
++	uint32_t previous_active_index;
++
++	/* Image entry information */
++	struct fwu_image_entry img_entry[NR_OF_IMAGES_IN_FW_BANK];
++
++} __packed;
++
++#endif /* FWU_METADATA_H */
+diff --git a/make_helpers/defaults.mk b/make_helpers/defaults.mk
+index 4d1f63b4b..047b19a0f 100644
+--- a/make_helpers/defaults.mk
++++ b/make_helpers/defaults.mk
+@@ -328,3 +328,11 @@ COT_DESC_IN_DTB			:= 0
+ 
+ # Build option to use the SP804 timer instead of the generic one
+ USE_SP804_TIMER			:= 0
++
++# Build option to define number of firmware banks, used in firmware update
++# metadata structure.
++NR_OF_FW_BANKS			:= 2
++
++# Build option to define number of images in firmware bank, used in firmware
++# update metadata structure.
++NR_OF_IMAGES_IN_FW_BANK		:= 1
+-- 
+2.17.1
+

@@ -1,0 +1,25 @@
+From ca64e4868093d3ce5b227c3a86ffb1e3a0e686b0 Mon Sep 17 00:00:00 2001
+From: Michal Frynas <michal.frynas@sigma.se>
+Date: Tue, 13 Oct 2020 15:08:15 +0200
+Subject: [PATCH 1/5] LUN environment variable
+
+bootpart contains which LUN we booted from.
+---
+ cmd/mmc.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/cmd/mmc.c b/cmd/mmc.c
+index 6f3cb85cc0..02cb73a7bc 100644
+--- a/cmd/mmc.c
++++ b/cmd/mmc.c
+@@ -749,6 +749,7 @@ static int mmc_partconf_print(struct mmc *mmc)
+ 		"BOOT_ACK: 0x%x\n"
+ 		"BOOT_PARTITION_ENABLE: 0x%x\n"
+ 		"PARTITION_ACCESS: 0x%x\n", ack, part, access);
++	env_set_ulong("bootpart", part);
+ 
+ 	return CMD_RET_SUCCESS;
+ }
+-- 
+2.27.0
+

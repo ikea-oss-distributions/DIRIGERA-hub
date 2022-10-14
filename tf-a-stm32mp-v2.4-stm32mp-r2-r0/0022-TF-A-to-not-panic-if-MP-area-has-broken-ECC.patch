@@ -1,0 +1,31 @@
+From 67325c6fbf7a7395348e08f95355945b9ca5b61d Mon Sep 17 00:00:00 2001
+From: Ronnie Olsson <ronnie.olsson@inter.ikea.com>
+Date: Wed, 5 May 2021 11:31:16 +0200
+Subject: [PATCH] TF-A to not panic if MP-area has broken ECC
+
+We deliberately write MP-area to a broken state to not leave certain
+information remaining in device.
+---
+ drivers/st/bsec/bsec2.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/st/bsec/bsec2.c b/drivers/st/bsec/bsec2.c
+index 9777e6721..a46417632 100644
+--- a/drivers/st/bsec/bsec2.c
++++ b/drivers/st/bsec/bsec2.c
+@@ -63,8 +63,10 @@ static void enable_non_secure_access(uint32_t otp)
+ 	otp_nsec_access[otp / __WORD_BIT] |= BIT(otp % __WORD_BIT);
+ 
+ 	if (bsec_shadow_register(otp) != BSEC_OK) {
+-		panic();
+-	}
++#if 0
++        panic();
++#endif
++    }
+ }
+ 
+ static bool non_secure_can_access(uint32_t otp)
+-- 
+2.17.1
+

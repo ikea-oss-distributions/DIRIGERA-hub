@@ -1,0 +1,152 @@
+From 5981c3c0f467df3a3384d88031198c4db90db8fe Mon Sep 17 00:00:00 2001
+From: Christer Fletcher <christer.fletcher@inter.ikea.com>
+Date: Fri, 12 Nov 2021 00:41:26 +0100
+Subject: [PATCH] Enable boot count in TAMP if .should_verify_system exists on
+ persist
+
+---
+ cmd/Kconfig                     | 30 ++++++++++++++++----
+ cmd/Makefile                    |  1 +
+ cmd/ikeix_restore_bootcount.c   | 57 +++++++++++++++++++++++++++++++++
+ include/config_distro_bootcmd.h |  1 +
+ 4 files changed, 83 insertions(+), 6 deletions(-)
+ create mode 100644 cmd/ikeix_restore_bootcount.c
+
+diff --git a/cmd/Kconfig b/cmd/Kconfig
+index 7c9ddfdfe4..326383d7a1 100644
+--- a/cmd/Kconfig
++++ b/cmd/Kconfig
+@@ -66,6 +66,30 @@ config SYS_XTRACE
+ 	  To enable the tracer a variable "xtrace" needs to be defined in
+ 	  the environment.
+ 
++menu "Ikeix commands"
++
++config CMD_IKEIXBOOT
++	bool "ikeixboot"
++	default y
++	help
++	  Boot ikeix from image.fit.
++
++config CMD_IKEIX_RESTORE_BOOT_COUNT
++	bool "Restore boot count"
++	default y
++	help
++	  Enables boot count in TAMP if .should_verify_system exists in
++	  CMD_IKEIX_RESTORE_BOOT_COUNT_PARTITION partition.
++
++config CMD_IKEIX_RESTORE_BOOT_COUNT_PARTITION
++	  int "partition number with .should_verify_system file"
++	  depends on CMD_IKEIX_RESTORE_BOOT_COUNT
++	  default "18"
++	  help
++	    Partition number of partition containing .should_verify_system file.
++
++endmenu
++
+ menu "Autoboot options"
+ 
+ config AUTOBOOT
+@@ -238,12 +262,6 @@ endmenu
+ 
+ menu "Boot commands"
+ 
+-config CMD_IKEIXBOOT
+-	bool "ikeixboot"
+-	default y
+-	help
+-	  Boot ikeix from image.fit.
+-
+ config CMD_BOOTD
+ 	bool "bootd"
+ 	default y
+diff --git a/cmd/Makefile b/cmd/Makefile
+index 142a48882e..516d5a28aa 100644
+--- a/cmd/Makefile
++++ b/cmd/Makefile
+@@ -184,6 +184,7 @@ obj-$(CONFIG_ARCH_MVEBU) += mvebu/
+ 
+ # ikeix
+ obj-$(CONFIG_CMD_IKEIXBOOT) += ikeixboot.o
++obj-$(CONFIG_CMD_IKEIX_RESTORE_BOOT_COUNT) += ikeix_restore_bootcount.o
+ 
+ endif # !CONFIG_SPL_BUILD
+ 
+diff --git a/cmd/ikeix_restore_bootcount.c b/cmd/ikeix_restore_bootcount.c
+new file mode 100644
+index 0000000000..d15a543942
+--- /dev/null
++++ b/cmd/ikeix_restore_bootcount.c
+@@ -0,0 +1,57 @@
++/*
++ * Copyright © Inter IKEA Systems B.V. 2017, 2018, 2019, 2020, 2021.
++ * All Rights Reserved.
++ *
++ * This is UNPUBLISHED PROPRIETARY SOURCE CODE of © Inter IKEA Systems B.V.;
++ * the contents of this file may not be disclosed to third parties, copied
++ * or duplicated in any form, in whole or in part, without the prior
++ * written permission of © Inter IKEA Systems B.V.
++ */
++
++#include <stdio.h>
++#include <command.h>
++#include <common.h>
++#include <fs.h>
++#include <asm/io.h>
++
++#define TAMP_BOOT_COUNT            TAMP_BACKUP_REGISTER(21)
++#define BOOTCOUNT_MAGIC            0xB0010000U
++#define BOOTCOUNT_RESET_MAGIC_MASK 0x0000FFFFU
++#define BOOTCOUNT_DISABLED_VALUE   0x00000000U
++
++int do_restore_bootcount(struct cmd_tbl *cmdtp, int flag, int argc, char * const argv[])
++{
++    char part_string[5];
++    int exists;
++    u32 value;
++
++    if (argc != 1)
++        return CMD_RET_USAGE;
++
++    snprintf(part_string, sizeof(part_string), "1:%x", CONFIG_CMD_IKEIX_RESTORE_BOOT_COUNT_PARTITION);
++
++    exists = file_exists("mmc", part_string, ".should_verify_system", FS_TYPE_ANY);
++    if (exists) {
++         value = readl(TAMP_BOOT_COUNT);
++         if ((value & BOOTCOUNT_MAGIC) == 0) {
++            printf("Boot cnt: file .should_verify_system exists on persistent filesystem\n");
++            printf("Boot cnt: enabling in TAMP: 0x%08X\n", BOOTCOUNT_MAGIC);
++            writel(BOOTCOUNT_MAGIC, TAMP_BOOT_COUNT);
++         } else if ((value ^ BOOTCOUNT_MAGIC) == BOOTCOUNT_RESET_MAGIC_MASK) {
++            printf("Boot cnt: partition reset-on-fail procedure\n");
++            printf("Boot cnt: disabling boot counter in TAMP\n");
++            writel(BOOTCOUNT_DISABLED_VALUE, TAMP_BOOT_COUNT);
++         } else {
++            printf("Boot cnt: file .should_verify_system exists on persistent filesystem\n");
++            printf("Boot cnt: already enabled in TAMP: 0x%08X\n", value);
++         }
++    }
++
++    return CMD_RET_SUCCESS;
++}
++
++U_BOOT_CMD(
++    ikeix_restore_bootcount, 2, 1,  do_restore_bootcount,
++    "re-enable bootcount in tamp if .enable_bootcount exists in persist",
++    "re-enable bootcount in tamp if .enable_bootcount exists in persist\n\tikeix_restore_bootcount"
++);
+diff --git a/include/config_distro_bootcmd.h b/include/config_distro_bootcmd.h
+index 9aacebfac7..7643914f87 100644
+--- a/include/config_distro_bootcmd.h
++++ b/include/config_distro_bootcmd.h
+@@ -495,6 +495,7 @@
+	"scan_dev_for_boot_part="                                         \
+		"part list ${devtype} ${devnum} -bootable devplist; "     \
+	"run set_rootpart; "                                      \
++		"ikeix_restore_bootcount; "                               \
+		"if itest ${bootpart} -eq 1; then "                       \
+			"env set rauc_slot A; "                           \
+		"else "                                                   \
+-- 
+2.33.1
+

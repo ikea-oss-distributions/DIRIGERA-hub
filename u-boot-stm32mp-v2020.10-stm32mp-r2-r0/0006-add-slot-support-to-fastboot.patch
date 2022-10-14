@@ -1,0 +1,54 @@
+From d53e96934f4131aa50f38551863197e59ef7d3de Mon Sep 17 00:00:00 2001
+From: Michal Frynas <michal.frynas@sigma.se>
+Date: Fri, 1 Oct 2021 14:04:32 +0200
+Subject: [PATCH] Add slot support to fastboot
+
+Fastboot delivery based on non-slot-support base.
+---
+ include/configs/stm32mp1.h | 28 ++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
+
+diff --git a/include/configs/stm32mp1.h b/include/configs/stm32mp1.h
+index d6dfd47e39..5975668587 100644
+--- a/include/configs/stm32mp1.h
++++ b/include/configs/stm32mp1.h
+@@ -142,6 +142,29 @@
+ 
+ #include <config_distro_bootcmd.h>
+ 
++#ifdef CONFIG_FASTBOOT_CMD_OEM_FORMAT
++/* eMMC default partitions for fastboot command: oem format */
++#define PARTS_DEFAULT \
++	"partitions=" \
++	"name=ssbl1,start=512K,size=2M;" \
++	"name=ssbl2,size=2M;" \
++	"name=teeh1,size=512K;" \
++	"name=teeh2,size=512K;" \
++	"name=teed1,size=512K;" \
++	"name=teed2,size=512K;" \
++	"name=teex1,size=512K;" \
++	"name=teex2,size=512K;" \
++	"name=bootfs1,size=64MB,bootable;" \
++	"name=bootfs2,size=64MB,bootable;" \
++	"name=vendorfs1,size=16M;" \
++	"name=vendorfs2,size=16M;" \
++	"name=rootfs1,size=746M;" \
++	"name=rootfs2,size=746M;" \
++	"name=userfs,size=-\0"
++#else
++#define PARTS_DEFAULT
++#endif
++
+ /*
+  * memory layout for 32M uncompressed/compressed kernel,
+  * 1M fdt, 1M script, 1M pxe and 1M for splashimage
+@@ -165,6 +188,7 @@
+ 	SAVE_DEFAULT \
+ 	STM32MP_BOOTCMD \
+ 	BOOTENV \
++	PARTS_DEFAULT \
+ 	"boot_net_usb_start=true\0"
+ 
+ #endif /* ifndef CONFIG_SPL_BUILD */
+-- 
+2.27.0

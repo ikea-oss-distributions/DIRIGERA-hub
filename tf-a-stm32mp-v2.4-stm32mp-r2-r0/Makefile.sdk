@@ -1,0 +1,221 @@
+# Set default path
+SRC_PATH ?= $(PWD)
+BLD_PATH ?= $(SRC_PATH)/../build
+DEPLOYDIR ?= $(SRC_PATH)/../deploy
+
+BL32_DEPLOYDIR     ?= $(DEPLOYDIR)/bl32
+FWCONFIG_DEPLOYDIR ?= $(DEPLOYDIR)/fwconfig
+
+# Configure default TF-A features
+TF_A_ENABLE_DEBUG_WRAPPER ?= 1
+
+# Configure FIP
+ENABLE_FIP ?= 1
+
+# Set default TF-A config
+ifeq ($(ENABLE_FIP), 1)
+TF_A_CONFIG ?= optee trusted emmc trusted
+else
+TF_A_CONFIG ?=  optee fastboot  serialboot
+endif
+
+# Default TF-A overall settings to null
+TF_A_BINARY ?=
+TF_A_DEVICETREE ?=
+TF_A_MAKE_TARGET ?=
+TF_A_EXTRA_OPTFLAGS ?=
+
+ifeq ($(ENABLE_FIP), 1)
+
+# Init default config settings
+TF_A_DEVICETREE_optee ?= stm32gw20-ev1 stm32gw20-ev2 
+TF_A_EXTRA_OPTFLAGS_optee ?= AARCH32_SP=optee 
+TF_A_BINARY_optee ?= tf-a
+TF_A_MAKE_TARGET_optee ?= dtbs
+
+# Init default config settings
+TF_A_DEVICETREE_trusted ?= stm32gw20-ev1
+TF_A_EXTRA_OPTFLAGS_trusted ?= AARCH32_SP=sp_min STM32MP_EMMC=0 STM32MP_USB_PROGRAMMER=1 STM32MP_USE_STM32IMAGE=1 TRUSTED_BOARD_BOOT=1
+TF_A_BINARY_trusted ?= tf-a
+TF_A_MAKE_TARGET_trusted ?= all
+
+# Init default config settings
+TF_A_DEVICETREE_emmc ?= stm32gw20-ev1
+TF_A_EXTRA_OPTFLAGS_emmc ?= AARCH32_SP=optee STM32MP_EMMC=1 PSA_FWU_SUPPORT=1 STM32MP_USE_STM32IMAGE=0 TRUSTED_BOARD_BOOT=1 DEBUG=0
+TF_A_BINARY_emmc ?= tf-a
+TF_A_MAKE_TARGET_emmc ?= all
+
+# Init default config settings
+TF_A_DEVICETREE_trusted ?= stm32gw20-ev1
+TF_A_EXTRA_OPTFLAGS_trusted ?= AARCH32_SP=sp_min STM32MP_EMMC=0 STM32MP_USB_PROGRAMMER=1 STM32MP_USE_STM32IMAGE=1 TRUSTED_BOARD_BOOT=1
+TF_A_BINARY_trusted ?= tf-a
+TF_A_MAKE_TARGET_trusted ?= all
+
+else
+
+# Init default config settings
+TF_A_DEVICETREE_optee ?= stm32gw20-ev1 stm32gw20-ev2 
+TF_A_EXTRA_OPTFLAGS_optee ?= AARCH32_SP=optee   STM32MP_SDMMC=1 STM32MP_EMMC=1 STM32MP_SPI_NOR=1 STM32MP_RAW_NAND=1 STM32MP_SPI_NAND=1 STM32MP_USE_STM32IMAGE=1
+TF_A_BINARY_optee ?= tf-a
+TF_A_MAKE_TARGET_optee ?=
+
+TF_A_DEVICETREE_serialboot ?=
+TF_A_EXTRA_OPTFLAGS_serialboot ?=
+TF_A_BINARY_serialboot ?=
+TF_A_MAKE_TARGET_serialboot ?=
+
+ifeq ($(TF_A_DEVICETREE_serialboot),)
+$(error "Please, define the variable TF_A_DEVICETREE_serialboot")
+endif
+
+ifeq ($(TF_A_EXTRA_OPTFLAGS_serialboot),)
+$(error "Please, define the variable TF_A_EXTRA_OPTFLAGS_serialboot")
+endif
+
+ifeq ($(TF_A_BINARY_serialboot),)
+$(error "Please, define the variable TF_A_BINARY_serialboot")
+endif
+
+endif
+
+# Reset default variables
+LDFLAGS =
+CFLAGS =
+CPPFLAGS =
+CC =
+CPP =
+AS =
+AR =
+LD =
+NM =
+# Define default make options
+EXTRA_OEMAKE ?=  PLAT=stm32mp1 ARCH=aarch32 ARM_ARCH_MAJOR=7 CROSS_COMPILE=arm-poky-linux-gnueabi- DEBUG=1 LOG_LEVEL=40 TRUSTED_BOARD_BOOT=1 MBEDTLS_DIR=mbedtls LOG_LEVEL=30
+
+# Configure overall devicetree list for FIP
+TF_A_DEVICETREE_ALL = stm32gw20-ev1 stm32gw20-ev2
+
+# Display TF-A config details
+define tf-configs
+	echo "  $(1)" ; \
+	echo "    with device tree : $(if $(TF_A_DEVICETREE),$(TF_A_DEVICETREE),$(TF_A_DEVICETREE_$(1)))" ; \
+	echo "    extra optionflags: $(if $(TF_A_EXTRA_OPTFLAGS),$(TF_A_EXTRA_OPTFLAGS),$(TF_A_EXTRA_OPTFLAGS_$(1)))" ; \
+	echo "    binary basename  : $(if $(TF_A_BINARY),$(TF_A_BINARY),$(TF_A_BINARY_$(1)) (TF_A_BINARY_$(1)))" ; \
+	echo "    tf-a build target: $(if $(TF_A_MAKE_TARGET),$(TF_A_MAKE_TARGET),$(TF_A_MAKE_TARGET_$(1)))" ;
+endef
+
+# Configure TF-A make rules
+define tf-rules
+tf-$(1): $2
+	@mkdir -p $(BLD_PATH)/$(1)
+	@$(foreach dt, $(if $(TF_A_DEVICETREE),$(TF_A_DEVICETREE),$(TF_A_DEVICETREE_$(1))), \
+		$(MAKE) $(EXTRA_OEMAKE) -C $(SRC_PATH) \
+			BUILD_PLAT=$(BLD_PATH)/$(1) \
+			DTB_FILE_NAME=$(dt).dtb \
+			$(if $(TF_A_EXTRA_OPTFLAGS),$(TF_A_EXTRA_OPTFLAGS),$(TF_A_EXTRA_OPTFLAGS_$(1))) \
+			$(if $(TF_A_MAKE_TARGET),$(TF_A_MAKE_TARGET),$(TF_A_MAKE_TARGET_$(1))) \
+			$(foreach soc,stm32gw20,$(if $(findstring $(soc),$(dt)),$(shell echo $(soc) | tr a-z A-Z)=1,)) ; \
+	)
+endef
+
+# Configure TF-A deploy rules
+define deploy-rules
+deploy-$(1): tf-$(1)
+	@mkdir -p $(DEPLOYDIR)
+	@mkdir -p $(DEPLOYDIR)/debug
+	@$(foreach dt, $(if $(TF_A_DEVICETREE),$(TF_A_DEVICETREE),$(TF_A_DEVICETREE_$(1))), \
+		if [ -f $(BLD_PATH)/$(1)/$(2)-$(dt).stm32 ]; then \
+			cp -f $(BLD_PATH)/$(1)/$(2)-$(dt).stm32 $(DEPLOYDIR)/$(2)-$(dt)-$(1).stm32 ; \
+			if [ "$(TF_A_ENABLE_DEBUG_WRAPPER)" = "1" ] ; then \
+				stm32wrapper4dbg -s $(BLD_PATH)/$(1)/$(2)-$(dt).stm32 -d $(DEPLOYDIR)/debug/debug-$(2)-$(dt)-$(1).stm32 ; \
+			fi ; \
+		fi ; \
+		if [ -f $(BLD_PATH)/$(1)/bl32.bin ] ; then \
+			mkdir -p $(BL32_DEPLOYDIR) ; \
+			cp -f $(BLD_PATH)/$(1)/bl32.bin $(BL32_DEPLOYDIR)/$(2)-bl32$(strip $(foreach soc,stm32gw20,$(if $(findstring $(soc),$(dt)),-$(soc),))).bin ; \
+			if [ -f $(BLD_PATH)/$(1)/fdts/$(dt)-bl32.dtb ]; then \
+				cp -f $(BLD_PATH)/$(1)/fdts/$(dt)-bl32.dtb $(BL32_DEPLOYDIR)/ ; \
+			fi ; \
+			if [ -f $(BLD_PATH)/$(1)/bl32/bl32.elf ]; then \
+				mkdir -p $(BL32_DEPLOYDIR)/debug ; \
+				mv -f $(BLD_PATH)/$(1)/bl32/bl32.elf $(BL32_DEPLOYDIR)/debug/$(2)-bl32$(strip $(foreach soc,stm32gw20,$(if $(findstring $(soc),$(dt)),-$(soc),))).elf ; \
+			fi ; \
+		fi ; \
+		if [ -f $(BLD_PATH)/$(1)/fdts/$(dt)-fw-config.dtb ]; then \
+			mkdir -p $(FWCONFIG_DEPLOYDIR) ; \
+			cp -f $(BLD_PATH)/$(1)/fdts/$(dt)-fw-config.dtb $(FWCONFIG_DEPLOYDIR)/$(dt)-fw-config-$(1).dtb ; \
+		fi ; \
+		if [ -f $(BLD_PATH)/$(1)/bl2/bl2.elf ] ; then \
+			cp -f $(BLD_PATH)/$(1)/bl2/bl2.elf $(DEPLOYDIR)/debug/$(2)-bl2-$(1).elf ; \
+		fi ; \
+		if [ -f $(BLD_PATH)/$(1)/bl32/bl32.elf ] ; then \
+			cp -f $(BLD_PATH)/$(1)/bl32/bl32.elf $(DEPLOYDIR)/debug/$(2)-bl32-$(1).elf ; \
+		fi ; \
+	)
+endef
+
+# Set dependencies list for building all
+DEPS = $(addprefix deploy-,$(TF_A_CONFIG))
+ifeq ($(ENABLE_FIP), 1)
+DEPS += fip
+endif
+
+help:
+	@echo
+	@echo "TF-A configuration:"
+	@echo "  TF_A_CONFIG = $(TF_A_CONFIG)"
+	@echo "Config details:"
+	@$(foreach config, $(TF_A_CONFIG), $(call tf-configs,$(config)))
+	@echo
+	@echo "Note that each TF-A configuration settings can be updated through overall or specific config var:"
+	@echo "  TF_A_DEVICETREE"
+	@echo "  TF_A_EXTRA_OPTFLAGS"
+	@echo "  TF_A_BINARY"
+	@echo "  TF_A_MAKE_TARGET"
+	@echo
+	@echo "TF-A features configuration:"
+	@echo "  TF_A_ENABLE_DEBUG_WRAPPER = $(TF_A_ENABLE_DEBUG_WRAPPER) ('1' to generate tf-a for debugging)"
+	@echo
+	@echo "TF-A folder configuration:"
+	@echo "  SRC_PATH  = $(SRC_PATH)"
+	@echo "  BLD_PATH  = $(BLD_PATH)"
+	@echo "  DEPLOYDIR = $(DEPLOYDIR)"
+	@echo "  BL32_DEPLOYDIR     = $(DEPLOYDIR)/bl32"
+	@echo "  FWCONFIG_DEPLOYDIR = $(DEPLOYDIR)/fwconfig"
+	@echo
+	@echo "FIP configuration:"
+	@echo "  ENABLE_FIP = $(ENABLE_FIP) ('1' to generate fip binary)"
+ifeq ($(ENABLE_FIP),1)
+	@echo "  Do not forget to set FIP deploydir folders (such as FIP_DEPLOYDIR_ROOT) to provide path to needed binaries"
+endif
+	@echo
+	@echo "Available targets:"
+	@echo "  all   : build TF-A binaries for defined config(s)"
+	@echo "  fip   : build FIP binaries"
+	@echo "  stm32 : build TF-A stm32 binaries"
+	@echo "  clean : clean build directories from generated files"
+	@echo
+
+all: $(DEPS)
+
+host_tools:
+	@$(MAKE) --no-print-directory -C $(SRC_PATH)/tools/stm32image
+
+# Set TF-A make rules
+$(foreach config, $(TF_A_CONFIG), $(eval $(call tf-rules,$(config),host_tools)))
+
+# Set TF-A deploy rules
+$(foreach config, $(TF_A_CONFIG), $(eval $(call deploy-rules,$(config),$(if $(TF_A_BINARY),$(TF_A_BINARY),$(TF_A_BINARY_$(config))))))
+
+fip: $(addprefix deploy-,$(TF_A_CONFIG))
+	FIP_DEPLOYDIR_TFA=$(BL32_DEPLOYDIR) FIP_DEPLOYDIR_FWCONF=$(FWCONFIG_DEPLOYDIR) FIP_DEVICETREE="$(if $(TF_A_DEVICETREE),$(TF_A_DEVICETREE),$(TF_A_DEVICETREE_ALL))" fiptool-stm32mp
+
+stm32: $(addprefix deploy-,$(TF_A_CONFIG))
+
+clean:
+	@for config in $(TF_A_CONFIG) ; do \
+		echo "Removing $(BLD_PATH)/$$config ..." ; \
+		rm -rf $(BLD_PATH)/$$config ; \
+	done
+	@echo "Removing $(DEPLOYDIR) ..."
+	@rm -rf $(DEPLOYDIR)
+	@echo

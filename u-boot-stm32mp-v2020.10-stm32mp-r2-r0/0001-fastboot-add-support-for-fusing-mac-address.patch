@@ -1,0 +1,156 @@
+From 6d7d2e1aea5197e62747a6ba470e89febb5be3ef Mon Sep 17 00:00:00 2001
+From: Michal Frynas <michal.frynas@sigma.se>
+Date: Thu, 30 Sep 2021 15:20:11 +0200
+Subject: [PATCH] Add support for fusing mac address in fastboot
+
+---
+ cmd/fuse.c                    |  4 ++-
+ drivers/fastboot/Kconfig      |  7 +++++
+ drivers/fastboot/fb_command.c | 58 +++++++++++++++++++++++++++++++++++
+ include/fastboot.h            |  3 ++
+ 4 files changed, 71 insertions(+), 1 deletion(-)
+
+diff --git a/cmd/fuse.c b/cmd/fuse.c
+index e001619d17..8abe1bdbc1 100644
+--- a/cmd/fuse.c
++++ b/cmd/fuse.c
+@@ -73,7 +73,7 @@ static int do_fuse(struct cmd_tbl *cmdtp, int flag, int argc,
+ 			printf(" %.8x", val);
+ 		}
+ 		putc('\n');
+-	} else if (!strcmp(op, "sense")) {
++	} else if ((!strcmp(op, "sense")) || !strcmp(op, "isempty")) {
+ 		if (argc == 2)
+ 			cnt = 1;
+ 		else if (argc != 3 || strtou32(argv[2], 0, &cnt))
+@@ -89,6 +89,8 @@ static int do_fuse(struct cmd_tbl *cmdtp, int flag, int argc,
+ 				goto err;
+ 
+ 			printf(" %.8x", val);
++			if (!strcmp(op, "isempty") && val)
++			goto err;
+ 		}
+ 		putc('\n');
+ 	} else if (!strcmp(op, "prog")) {
+diff --git a/drivers/fastboot/Kconfig b/drivers/fastboot/Kconfig
+index 4352ba67a7..f3d897379c 100644
+--- a/drivers/fastboot/Kconfig
++++ b/drivers/fastboot/Kconfig
+@@ -177,6 +177,13 @@ config FASTBOOT_USE_BCB_SET_REBOOT_FLAG
+ 	  implementation if your platform supports BCB commands and doesn't
+ 	  require any specific reboot reason handling.
+ 
++config FASTBOOT_CMD_OEM_FUSEMAC
++	bool "Enable the 'oem fusemac' command"
++	depends on FASTBOOT_FLASH_MMC && SUPPORT_EMMC_BOOT
++	help
++	  Add support for the "oem fusemac" command from a client. This command
++	  allows to program MAC address into OTP area.
++
+ endif # FASTBOOT
+ 
+ endmenu
+diff --git a/drivers/fastboot/fb_command.c b/drivers/fastboot/fb_command.c
+index d3c578672d..dd21ae6732 100644
+--- a/drivers/fastboot/fb_command.c
++++ b/drivers/fastboot/fb_command.c
+@@ -42,6 +42,9 @@ static void reboot_recovery(char *, char *);
+ #if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_FORMAT)
+ static void oem_format(char *, char *);
+ #endif
++#if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_FUSEMAC)
++static void oem_fusemac(char *, char *);
++#endif
+ 
+ static const struct {
+ 	const char *command;
+@@ -99,6 +102,12 @@ static const struct {
+ 		.dispatch = oem_format,
+ 	},
+ #endif
++#if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_FUSEMAC)
++	[FASTBOOT_COMMAND_OEM_FUSEMAC] = {
++		.command = "oem fusemac",
++		.dispatch = oem_fusemac,
++	},
++#endif
+ };
+ 
+ /**
+@@ -367,6 +376,7 @@ static void oem_format(char *cmd_parameter, char *response)
+ 	} else {
+ 		sprintf(cmdbuf, "gpt write mmc %x $partitions",
+ 			CONFIG_FASTBOOT_FLASH_MMC_DEV);
++		printf("Execute: %s\n", cmdbuf);
+ 		if (run_command(cmdbuf, 0))
+ 			fastboot_fail("", response);
+ 		else
+@@ -374,3 +384,51 @@ static void oem_format(char *cmd_parameter, char *response)
+ 	}
+ }
+ #endif
++
++#if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_FUSEMAC)
++/**
++ * oem_fusemac() - Execute the OEM fuse property command
++ *
++ * @cmd_parameter: Pointer to command parameter
++ * @response: Pointer to fastboot response buffer
++ */
++static void oem_fusemac(char *cmd_parameter, char *response)
++{
++	char cmdbuf[64];
++	int bank = 0;
++	int fuse_address = 57;
++	uint32_t squashed_mac[2];
++	unsigned char* squashed_mac_ptr = (unsigned char*) squashed_mac;
++	char* cmd_copy = NULL;
++	char* token = NULL;
++
++	if (!cmd_parameter) {
++		fastboot_fail("Expected command parameter", response);
++		return;
++	}
++
++	/* execute 'fuse isempty' command bank, fuse address and number of registers */
++	snprintf(cmdbuf, sizeof(cmdbuf), "fuse isempty %d %d 2",
++			 bank, fuse_address);
++	printf("Execute: %s\n", cmdbuf);
++	if (run_command(cmdbuf, 0))
++		fastboot_okay("Failed fuse fetch or fuse already programmed", response);
++	else {
++		memset(squashed_mac_ptr, 0, sizeof(squashed_mac));
++		cmd_copy = strdup(cmd_parameter);
++		if (!strncmp(cmd_copy, ":", 1))
++			cmd_copy++;
++		while ((token = strsep(&cmd_parameter, ":"))) {
++			*squashed_mac_ptr++ = strtoul(token, NULL, 16);
++		}
++		snprintf(cmdbuf, sizeof(cmdbuf), "fuse prog -y %d %d 0x%08x 0x%08x",
++					 bank, fuse_address, squashed_mac[0], squashed_mac[1]);
++		free(cmd_copy);
++		printf("Execute: %s\n", cmdbuf);
++		if (run_command(cmdbuf, 0))
++			fastboot_fail("Cannot fuse mac address", response);
++		else
++			fastboot_okay(NULL, response);
++	}
++}
++#endif
+diff --git a/include/fastboot.h b/include/fastboot.h
+index 8e9ee80907..f453adedd0 100644
+--- a/include/fastboot.h
++++ b/include/fastboot.h
+@@ -38,6 +38,9 @@ enum {
+ #if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_FORMAT)
+ 	FASTBOOT_COMMAND_OEM_FORMAT,
+ #endif
++#if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_FUSEMAC)
++	FASTBOOT_COMMAND_OEM_FUSEMAC,
++#endif
+ 
+ 	FASTBOOT_COMMAND_COUNT
+ };
+-- 
+2.27.0
+
