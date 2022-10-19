@@ -4625,6 +4625,111 @@ the following restrictions:
 
 Copyright 2022
 
+[HomeSmart/M4-firmware : master]
+
+
+Components: 
+
+Amazon FreeRTOS 201906.00_Major : MIT License
+Amazon FreeRTOS 201910.00 : MIT License
+FreeRTOS Real Time Kernel V10.3.0 : MIT License
+open-amp 2020.10.0 : BSD 3-clause "New" or "Revised" License
+
+Licenses: 
+
+BSD 3-clause "New" or "Revised" License
+(open-amp 2020.10.0)
+
+Software License Agreement (BSD 3-Clause License)
+========================================
+
+Copyright (c) 2014, Mentor Graphics Corporation. All rights reserved.
+Copyright (c) 2015 - 2016 Xilinx, Inc. All rights reserved.
+Copyright (c) 2016 Freescale Semiconductor, Inc. All rights reserved
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice,
+   this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of <the copyright holder> nor the names of its contributors
+   may be used to endorse or promote products derived from this software
+   without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE
+
+---
+
+MIT License
+(FreeRTOS Real Time Kernel V10.3.0)
+
+-------------
+
+
+
+Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
+
+---
+
+MIT License
+(Amazon FreeRTOS 201906.00_Major, Amazon FreeRTOS 201910.00)
+
+MIT License
+
+Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE
+
+Copyright 2022
+
 [HomeSmart/Node.js : master]
 
 
@@ -8386,111 +8491,6 @@ PYTHON SOFTWARE FOUNDATION LICENSE VERSION 2
 
 Copyright 2022
 
-[HomeSmart/M4-firmware : master]
-
-
-Components: 
-
-Amazon FreeRTOS 201906.00_Major : MIT License
-Amazon FreeRTOS 201910.00 : MIT License
-FreeRTOS Real Time Kernel V10.3.0 : MIT License
-open-amp 2020.10.0 : BSD 3-clause "New" or "Revised" License
-
-Licenses: 
-
-BSD 3-clause "New" or "Revised" License
-(open-amp 2020.10.0)
-
-Software License Agreement (BSD 3-Clause License)
-========================================
-
-Copyright (c) 2014, Mentor Graphics Corporation. All rights reserved.
-Copyright (c) 2015 - 2016 Xilinx, Inc. All rights reserved.
-Copyright (c) 2016 Freescale Semiconductor, Inc. All rights reserved
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-1. Redistributions of source code must retain the above copyright notice,
-   this list of conditions and the following disclaimer.
-
-2. Redistributions in binary form must reproduce the above copyright notice,
-   this list of conditions and the following disclaimer in the documentation
-   and/or other materials provided with the distribution.
-
-3. Neither the name of <the copyright holder> nor the names of its contributors
-   may be used to endorse or promote products derived from this software
-   without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-POSSIBILITY OF SUCH DAMAGE
-
----
-
-MIT License
-(FreeRTOS Real Time Kernel V10.3.0)
-
--------------
-
-
-
-Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
-
----
-
-MIT License
-(Amazon FreeRTOS 201906.00_Major, Amazon FreeRTOS 201910.00)
-
-MIT License
-
-Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE
-
-Copyright 2022
-
 [HomeSmart/Go : master]
 
 
@@ -8529,18 +8529,15 @@ GoDoc Text v0.2.0 : MIT License
 gogo-protobuf v1.3.2 : BSD 3-clause "New" or "Revised" License
 golang-github-docker-go-connections-dev 0.4.0 : Apache License 2.0
 golang-github-spf13-pflag-dev v1.0.5 : BSD 3-clause "New" or "Revised" License
-golang.org/x/crypto 20210502-snapshot-e9a32991 : BSD 3-clause "New" or "Revised" License
 golang.org/x/net 20211105-snapshot-69e39bad : BSD 3-clause "New" or "Revised" License
 golang.org/x/net 20220126-snapshot-cd36cc07 : BSD 3-clause "New" or "Revised" License
 golang.org/x/net 20220425-snapshot-2871e0cb : BSD 3-clause "New" or "Revised" License
 golang.org/x/sync 20210219-snapshot-036812b2 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys 20200216-snapshot-d5e6a3e2 : BSD 3-clause "New" or "Revised" License
-golang.org/x/sys 20210510-snapshot-b0526f3d : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys 20210614-snapshot-665e8c73 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys 20210620-snapshot-63515b42 : BSD 3-clause "New" or "Revised" License
 golang.org/x/time 20220411-snapshot-583f2d63 : BSD 3-clause "New" or "Revised" License
 golang.org/x/xerrors 20190719-snapshot-9bdfabe6 : BSD 3-clause "New" or "Revised" License
-golang/text 20210430-snapshot-5c7c50eb : BSD 3-clause "New" or "Revised" License
 golang/text v0.3.7 : BSD 3-clause "New" or "Revised" License
 google.golang.org/protobuf v1.28.1 : BSD 3-clause "New" or "Revised" License
 google/go-cmp v0.5.5 : BSD 3-clause "New" or "Revised" License
@@ -9208,7 +9205,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 ---
 
 BSD 3-clause "New" or "Revised" License
-(golang.org/x/crypto 20210502-snapshot-e9a32991, golang.org/x/net 20211105-snapshot-69e39bad, golang.org/x/net 20220126-snapshot-cd36cc07, golang.org/x/net 20220425-snapshot-2871e0cb, golang.org/x/sync 20210219-snapshot-036812b2, golang.org/x/sys 20200216-snapshot-d5e6a3e2, golang.org/x/sys 20210510-snapshot-b0526f3d, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys 20210620-snapshot-63515b42, golang.org/x/time 20220411-snapshot-583f2d63, golang.org/x/xerrors 20190719-snapshot-9bdfabe6, golang/text 20210430-snapshot-5c7c50eb, google.golang.org/protobuf v1.28.1, google/go-cmp v0.5.8, hybridgroup/ble 20220920-snapshot-9a45bebf)
+(golang.org/x/net 20211105-snapshot-69e39bad, golang.org/x/net 20220126-snapshot-cd36cc07, golang.org/x/net 20220425-snapshot-2871e0cb, golang.org/x/sync 20210219-snapshot-036812b2, golang.org/x/sys 20200216-snapshot-d5e6a3e2, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys 20210620-snapshot-63515b42, golang.org/x/time 20220411-snapshot-583f2d63, golang.org/x/xerrors 20190719-snapshot-9bdfabe6, google.golang.org/protobuf v1.28.1, google/go-cmp v0.5.8, hybridgroup/ble 20220920-snapshot-9a45bebf)
 
 Copyright (c) <YEAR>, <OWNER>
 All rights reserved.
