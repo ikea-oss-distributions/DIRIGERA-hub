@@ -7,7 +7,6 @@
 -A INPUT -i wpan+ -p udp -m udp --dport 53 -m conntrack --ctstate NEW -j ACCEPT
 -A INPUT -i wpan+ -p udp -m udp --dport 67 -m conntrack --ctstate NEW -j ACCEPT
 -A INPUT -p icmp -j ACCEPT
--A INPUT -p udp -m udp --dport 1900 -m conntrack --ctstate NEW -j ACCEPT
 -A INPUT -p udp -m udp --dport 5353 -m conntrack --ctstate NEW -j ACCEPT
 -A INPUT -p udp -m udp --dport 5540 -m conntrack --ctstate NEW -j ACCEPT
 -A INPUT -p udp -m udp --dport 49153 -m conntrack --ctstate NEW -j ACCEPT
