@@ -1,0 +1,29 @@
+From 406e8a6591325d0bd8b64bf7713216966a6bb6aa Mon Sep 17 00:00:00 2001
+From: Christophe Guibout <christophe.guibout@st.com>
+Date: Thu, 12 Dec 2019 14:30:45 +0100
+Subject: [PATCH] support stm32 extension
+
+Avoid the following error:
+ Last error: Installation error: Unsupported image
+ /run/rauc/bundle/u-boot-stm32mp157c-ev1-optee.stm32 for slot type raw
+
+Change-Id: I151f50852337c934a4bac70833b61241ce1ae6fd
+---
+ src/update_handler.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/update_handler.c b/src/update_handler.c
+index 9265efe..c9576a2 100644
+--- a/src/update_handler.c
++++ b/src/update_handler.c
+@@ -1707,6 +1707,7 @@ typedef struct {
+ RaucUpdatePair updatepairs[] = {
+ 	{"*.ext4.caibx", "ext4", img_to_fs_handler},
+ 	{"*.ext4.caibx", "raw", img_to_raw_handler},
++	{"*.stm32", "raw", img_to_raw_handler},
+ 	{"*.vfat.caibx", "raw", img_to_raw_handler},
+ 	{"*.ubifs.caibx", "ubivol", img_to_ubivol_handler},
+ 	{"*.ubifs.caibx", "ubifs", img_to_ubifs_handler},
+-- 
+2.25.1
+

@@ -1,0 +1,28 @@
+From eded79449c5ff0a00f2cf193e1cbd4388576fbaa Mon Sep 17 00:00:00 2001
+From: Christer Fletcher <christer.fletcher@inter.ikea.com>
+Date: Fri, 15 Oct 2021 15:34:18 +0200
+Subject: [PATCH] Add noexec in fstab
+
+Change-Id: Ia3792dbf451f0c26e5b919b6b9ca7f9ade768b48
+---
+ fstab | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/fstab b/fstab
+index 9ef5e31..19e5de3 100644
+--- a/fstab
++++ b/fstab
+@@ -3,8 +3,8 @@
+ /dev/root            /                    auto       defaults              1  1
+ proc                 /proc                proc       defaults              0  0
+ devpts               /dev/pts             devpts     mode=0620,gid=5       0  0
+-tmpfs                /run                 tmpfs      mode=0755,nodev,nosuid,strictatime 0  0
+-tmpfs                /var/volatile        tmpfs      defaults              0  0
++tmpfs                /run                 tmpfs      mode=0755,nodev,nosuid,noexec,strictatime 0  0
++tmpfs                /var/volatile        tmpfs      defaults,noexec       0  0
+ 
+ #/dev/mmcblk0p4      /boot                 ext4       defaults,sync         0  1
+ #/dev/mmcblk0p5      /vendor               ext4       defaults,sync         0  1
+-- 
+2.33.1
+

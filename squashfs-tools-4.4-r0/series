@@ -1,2 +1,1 @@
 0001-squashfs-tools-fix-build-failure-against-gcc-10.patch -p2
-CVE-2021-40153.patch -p2

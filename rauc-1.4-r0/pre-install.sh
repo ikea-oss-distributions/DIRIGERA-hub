@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/sh
 # Copyright © Inter IKEA Systems B.V. 2017, 2018, 2019, 2020, 2021.
 # All Rights Reserved.
 #
@@ -15,18 +15,9 @@ BOOT_COUNTER_STATUS="$(devmem2 0x5c00a154 | grep Read | awk '{print $6}')"
 
 if [ "${BOOT_COUNTER_STATUS}" != "0x00000000" ]
 then
-    logger -s -p 3 "Error boot counter not disabled when trying to install fw"
+    echo "<3> Error boot counter not disabled when trying to install fw"
     exit 1
 fi
-
-for file in "${RAUC_BUNDLE_MOUNT_POINT}"/*.stm32; do
-    if [ -f "${file}" ]; then
-        if ! verifybl "${file}" ; then
-            logger -s -p 3 "Failed to verify signature"
-            exit 1
-        fi
-    fi
-done
 
 # Set OTA ongoing flag in verity TAMP
 devmem2 0x5c00a14c w 0x00000002
