@@ -1,0 +1,27 @@
+From 4f588553399cad232eff3555e06e06527d52b597 Mon Sep 17 00:00:00 2001
+From: Ronnie Olsson <ronnie.olsson@inter.ikea.com>
+Date: Mon, 22 Mar 2021 15:46:36 +0100
+Subject: [PATCH] [HSPP-3080] Enforce platform security in fuses
+
+Allow general fusing function to enable enforced platform security.
+---
+ drivers/fastboot/fb_command.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/fastboot/fb_command.c b/drivers/fastboot/fb_command.c
+index 3c04983155..b7be5668a2 100644
+--- a/drivers/fastboot/fb_command.c
++++ b/drivers/fastboot/fb_command.c
+@@ -465,7 +465,8 @@ static void oem_fusegen(char *cmd_parameter, char *response)
+ 	fuse_address = strtoul(token, NULL, 10);
+ 
+ 	/* Sanity check */
+-	if (fuse_address < 32 || fuse_address + num_regs_to_fuse > 96) {
++	if ((fuse_address < 32 || fuse_address + num_regs_to_fuse > 96) &&
++			fuse_address != 0) {
+ 		fastboot_fail("Bad input parameters", response);
+ 		goto exit;
+ 	}
+-- 
+2.17.1
+

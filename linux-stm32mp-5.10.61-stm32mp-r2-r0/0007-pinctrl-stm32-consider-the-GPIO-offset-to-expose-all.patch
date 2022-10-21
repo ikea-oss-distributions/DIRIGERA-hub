@@ -1,0 +1,44 @@
+From f5f845e00be93ef7d27ff4dd21434e3d4acf8059 Mon Sep 17 00:00:00 2001
+From: Fabien Dessenne <fabien.dessenne@foss.st.com>
+Date: Tue, 14 Dec 2021 15:07:52 +0100
+Subject: [PATCH 1/2] pinctrl: stm32: consider the GPIO offset to expose all
+ the GPIO lines
+
+Consider the GPIO controller offset (from "gpio-ranges") to compute the
+maximum GPIO line number.
+This fixes an issue where gpio-ranges uses a non-null offset.
+  e.g.: gpio-ranges = <&pinctrl 6 86 10>)
+        in that case the last valid GPIO line is not 9 but 15 (6 + 10 - 1)
+
+Fixes: 67e2996f72c7 ("pinctrl: stm32: fix the reported number of GPIO lines per bank")
+Reported-by: Christoph Fritz <chf.fritz@googlemail.com>
+Signed-off-by: Fabien Dessenne <fabien.dessenne@foss.st.com>
+Change-Id: Ib81945bbb07faa5c027dffed89a937cb9d3dc2c0
+Reviewed-on: https://gerrit.st.com/c/mpu/oe/st/linux-stm32/+/233613
+Reviewed-by: CITOOLS <MDG-smet-aci-reviews@list.st.com>
+---
+ drivers/pinctrl/stm32/pinctrl-stm32.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
+index 474b9debca27..0ba23ab7af54 100644
+--- a/drivers/pinctrl/stm32/pinctrl-stm32.c
++++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
+@@ -1288,10 +1288,10 @@ static int stm32_gpiolib_register_bank(struct stm32_pinctrl *pctl,
+ 		bank_nr = args.args[1] / STM32_GPIO_PINS_PER_BANK;
+ 		bank->gpio_chip.base = args.args[1];
+ 
+-		npins = args.args[2];
+-		while (!of_parse_phandle_with_fixed_args(np, "gpio-ranges", 3,
+-							 ++i, &args))
+-			npins += args.args[2];
++		/* get the last defined gpio line (offset + nb of pins) */
++		npins = args.args[0] + args.args[2];
++		while (!of_parse_phandle_with_fixed_args(np, "gpio-ranges", 3, ++i, &args))
++			npins = max(npins, (int)(args.args[0] + args.args[2]));
+ 	} else {
+ 		bank_nr = pctl->nbanks;
+ 		bank->gpio_chip.base = bank_nr * STM32_GPIO_PINS_PER_BANK;
+-- 
+2.17.1
+

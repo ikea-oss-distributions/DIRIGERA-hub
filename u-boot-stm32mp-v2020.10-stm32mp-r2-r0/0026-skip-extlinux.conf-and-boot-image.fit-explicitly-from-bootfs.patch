@@ -1,0 +1,142 @@
+From e1072cd4acf2723eb3610ab6451bc1d2bf3cb61c Mon Sep 17 00:00:00 2001
+From: Christer Fletcher <christer.fletcher@inter.ikea.com>
+Date: Thu, 6 May 2021 14:22:39 +0200
+Subject: [PATCH] Skip extlinux.conf and boot /image.fit explicitly from
+ bootfs.
+
+---
+ cmd/Kconfig                     |  6 +++
+ cmd/Makefile                    |  4 ++
+ cmd/ikeixboot.c                 | 76 +++++++++++++++++++++++++++++++++
+ include/config_distro_bootcmd.h |  1 +
+ 4 files changed, 87 insertions(+)
+ create mode 100644 cmd/ikeixboot.c
+
+diff --git a/cmd/Kconfig b/cmd/Kconfig
+index 0c984d735d..f0f0cbd3ba 100644
+--- a/cmd/Kconfig
++++ b/cmd/Kconfig
+@@ -280,6 +280,12 @@ endmenu
+ 
+ menu "Boot commands"
+ 
++config CMD_IKEIXBOOT
++	bool "ikeixboot"
++	default y
++	help
++	  Boot ikeix from image.fit.
++
+ config CMD_BOOTD
+ 	bool "bootd"
+ 	default y
+diff --git a/cmd/Makefile b/cmd/Makefile
+index 3a9c9747c9..07109cb7ba 100644
+--- a/cmd/Makefile
++++ b/cmd/Makefile
+@@ -190,6 +190,10 @@ obj-$(CONFIG_RISCV) += riscv/
+ obj-$(CONFIG_X86) += x86/
+ 
+ obj-$(CONFIG_ARCH_MVEBU) += mvebu/
++
++# ikeix
++obj-$(CONFIG_CMD_IKEIXBOOT) += ikeixboot.o
++
+ endif # !CONFIG_SPL_BUILD
+ 
+ obj-$(CONFIG_$(SPL_)CMD_TLV_EEPROM) += tlv_eeprom.o
+diff --git a/cmd/ikeixboot.c b/cmd/ikeixboot.c
+new file mode 100644
+index 0000000000..fabf0dc900
+--- /dev/null
++++ b/cmd/ikeixboot.c
+@@ -0,0 +1,76 @@
++/*
++ * Copyright © Inter IKEA Systems B.V. 2017, 2018, 2019, 2020, 2021.
++ * All Rights Reserved.
++ *
++ * This is UNPUBLISHED PROPRIETARY SOURCE CODE of © Inter IKEA Systems B.V.;
++ * the contents of this file may not be disclosed to third parties, copied
++ * or duplicated in any form, in whole or in part, without the prior
++ * written permission of © Inter IKEA Systems B.V.
++ */
++
++#include <stdio.h>
++#include <bootm.h>
++#include <command.h>
++#include <common.h>
++#include <fs.h>
++#include <mapmem.h>
++
++static int getfile(struct cmd_tbl *cmdtp, char *partition, char *file_addr)
++{
++#ifdef CONFIG_CMD_FS_GENERIC
++	char *fs_argv[5];
++	fs_argv[0] = "load";
++	fs_argv[1] = "mmc";
++	fs_argv[2] = partition;
++	fs_argv[3] = file_addr;
++	fs_argv[4] = "/image.fit";
++
++	if (!do_load(cmdtp, 0, 5, fs_argv, FS_TYPE_ANY))
++		return 0;
++#endif
++	return CMD_RET_FAILURE;
++}
++
++int do_ikeixboot(struct cmd_tbl *cmdtp, int flag, int argc, char * const argv[])
++{
++	unsigned long fit_image_ram_address;
++	int res = 0;
++
++	if (argc < 3)
++		return CMD_RET_USAGE;
++
++	if (strict_strtoul(argv[2], 16, &fit_image_ram_address) < 0) {
++		printf("Invalid address: %s\n", argv[2]);
++		return CMD_RET_FAILURE;
++	}
++
++	res = getfile(cmdtp, argv[1], argv[2]);
++	if (res) {
++		return res;
++	}
++
++	printf("image.fit loaded\n");
++	char * const bootm_argv[] = { argv[2] };
++	ulong kernel_addr;
++	char *buf;
++
++	kernel_addr = genimg_get_kernel_addr((char * const)fit_image_ram_address);
++	buf = map_sysmem(kernel_addr, 0);
++
++	res = do_bootm_states(cmdtp, flag, 1, bootm_argv, BOOTM_STATE_START |
++		BOOTM_STATE_FINDOS | BOOTM_STATE_FINDOTHER |
++		BOOTM_STATE_LOADOS |
++		BOOTM_STATE_RAMDISK |
++		BOOTM_STATE_OS_PREP | BOOTM_STATE_OS_FAKE_GO |
++		BOOTM_STATE_OS_GO, &images, 1);
++
++	// We should not get here...
++	unmap_sysmem(buf);
++
++	return CMD_RET_FAILURE;
++}
++
++U_BOOT_CMD(
++	ikeixboot, 3, 1,  do_ikeixboot,
++	"boot ikeix from image.fit", "boot ikeix from image.fit\n\tikeixboot <bootpart> <ramaddress>"
++);
+diff --git a/include/config_distro_bootcmd.h b/include/config_distro_bootcmd.h
+index 93897588d9..84035a2d1d 100644
+--- a/include/config_distro_bootcmd.h
++++ b/include/config_distro_bootcmd.h
+@@ -492,6 +492,7 @@
+ 				"${devnum}:${distro_bootpart}...; "       \
+ 		"for prefix in ${boot_prefixes}; do "                     \
+ 			"run scan_dev_for_copro_firmware; "               \
++			"ikeixboot ${devnum}:${distro_bootpart} ${scriptaddr}; " \
+ 			"run scan_dev_for_extlinux; "                     \
+ 			"run scan_dev_for_scripts; "                      \
+ 		"done;"                                                   \
+-- 
+2.27.0

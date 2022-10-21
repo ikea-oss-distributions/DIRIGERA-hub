@@ -1,0 +1,36 @@
+From 2511eb8e4ff8f2cbdbeffe94fdd24c4a262f001c Mon Sep 17 00:00:00 2001
+From: Ronnie Olsson <ronnie.olsson@inter.ikea.com>
+Date: Wed, 7 Apr 2021 13:47:42 +0200
+Subject: [PATCH] [HSPP-4561] Adding partitions
+
+..
+..
+746MB rootfs2
+  4MB factory
+1/2MB configfs1 <---
+1/2MB configfs2 <--- NEW
+  4MB persist1  <--- Partitions
+  4MB persist2  <---
+    - userfs
+---
+ include/configs/stm32mp1.h | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/include/configs/stm32mp1.h b/include/configs/stm32mp1.h
+index 580cb2c1f4..da8829b43b 100644
+--- a/include/configs/stm32mp1.h
++++ b/include/configs/stm32mp1.h
+@@ -243,6 +243,10 @@
+ 	"name=rootfs1,size=746M;" \
+ 	"name=rootfs2,size=746M;" \
+ 	"name=factory,size=4M;" \
++	"name=configfs1,size=512K;" \
++	"name=configfs2,size=512K;" \
++	"name=persist1,size=4M;" \
++	"name=persist2,size=4M;" \
+ 	"name=userfs,size=-\0"
+ #else
+ #define PARTS_DEFAULT
+-- 
+2.17.1
+

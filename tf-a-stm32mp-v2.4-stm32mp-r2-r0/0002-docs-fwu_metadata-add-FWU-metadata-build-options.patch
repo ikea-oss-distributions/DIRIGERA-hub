@@ -1,0 +1,46 @@
+From fb83228fb8b4aba7a67d223214130edf6539beb6 Mon Sep 17 00:00:00 2001
+From: Manish V Badarkhe <Manish.Badarkhe@arm.com>
+Date: Tue, 16 Mar 2021 11:14:19 +0000
+Subject: [PATCH 02/18] docs(fwu_metadata): add FWU metadata build options
+
+Added the build options used in defining the firmware update metadata
+structure.
+
+Change-Id: Idd40ea629e643e775083f283b75c80f6c026b127
+Signed-off-by: Manish V Badarkhe <Manish.Badarkhe@arm.com>
+---
+ docs/getting_started/build-options.rst | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
+
+diff --git a/docs/getting_started/build-options.rst b/docs/getting_started/build-options.rst
+index 8adf4ad8b..edd97d746 100644
+--- a/docs/getting_started/build-options.rst
++++ b/docs/getting_started/build-options.rst
+@@ -830,6 +830,23 @@ commands can be used:
+     # Resume execution
+     continue
+ 
++Firmware update options
++-----------------------
++
++-  ``NR_OF_FW_BANKS``: Define the number of firmware banks. This flag is used
++   in defining the firmware update metadata structure. This flag is by default
++   set to '2'.
++
++-  ``NR_OF_IMAGES_IN_FW_BANK``: Define the number of firmware images in each
++   firmware bank. Each firmware bank must have the same number of images as per
++   the `PSA FW update specification`_.
++   This flag is used in defining the firmware update metadata structure. This
++   flag is by default set to '1'.
++
+ --------------
+ 
+-*Copyright (c) 2019-2020, Arm Limited. All rights reserved.*
++*Copyright (c) 2019-2021, Arm Limited. All rights reserved.*
++
++.. _DEN0115: https://developer.arm.com/docs/den0115/latest
++.. _PSA FW update specification: https://developer.arm.com/documentation/den0118/a/
++
+-- 
+2.17.1
+

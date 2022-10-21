@@ -1,0 +1,176 @@
+From 3bb260bf2dbdbb917d8b404fb742aa4cdbfbe532 Mon Sep 17 00:00:00 2001
+From: Benjamin Baratte <benjamin.baratte@st.com>
+Date: Thu, 14 Oct 2021 12:07:28 +0200
+Subject: [PATCH 4/4] Adding I2C5 driver for STSAFE-A DK2
+
+%% original patch: 0004-Adding-I2C5-driver-for-STSAFE-A-DK2.patch
+---
+ core/arch/arm/dts/stm32mp151.dtsi             | 16 ++++++++
+ core/arch/arm/dts/stm32mp157c-dk2.dts         | 40 +++++++++++++++++++
+ core/arch/arm/plat-stm32mp1/main.c            |  2 +
+ core/arch/arm/plat-stm32mp1/platform_config.h |  1 +
+ .../arch/arm/plat-stm32mp1/shared_resources.c |  1 +
+ core/drivers/clk/clk-stm32mp15.c              |  7 ++++
+ 6 files changed, 67 insertions(+)
+
+diff --git a/core/arch/arm/dts/stm32mp151.dtsi b/core/arch/arm/dts/stm32mp151.dtsi
+index f34e2b95..680874f6 100644
+--- a/core/arch/arm/dts/stm32mp151.dtsi
++++ b/core/arch/arm/dts/stm32mp151.dtsi
+@@ -447,6 +447,22 @@
+ 			secure-status = "disabled";
+ 		};
+ 
++		i2c5: i2c@40015000 {
++			compatible = "st,stm32mp15-i2c";
++			reg = <0x40015000 0x400>;
++			interrupt-names = "event", "error";
++			interrupts-extended = <&exti 25 IRQ_TYPE_LEVEL_HIGH>,
++						  <&intc GIC_SPI 108 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&rcc I2C5_K>;
++			resets = <&rcc I2C5_R>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			st,syscfg-fmp = <&syscfg 0x4 0x10>;
++			wakeup-source;
++			status = "disabled";
++			secure-status = "disabled";
++		};
++
+ 		iwdg1: watchdog@5c003000 {
+ 			compatible = "st,stm32mp1-iwdg";
+ 			reg = <0x5C003000 0x400>;
+diff --git a/core/arch/arm/dts/stm32mp157c-dk2.dts b/core/arch/arm/dts/stm32mp157c-dk2.dts
+index 349925be..a36e57f5 100644
+--- a/core/arch/arm/dts/stm32mp157c-dk2.dts
++++ b/core/arch/arm/dts/stm32mp157c-dk2.dts
+@@ -76,3 +76,43 @@
+ 			 "stsafe_otp";
+ };
+ 
++&pinctrl {
++	i2c5_pins_mx: i2c5_mx-0 {
++		pins {
++			pinmux = <STM32_PINMUX('A', 11, AF4)>, /* I2C5_SCL */
++					 <STM32_PINMUX('A', 12, AF4)>; /* I2C5_SDA */
++			bias-disable;
++			drive-open-drain;
++			slew-rate = <0>;
++		};
++	};
++
++	i2c5_sleep_pins_mx: i2c5_sleep_mx-0 {
++		pins {
++			pinmux = <STM32_PINMUX('A', 11, ANALOG)>, /* I2C5_SCL */
++					 <STM32_PINMUX('A', 12, ANALOG)>; /* I2C5_SDA */
++		};
++	};
++};
++
++
++&i2c5 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&i2c5_pins_mx>;
++	pinctrl-1 = <&i2c5_sleep_pins_mx>;
++	i2c-scl-rising-time-ns = <25>;
++	i2c-scl-falling-time-ns = <10>;
++	clock-frequency = <100000>;
++	status = "okay";
++	secure-status = "okay";
++
++	stsafe: stsafe_a {
++		compatible = "st,stsafe";
++		reg = <0x20>;
++		status = "disabled";
++		secure-status = "okay";
++	};
++};
++
++
++
+diff --git a/core/arch/arm/plat-stm32mp1/main.c b/core/arch/arm/plat-stm32mp1/main.c
+index 13460c6b..a0eea8cd 100644
+--- a/core/arch/arm/plat-stm32mp1/main.c
++++ b/core/arch/arm/plat-stm32mp1/main.c
+@@ -38,6 +38,7 @@ register_phys_mem_pgdir(MEM_AREA_IO_NSEC, GPIOS_NSEC_BASE, GPIOS_NSEC_SIZE);
+ #endif
+ register_phys_mem_pgdir(MEM_AREA_IO_NSEC, I2C4_BASE, SMALL_PAGE_SIZE);
+ register_phys_mem_pgdir(MEM_AREA_IO_NSEC, I2C6_BASE, SMALL_PAGE_SIZE);
++register_phys_mem_pgdir(MEM_AREA_IO_NSEC, I2C5_BASE, SMALL_PAGE_SIZE);
+ register_phys_mem_pgdir(MEM_AREA_IO_NSEC, IWDG1_BASE, SMALL_PAGE_SIZE);
+ register_phys_mem_pgdir(MEM_AREA_IO_NSEC, IWDG2_BASE, SMALL_PAGE_SIZE);
+ register_phys_mem_pgdir(MEM_AREA_IO_NSEC, RNG1_BASE, SMALL_PAGE_SIZE);
+@@ -62,6 +63,7 @@ register_phys_mem_pgdir(MEM_AREA_IO_SEC, ETZPC_BASE, SMALL_PAGE_SIZE);
+ register_phys_mem_pgdir(MEM_AREA_IO_SEC, GIC_BASE, GIC_SIZE);
+ register_phys_mem_pgdir(MEM_AREA_IO_SEC, GPIOZ_BASE, SMALL_PAGE_SIZE);
+ register_phys_mem_pgdir(MEM_AREA_IO_SEC, I2C4_BASE, SMALL_PAGE_SIZE);
++register_phys_mem_pgdir(MEM_AREA_IO_SEC, I2C5_BASE, SMALL_PAGE_SIZE);
+ register_phys_mem_pgdir(MEM_AREA_IO_SEC, I2C6_BASE, SMALL_PAGE_SIZE);
+ register_phys_mem_pgdir(MEM_AREA_IO_SEC, IWDG1_BASE, SMALL_PAGE_SIZE);
+ register_phys_mem_pgdir(MEM_AREA_IO_SEC, PWR_BASE, SMALL_PAGE_SIZE);
+diff --git a/core/arch/arm/plat-stm32mp1/platform_config.h b/core/arch/arm/plat-stm32mp1/platform_config.h
+index 0ea5efc3..08377317 100644
+--- a/core/arch/arm/plat-stm32mp1/platform_config.h
++++ b/core/arch/arm/plat-stm32mp1/platform_config.h
+@@ -64,6 +64,7 @@
+ #define GPIOZ_BASE			0x54004000
+ #define HASH1_BASE			0x54002000
+ #define I2C4_BASE			0x5c002000
++#define I2C5_BASE			0x40015000
+ #define I2C6_BASE			0x5c009000
+ #define IWDG1_BASE			0x5c003000
+ #define IWDG2_BASE			0x5a002000
+diff --git a/core/arch/arm/plat-stm32mp1/shared_resources.c b/core/arch/arm/plat-stm32mp1/shared_resources.c
+index 7d2bcacb..291c7af4 100644
+--- a/core/arch/arm/plat-stm32mp1/shared_resources.c
++++ b/core/arch/arm/plat-stm32mp1/shared_resources.c
+@@ -358,6 +358,7 @@ static void register_periph_iomem(vaddr_t base, enum shres_state state)
+ 	case UART8_BASE:
+ 	/* Fall through */
+ #endif
++	case I2C5_BASE:
+ 	case IWDG2_BASE:
+ 		/* Allow drivers to register some non-secure resources */
+ 		DMSG("IO for non-secure resource 0x%lx", base);
+diff --git a/core/drivers/clk/clk-stm32mp15.c b/core/drivers/clk/clk-stm32mp15.c
+index c2d628f7..7bc531c8 100644
+--- a/core/drivers/clk/clk-stm32mp15.c
++++ b/core/drivers/clk/clk-stm32mp15.c
+@@ -104,6 +104,7 @@ enum stm32mp1_parent_id {
+ enum stm32mp1_parent_sel {
+ 	_STGEN_SEL,
+ 	_I2C46_SEL,
++	_I2C35_SEL,
+ 	_SPI6_SEL,
+ 	_USART1_SEL,
+ 	_RNG1_SEL,
+@@ -429,6 +430,7 @@ static const struct stm32mp1_clk_gate stm32mp1_clk_gate[] = {
+ 	_CLK_SC_SELEC(N_S, RCC_MP_APB1ENSETR, 18, UART7_K, _UART78_SEL),
+ 	_CLK_SC_SELEC(N_S, RCC_MP_APB1ENSETR, 19, UART8_K, _UART78_SEL),
+ #endif
++	_CLK_SC_SELEC(N_S, RCC_MP_APB1ENSETR, 24, I2C5_K, _I2C35_SEL),
+ 	_CLK_SC_FIXED(N_S, RCC_MP_APB2ENSETR, 2, TIM15_K, _PCLK2),
+ #ifdef CFG_WITH_NSEC_UARTS
+ 	_CLK_SC_SELEC(N_S, RCC_MP_APB2ENSETR, 13, USART6_K, _UART6_SEL),
+@@ -462,6 +464,10 @@ static const uint8_t i2c46_parents[] = {
+ 	_PCLK5, _PLL3_Q, _HSI_KER, _CSI_KER
+ };
+ 
++static const uint8_t i2c35_parents[] = {
++	_PCLK1, _PLL4_R, _HSI_KER, _CSI_KER
++};
++
+ static const uint8_t spi6_parents[] = {
+ 	_PCLK5, _PLL4_Q, _HSI_KER, _CSI_KER, _HSE_KER, _PLL3_Q
+ };
+@@ -537,6 +543,7 @@ static const struct stm32mp1_clk_sel stm32mp1_clk_sel[_PARENT_SEL_NB] = {
+ 	_CLK_PARENT(_UART35_SEL, RCC_UART35CKSELR, 0, 0x7, uart234578_parents),
+ 	_CLK_PARENT(_UART78_SEL, RCC_UART78CKSELR, 0, 0x7, uart234578_parents),
+ #endif
++	_CLK_PARENT(_I2C35_SEL, RCC_I2C35CKSELR, 0, 0x7, i2c35_parents),
+ #ifdef STM32MP1_USE_MPU0_RESET
+ 	_CLK_PARENT(_SDMMC12_SEL, RCC_SDMMC12CKSELR, 0, 0x7, sdmmc12_parents),
+ 	_CLK_PARENT(_SDMMC3_SEL, RCC_SDMMC3CKSELR, 0, 0x7, sdmmc3_parents),
+-- 
+2.20.1
+

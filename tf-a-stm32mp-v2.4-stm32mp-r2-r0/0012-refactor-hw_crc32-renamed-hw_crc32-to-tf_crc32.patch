@@ -1,0 +1,94 @@
+From 747a0e74a2318932eabd774745d19fc6bc2570c6 Mon Sep 17 00:00:00 2001
+From: Manish V Badarkhe <Manish.Badarkhe@arm.com>
+Date: Fri, 2 Jul 2021 20:29:56 +0100
+Subject: [PATCH 12/18] refactor(hw_crc32): renamed hw_crc32 to tf_crc32
+
+Renamed hw_crc32 to tf_crc32 to make the file and function
+name more generic so that the same name can be used in upcoming
+software CRC32 implementation.
+
+Change-Id: Idff8f70c50ca700a4328a27b49d5e1f14d2095eb
+Signed-off-by: Manish V Badarkhe <Manish.Badarkhe@arm.com>
+---
+ common/tf_crc32.c         | 45 +++++++++++++++++++++++++++++++++++++++
+ include/common/tf_crc32.h | 16 ++++++++++++++
+ 2 files changed, 61 insertions(+)
+ create mode 100644 common/tf_crc32.c
+ create mode 100644 include/common/tf_crc32.h
+
+diff --git a/common/tf_crc32.c b/common/tf_crc32.c
+new file mode 100644
+index 000000000..b33d36ea2
+--- /dev/null
++++ b/common/tf_crc32.c
+@@ -0,0 +1,45 @@
++/*
++ * Copyright (c) 2021, Arm Limited. All rights reserved.
++ *
++ * SPDX-License-Identifier: BSD-3-Clause
++ */
++
++#include <stdarg.h>
++#include <assert.h>
++
++#include <arm_acle.h>
++#include <common/debug.h>
++#include <common/tf_crc32.h>
++
++/* compute CRC using Arm intrinsic function
++ *
++ * This function is useful for the platforms with the CPU ARMv8.0
++ * (with CRC instructions supported), and onwards.
++ * Platforms with CPU ARMv8.0 should make sure to add a compile switch
++ * '-march=armv8-a+crc" for successful compilation of this file.
++ *
++ * @crc: previous accumulated CRC
++ * @buf: buffer base address
++ * @size: the size of the buffer
++ *
++ * Return calculated CRC value
++ */
++uint32_t tf_crc32(uint32_t crc, const unsigned char *buf, size_t size)
++{
++	assert(buf != NULL);
++
++	uint32_t calc_crc = ~crc;
++	const unsigned char *local_buf = buf;
++	size_t local_size = size;
++
++	/*
++	 * calculate CRC over byte data
++	 */
++	while (local_size != 0UL) {
++		calc_crc = __crc32b(calc_crc, *local_buf);
++		local_buf++;
++		local_size--;
++	}
++
++	return ~calc_crc;
++}
+diff --git a/include/common/tf_crc32.h b/include/common/tf_crc32.h
+new file mode 100644
+index 000000000..38c56a50d
+--- /dev/null
++++ b/include/common/tf_crc32.h
+@@ -0,0 +1,16 @@
++/*
++ * Copyright (c) 2021, Arm Limited. All rights reserved.
++ *
++ * SPDX-License-Identifier: BSD-3-Clause
++ */
++
++#ifndef TF_CRC32_H
++#define TF_CRC32_H
++
++#include <stddef.h>
++#include <stdint.h>
++
++/* compute CRC using Arm intrinsic function */
++uint32_t tf_crc32(uint32_t crc, const unsigned char *buf, size_t size);
++
++#endif /* TF_CRC32_H */
+-- 
+2.17.1
+

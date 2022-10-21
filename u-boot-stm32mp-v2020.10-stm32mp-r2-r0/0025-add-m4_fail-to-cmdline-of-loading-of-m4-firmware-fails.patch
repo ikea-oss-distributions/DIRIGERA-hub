@@ -1,0 +1,47 @@
+From 4f6ec2364a6875aad1459e62bf2f3ccab86babae Mon Sep 17 00:00:00 2001
+From: Christer Fletcher <christer.fletcher@inter.ikea.com>
+Date: Thu, 6 May 2021 14:21:53 +0200
+Subject: [PATCH] Add m4_fail to cmdline of loading of m4-firmware fails.
+
+---
+ include/config_distro_bootcmd.h | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/include/config_distro_bootcmd.h b/include/config_distro_bootcmd.h
+index a36cf1459b..93897588d9 100644
+--- a/include/config_distro_bootcmd.h
++++ b/include/config_distro_bootcmd.h
+@@ -473,12 +473,18 @@
+ 		"if ext4load mmc ${devnum}:${distro_bootpart} ${kernel_addr_r} ${coprofile}; then " \
+ 			"rproc init; "                                    \
+ 			"rproc load 0 ${kernel_addr_r} ${filesize}; "     \
+-			"if test -n \"$factory_reset\"; then "            \
+-			    "mw.l ${m4_ipc_start} 1; "                    \
++			"if test $? -ne 1; then "                         \
++				"if test -n \"$factory_reset\"; then "    \
++					"mw.l ${m4_ipc_start} 1; "        \
++				"else "                                   \
++					"mw.l ${m4_ipc_start} 0; "        \
++				"fi; "                                    \
++				"rproc start 0; "                         \
+ 			"else "                                           \
+-			    "mw.l ${m4_ipc_start} 0; "                    \
++				"env set m4_fail m4_fail; "               \
++				"run set_bootargs; "                      \
++				"echo updated bootargs = ${bootargs}; "   \
+ 			"fi; "                                            \
+-			"rproc start 0; "                                 \
+ 		"fi\0"                                                    \
+ 	\
+ 	"scan_dev_for_boot="                                              \
+@@ -532,6 +538,7 @@
+ 			"rauc.slot=${rauc_slot} "                         \
+ 			"${reset_reason} "                                \
+ 			"${verity_fail} "                                 \
++			"${m4_fail} "                                     \
+ 			"${wifimac} "                                     \
+ 			"${factory_hash} "                                \
+ 			"${cmdline_secure} "                              \
+-- 
+2.31.1
+

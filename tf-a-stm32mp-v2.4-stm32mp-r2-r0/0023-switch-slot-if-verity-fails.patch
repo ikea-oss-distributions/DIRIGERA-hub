@@ -1,0 +1,252 @@
+From 1e95bc2ab66bc5ae9c18f40bd1d237e40baeb499 Mon Sep 17 00:00:00 2001
+From: Ronnie Olsson <ronnie.olsson@inter.ikea.com>
+Date: Mon, 7 Feb 2022 11:34:09 +0100
+Subject: [PATCH] [PATCH] Switch slot if verity fails
+
+---
+ drivers/mmc/mmc.c                           | 44 +++++++++++++++++++--
+ include/drivers/mmc.h                       |  7 ++++
+ plat/st/common/bl2_io_storage.c             | 25 ++++++++++++
+ plat/st/stm32mp1/bl2_plat_setup.c           |  5 +++
+ plat/st/stm32mp1/include/stm32mp1_private.h |  8 ++++
+ plat/st/stm32mp1/stm32mp1_private.c         | 27 +++++++++++++
+ 6 files changed, 112 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/mmc/mmc.c b/drivers/mmc/mmc.c
+index 42243ea09..dcaee98b2 100644
+--- a/drivers/mmc/mmc.c
++++ b/drivers/mmc/mmc.c
+@@ -19,6 +19,8 @@
+ 
+ #define MMC_DEFAULT_MAX_RETRIES		5
+ #define SEND_OP_COND_MAX_RETRIES	100
++#define CMD6_TIMEOUT_US			500000  /* 500 ms */
++#define MIN_PART_SWITCH_TIME_US		300000  /* 300 ms */
+ 
+ #define MULT_BY_512K_SHIFT		19
+ 
+@@ -89,9 +91,9 @@ static int mmc_device_state(void)
+ 		int ret;
+ 
+ 		if (retries == 0) {
+-			ERROR("CMD13 failed after %d retries\n",
++			VERBOSE("CMD13 failed after %d retries\n",
+ 			      MMC_DEFAULT_MAX_RETRIES);
+-			return -EIO;
++			return -ETIMEDOUT;
+ 		}
+ 
+ 		ret = mmc_send_cmd(MMC_CMD(13), rca << RCA_SHIFT_OFFSET,
+@@ -114,6 +116,18 @@ static int mmc_device_state(void)
+ static int mmc_set_ext_csd(unsigned int ext_cmd, unsigned int value)
+ {
+ 	int ret;
++	bool expire;
++	unsigned int timeout_val = CMD6_TIMEOUT_US;
++	uint64_t timeout = 0;
++
++	if (ext_cmd == CMD_EXTCSD_PARTITION_CONFIG) {
++		timeout_val = mmc_ext_csd[CMD_EXTCSD_PART_SWITCH_TIME];
++		if (timeout_val < MIN_PART_SWITCH_TIME_US) {
++			timeout_val = MIN_PART_SWITCH_TIME_US;
++		}
++		timeout_val *= 10U;
++	}
++	timeout = timeout_init_us(timeout_val);
+ 
+ 	ret = mmc_send_cmd(MMC_CMD(6),
+ 			   EXTCSD_WRITE_BYTES | EXTCSD_CMD(ext_cmd) |
+@@ -125,10 +139,18 @@ static int mmc_set_ext_csd(unsigned int ext_cmd, unsigned int value)
+ 
+ 	do {
+ 		ret = mmc_device_state();
+-		if (ret < 0) {
++		if ((ret < 0) && (ret != -ETIMEDOUT)) {
+ 			return ret;
+ 		}
+-	} while (ret == MMC_STATE_PRG);
++
++		expire = timeout_elapsed(timeout);
++		udelay(100);
++	} while ((ret == -ETIMEDOUT) && (!expire));
++
++	if (expire) {
++		ERROR("set ext csd timeout expired\n");
++		return -EIO;
++	}
+ 
+ 	return 0;
+ }
+@@ -775,6 +797,20 @@ size_t mmc_rpmb_erase_blocks(int lba, size_t size)
+ 	return size_erased;
+ }
+ 
++unsigned int mmc_get_ext_csd_bootpart(void)
++{
++	return((mmc_ext_csd[CMD_EXTCSD_PARTITION_CONFIG] &
++			PART_CFG_BOOT_PARTITION_MASK) >>
++			PART_CFG_BOOT_PARTITION_SHIFT);
++}
++
++int mmc_set_ext_csd_bootpart(unsigned int value)
++{
++	return mmc_set_ext_csd(CMD_EXTCSD_PARTITION_CONFIG,
++			PART_CFG_BOOT_PARTITION_ACK |
++			PART_CFG_BOOT_PARTITION(value));
++}
++
+ int mmc_init(const struct mmc_ops *ops_ptr, unsigned int clk,
+ 	     unsigned int width, unsigned int flags,
+ 	     struct mmc_device_info *device_info)
+diff --git a/include/drivers/mmc.h b/include/drivers/mmc.h
+index 2b4f5ab8b..8d3458a59 100644
+--- a/include/drivers/mmc.h
++++ b/include/drivers/mmc.h
+@@ -61,7 +61,12 @@
+ #define CMD_EXTCSD_BUS_WIDTH		183
+ #define CMD_EXTCSD_HS_TIMING		185
+ #define CMD_EXTCSD_SEC_CNT		212
++#define CMD_EXTCSD_PART_SWITCH_TIME	199
+ 
++#define PART_CFG_BOOT_PARTITION_ACK	(U(1) << 6)
++#define PART_CFG_BOOT_PARTITION(x)	U((x) << 3)
++#define PART_CFG_BOOT_PARTITION_MASK	GENMASK_32(5, 3)
++#define PART_CFG_BOOT_PARTITION_SHIFT	3
+ #define PART_CFG_BOOT_PARTITION1_ENABLE	(U(1) << 3)
+ #define PART_CFG_PARTITION1_ACCESS	(U(1) << 0)
+ 
+@@ -255,6 +260,8 @@ size_t mmc_erase_blocks(int lba, size_t size);
+ size_t mmc_rpmb_read_blocks(int lba, uintptr_t buf, size_t size);
+ size_t mmc_rpmb_write_blocks(int lba, const uintptr_t buf, size_t size);
+ size_t mmc_rpmb_erase_blocks(int lba, size_t size);
++unsigned int mmc_get_ext_csd_bootpart(void);
++int mmc_set_ext_csd_bootpart(unsigned int value);
+ int mmc_init(const struct mmc_ops *ops_ptr, unsigned int clk,
+ 	     unsigned int width, unsigned int flags,
+ 	     struct mmc_device_info *device_info);
+diff --git a/plat/st/common/bl2_io_storage.c b/plat/st/common/bl2_io_storage.c
+index 2f945a423..22e3bb504 100644
+--- a/plat/st/common/bl2_io_storage.c
++++ b/plat/st/common/bl2_io_storage.c
+@@ -203,6 +203,31 @@ static void boot_mmc(enum mmc_device_type mmc_dev_type,
+ 		panic();
+ 	}
+ 
++	if (mmc_dev_type == MMC_IS_EMMC) {
++		unsigned int part_number;
++		int ret;
++
++		part_number = mmc_get_ext_csd_bootpart();
++
++		enum verity_status_e verity_status = stm32mp_verity_check(false);
++		if (verity_status == VERITY_FAIL) {
++			WARN("Switch to other boot partition, verity failed.\n");
++			part_number = (part_number == 1U) ? 2U : 1U;
++			ret = mmc_set_ext_csd_bootpart(part_number);
++
++			if (ret != 0) {
++				ERROR("Update to new boot partition %i\n", ret);
++				panic();
++			}
++		} else if (verity_status == VERITY_FAIL_OTA) {
++			WARN("Verity failed but OTA is ongoing, continuing.\n");
++		} else if (verity_status == VERITY_FAIL_SLOT_SWAPPED) {
++			INFO("Verity failed, slot already swapped, continuing.\n");
++		} else if (verity_status == VERITY_OK) {
++			INFO("Verity OK.\n");
++		}
++	}
++
+ 	/* Open MMC as a block device to read GPT table */
+ 	io_result = register_io_dev_block(&mmc_dev_con);
+ 	if (io_result != 0) {
+diff --git a/plat/st/stm32mp1/bl2_plat_setup.c b/plat/st/stm32mp1/bl2_plat_setup.c
+index 642138a1d..ddd463093 100644
+--- a/plat/st/stm32mp1/bl2_plat_setup.c
++++ b/plat/st/stm32mp1/bl2_plat_setup.c
+@@ -200,6 +200,11 @@ void bl2_platform_setup(void)
+ 		ERROR("DDR mapping: error %d\n", ret);
+ 		panic();
+ 	}
++
++	if (stm32mp_verity_check(true) == VERITY_FAIL) {
++		INFO("Reset to switch slot as verity failed.\n");
++		stm32mp_system_reset();
++	}
+ }
+ 
+ static void update_monotonic_counter(void)
+diff --git a/plat/st/stm32mp1/include/stm32mp1_private.h b/plat/st/stm32mp1/include/stm32mp1_private.h
+index be03b226f..9fad7bc45 100644
+--- a/plat/st/stm32mp1/include/stm32mp1_private.h
++++ b/plat/st/stm32mp1/include/stm32mp1_private.h
+@@ -16,6 +16,13 @@ enum boot_device_e {
+ 	BOOT_DEVICE_BOARD
+ };
+ 
++enum verity_status_e {
++	VERITY_OK,
++	VERITY_FAIL,
++	VERITY_FAIL_OTA,
++	VERITY_FAIL_SLOT_SWAPPED
++};
++
+ void configure_mmu(void);
+ 
+ void stm32mp_mask_timer(void);
+@@ -33,6 +40,7 @@ int stm32_save_boot_interface(uint32_t interface, uint32_t instance);
+ int stm32_get_boot_interface(uint32_t *interface, uint32_t *instance);
+ bool stm32_boot_is_serial(void);
+ 
++enum verity_status_e stm32mp_verity_check(bool set_swap);
+ enum etzpc_decprot_attributes stm32mp_etzpc_binding2decprot(uint32_t mode);
+ 
+ void stm32mp1_syscfg_init(void);
+diff --git a/plat/st/stm32mp1/stm32mp1_private.c b/plat/st/stm32mp1/stm32mp1_private.c
+index 80050f73d..e5b6aba6d 100644
+--- a/plat/st/stm32mp1/stm32mp1_private.c
++++ b/plat/st/stm32mp1/stm32mp1_private.c
+@@ -21,6 +21,11 @@
+ #include <plat/common/platform.h>
+ #include <smccc_helpers.h>
+ 
++#define TAMP_BKP_NONSEC_VERITY		19u
++#define VERITY_FAIL_MASK		(1 << 0)
++#define VERITY_OTA_MASK			(1 << 1)
++#define VERITY_SLOT_SWAPPED_MASK	(1 << 2)
++
+ /* Internal layout of the 32bit OTP word board_id */
+ #define BOARD_ID_BOARD_NB_MASK		GENMASK(31, 16)
+ #define BOARD_ID_BOARD_NB_SHIFT		16
+@@ -673,6 +678,28 @@ uint32_t stm32_iwdg_shadow_update(uint32_t iwdg_inst, uint32_t flags)
+ }
+ #endif
+ 
++enum verity_status_e stm32mp_verity_check(bool set_swap) {
++	uint32_t verity_reg = tamp_bkpr(TAMP_BKP_NONSEC_VERITY);
++	uint32_t value = mmio_read_32(verity_reg);
++
++	if ((value & VERITY_FAIL_MASK) != 0) {
++		if (set_swap) {
++			uint32_t new_value = value | VERITY_SLOT_SWAPPED_MASK;
++			mmio_write_32(verity_reg, new_value);
++		}
++
++		if ((value & VERITY_SLOT_SWAPPED_MASK) != 0) {
++			return VERITY_FAIL_SLOT_SWAPPED;
++		}
++		if ((value & VERITY_OTA_MASK) != 0) {
++			return VERITY_FAIL_OTA;
++		}
++		return VERITY_FAIL;
++	}
++
++	return VERITY_OK;
++}
++
+ /*
+  * This function allows to split bindings between platform and ETZPC
+  * HW mapping. If this conversion was done at driver level, the driver
+-- 
+2.17.1
+

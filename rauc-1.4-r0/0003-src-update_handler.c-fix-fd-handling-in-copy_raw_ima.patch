@@ -1,0 +1,157 @@
+src/update_handler.c: fix fd handling in copy_raw_image
+
+A failure in copy_raw_image() (e.g. when g_output_stream_splice() returned
+an error) would have left the fd on the output device open.
+
+Subsequent install attempts then would have failed like:
+
+| Opening output device /dev/mmcblk0p1 failed: Device or resource busy
+
+This happens, because only some and not all error paths called
+close(out_fd) to close the open file descriptor of the output device.
+
+However, it should not be required to close the file descriptor manually in
+copy_raw_image(). Conceptually, the file descriptor belongs to the
+GUnixOutputStream and should be closed with it by the calling functions.
+
+Why this did not happen has two combined reasons
+
+a) closing the file descriptor when closing the stream was explicitly
+   disabled in commit 549d79b5 by adding
+   'g_unix_output_stream_set_close_fd(outstream, FALSE);'.
+
+   This was done to allow calling fsync() on the already-closed fd.
+
+b) The fd in turn was already closed because g_output_stream_splice()
+   was called with G_OUTPUT_STREAM_SPLICE_CLOSE_TARGET which instantly
+   closes the stream after splicing.
+
+So the right approach is to revert both choices. Simply leave the output
+stream alive after splicing data (by using G_OUTPUT_STREAM_SPLICE_NONE).
+This will give us access to the fd until the stream itself is cleared
+and allows us to drop g_unix_output_stream_set_close_fd(outstream,
+FALSE). The output stream is then closed in the calling functions to detect any
+remaining errors.
+
+Fixes 549d79b5 ("src/update_handler: add fsync call to copy_raw_image()")
+
+Fixes #761
+
+Signed-off-by: Christian Hitz <christian.hitz@bbv.ch>
+Signed-off-by: Enrico Joerns <ejo@pengutronix.de>
+Signed-off-by: Jan Luebbe <jlu@pengutronix.de>
+---
+ src/update_handler.c | 44 +++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 37 insertions(+), 7 deletions(-)
+
+diff --git a/src/update_handler.c b/src/update_handler.c
+index f702c26..801ce99 100644
+--- a/src/update_handler.c
++++ b/src/update_handler.c
+@@ -200,7 +200,7 @@ static gboolean copy_raw_image(RaucImage *image, GUnixOutputStream *outstream, G
+ 	g_unix_output_stream_set_close_fd(outstream, FALSE);
+ 
+ 	size = g_output_stream_splice((GOutputStream *) outstream, instream,
+-			G_OUTPUT_STREAM_SPLICE_CLOSE_TARGET,
++			G_OUTPUT_STREAM_SPLICE_NONE,
+ 			NULL,
+ 			&ierror);
+ 	if (size == -1) {
+@@ -224,16 +224,10 @@ static gboolean copy_raw_image(RaucImage *image, GUnixOutputStream *outstream, G
+ 
+ 	/* flush to block device before closing to assure content is written to disk */
+ 	if (fsync(out_fd) == -1) {
+-		close(out_fd); /* Silent attempt to close as we failed, anyway */
+ 		g_set_error(error, R_UPDATE_ERROR, R_UPDATE_ERROR_FAILED, "Syncing content to disk failed: %s", strerror(errno));
+ 		return FALSE;
+ 	}
+ 
+-	if (close(out_fd) == -1) {
+-		g_set_error(error, R_UPDATE_ERROR, R_UPDATE_ERROR_FAILED, "Closing output device failed: %s", strerror(errno));
+-		return FALSE;
+-	}
+-
+ 	return TRUE;
+ }
+ 
+@@ -410,6 +404,12 @@ static gboolean copy_raw_image_to_dev(RaucImage *image, RaucSlot *slot, GError *
+ 		goto out;
+ 	}
+ 
++	res = g_output_stream_close(G_OUTPUT_STREAM(outstream), NULL, &ierror);
++	if (!res) {
++		g_propagate_error(error, ierror);
++		goto out;
++	}
++
+ out:
+ 	return res;
+ }
+@@ -888,6 +888,12 @@ static gboolean img_to_ubivol_handler(RaucImage *image, RaucSlot *dest_slot, con
+ 		}
+ 	}
+ 
++	res = g_output_stream_close(G_OUTPUT_STREAM(outstream), NULL, &ierror);
++	if (!res) {
++		g_propagate_error(error, ierror);
++		return FALSE;
++	}
++
+ 	/* run slot post install hook if enabled */
+ 	if (hook_name && image->hooks.post_install) {
+ 		res = run_slot_hook(hook_name, R_SLOT_HOOK_POST_INSTALL, NULL, dest_slot, &ierror);
+@@ -951,6 +957,12 @@ static gboolean img_to_ubifs_handler(RaucImage *image, RaucSlot *dest_slot, cons
+ 		}
+ 	}
+ 
++	res = g_output_stream_close(G_OUTPUT_STREAM(outstream), NULL, &ierror);
++	if (!res) {
++		g_propagate_error(error, ierror);
++		return FALSE;
++	}
++
+ 	/* run slot post install hook if enabled */
+ 	if (hook_name && image->hooks.post_install) {
+ 		res = mount_and_run_slot_hook(hook_name, R_SLOT_HOOK_POST_INSTALL, dest_slot, &ierror);
+@@ -1349,6 +1361,12 @@ static gboolean img_to_boot_mbr_switch_handler(RaucImage *image, RaucSlot *dest_
+ 		goto out;
+ 	}
+ 
++	res = g_output_stream_close(G_OUTPUT_STREAM(outstream), NULL, &ierror);
++	if (!res) {
++		g_propagate_error(error, ierror);
++		goto out;
++	}
++
+ 	/* run slot post install hook if enabled */
+ 	if (hook_name && image->hooks.post_install) {
+ 		res = run_slot_hook(hook_name, R_SLOT_HOOK_POST_INSTALL, NULL,
+@@ -1464,6 +1482,12 @@ static gboolean img_to_boot_gpt_switch_handler(RaucImage *image, RaucSlot *dest_
+ 		goto out;
+ 	}
+ 
++	res = g_output_stream_close(G_OUTPUT_STREAM(outstream), NULL, &ierror);
++	if (!res) {
++		g_propagate_error(error, ierror);
++		goto out;
++	}
++
+ 	/* run slot post install hook if enabled */
+ 	if (hook_name && image->hooks.post_install) {
+ 		res = run_slot_hook(hook_name, R_SLOT_HOOK_POST_INSTALL, NULL,
+@@ -1624,6 +1648,12 @@ static gboolean img_to_boot_emmc_handler(RaucImage *image, RaucSlot *dest_slot,
+ 
+ 	g_message("Boot partition %s is now active", part_slot->device);
+ 
++	res = g_output_stream_close(G_OUTPUT_STREAM(outstream), NULL, &ierror);
++	if (!res) {
++		g_propagate_error(error, ierror);
++		goto out;
++	}
++
+ 	/* run slot post install hook if enabled */
+ 	if (hook_name && image->hooks.post_install) {
+ 		res = run_slot_hook(
+-- 
+2.27.0
+

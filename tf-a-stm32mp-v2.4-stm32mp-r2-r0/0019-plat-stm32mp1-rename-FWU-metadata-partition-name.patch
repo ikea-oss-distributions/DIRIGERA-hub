@@ -1,0 +1,56 @@
+From c43bf10d8ef31291d3d0be79d9a509b7bc8f3272 Mon Sep 17 00:00:00 2001
+From: Christophe Guibout <christophe.guibout@st.com>
+Date: Fri, 19 Nov 2021 10:56:17 +0100
+Subject: [PATCH] plat: stm32mp1: rename FWU metadata partition name
+
+STM32_Programmer_CLI doesn't support partition name higher
+than 16 characters.
+
+Change-Id: I10d304a94a2b0c5ec5ead90ef8261ddfb7333bff
+---
+ drivers/fwu/fwu.c                     | 6 +++---
+ plat/st/common/stm32mp_fwu_metadata.c | 4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/fwu/fwu.c b/drivers/fwu/fwu.c
+index 7cb4c2982..613fb09ca 100644
+--- a/drivers/fwu/fwu.c
++++ b/drivers/fwu/fwu.c
+@@ -171,12 +171,12 @@ void fwu_init(void)
+ 	int result = fwu_metadata_load(FWU_METADATA_IMAGE_ID);
+ 
+ 	if (result != 0) {
+-		WARN("loading of FWU-Metadata failed, "
+-		     "using Bkup-FWU-Metadata\n");
++		WARN("loading of FWUMetadata failed, "
++		     "using Bkup-FWUMetadata\n");
+ 
+ 		result = fwu_metadata_load(BKUP_FWU_METADATA_IMAGE_ID);
+ 		if (result != 0) {
+-			ERROR("loading of Bkup-FWU-Metadata failed\n");
++			ERROR("loading of Bkup-FWUMetadata failed\n");
+ 			panic();
+ 		}
+ 	}
+diff --git a/plat/st/common/stm32mp_fwu_metadata.c b/plat/st/common/stm32mp_fwu_metadata.c
+index d7eb68c7f..b5347fc4c 100644
+--- a/plat/st/common/stm32mp_fwu_metadata.c
++++ b/plat/st/common/stm32mp_fwu_metadata.c
+@@ -85,12 +85,12 @@ int plat_fwu_set_metadata_image_source(unsigned int image_id,
+ #if STM32MP_SDMMC || STM32MP_EMMC
+ 	if (image_id == FWU_METADATA_IMAGE_ID) {
+ 		result = get_fwu_from_gpt(FWU_METADATA_IMAGE_ID,
+-					  "FWU-Metadata",
++					  "FWUMetadata",
+ 					  dev_handle,
+ 					  image_spec);
+ 	} else if (image_id == BKUP_FWU_METADATA_IMAGE_ID) {
+ 		result = get_fwu_from_gpt(BKUP_FWU_METADATA_IMAGE_ID,
+-					  "Bkup-FWU-Metadata",
++					  "Bkup-FWUMetadata",
+ 					  dev_handle,
+ 					  image_spec);
+ 	}
+-- 
+2.17.1
+

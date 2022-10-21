@@ -1,0 +1,113 @@
+From 301d03494f6a679723ab34c75d59d1fa20dcffba Mon Sep 17 00:00:00 2001
+From: Ronnie Olsson <ronnie.olsson@inter.ikea.com>
+Date: Mon, 24 May 2021 14:26:21 +0200
+Subject: [PATCH] [HSPP-3637] Add provision_stsafe to cmdline
+
+Add provisioning info on kernel cmdline if ST-Safe is
+unprovisioned.
+---
+ arch/arm/mach-stm32mp/cpu.c                | 54 ++++++++++++++++++++++
+ arch/arm/mach-stm32mp/include/mach/stm32.h |  1 +
+ include/config_distro_bootcmd.h            |  3 +-
+ 3 files changed, 57 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm/mach-stm32mp/cpu.c b/arch/arm/mach-stm32mp/cpu.c
+index 19f9a86eac..04d5bba2e9 100644
+--- a/arch/arm/mach-stm32mp/cpu.c
++++ b/arch/arm/mach-stm32mp/cpu.c
+@@ -608,6 +608,59 @@ __weak int setup_mac_address(void)
+ 	return 0;
+ }
+ 
++static int check_stsafe_provisioning(void)
++{
++	struct udevice *dev;
++	u32 otp[4];
++	int ret;
++	bool provision = true;
++	u32 buf[4] = {0};
++
++	ret = uclass_get_device_by_driver(UCLASS_MISC,
++					  DM_GET_DRIVER(stm32mp_bsec),
++					  &dev);
++	if (ret)
++		return ret;
++
++	ret = misc_read(dev, STM32_BSEC_SHADOW(BSEC_OTP_MP),
++			otp, sizeof(otp));
++	if (ret < 0)
++		return ret;
++
++	/*
++	 * If otp is all zeros then no master password is fused and therefore
++	 * no provisioning should be attempted.
++	 */
++
++	if (!memcmp(otp, buf, sizeof(otp))) {
++		printf("No master password written, don't provision.\n");
++		return 0;
++	}
++
++	/* Broken master password looks like this:
++	 * ffffffef ffffffff fffffeff fffffeff
++	 * or
++	 * ffffffff ffffffff ffffffff ffffffff
++	 * If any other pattern is detected assume we need to provision
++	 */
++	buf[0] = 0xffffffef;
++	buf[1] = 0xffffffff;
++	buf[2] = 0xfffffeff;
++	buf[3] = 0xfffffeff;
++	if (!memcmp(otp, buf, sizeof(otp)))
++		provision = false;
++
++	memset(buf, 0xff, sizeof(buf));
++	if (!memcmp(otp, buf, sizeof(otp)))
++		provision = false;
++
++	/* ST-Safe needs to be unlocked and provisioned */
++	if (provision)
++		env_set("provision_stsafe", "provision_stsafe");
++
++	return 0;
++}
++
+ static int setup_wifi_mac_address(void)
+ {
+ 	char envvar[26] = {0};
+@@ -800,6 +853,7 @@ int arch_misc_init(void)
+ 	get_verity_status();
+ 	setup_factory_rootfs_hash();
+ 	setup_secure_device();
++	check_stsafe_provisioning();
+ 
+ 	return 0;
+ }
+diff --git a/arch/arm/mach-stm32mp/include/mach/stm32.h b/arch/arm/mach-stm32mp/include/mach/stm32.h
+index df610319b3..744b130a6e 100644
+--- a/arch/arm/mach-stm32mp/include/mach/stm32.h
++++ b/arch/arm/mach-stm32mp/include/mach/stm32.h
+@@ -139,6 +139,7 @@ enum forced_boot_mode {
+ #define BSEC_OTP_PKG			16
+ #define BSEC_OTP_MAC			57
+ #define BSEC_OTP_BOARD			59
++#define BSEC_OTP_MP				65
+ #define BSEC_OTP_WIFI			69
+ #define BSEC_OTP_FACTORY_HASH	71
+ 
+diff --git a/include/config_distro_bootcmd.h b/include/config_distro_bootcmd.h
+index 84035a2d1d..5625266f7b 100644
+--- a/include/config_distro_bootcmd.h
++++ b/include/config_distro_bootcmd.h
+@@ -543,7 +543,8 @@
+ 			"${wifimac} "                                     \
+ 			"${factory_hash} "                                \
+ 			"${cmdline_secure} "                              \
+-			"${factory_reset} \0"                             \
++			"${factory_reset} "                               \
++			"${provision_stsafe} \0"                          \
+ 
+ #ifndef CONFIG_BOOTCOMMAND
+ #define CONFIG_BOOTCOMMAND "run distro_bootcmd"
+-- 
+2.27.0

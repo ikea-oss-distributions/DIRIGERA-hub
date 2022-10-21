@@ -1,0 +1,41 @@
+From 02dc9b096c9e97c8103624ffbd85a92750edbc9a Mon Sep 17 00:00:00 2001
+From: Manish V Badarkhe <Manish.Badarkhe@arm.com>
+Date: Thu, 1 Jul 2021 21:32:31 +0100
+Subject: [PATCH 08/18] feat(fwu): avoid booting with an alternate boot source
+
+All firmware banks should be part of the same non-volatile storage
+as per PSA FWU specification, hence avoid checking for any alternate
+boot source when PSA FWU is enabled.
+
+Change-Id: I5b016e59e87f1cbfc73f4cd29fce6017c24f88b3
+Signed-off-by: Manish V Badarkhe <Manish.Badarkhe@arm.com>
+---
+ common/bl_common.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/common/bl_common.c b/common/bl_common.c
+index 22a0daf18..31a70ee6d 100644
+--- a/common/bl_common.c
++++ b/common/bl_common.c
+@@ -239,9 +239,18 @@ int load_auth_image(unsigned int image_id, image_info_t *image_data)
+ {
+ 	int err;
+ 
++/*
++ * All firmware banks should be part of the same non-volatile storage as per
++ * PSA FWU specification, hence don't check for any alternate boot source
++ * when PSA FWU is enabled.
++ */
++#if PSA_FWU_SUPPORT
++	err = load_auth_image_internal(image_id, image_data);
++#else
+ 	do {
+ 		err = load_auth_image_internal(image_id, image_data);
+ 	} while ((err != 0) && (plat_try_next_boot_source(image_id) != 0));
++#endif /* PSA_FWU_SUPPORT */
+ 
+ 	return err;
+ }
+-- 
+2.17.1
+

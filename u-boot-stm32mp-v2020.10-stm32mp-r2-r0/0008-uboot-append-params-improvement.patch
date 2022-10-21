@@ -1,0 +1,55 @@
+From fb5e7162d5cb4a82e41e18a312b1bfa368926da6 Mon Sep 17 00:00:00 2001
+From: Michal Frynas <michal.frynas@sigma.se>
+Date: Thu, 3 Dec 2020 13:17:14 +0100
+Subject: [PATCH] U-boot append parameters improvement
+
+---
+ cmd/pxe_utils.c | 28 ++++++++++++++++++++++++----
+ 1 file changed, 24 insertions(+), 4 deletions(-)
+
+diff --git a/cmd/pxe_utils.c b/cmd/pxe_utils.c
+index a636346bb5..e0494e1af8 100644
+--- a/cmd/pxe_utils.c
++++ b/cmd/pxe_utils.c
+@@ -419,15 +419,35 @@ static int label_boot(struct cmd_tbl *cmdtp, struct pxe_label *label)
+ 			return 1;
+ 		}
+ 
+-		if (label->append)
+-			strncpy(bootargs, label->append, sizeof(bootargs));
++		char *bootparams = env_get("bootargs");
++		const int bootparams_len = (bootparams ? strlen(bootparams) : 0);
++		const int append_len = (label->append ? strlen(label->append) : 0);
++		const int ip_str_len = 68;
++		const int mac_str_len = 29;
++		const int extra_chars_len = 2; // space and eol
++
++		if (bootparams) {
++			if ((bootparams_len + extra_chars_len) > CONFIG_SYS_CBSIZE) {
++				printf("bootparams too long");
++			}
++			strncat(bootargs, bootparams, CONFIG_SYS_CBSIZE);
++		}
+ 
++		if (label->append) {
++			if ((append_len + extra_chars_len) >
++			(CONFIG_SYS_CBSIZE - (bootparams_len + extra_chars_len))) {
++				printf("append params too long");
++			}
++			strncat(bootargs, label->append, CONFIG_SYS_CBSIZE - strlen(bootargs));
++		}
+ 		strcat(bootargs, ip_str);
+ 		strcat(bootargs, mac_str);
+ 
+ 		cli_simple_process_macros(bootargs, finalbootargs);
+-		env_set("bootargs", finalbootargs);
+-		printf("append: %s\n", finalbootargs);
++		if (env_set("bootargs", finalbootargs)) {
++			printf("Kernel bootargs variable was updated.\n");
++		}
++		printf("Final kernel parameters: %s\n", finalbootargs);
+ 	}
+ 
+ 	bootm_argv[1] = env_get("kernel_addr_r");
+-- 
+2.27.0

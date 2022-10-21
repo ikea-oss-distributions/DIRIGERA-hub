@@ -1,0 +1,26 @@
+From 95f2fbb00b3e67f23bc1d10162b5375e8ab8a783 Mon Sep 17 00:00:00 2001
+From: WojciechJakubiszyn <“wojciech.jakubiszyn@inter.ikea.com”>
+Date: Wed, 6 Apr 2022 10:33:08 +0200
+Subject: [PATCH] Remove checking not needed rules files from meson scrypt
+
+---
+ rules.d/meson.build | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/rules.d/meson.build b/rules.d/meson.build
+index 86657a20db..f0ae306584 100644
+--- a/rules.d/meson.build
++++ b/rules.d/meson.build
+@@ -15,9 +15,6 @@ rules = files('''
+         60-sensor.rules
+         60-serial.rules
+         61-autosuspend-manual.rules
+-        70-joystick.rules
+-        70-mouse.rules
+-        70-touchpad.rules
+         75-net-description.rules
+         75-probe_mtd.rules
+         78-sound-card.rules
+-- 
+2.25.1
+

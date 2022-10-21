@@ -1,0 +1,882 @@
+From b4072463ca12a803e62b912ab7c4c6ee6e60eb61 Mon Sep 17 00:00:00 2001
+From: Benjamin Baratte <benjamin.baratte@st.com>
+Date: Thu, 14 Oct 2021 11:58:04 +0200
+Subject: [PATCH 3/4] drivers add STSAFE-A driver and HUK dependencies
+
+---
+ core/arch/arm/dts/stm32mp151.dtsi             |   9 +-
+ core/arch/arm/dts/stm32mp157c-dk2.dts         |   2 +
+ core/arch/arm/plat-stm32mp1/conf.mk           |   6 +
+ .../plat-stm32mp1/drivers/stm32mp1_stsafe.c   | 424 ++++++++++++++++++
+ .../plat-stm32mp1/drivers/stm32mp1_stsafe.h   |  19 +
+ core/arch/arm/plat-stm32mp1/drivers/sub.mk    |   1 +
+ core/arch/arm/plat-stm32mp1/pta/pta_stsafe.c  | 191 ++++++++
+ core/arch/arm/plat-stm32mp1/pta/pta_stsafe.h  |  58 +++
+ core/arch/arm/plat-stm32mp1/pta/sub.mk        |  19 +
+ core/arch/arm/plat-stm32mp1/sub.mk            |   1 +
+ core/include/kernel/huk_subkey.h              |   1 +
+ 11 files changed, 729 insertions(+), 2 deletions(-)
+ create mode 100644 core/arch/arm/plat-stm32mp1/drivers/stm32mp1_stsafe.c
+ create mode 100644 core/arch/arm/plat-stm32mp1/drivers/stm32mp1_stsafe.h
+ create mode 100644 core/arch/arm/plat-stm32mp1/pta/pta_stsafe.c
+ create mode 100644 core/arch/arm/plat-stm32mp1/pta/pta_stsafe.h
+ create mode 100644 core/arch/arm/plat-stm32mp1/pta/sub.mk
+
+diff --git a/core/arch/arm/dts/stm32mp151.dtsi b/core/arch/arm/dts/stm32mp151.dtsi
+index d5904c3f..f34e2b95 100644
+--- a/core/arch/arm/dts/stm32mp151.dtsi
++++ b/core/arch/arm/dts/stm32mp151.dtsi
+@@ -43,7 +43,8 @@
+ 			      <&package_otp>,
+ 			      <&hw2_otp>,
+ 			      <&pkh_otp>,
+-			      <&huk_otp>;
++			      <&huk_otp>,
++			      <&stsafe_otp>;
+ 
+ 		nvmem-cell-names = "cfg0_otp",
+ 				   "part_number_otp",
+@@ -53,7 +54,8 @@
+ 				   "package_otp",
+ 				   "hw2_otp",
+ 				   "pkh_otp",
+- 				   "huk_otp";
++ 				   "huk_otp",
++ 				   "stsafe_otp";
+ 	};
+ 
+ 	psci {
+@@ -508,6 +510,9 @@
+ 			huk_otp: huk_otp@f4 {
+ 				reg = <0xf4 0x10>;
+ 			};
++			stsafe_otp: stsafe_otp@104 {
++				reg = <0x104 0x10>;
++			};
+ 		};
+ 
+ 		etzpc: etzpc@5c007000 {
+diff --git a/core/arch/arm/dts/stm32mp157c-dk2.dts b/core/arch/arm/dts/stm32mp157c-dk2.dts
+index 1dd4ffb7..349925be 100644
+--- a/core/arch/arm/dts/stm32mp157c-dk2.dts
++++ b/core/arch/arm/dts/stm32mp157c-dk2.dts
+@@ -61,6 +61,7 @@
+ 			<&pkh_otp>,
+ 			<&board_id>,
+ 			<&huk_otp>,
++			<&stsafe_otp>;
+ 
+ 	nvmem-cell-names = "cfg0_otp",
+ 			 "part_number_otp",
+@@ -72,5 +73,6 @@
+ 			 "pkh_otp",
+ 			 "board_id",
+ 			 "huk_otp",
++			 "stsafe_otp";
+ };
+ 
+diff --git a/core/arch/arm/plat-stm32mp1/conf.mk b/core/arch/arm/plat-stm32mp1/conf.mk
+index b3616ed8..5ff39b92 100644
+--- a/core/arch/arm/plat-stm32mp1/conf.mk
++++ b/core/arch/arm/plat-stm32mp1/conf.mk
+@@ -69,6 +69,7 @@ $(call force,CFG_SECONDARY_INIT_CNTFRQ,y)
+ $(call force,CFG_SECURE_TIME_SOURCE_CNTPCT,y)
+ $(call force,CFG_SM_PLATFORM_HANDLER,y)
+ $(call force,CFG_WITH_SOFTWARE_PRNG,y)
++$(call force,CFG_STSAFE,y)
+ 
+ ifneq ($(filter $(CFG_EMBED_DTB_SOURCE_FILE),$(flavorlist-512M)),)
+ CFG_TZDRAM_START ?= 0xde000000
+@@ -132,6 +133,7 @@ CFG_STM32_HUK ?= y
+ CFG_STM32MP15_CLK ?= y
+ CFG_STPMIC1 ?= y
+ CFG_TZC400 ?= y
++CFG_STSAFE ?= y
+ 
+ ifeq ($(CFG_STM32_CLKCALIB),y)
+ $(call force,CFG_STM32_TIM,y)
+@@ -142,6 +144,10 @@ $(call force,CFG_STM32_I2C,y)
+ $(call force,CFG_STM32_GPIO,y)
+ endif
+ 
++ifeq ($(CFG_STSAFE),y)
++$(call force,CFG_STM32_I2C,y)
++$(call force,CFG_STM32_GPIO,y)
++endif
+ # Platform specific configuration
+ CFG_STM32MP_PANIC_ON_TZC_PERM_VIOLATION ?= y
+ 
+diff --git a/core/arch/arm/plat-stm32mp1/drivers/stm32mp1_stsafe.c b/core/arch/arm/plat-stm32mp1/drivers/stm32mp1_stsafe.c
+new file mode 100644
+index 00000000..03da474f
+--- /dev/null
++++ b/core/arch/arm/plat-stm32mp1/drivers/stm32mp1_stsafe.c
+@@ -0,0 +1,424 @@
++// SPDX-License-Identifier: BSD-3-Clause
++/*
++ * Copyright (c) 2018, STMicroelectronics - All Rights Reserved
++ */
++#include <drivers/stm32_i2c.h>
++#include <drivers/stm32mp1_stsafe.h>
++#include <drivers/stpmic1.h>
++#include <io.h>
++#include <keep.h>
++#include <kernel/delay.h>
++#include <kernel/dt.h>
++#include <kernel/boot.h>
++#include <kernel/panic.h>
++#include <kernel/pm.h>
++#include <kernel/huk_subkey.h>
++#include <libfdt.h>
++#include <mm/core_memprot.h>
++#include <platform_config.h>
++#include <stdbool.h>
++#include <stm32_util.h>
++#include <trace.h>
++#include <util.h>
++#include <kernel/huk_subkey.h>
++#include <kernel/tee_common_otp.h>
++#include <drivers/stm32_bsec.h>
++
++
++#define TIMEOUT_I2C_STSAFE 1000 /* i2c command timeout */
++#define TIMEOUT_CMD_STSAFE 2000 /* max 2 secondes to wait end of command */
++#define POLLING_STSAFE     3    /* polling period 3 ms */
++
++//#define STSAFE_DRIVER_DEBUG
++
++#ifndef STSAFE_DRIVER_DEBUG
++#define STSAFE_DRIVER_ERROR(...)
++#define STSAFE_DRIVER_MSG(...)
++#else
++#define STSAFE_DRIVER_ERROR EMSG
++#define STSAFE_DRIVER_MSG   DMSG
++#endif
++
++#ifndef STSAFEA_LOCK_PASSWORD_OTP
++#define STSAFEA_LOCK_PASSWORD_OTP 0
++#endif
++
++void stm32mp_get_stsafe(void);
++void stm32mp_put_stsafe(void);
++
++TEE_Result stsafe_getpassword(unsigned char *password)
++{
++    uint32_t otp_id;
++    size_t otp_bit_len;
++    TEE_Result ret;
++    uint32_t data_v;
++
++
++    /* get NVM mapping for stsafe_otp */
++    ret = stm32_bsec_find_otp_in_nvmem_layout("stsafe_otp", &otp_id, &otp_bit_len);
++    if (ret != TEE_SUCCESS)
++    {
++        STSAFE_DRIVER_ERROR("%s : stsafe_otp not present in the otp layout %x\n", __func__, ret);
++        return TEE_ERROR_BAD_PARAMETERS;
++    }
++    if (otp_bit_len != (16 * CHAR_BIT))
++    {
++
++        STSAFE_DRIVER_ERROR("%s : stsafe_otp size shall be 16 bytes but is %d\n", __func__, otp_bit_len);
++        return TEE_ERROR_BAD_PARAMETERS;
++    }
++    /* store password in the OTP */
++    for (unsigned int i = 0; i < otp_bit_len/32; i++)
++    {
++        ret = stm32_bsec_shadow_read_otp(&data_v, otp_id + i);
++        if (ret != TEE_SUCCESS)
++        {
++            STSAFE_DRIVER_ERROR("%s : unable to read otp %d error = %x\n", __func__, otp_id, ret);
++            return ret;
++        }
++        memcpy(&(password[i*4]), &data_v, 4);
++    }
++    return ret;
++}
++
++#ifdef CFG_STM32_BSEC_WRITE
++TEE_Result stsafe_setpassword(unsigned char *password)
++{
++    uint32_t otp_id;
++    size_t otp_bit_len;
++    TEE_Result ret;
++    uint32_t data_v;
++
++    /* get NVM mapping for stsafe_otp */
++    ret = stm32_bsec_find_otp_in_nvmem_layout("stsafe_otp", &otp_id, &otp_bit_len);
++    if (ret != TEE_SUCCESS)
++    {
++        STSAFE_DRIVER_ERROR("%s : stsafe_otp not present in the otp layout %x\n", __func__, ret);
++        return TEE_ERROR_BAD_PARAMETERS;
++    }
++    if (otp_bit_len != (16 * CHAR_BIT))
++    {
++
++        STSAFE_DRIVER_ERROR("%s : stsafe_otp size shall be 16 bytes but is %d\n", __func__, otp_bit_len);
++        return TEE_ERROR_BAD_PARAMETERS;
++    }
++    /* store password in the OTP */
++    for (unsigned int i = 0; i < otp_bit_len/32; i++)
++    {
++        memcpy(&data_v, &(password[i*4]), 4);
++        ret = stm32_bsec_program_otp(data_v, otp_id + i);
++        if (ret != TEE_SUCCESS)
++        {
++            STSAFE_DRIVER_ERROR("%s : unable to program otp %d error = %x\n", __func__, otp_id, ret);
++            return ret;
++        }
++#if STSAFEA_LOCK_PASSWORD_OTP
++        ret = stm32_bsec_permanent_lock(otp_id + i);
++        if (ret != TEE_SUCCESS)
++        {
++            STSAFE_DRIVER_ERROR("%s : unable to lock  otp %d error = %x\n", __func__, otp_id, ret);
++            return ret;
++        }
++#endif
++    }
++    return ret;
++}
++#endif
++
++int stsafe_getpairing(unsigned char *keys, unsigned char *serial)
++{
++    int ret = TEE_ERROR_GENERIC;
++  
++    STSAFE_DRIVER_MSG("%s: derive pairing keys\n", __func__); 
++    ret = huk_subkey_derive(HUK_SUBKEY_STSAFE, serial, 9, keys, 32);
++   
++    return ret;
++}
++
++struct i2c_handle_s i2c_handle;
++static uint32_t stsafe_i2c_addr;
++
++static int dt_get_stsafe_node(void *fdt)
++{
++	static int node = -FDT_ERR_BADOFFSET;
++
++	if (node == -FDT_ERR_BADOFFSET)
++		node = fdt_node_offset_by_compatible(fdt, -1, "st,stsafe");
++
++	return node;
++}
++
++static int dt_stsafe_status(void)
++{
++	void *fdt = get_embedded_dt();
++
++	if (fdt) {
++		int node = dt_get_stsafe_node(fdt);
++
++		if (node > 0)
++			return _fdt_get_status(fdt, node);
++	}
++    STSAFE_DRIVER_ERROR("Stsafe Node not found\n");
++	return -1;
++}
++
++static bool dt_stsafe_is_secure(void)
++{
++	int status = dt_stsafe_status();
++    STSAFE_DRIVER_MSG("Status = %u (%u)\n", status, DT_STATUS_OK_SEC);
++	return ((unsigned)status == DT_STATUS_OK_SEC) &&
++	       ((i2c_handle.dt_status & DT_STATUS_OK_SEC) == DT_STATUS_OK_SEC);
++}
++
++/*
++ * Get STSAFE and its I2C bus configuration from the device tree.
++ * Return 0 on success, negative on error, 1 if no STSAFE node is defined.
++ */
++static int dt_stsafe_i2c_config(struct dt_node_info *i2c_info,
++			     struct stm32_pinctrl **pinctrl,
++			     size_t *pinctrl_count,
++			     struct stm32_i2c_init_s *init)
++{
++	int stsafe_node;
++	int i2c_node;
++	void *fdt;
++	const fdt32_t *cuint;
++
++	fdt = get_embedded_dt();
++	if (!fdt)
++		panic();
++
++	stsafe_node = dt_get_stsafe_node(fdt);
++	if (stsafe_node < 0)
++		panic();
++
++	cuint = fdt_getprop(fdt, stsafe_node, "reg", NULL);
++	if (cuint == NULL) {
++		return -FDT_ERR_NOTFOUND;
++	}
++
++	stsafe_i2c_addr = fdt32_to_cpu(*cuint) << 1;
++	if (stsafe_i2c_addr > UINT16_MAX) {
++		return -FDT_ERR_BADVALUE;
++	}
++
++	i2c_node = fdt_parent_offset(fdt, stsafe_node);
++	if (i2c_node < 0) {
++		return -FDT_ERR_NOTFOUND;
++	}
++
++	_fdt_fill_device_info(fdt, i2c_info, i2c_node);
++	if (!i2c_info->reg) {
++		return -FDT_ERR_NOTFOUND;
++	}
++
++	return stm32_i2c_get_setup_from_fdt(fdt, i2c_node, init,
++					    pinctrl, pinctrl_count);
++}
++
++/* Return true if STSAFE is available, false if not found, panic on errors */
++static bool initialize_stsafe_i2c(void)
++{
++	int ret = 0;
++	struct dt_node_info i2c_info = { };
++	struct i2c_handle_s *i2c = &i2c_handle;
++	struct stm32_pinctrl *pinctrl = NULL;
++	size_t pin_count = 0;
++	struct stm32_i2c_init_s i2c_init = { };
++
++	ret = dt_stsafe_i2c_config(&i2c_info, &pinctrl, &pin_count, &i2c_init);
++	if (ret < 0) {
++		STSAFE_DRIVER_ERROR("I2C configuration failed %d", ret);
++		panic();
++	}
++
++	/* Initialize STSAFE I2C */
++	i2c->base.pa = i2c_info.reg;
++	i2c->base.va = (vaddr_t)phys_to_virt(i2c->base.pa, MEM_AREA_IO_SEC);
++	assert(i2c->base.va);
++	i2c->dt_status = i2c_info.status;
++	i2c->clock = i2c_info.clock;
++	i2c->i2c_state = I2C_STATE_RESET;
++	i2c_init.own_address1 = stsafe_i2c_addr;
++	i2c_init.analog_filter = true;
++	i2c_init.digital_filter_coef = 0;
++
++	i2c->pinctrl = pinctrl;
++	i2c->pinctrl_count = pin_count;
++
++	ret = stm32_i2c_init(i2c, &i2c_init);
++	if (ret) {
++		STSAFE_DRIVER_ERROR("I2C init 0x%" PRIxPA ": %d", i2c_info.reg, ret);
++		panic();
++	}
++
++	return true;
++}
++
++/*
++ * Automated suspend/resume at system suspend/resume is expected
++ * only when the STSAFE is secure. If it is non secure, only atomic
++ * execution context acn get/put the STSAFE resources.
++ */
++static TEE_Result stsafe_pm(enum pm_op op, uint32_t pm_hint __unused,
++			  const struct pm_callback_handle *pm_handle __unused)
++{
++	if (op == PM_OP_SUSPEND)
++		stm32_i2c_suspend(&i2c_handle);
++	else
++		stm32_i2c_resume(&i2c_handle);
++
++	return TEE_SUCCESS;
++}
++DECLARE_KEEP_PAGER(stsafe_pm);
++
++/* stm32mp_get/put_stsafe allows secure atomic sequences to use non secure STSAFE */
++void stm32mp_get_stsafe(void)
++{
++	stm32_i2c_resume(&i2c_handle);
++}
++
++void stm32mp_put_stsafe(void)
++{
++	stm32_i2c_suspend(&i2c_handle);
++}
++
++
++int stsafe_write(unsigned char *pbuff, unsigned short size)
++{
++    uint32_t retry = TIMEOUT_CMD_STSAFE / POLLING_STSAFE;
++    int32_t ret = 0;
++
++    stm32_i2c_resume(&i2c_handle);
++
++    while (retry != 0){
++        ret = stm32_i2c_master_transmit(&i2c_handle, stsafe_i2c_addr, pbuff, size, TIMEOUT_I2C_STSAFE);
++        if (ret != 0){
++            STSAFE_DRIVER_ERROR("Error = %x, i2c err = %x (I2C_ERROR_ACKF %x)", ret, i2c_handle.i2c_err, I2C_ERROR_ACKF);
++            if (i2c_handle.i2c_err & I2C_ERROR_ACKF) {
++                mdelay(POLLING_STSAFE);
++                retry--;
++                STSAFE_DRIVER_ERROR("STSAFE I2C ack error %x %x\n", ret, i2c_handle.i2c_err);
++            } else {
++                /* error on bus => abort */
++                STSAFE_DRIVER_ERROR("Unknown error %x\n", i2c_handle.i2c_err);
++                break;
++            }
++        }
++        else
++        {
++            STSAFE_DRIVER_ERROR("i2c_master_transmit = %x\n", ret);
++            break;
++        }
++    }
++
++    stm32_i2c_suspend(&i2c_handle);
++    return ret;
++}
++
++int stsafe_read(unsigned char *pbuff, unsigned int *size, unsigned int expected)
++{
++    uint8_t *header = pbuff;
++    uint32_t retry = TIMEOUT_CMD_STSAFE / POLLING_STSAFE;
++    uint16_t l_size;
++    int32_t ret;
++    stm32_i2c_resume(&i2c_handle);
++
++    while (retry != 0){
++        ret = stm32_i2c_master_receive(&i2c_handle, stsafe_i2c_addr, header, expected, TIMEOUT_I2C_STSAFE);
++        if (ret != 0) {
++            STSAFE_DRIVER_ERROR("Error = %x, i2c err = %x (I2C_ERROR_ACKF %x)", ret, i2c_handle.i2c_err, I2C_ERROR_ACKF);
++            if (i2c_handle.i2c_err & I2C_ERROR_ACKF) {
++                /* acknowledge failed retry */
++                mdelay(POLLING_STSAFE);
++                retry--;
++            }
++            else {
++                /* error on bus => abort */
++                retry = 0;
++            }
++        }
++        else
++        {
++            STSAFE_DRIVER_ERROR("i2c_master_received = %x\n", ret);
++            retry = 0;
++        }
++    }
++
++    if ( ret == 0  ){
++        l_size = (uint16_t)((header[1] << 8) | (header[2] + 3));
++        if (l_size > *size)
++        {
++            /* buffer too short  */
++            STSAFE_DRIVER_ERROR("buffer too short %d > %d\n", l_size, *size);
++            ret = -1;
++        }
++        else
++        {
++            *size = l_size;
++            if (*size != expected)
++            {
++                ret = stm32_i2c_master_receive(&i2c_handle, stsafe_i2c_addr, pbuff, *size, TIMEOUT_I2C_STSAFE);
++            /* command is ok if error here this is an hardware error then return -1 */
++                if (ret != 0)
++                    *size = 0;
++            }
++        }
++    } else {
++        *size = 0;
++    }
++
++    stm32_i2c_suspend(&i2c_handle);
++    return ret;
++}
++
++
++#ifndef STSAFEA_REGISTER_SECURE
++static void register_non_secure_stsafe(void)
++{
++	size_t n = 0;
++
++	/* Allow this function to be called when STPMIC1 not used */
++	if (!i2c_handle.base.pa)
++		return;
++
++	for (n = 0; n < i2c_handle.pinctrl_count; n++)
++		stm32mp_register_non_secure_gpio(i2c_handle.pinctrl[n].bank,
++						 i2c_handle.pinctrl[n].pin);
++
++	stm32mp_register_non_secure_periph_iomem(i2c_handle.base.pa);
++}
++#else
++static void register_secure_stsafe(void)
++{
++	size_t n = 0;
++
++	for (n = 0; n < i2c_handle.pinctrl_count; n++)
++		stm32mp_register_secure_gpio(i2c_handle.pinctrl[n].bank,
++					     i2c_handle.pinctrl[n].pin);
++
++	stm32mp_register_secure_periph_iomem(i2c_handle.base.pa);
++}
++#endif
++static TEE_Result initialize_stsafe(void)
++{
++	if (!initialize_stsafe_i2c()) {
++		STSAFE_DRIVER_ERROR("Secure STSAFE initialization failed\n");
++		panic();
++	}
++
++	if (!dt_stsafe_is_secure()) {
++		STSAFE_DRIVER_ERROR("Secure STSAFE not correctly defined in DT\n");
++		panic();
++ 	}
++#ifdef STSAFEA_REGISTER_SECURE
++    register_secure_stsafe();
++#else 
++	register_non_secure_stsafe();
++#endif
++	stm32mp_put_stsafe();
++
++	return TEE_SUCCESS;
++}
++
++driver_init(initialize_stsafe);
+diff --git a/core/arch/arm/plat-stm32mp1/drivers/stm32mp1_stsafe.h b/core/arch/arm/plat-stm32mp1/drivers/stm32mp1_stsafe.h
+new file mode 100644
+index 00000000..3d07e9a9
+--- /dev/null
++++ b/core/arch/arm/plat-stm32mp1/drivers/stm32mp1_stsafe.h
+@@ -0,0 +1,19 @@
++/* SPDX-License-Identifier: BSD-3-Clause */
++/*
++ * Copyright (c) 2017-2018, STMicroelectronics - All Rights Reserved
++ */
++
++#ifndef STM32MP1_STSAFE_H
++#define STM32MP1_STSAFE_H
++
++#include <tee_api_types.h>
++
++int stsafe_write(unsigned char *cmd, unsigned short size);
++int stsafe_read(unsigned char *rsp, unsigned int *size, unsigned int expected);
++int stsafe_getpairing(unsigned char *keys, unsigned char *serial);
++TEE_Result stsafe_getpassword(unsigned char *password);
++#ifdef CFG_STM32_BSEC_WRITE
++TEE_Result stsafe_setpassword(unsigned char *password);
++#endif
++#endif /* STM32MP1_STSAFE_H */
++
+diff --git a/core/arch/arm/plat-stm32mp1/drivers/sub.mk b/core/arch/arm/plat-stm32mp1/drivers/sub.mk
+index 0b814a41..73053f74 100644
+--- a/core/arch/arm/plat-stm32mp1/drivers/sub.mk
++++ b/core/arch/arm/plat-stm32mp1/drivers/sub.mk
+@@ -4,3 +4,4 @@ srcs-$(CFG_STPMIC1) += stm32mp1_pmic.c
+ srcs-y 	+= stm32mp1_pwr.c
+ srcs-y 	+= stm32mp1_rcc.c
+ srcs-y 	+= stm32mp1_syscfg.c
++srcs-$(CFG_STSAFE) += stm32mp1_stsafe.c
+diff --git a/core/arch/arm/plat-stm32mp1/pta/pta_stsafe.c b/core/arch/arm/plat-stm32mp1/pta/pta_stsafe.c
+new file mode 100644
+index 00000000..f645f93f
+--- /dev/null
++++ b/core/arch/arm/plat-stm32mp1/pta/pta_stsafe.c
+@@ -0,0 +1,191 @@
++// SPDX-License-Identifier: BSD-3-Clause
++/*
++ * Copyright (c) 2018, STMicroelectronics - All Rights Reserved
++ */
++
++#include <drivers/stm32mp1_stsafe.h>
++#include <kernel/msg_param.h>
++#include <kernel/pseudo_ta.h>
++#include <kernel/user_ta.h>
++#include <kernel/delay.h>
++#include "pta_stsafe.h"
++
++#ifndef STSAFE_PTA_DEBUG
++#define STSAFE_PTA_ERROR(...)
++#define STSAFE_PTA_MSG(...)
++#else
++#define STSAFE_PTA_ERROR EMSG
++#define STSAFE_PTA_MSG   DMSG
++#endif
++
++
++static TEE_Result stsafe_get_password(struct ts_session *s __unused,
++              uint32_t param_types, TEE_Param params[4])
++{
++    TEE_Result ret = TEE_ERROR_GENERIC;
++
++	const uint32_t exp_param_types =
++		TEE_PARAM_TYPES(TEE_PARAM_TYPE_MEMREF_OUTPUT,
++                TEE_PARAM_TYPE_NONE,
++				TEE_PARAM_TYPE_NONE,
++				TEE_PARAM_TYPE_NONE);
++
++	/*
++	 * Safely get the invocation parameters
++	 */
++	if (param_types != exp_param_types)
++		return TEE_ERROR_BAD_PARAMETERS;
++    if (params[0].memref.size < 16)
++        return TEE_ERROR_BAD_PARAMETERS;
++
++    ret = stsafe_getpassword(params[0].memref.buffer);
++    if (ret != 0)
++        return TEE_ERROR_GENERIC;
++
++    return TEE_SUCCESS;
++}
++
++
++static TEE_Result stsafe_set_password(struct ts_session *s __unused,
++              uint32_t param_types, TEE_Param params[4])
++{
++    TEE_Result ret = TEE_ERROR_GENERIC;
++
++	const uint32_t exp_param_types =
++		TEE_PARAM_TYPES(TEE_PARAM_TYPE_MEMREF_INPUT,
++                TEE_PARAM_TYPE_NONE,
++				TEE_PARAM_TYPE_NONE,
++				TEE_PARAM_TYPE_NONE);
++
++#ifdef CFG_STM32_BSEC_WRITE
++	/*
++	 * Safely get the invocation parameters
++	 */
++	if (param_types != exp_param_types)
++		return TEE_ERROR_BAD_PARAMETERS;
++    if (params[0].memref.size < 16)
++        return TEE_ERROR_BAD_PARAMETERS;
++
++    ret = stsafe_setpassword(params[0].memref.buffer);
++    if (ret != 0)
++        return TEE_ERROR_GENERIC;
++
++    return TEE_SUCCESS;
++#else
++    return TEE_ERROR_NOT_SUPPORTED;
++#endif
++}
++
++
++/*
++ * Process command PTA_STSAFE_PAIRING. API in pta_stsafe.h
++ */
++static TEE_Result stsafe_pairing(struct ts_session *s __unused,
++              uint32_t param_types, TEE_Param params[4])
++{
++    int32_t ret = -1;
++
++	const uint32_t exp_param_types =
++		TEE_PARAM_TYPES(TEE_PARAM_TYPE_MEMREF_INPUT,
++                TEE_PARAM_TYPE_MEMREF_OUTPUT,
++				TEE_PARAM_TYPE_NONE,
++				TEE_PARAM_TYPE_NONE);
++
++	/*
++	 * Safely get the invocation parameters
++	 */
++	if (param_types != exp_param_types)
++		return TEE_ERROR_BAD_PARAMETERS;
++    if (params[0].memref.size < 9)
++        return TEE_ERROR_BAD_PARAMETERS;
++    if (params[1].memref.size != 32)
++        return TEE_ERROR_BAD_PARAMETERS;
++
++    ret = stsafe_getpairing(params[1].memref.buffer, params[0].memref.buffer);
++    if (ret != 0)
++        return TEE_ERROR_GENERIC;
++
++    return TEE_SUCCESS;
++}
++/*
++ * Process command PTA_STSAFE_CMD. API in pta_stsafe.h
++ */
++static TEE_Result stsafe_cmd(struct ts_session *s __unused,
++			  uint32_t param_types, TEE_Param params[4])
++{
++    int32_t ret = -1;
++    uint32_t size = 0;
++	const uint32_t exp_param_types =
++		TEE_PARAM_TYPES(TEE_PARAM_TYPE_VALUE_INPUT,
++                TEE_PARAM_TYPE_MEMREF_INPUT,
++                TEE_PARAM_TYPE_MEMREF_OUTPUT,
++				TEE_PARAM_TYPE_NONE);
++
++	/*
++	 * Safely get the invocation parameters
++	 */
++	if (param_types != exp_param_types)
++		return TEE_ERROR_BAD_PARAMETERS;
++
++    uint8_t *data = (uint8_t *)params[1].memref.buffer;
++
++    if (*data == 0xFF)
++        EMSG("Error invalid data");
++    ret = stsafe_write(params[1].memref.buffer, params[1].memref.size);
++    if (ret == -1){
++        STSAFE_PTA_ERROR("stsafe_write error = %x", ret);
++        return TEE_ERROR_COMMUNICATION;
++    }
++    mdelay(params[0].value.a);
++    size = params[2].memref.size;
++    ret = stsafe_read(params[2].memref.buffer, &size, params[0].value.b);
++    if (ret == -1){
++        STSAFE_PTA_ERROR("stsafe_read error = %x", ret);
++        return TEE_ERROR_COMMUNICATION;
++    }
++    params[2].memref.size = size;
++    return TEE_SUCCESS;
++}
++
++static TEE_Result open_session(uint32_t param_types __unused,
++			       TEE_Param params[TEE_NUM_PARAMS] __unused,
++			       void **sess_ctx __unused)
++{
++	struct ts_session *s;
++
++	/* Check that we're called from a user TA */
++	s = ts_get_calling_session();
++	if (!s)
++		return TEE_ERROR_ACCESS_DENIED;
++	if (!is_user_ta_ctx(s->ctx))
++		return TEE_ERROR_ACCESS_DENIED;
++
++	return TEE_SUCCESS;
++}
++
++static TEE_Result invoke_command(void *sess_ctx __unused, uint32_t cmd_id,
++				 uint32_t param_types,
++				 TEE_Param params[TEE_NUM_PARAMS])
++{
++	struct ts_session *s = ts_get_calling_session();
++
++	switch (cmd_id) {
++        case PTA_STSAFE_CMD:
++            return stsafe_cmd(s, param_types, params);
++        case PTA_STSAFE_PAIRING_CMD:
++            return stsafe_pairing(s, param_types, params);
++        case PTA_STSAFE_SET_PASSWORD_CMD:
++            return stsafe_set_password(s, param_types, params);
++        case PTA_STSAFE_GET_PASSWORD_CMD:
++            return stsafe_get_password(s, param_types, params);
++        default:
++            break;
++	}
++
++	return TEE_ERROR_NOT_IMPLEMENTED;
++}
++
++pseudo_ta_register(.uuid = PTA_STSAFE_UUID, .name = "stsafe.pta",
++		   .flags = PTA_DEFAULT_FLAGS,
++		   .open_session_entry_point = open_session,
++		   .invoke_command_entry_point = invoke_command);
+diff --git a/core/arch/arm/plat-stm32mp1/pta/pta_stsafe.h b/core/arch/arm/plat-stm32mp1/pta/pta_stsafe.h
+new file mode 100644
+index 00000000..687a41d6
+--- /dev/null
++++ b/core/arch/arm/plat-stm32mp1/pta/pta_stsafe.h
+@@ -0,0 +1,58 @@
++// SPDX-License-Identifier: BSD-3-Clause
++/*
++ * Copyright (c) 2021, STMicroelectronics - All Rights Reserved
++ */
++
++
++#ifndef __PTA_STSAFE_H
++#define __PTA_STSAFE_H
++
++/*
++ * Interface to the pseudo TA, which is provides misc. auxiliary services,
++ * extending existing GlobalPlatform Core API
++ */
++
++/* This UUID is generated with http://www.uuidgenerator.net */
++
++
++#define PTA_STSAFE_UUID { 0x51d8b4f3, 0xc3cf, 0xace4, { \
++                      0x3a, 0x51, 0x34, 0x7b, 0xb9, 0xaa, 0x7c, 0x89 }  }
++
++/*
++ * PTA_STSAFE_CMD - command description
++ * param[0] expected delay
++ * param[1] (memref) input buffer
++ * param[2] (memref) output buffer
++ * param[3] unused
++ */
++#define PTA_STSAFE_CMD 0
++
++/*
++ * PTA_STSAFE_PAIRING - Get Pairing key
++ * param[0] (memref) input extra serial buffer
++ * param[1] (memref) output pairing key buffer
++ * param[2] unused
++ * param[3] unused
++ */
++#define PTA_STSAFE_PAIRING_CMD 1
++
++/*
++ * PTA_STSAFE_SET_PASSWORD_CMD - Store STSAFE password
++ * param[0] (memref) input password buffer
++ * param[1] unused
++ * param[2] unused
++ * param[3] unused
++ */
++#define PTA_STSAFE_SET_PASSWORD_CMD 2
++
++/*
++ * PTA_STSAFE_GET_PASSWORD_CMD - Get STSAFE password
++ * param[0] (memref) output password buffer
++ * param[1] unused
++ * param[2] unused
++ * param[3] unused
++ */
++#define PTA_STSAFE_GET_PASSWORD_CMD 3
++
++#endif /* __PTA_STSAFE_H */
++
+diff --git a/core/arch/arm/plat-stm32mp1/pta/sub.mk b/core/arch/arm/plat-stm32mp1/pta/sub.mk
+new file mode 100644
+index 00000000..14e973cf
+--- /dev/null
++++ b/core/arch/arm/plat-stm32mp1/pta/sub.mk
+@@ -0,0 +1,19 @@
++srcs-y += pta_stsafe.c
++
++src := core/arch/$(ARCH)/plat-$(PLATFORM)/pta/pta_stsafe.h
++dest := $(out-dir)/export-$(ta-targets)/include
++
++define pta-export-headers
++$2/$$(notdir $1): $1
++	@set -e; \
++	mkdir -p $$(dir $$@) ; \
++	echo '  INSTALL $$@' ; \
++	cp $$< $$@
++
++cleanfiles += $2/$$(notdir $1)
++ta_dev_kit: $2/$$(notdir $1)
++ta_dev_kit-files += $2/$$(notdir $1)
++endef
++
++$(eval $(call pta-export-headers, $(src), $(dest)))
++
+diff --git a/core/arch/arm/plat-stm32mp1/sub.mk b/core/arch/arm/plat-stm32mp1/sub.mk
+index ae204174..33f22d12 100644
+--- a/core/arch/arm/plat-stm32mp1/sub.mk
++++ b/core/arch/arm/plat-stm32mp1/sub.mk
+@@ -19,3 +19,4 @@ endif
+ subdirs-y += drivers
+ subdirs-y += nsec-service
+ subdirs-y += pm
++subdirs-y += pta
+diff --git a/core/include/kernel/huk_subkey.h b/core/include/kernel/huk_subkey.h
+index 429480e9..b2b71d4c 100644
+--- a/core/include/kernel/huk_subkey.h
++++ b/core/include/kernel/huk_subkey.h
+@@ -31,6 +31,7 @@ enum huk_subkey_usage {
+ 	HUK_SUBKEY_DIE_ID = 2,
+ 	HUK_SUBKEY_UNIQUE_TA = 3,
+ 	HUK_SUBKEY_TA_ENC = 4,
++	HUK_SUBKEY_STSAFE = 0xfe,
+ };
+ 
+ #define HUK_SUBKEY_MAX_LEN	TEE_SHA256_HASH_SIZE
+-- 
+2.20.1
+

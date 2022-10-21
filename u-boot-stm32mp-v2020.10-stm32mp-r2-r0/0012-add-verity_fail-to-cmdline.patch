@@ -1,0 +1,65 @@
+From 1a02002e0c2b31f1ae337fa2885f3d658018bdf4 Mon Sep 17 00:00:00 2001
+From: Christer Fletcher <christer.fletcher@inter.ikea.com>
+Date: Wed, 24 Feb 2021 10:00:20 +0100
+Subject: [PATCH] [HSPP-3667] Add verity_fail to cmdline if verity fail bit is
+ set in TAMP
+
+(1 << 0) in TAMP_BKP_19 indicates that reboot was due to verity failure.
+---
+ arch/arm/mach-stm32mp/cpu.c     | 14 +++++++++++++-
+ include/config_distro_bootcmd.h |  1 +
+ 2 files changed, 14 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm/mach-stm32mp/cpu.c b/arch/arm/mach-stm32mp/cpu.c
+index cd8cf19334..21488dce6b 100644
+--- a/arch/arm/mach-stm32mp/cpu.c
++++ b/arch/arm/mach-stm32mp/cpu.c
+@@ -39,7 +39,9 @@
+ #define TZC_REGION_ATTRIBUTE0	(STM32_TZC_BASE + 0x110)
+ #define TZC_REGION_ID_ACCESS0	(STM32_TZC_BASE + 0x114)
+ 
+-#define TAMP_CR1		(STM32_TAMP_BASE + 0x00)
++#define TAMP_CR1				(STM32_TAMP_BASE + 0x00)
++#define TAMP_VERITY				TAMP_BACKUP_REGISTER(19)
++#define TAMP_VERITY_FAIL_BIT	(1 << 0)
+ 
+ #define PWR_CR1			(STM32_PWR_BASE + 0x00)
+ #define PWR_MCUCR		(STM32_PWR_BASE + 0x14)
+@@ -663,6 +665,15 @@ static void get_reset_reason(void)
+ 	env_set("reset_reason", buf);
+ }
+ 
++static void get_verity_status(void)
++{
++	u32 value = readl(TAMP_VERITY);
++	printf("TAMP_VERITY value: 0x%08X\n", value);
++	if ((value & TAMP_VERITY_FAIL_BIT) == TAMP_VERITY_FAIL_BIT) {
++		env_set("verity_fail", "verity_fail");
++	}
++}
++
+ int arch_misc_init(void)
+ {
+ 	setup_boot_mode();
+@@ -670,6 +681,7 @@ int arch_misc_init(void)
+ 	setup_serial_number();
+ 	get_longpress_ponkey();
+ 	get_reset_reason();
++	get_verity_status();
+ 
+ 	return 0;
+ }
+diff --git a/include/config_distro_bootcmd.h b/include/config_distro_bootcmd.h
+index 9a85b28f8c..ef3b4fc6f0 100644
+--- a/include/config_distro_bootcmd.h
++++ b/include/config_distro_bootcmd.h
+@@ -525,6 +525,7 @@
+ 			"rootwait ro console=ttySTM0,115200 "             \
+ 			"rauc.slot=${rauc_slot} "                         \
+ 			"${reset_reason} "                                \
++			"${verity_fail} "                                 \
+ 			"${factory_reset} \0"                             \
+ 
+ #ifndef CONFIG_BOOTCOMMAND
+-- 
+2.27.0

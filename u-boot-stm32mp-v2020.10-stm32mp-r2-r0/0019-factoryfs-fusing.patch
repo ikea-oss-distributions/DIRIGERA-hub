@@ -1,0 +1,421 @@
+From bb80e87a5dea75277d306d8650d6dc5be796fb61 Mon Sep 17 00:00:00 2001
+From: Christer Fletcher <christer.fletcher@inter.ikea.com>
+Date: Thu, 25 Mar 2021 16:52:10 +0100
+Subject: [PATCH 1/2] [HSPP-4302] Write factoryfs verity hash to OTP.
+
+Add 'oem fusefactory' command.
+---
+ drivers/fastboot/fb_command.c |  71 +++++++++---
+ drivers/misc/Kconfig          |   8 ++
+ drivers/misc/Makefile         |   1 +
+ drivers/misc/factoryfs_calc.c | 196 ++++++++++++++++++++++++++++++++++
+ include/factoryfs_calc.h      |  12 +++
+ include/fastboot.h            |   1 +
+ 6 files changed, 276 insertions(+), 13 deletions(-)
+ create mode 100644 drivers/misc/factoryfs_calc.c
+ create mode 100644 include/factoryfs_calc.h
+
+diff --git a/drivers/fastboot/fb_command.c b/drivers/fastboot/fb_command.c
+index b5aeef1db1..ce36dca5be 100644
+--- a/drivers/fastboot/fb_command.c
++++ b/drivers/fastboot/fb_command.c
+@@ -6,6 +6,7 @@
+ #include <common.h>
+ #include <command.h>
+ #include <env.h>
++#include <factoryfs_calc.h>
+ #include <fastboot.h>
+ #include <fastboot-internal.h>
+ #include <fb_mmc.h>
+@@ -13,6 +14,7 @@
+ #include <flash.h>
+ #include <part.h>
+ #include <stdlib.h>
++#include <u-boot/sha256.h>
+ 
+ /**
+  * image_size - final fastboot image size
+@@ -50,6 +52,8 @@ static void oem_partconf(char *, char *);
+ static void oem_bootbus(char *, char *);
+ #endif
+ #if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_FUSEMAC)
++static void oem_fusegen(char *, char *);
++static void oem_fusefactory(char *, char *);
+ static void oem_fusewifimac(char *, char *);
+ static void oem_fuseethmac(char *, char *);
+ static void oem_fusemac(char *, char *, int);
+@@ -136,6 +140,10 @@ static const struct {
+ 		.command = "oem fusegen",
+ 		.dispatch = oem_fusegen,
+ 	},
++	[FASTBOOT_COMMAND_OEM_FUSEFACTORY] = {
++		.command = "oem fusefactory",
++		.dispatch = oem_fusefactory,
++	},
+ #endif
+ };
+ 
+@@ -468,6 +476,31 @@ static void oem_bootbus(char *cmd_parameter, char *response)
+ }
+ #endif
+ 
++/*
++ * Fuse and lock a single word.
++ */
++static bool fuse_word(int fuse_address, u32 fuseval) {
++	char cmdbuf[64];
++
++	snprintf(cmdbuf, sizeof(cmdbuf), "fuse prog -y 0 %d 0x%08x",
++			fuse_address, fuseval);
++	printf("fuse command \"%s\"\n", cmdbuf);
++
++	/* If fusing fails return OK, assuming OTP locked  */
++	if (run_command(cmdbuf, 0)) {
++		return 0;
++	}
++
++	/* Lock fuse from further fusing */
++	snprintf(cmdbuf, sizeof(cmdbuf), "fuse prog -y 0 0x1%07x 1",
++			fuse_address);
++	printf("fuse lock command=\"%s\"\n", cmdbuf);
++	if (run_command(cmdbuf, 0)) {
++		return 1;
++	}
++	return 0;
++}
++
+ /* General fusing function. Fuse from 1 to 4 registers
+  * Syntax:
+  * fastboot oem fusegen:<num>:<reg>:<val1>,<val2>,...,<valn>
+@@ -476,7 +509,6 @@ static void oem_bootbus(char *cmd_parameter, char *response)
+  */
+ static void oem_fusegen(char *cmd_parameter, char *response)
+ {
+-	char cmdbuf[64];
+ 	char *cmd_copy = NULL;
+ 	char *token = NULL;
+ 	int fuse_address, num_regs_to_fuse, i;
+@@ -513,19 +545,8 @@ static void oem_fusegen(char *cmd_parameter, char *response)
+ 	for (i = 0; i < num_regs_to_fuse; i++) {
+ 		token = strsep(&cmd_copy, ",");
+ 		fuseval = strtoul(token, NULL, 16);
+-		snprintf(cmdbuf, sizeof(cmdbuf), "fuse prog -y 0 %d 0x%08x",
+-				fuse_address + i, fuseval);
+-		printf("fuse command \"%s\"\n", cmdbuf);
+ 
+-		/* If fusing failed we move on to next, assuming OTP locked */
+-		if (run_command(cmdbuf, 0))
+-			continue;
+-
+-		/* Lock fuse from further fusing */
+-		snprintf(cmdbuf, sizeof(cmdbuf), "fuse prog -y 0 0x1%07x 1",
+-				fuse_address + i);
+-		printf("fuse lock command=\"%s\"\n", cmdbuf);
+-		if (run_command(cmdbuf, 0)) {
++		if (fuse_word(fuse_address + i, fuseval)) {
+ 			fastboot_fail("Cannot lock fuse", response);
+ 			goto exit;
+ 		}
+@@ -533,6 +554,7 @@ static void oem_fusegen(char *cmd_parameter, char *response)
+ 
+ 	fastboot_okay(NULL, response);
+ exit:
++	free(cmd_copy);
+ 	return;
+ }
+ 
+@@ -595,6 +617,29 @@ static void oem_fusemac(char *cmd_parameter, char *response, int fuse_address)
+ 			fastboot_okay(NULL, response);
+ 	}
+ }
++
++static void oem_fusefactory(char *cmd_parameter, char *response)
++{
++	const int start_word = 71;
++	u8 sha256[SHA256_SUM_LEN];
++	int ret;
++	int i;
++
++	ret = factoryfs_calc((u8*)sha256);
++	if (ret == 0) {
++		printf("Fusing factoryfs rootHash.\n");
++		u32* value = (u32*)sha256;
++
++		for (i = 0; i < (SHA256_SUM_LEN / sizeof(u32)); i++) {
++			fuse_word(start_word + i, *(value + i));
++		}
++	} else {
++		fastboot_response("FAIL", response, "factoryfs rootHash calc failed: %d", ret);
++		return;
++	}
++	fastboot_okay(NULL, response);
++}
++
+ #endif
+ 
+ /**
+diff --git a/drivers/misc/Kconfig b/drivers/misc/Kconfig
+index b67e906a76..ea7612c122 100644
+--- a/drivers/misc/Kconfig
++++ b/drivers/misc/Kconfig
+@@ -324,6 +324,14 @@ config STM32_RCC
+ 	  generation.
+ 	  This driver is similar to an MFD driver in the Linux kernel.
+ 
++config FACTORYFS_CALC
++	bool "Enable Factory FS hash calculation function."
++	depends on ARCH_STM32MP && MISC
++	default y if CMD_FUSE
++	help
++	  If you say Y here, you will get support for the factory fs hash
++	  calculation. This API is needed for fusing factory fs.
++
+ config TEGRA_CAR
+ 	bool "Enable support for the Tegra CAR driver"
+ 	depends on TEGRA_NO_BPMP
+diff --git a/drivers/misc/Makefile b/drivers/misc/Makefile
+index 947bd3a647..c3d3de8d68 100644
+--- a/drivers/misc/Makefile
++++ b/drivers/misc/Makefile
+@@ -64,6 +64,7 @@ obj-$(CONFIG_SMSC_LPC47M) += smsc_lpc47m.o
+ obj-$(CONFIG_SMSC_SIO1007) += smsc_sio1007.o
+ obj-$(CONFIG_STM32MP_FUSE) += stm32mp_fuse.o
+ obj-$(CONFIG_STM32_RCC) += stm32_rcc.o
++obj-$(CONFIG_FACTORYFS_CALC) += factoryfs_calc.o
+ obj-$(CONFIG_SYS_DPAA_QBMAN) += fsl_portals.o
+ obj-$(CONFIG_TEGRA186_BPMP) += tegra186_bpmp.o
+ obj-$(CONFIG_TEGRA_CAR) += tegra_car.o
+diff --git a/drivers/misc/factoryfs_calc.c b/drivers/misc/factoryfs_calc.c
+new file mode 100644
+index 0000000000..3492661339
+--- /dev/null
++++ b/drivers/misc/factoryfs_calc.c
+@@ -0,0 +1,196 @@
++/*
++ * Copyright © Inter IKEA Systems B.V. 2021.
++ * All Rights Reserved.
++ *
++ * This is UNPUBLISHED PROPRIETARY SOURCE CODE of © Inter IKEA Systems B.V.;
++ * the contents of this file may not be disclosed to third parties, copied
++ * or duplicated in any form, in whole or in part, without the prior
++ * written permission of © Inter IKEA Systems B.V.
++ */
++
++#include <common.h>
++#include <errno.h>
++#include <malloc.h>
++#include <mmc.h>
++#include <part.h>
++#include <stdio.h>
++#include <u-boot/sha256.h>
++
++#define MIN(x,y) (x < y ? x : y)
++
++#define MAX_FACTORY_FS_PART_SIZE (16*1024*1024) // Support up to 16 MB, even though 4 MB is expected.
++#define SQFS_PAD 4096
++
++#define DATA_BLOCK_SIZE 1024
++#define HASH_BLOCK_SIZE 4096
++#define SQFS_SUPERBLOCK_MAGIC 0x73717368
++
++// To simplify implementation we only allow one level in the hash tree.
++// That gives a maximum squash fs size of 128 KB.
++#define MAX_SQFS_SIZE (HASH_BLOCK_SIZE * DATA_BLOCK_SIZE / SHA256_SUM_LEN)
++#define MIN_SQFS_SIZE SQFS_PAD
++
++static void print_sha256_sum(const u8* sha256)
++{
++	for (int i = 0; i < SHA256_SUM_LEN; i++)
++	{
++		printf("%02x", sha256[i]);
++	}
++	printf("\n");
++}
++
++static int read_squash_fs(u64* partition_size, u8** data) {
++	struct disk_partition part_info;
++	struct blk_desc *mmc_dev;
++	struct mmc *mmc;
++	u32 blocks_read;
++	int ret;
++
++	mmc = find_mmc_device(1);
++	if (mmc == NULL) {
++		printf("Couldn't find mmc device.\n");
++		return -ENODEV;
++	}
++
++	ret = mmc_init(mmc);
++	if (ret != 0) {
++		printf("mmc_init failed.\n");
++		return ret;
++	}
++
++	mmc_dev = blk_get_devnum_by_type(IF_TYPE_MMC, 1);
++	if (mmc_dev == NULL || mmc_dev->type != DEV_TYPE_HARDDISK) {
++		printf("Couldn't get blk_desc from mmc.\n");
++		return -ENOTBLK;
++	}
++
++	ret = part_get_info(mmc_dev, 15, &part_info);
++	if (ret != 0) {
++		printf("Couldn't get the factory fs partition.\n");
++		return ret;
++	}
++
++	*partition_size = (part_info.size * part_info.blksz);
++
++	if (*partition_size > MAX_FACTORY_FS_PART_SIZE) {
++		printf("Factory partition unreasonably large, aborting.\n");
++		return -EOVERFLOW;
++	}
++
++	*data = malloc(*partition_size);
++	if (*data == NULL) {
++		printf("Couldn't allocate for factory fs\n");
++		return -ENOMEM;
++	}
++	memset(*data, 0, *partition_size);
++
++	blocks_read = blk_dread(mmc_dev, part_info.start, part_info.size, *data);
++	if (blocks_read != part_info.size) {
++		printf("Failed reading the factory fs partition\n");
++		free(*data);
++		*data = NULL;
++		return -EIO;
++	}
++
++	return 0;
++}
++
++static int calculate_root_hash(const u64 squashfs_size, const u8* const salt, const u8* const data, u8* root_hash) {
++	sha256_context sha_context;
++	u8 l1_blocks;
++	u8* blocks;
++	u8 i;
++
++	l1_blocks = MIN(squashfs_size / DATA_BLOCK_SIZE, HASH_BLOCK_SIZE / SHA256_SUM_LEN);
++
++	// This is simplified to only allow for one level of hashes, same for for loop below.
++	blocks = malloc(HASH_BLOCK_SIZE);
++	if (blocks == NULL) {
++		printf("Couldn't allocate for verity blocks\n");
++		return -ENOMEM;
++	}
++	memset(blocks, 0, HASH_BLOCK_SIZE);
++
++	// Hash all the data blocks
++	for (i = 0; i < l1_blocks; i++) {
++		sha256_starts(&sha_context);
++		sha256_update(&sha_context, salt, 32);
++		sha256_update(&sha_context, data + (i * DATA_BLOCK_SIZE), DATA_BLOCK_SIZE);
++		sha256_finish(&sha_context, blocks + (i * 32));
++	}
++
++	// Hash the hashes into the root hash
++	sha256_starts(&sha_context);
++	sha256_update(&sha_context, salt, 32);
++	sha256_update(&sha_context, blocks, HASH_BLOCK_SIZE);
++	sha256_finish(&sha_context, root_hash);
++
++	free(blocks);
++
++	return 0;
++}
++
++int factoryfs_calc(u8* output)
++{
++	u8 salt[SHA256_SUM_LEN];
++	u64 partition_size;
++	u64 squashfs_size;
++	u8* data = NULL;
++	u32 sqfs_magic;
++	int ret = 0;
++
++	ret = read_squash_fs(&partition_size, &data);
++	if (ret != 0) {
++		return ret;
++	}
++	// malloc of data done, needs to be freed after this point.
++
++	sqfs_magic = *(u32*)data;
++	if (sqfs_magic != SQFS_SUPERBLOCK_MAGIC) {
++		printf("Invalid squashfs magic: %08x\n", sqfs_magic);
++		ret = -EILSEQ;
++		goto exit;
++	}
++
++	squashfs_size = *(u64 *)&data[40];
++	squashfs_size += SQFS_PAD - (squashfs_size % SQFS_PAD);
++
++	if (squashfs_size > MAX_SQFS_SIZE) {
++		printf("SquashFS size larger than supported dm-verity calc in u-boot, implementation needs improvement to support this: %llu\n", squashfs_size);
++		ret = -EOVERFLOW;
++		goto exit;
++	}
++
++	if (squashfs_size > partition_size) {
++		printf("SquashFS size larger than partition.\n");
++		ret = -EOVERFLOW;
++		goto exit;
++	}
++
++	if (strncmp((const char*)(data + squashfs_size), "verity", strlen("verity"))) {
++		printf("No verity data after factoryfs found.\n");
++		ret = -EILSEQ;
++		goto exit;
++	}
++
++	memcpy(salt, &data[squashfs_size + 88], 32);
++
++	printf("Salt:                 ");
++	print_sha256_sum(salt);
++
++	ret = calculate_root_hash(squashfs_size, salt, data, output);
++	if (ret != 0) {
++		goto exit;
++	}
++
++	printf("Calculated root_hash: ");
++	print_sha256_sum(output);
++
++exit:
++	if (data != NULL) {
++		free(data);
++	}
++
++	return ret;
++}
++
+diff --git a/include/factoryfs_calc.h b/include/factoryfs_calc.h
+new file mode 100644
+index 0000000000..831f95bfa6
+--- /dev/null
++++ b/include/factoryfs_calc.h
+@@ -0,0 +1,12 @@
++/*
++ * Copyright © Inter IKEA Systems B.V. 2021.
++ * All Rights Reserved.
++ *
++ * This is UNPUBLISHED PROPRIETARY SOURCE CODE of © Inter IKEA Systems B.V.;
++ * the contents of this file may not be disclosed to third parties, copied
++ * or duplicated in any form, in whole or in part, without the prior
++ * written permission of © Inter IKEA Systems B.V.
++ */
++
++int factoryfs_calc(u8* output);
++
+diff --git a/include/fastboot.h b/include/fastboot.h
+index bbc281de3c..274fac5bff 100644
+--- a/include/fastboot.h
++++ b/include/fastboot.h
+@@ -48,6 +48,7 @@ enum {
+ 	FASTBOOT_COMMAND_OEM_FUSEETHMAC,
+ 	FASTBOOT_COMMAND_OEM_FUSEWIFIMAC,
+ 	FASTBOOT_COMMAND_OEM_FUSEGEN,
++	FASTBOOT_COMMAND_OEM_FUSEFACTORY,
+ #endif
+ 
+ 	FASTBOOT_COMMAND_COUNT
+-- 
+2.27.0

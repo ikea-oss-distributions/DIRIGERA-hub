@@ -1,0 +1,36 @@
+From f57761b10498b2d88435a50f27f2857eb8e454ad Mon Sep 17 00:00:00 2001
+From: Piotr Blachnio <piotr.blachnio@inter.ikea.com>
+Date: Mon, 4 Jan 2021 09:11:18 +0100
+Subject: [PATCH] Adding M4 coprocessor firmware boot command
+
+---
+ include/config_distro_bootcmd.h | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/include/config_distro_bootcmd.h b/include/config_distro_bootcmd.h
+index 2c6a5cca1e..dd361be55e 100644
+--- a/include/config_distro_bootcmd.h
++++ b/include/config_distro_bootcmd.h
+@@ -467,10 +467,19 @@
+ 			"fi; "                                            \
+ 		"done\0"                                                  \
+ 	\
++	"coprofile=m4-firmware\0"                                         \
++	"scan_dev_for_copro_firmware="                                    \
++		"if ext4load mmc ${devnum}:${distro_bootpart} ${kernel_addr_r} ${coprofile}; then " \
++			"rproc init; "                                    \
++			"rproc load 0 ${kernel_addr_r} ${filesize}; "     \
++			"rproc start 0; "                                 \
++		"fi\0"                                                    \
++	\
+ 	"scan_dev_for_boot="                                              \
+ 		"echo Scanning ${devtype} "                               \
+ 				"${devnum}:${distro_bootpart}...; "       \
+ 		"for prefix in ${boot_prefixes}; do "                     \
++			"run scan_dev_for_copro_firmware; "               \
+ 			"run scan_dev_for_extlinux; "                     \
+ 			"run scan_dev_for_scripts; "                      \
+ 		"done;"                                                   \
+-- 
+2.27.0
+

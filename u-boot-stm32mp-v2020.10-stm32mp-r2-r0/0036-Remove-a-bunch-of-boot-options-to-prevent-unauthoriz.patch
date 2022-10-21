@@ -1,0 +1,45 @@
+From 1489dbc6045f25fa986077311bda37b16d3ca886 Mon Sep 17 00:00:00 2001
+From: Christer Fletcher <christer.fletcher@inter.ikea.com>
+Date: Thu, 30 Sep 2021 10:19:24 +0200
+Subject: [PATCH] Remove a bunch of boot options to prevent unauthorized boot.
+
+---
+ include/config_distro_bootcmd.h | 13 -------------
+ 1 file changed, 13 deletions(-)
+
+diff --git a/include/config_distro_bootcmd.h b/include/config_distro_bootcmd.h
+index e7a9ea3b2b..2ceb5a5df5 100644
+--- a/include/config_distro_bootcmd.h
++++ b/include/config_distro_bootcmd.h
+@@ -412,17 +412,7 @@
+ #define BOOTENV_DEV(devtypeu, devtypel, instance) \
+ 	BOOTENV_DEV_##devtypeu(devtypeu, devtypel, instance)
+ #define BOOTENV \
+-	BOOTENV_SHARED_HOST \
+ 	BOOTENV_SHARED_MMC \
+-	BOOTENV_SHARED_PCI \
+-	BOOTENV_SHARED_USB \
+-	BOOTENV_SHARED_SATA \
+-	BOOTENV_SHARED_SCSI \
+-	BOOTENV_SHARED_NVME \
+-	BOOTENV_SHARED_IDE \
+-	BOOTENV_SHARED_UBIFS \
+-	BOOTENV_SHARED_EFI \
+-	BOOTENV_SHARED_VIRTIO \
+ 	"boot_prefixes=/ /boot/\0" \
+ 	"boot_scripts=boot.scr.uimg boot.scr\0" \
+ 	"boot_script_dhcp=boot.scr.uimg\0" \
+@@ -499,10 +489,7 @@
+ 		"for prefix in ${boot_prefixes}; do "                     \
+ 			"run scan_dev_for_copro_firmware; "               \
+ 			"ikeixboot ${devnum}:${distro_bootpart} ${scriptaddr}; " \
+-			"run scan_dev_for_extlinux; "                     \
+-			"run scan_dev_for_scripts; "                      \
+ 		"done;"                                                   \
+-		SCAN_DEV_FOR_EFI                                          \
+ 		"\0"                                                      \
+ 	\
+ 	"scan_dev_for_boot_part="                                         \
+-- 
+2.33.0
+

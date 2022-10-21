@@ -1,0 +1,36 @@
+diff --git a/plat/st/common/stm32mp_crypto_lib.c b/plat/st/common/stm32mp_crypto_lib.c
+index 958216281..9841d14fb 100644
+--- a/plat/st/common/stm32mp_crypto_lib.c
++++ b/plat/st/common/stm32mp_crypto_lib.c
+@@ -368,10 +368,27 @@ static int crypto_verify_signature(void *data_ptr, unsigned int data_len,
+ 	 * manage exactly 2*32 bytes, we remove this higher byte
+ 	 * if there are not 00, we will fail either.
+ 	 */
+-	memcpy(sig, seq.buf.p + seq.buf.len - sizeof(sig) / 2U, sizeof(sig) / 2U);
+-	memcpy(sig +  sizeof(sig) / 2U,
+-	       seq.next->buf.p + seq.next->buf.len - sizeof(sig) / 2U,
+-	       sizeof(sig) / 2U);
++
++	if (seq.buf.len >= sizeof(sig)/2U)
++		memcpy(sig, seq.buf.p + seq.buf.len - sizeof(sig) / 2U, sizeof(sig) / 2U);
++	else {
++		uint8_t foo = 0;
++		memcpy(sig, &foo, 1);
++		memcpy(sig + 1, seq.buf.p, seq.buf.len);
++	}
++
++	if (seq.next->buf.len >= sizeof(sig)/2U)
++		memcpy(sig +  sizeof(sig) / 2U,
++		       seq.next->buf.p + seq.next->buf.len - sizeof(sig) / 2U,
++		       sizeof(sig) / 2U);
++	else {
++		uint8_t foo = 0;
++		memcpy(sig + sizeof(sig) / 2U, &foo, 1);
++		memcpy(sig +  sizeof(sig) / 2U + 1,
++		       seq.next->buf.p,
++		       seq.next->buf.len);
++	}
++
+ 	/* Need to free allocated 'next' in mbedtls_asn1_get_sequence_of */
+ 	mbedtls_free(seq.next);
+ 

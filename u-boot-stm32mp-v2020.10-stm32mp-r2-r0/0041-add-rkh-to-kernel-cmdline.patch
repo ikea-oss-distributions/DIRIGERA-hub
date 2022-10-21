@@ -1,0 +1,103 @@
+From be0b5a9b81ed363e364928001bb0bd3d64d2b39b Mon Sep 17 00:00:00 2001
+From: Ronnie Olsson <ronnie.olsson@inter.ikea.com>
+Date: Tue, 9 Nov 2021 11:11:59 +0100
+Subject: [PATCH] [HSPP-7161] Print rkh on kernel cmdline
+
+Easy to access public root key hash on device.
+---
+ arch/arm/mach-stm32mp/cpu.c                | 45 ++++++++++++++++++++++
+ arch/arm/mach-stm32mp/include/mach/stm32.h |  1 +
+ include/config_distro_bootcmd.h            |  3 +
+ 3 files changed, 48 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm/mach-stm32mp/cpu.c b/arch/arm/mach-stm32mp/cpu.c
+index 3dd40e5b19..873a5db44c 100644
+--- a/arch/arm/mach-stm32mp/cpu.c
++++ b/arch/arm/mach-stm32mp/cpu.c
+@@ -874,6 +874,50 @@ static void get_verity_status(void)
+ 	}
+ }
+ 
++static int setup_rkh(void)
++{
++	bool written = false;
++	struct udevice *dev;
++	char envvar[69];
++	u32 otp[8];
++	int ret;
++	int i;
++
++	ret = uclass_get_device_by_driver(UCLASS_MISC,
++					  DM_GET_DRIVER(stm32mp_bsec),
++					  &dev);
++	if (ret)
++		return ret;
++
++	ret = misc_read(dev, STM32_BSEC_SHADOW(BSEC_OTP_RKH),
++			otp, sizeof(otp));
++	if (ret < 0)
++		return ret;
++
++	for (i = 0; i < sizeof(otp)/sizeof(otp[0]); i++) {
++		if (otp[i] != 0) {
++			written = true;
++			break;
++		}
++	}
++
++	if (!written) {
++		printf("No public key hash fused.\n");
++		env_set("rkh", "rkh=");
++		return -EINVAL;
++	}
++
++	sprintf(envvar, "%s", "rkh=");
++
++	for (i = 0; i < sizeof(otp)/4; i++)
++		sprintf(envvar + 4 + i*8, "%08X", otp[i]);
++
++	printf("%s\n", envvar);
++	env_set("rkh", envvar);
++
++	return 0;
++}
++
+ int arch_misc_init(void)
+ {
+ 	setup_boot_mode();
+@@ -887,6 +931,7 @@ int arch_misc_init(void)
+ 	setup_factory_rootfs_hash();
+ 	setup_secure_device();
+ 	check_stsafe_provisioning();
++	setup_rkh();
+ 
+ 	return 0;
+ }
+diff --git a/arch/arm/mach-stm32mp/include/mach/stm32.h b/arch/arm/mach-stm32mp/include/mach/stm32.h
+index 744b130a6e..1bcc1cb96b 100644
+--- a/arch/arm/mach-stm32mp/include/mach/stm32.h
++++ b/arch/arm/mach-stm32mp/include/mach/stm32.h
+@@ -137,6 +137,7 @@ enum forced_boot_mode {
+ #define BSEC_OTP_RPN			1
+ #define BSEC_OTP_SERIAL			13
+ #define BSEC_OTP_PKG			16
++#define BSEC_OTP_RKH			24
+ #define BSEC_OTP_MAC			57
+ #define BSEC_OTP_BOARD			59
+ #define BSEC_OTP_MP				65
+diff --git a/include/config_distro_bootcmd.h b/include/config_distro_bootcmd.h
+index 9aacebfac7..5c787d827f 100644
+--- a/include/config_distro_bootcmd.h
++++ b/include/config_distro_bootcmd.h
+@@ -559,7 +559,8 @@
+ 			"hw_conf=${hw_conf} "                             \
+ 			"rtc_vendor=${rtc_vendor} "                       \
+ 			"systemd.hostname=${gateway_id} "                 \
+-			"${provision_stsafe} \0"                          \
++			"${provision_stsafe} "                            \
++			"${rkh} \0"                                       \
+ 
+ #ifndef CONFIG_BOOTCOMMAND
+ #define CONFIG_BOOTCOMMAND "run distro_bootcmd"
+-- 
+2.27.0

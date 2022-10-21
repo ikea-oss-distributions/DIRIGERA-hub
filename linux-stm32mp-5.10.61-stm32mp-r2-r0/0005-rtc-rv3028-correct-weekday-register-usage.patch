@@ -1,0 +1,54 @@
+From f0086ad6033b03c385c86a364ddc12a4e0ed7352 Mon Sep 17 00:00:00 2001
+From: Heiko Schocher <hs@denx.de>
+Date: Tue, 9 Mar 2021 14:47:19 +0100
+Subject: [PATCH 2/3] rtc: rv3028: correct weekday register usage
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+The datasheet for the rv3028 says the weekday has exact 3 bits
+and in chapter 3.4.0 for the "3h–Weekday" register it says:
+"""
+This register holds the current day of the week. Each value represents
+one weekday that is assigned by the user. Values will range from 0 to 6
+The weekday counter is simply a 3-bit counter which counts up to 6
+and then resets to 0.
+"""
+
+So do not code weekday bitwise instead, use the raw values from
+0-6.
+
+Tested on "PHYTEC phyBOARD-Pollux i.MX8MP" board.
+
+Signed-off-by: Heiko Schocher <hs@denx.de>
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Link: https://lore.kernel.org/r/20210309134719.1494062-1-hs@denx.de
+---
+ drivers/rtc/rtc-rv3028.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/rtc/rtc-rv3028.c b/drivers/rtc/rtc-rv3028.c
+index 044160359..44299d3eb 100644
+--- a/drivers/rtc/rtc-rv3028.c
++++ b/drivers/rtc/rtc-rv3028.c
+@@ -325,7 +325,7 @@ static int rv3028_get_time(struct device *dev, struct rtc_time *tm)
+ 	tm->tm_sec  = bcd2bin(date[RV3028_SEC] & 0x7f);
+ 	tm->tm_min  = bcd2bin(date[RV3028_MIN] & 0x7f);
+ 	tm->tm_hour = bcd2bin(date[RV3028_HOUR] & 0x3f);
+-	tm->tm_wday = ilog2(date[RV3028_WDAY] & 0x7f);
++	tm->tm_wday = date[RV3028_WDAY] & 0x7f;
+ 	tm->tm_mday = bcd2bin(date[RV3028_DAY] & 0x3f);
+ 	tm->tm_mon  = bcd2bin(date[RV3028_MONTH] & 0x1f) - 1;
+ 	tm->tm_year = bcd2bin(date[RV3028_YEAR]) + 100;
+@@ -342,7 +342,7 @@ static int rv3028_set_time(struct device *dev, struct rtc_time *tm)
+ 	date[RV3028_SEC]   = bin2bcd(tm->tm_sec);
+ 	date[RV3028_MIN]   = bin2bcd(tm->tm_min);
+ 	date[RV3028_HOUR]  = bin2bcd(tm->tm_hour);
+-	date[RV3028_WDAY]  = 1 << (tm->tm_wday);
++	date[RV3028_WDAY]  = tm->tm_wday;
+ 	date[RV3028_DAY]   = bin2bcd(tm->tm_mday);
+ 	date[RV3028_MONTH] = bin2bcd(tm->tm_mon + 1);
+ 	date[RV3028_YEAR]  = bin2bcd(tm->tm_year - 100);
+-- 
+2.27.0
+

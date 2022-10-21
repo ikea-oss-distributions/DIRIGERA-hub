@@ -1,0 +1,43 @@
+From 6bdc1be9cbaaa8035a31ece947829c2591f1f435 Mon Sep 17 00:00:00 2001
+From: Ronnie Olsson <ronnie.olsson@inter.ikea.com>
+Date: Sun, 21 Jun 2020 18:57:06 +0200
+Subject: [PATCH] [HSPP-1354] Remove gpioz bank dependency
+
+We have no port z/gpioz bank in the cab packages.
+It's removed from device tree to get rid of unnecessary error messages
+during bootup so it has to be removed here as well.
+---
+---
+ plat/st/stm32mp1/stm32mp1_shared_resources.c | 12 ------------
+ 1 file changed, 12 deletions(-)
+
+diff --git a/plat/st/stm32mp1/stm32mp1_shared_resources.c b/plat/st/stm32mp1/stm32mp1_shared_resources.c
+index 01fb499c1..a7a5aebe7 100644
+--- a/plat/st/stm32mp1/stm32mp1_shared_resources.c
++++ b/plat/st/stm32mp1/stm32mp1_shared_resources.c
+@@ -711,17 +711,6 @@ static void check_rcc_secure_configuration(void)
+ 	}
+ }
+ 
+-static void set_gpio_secure_configuration(void)
+-{
+-	uint32_t pin;
+-
+-	for (pin = 0U; pin < get_gpioz_nbpin(); pin++) {
+-		bool secure_state = periph_is_secure(STM32MP1_SHRES_GPIOZ(pin));
+-
+-		set_gpio_secure_cfg(GPIO_BANK_Z, pin, secure_state);
+-	}
+-}
+-
+ static void print_shared_resources_state(void)
+ {
+ 	unsigned int id;
+@@ -750,5 +739,4 @@ void stm32mp_lock_periph_registering(void)
+ 
+ 	check_rcc_secure_configuration();
+ 	check_etzpc_secure_configuration();
+-	set_gpio_secure_configuration();
+ }
+-- 
+2.27.0

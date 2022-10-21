@@ -1,0 +1,27 @@
+From d6b882605ff26cc3a41a38f15ec1c3916580e9e9 Mon Sep 17 00:00:00 2001
+From: Christophe Guibout <christophe.guibout@st.com>
+Date: Thu, 30 Sep 2021 10:06:48 +0200
+Subject: [PATCH 17/18] feat(fwu): enable PSA_FWU_SUPPORT
+
+Change-Id: I7ec32dfca10b036b327c95a89e731a691d44c41c
+
+%% original patch: 0017-feat-fwu-enable-PSA_FWU_SUPPORT.patch
+---
+ Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Makefile b/Makefile
+index f9ea2df2d..04389d717 100644
+--- a/Makefile
++++ b/Makefile
+@@ -932,6 +932,7 @@ $(eval $(call assert_numerics,\
+         FW_ENC_STATUS \
+         NR_OF_FW_BANKS \
+         NR_OF_IMAGES_IN_FW_BANK \
++        PSA_FWU_SUPPORT \
+ )))
+ 
+ ifdef KEY_SIZE
+-- 
+2.17.1
+
