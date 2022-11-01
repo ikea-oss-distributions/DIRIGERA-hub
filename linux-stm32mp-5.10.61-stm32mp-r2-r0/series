@@ -21,9 +21,6 @@
 0021-ARM-5.10.61-stm32mp1-r2-CPUIDLE-POWER.patch -p1
 0022-ARM-5.10.61-stm32mp1-r2-DEVICETREE.patch -p1
 0023-ARM-5.10.61-stm32mp1-r2-CONFIG.patch -p1
-0001-selinux-clarify-task-subjective-and-objective-creden.patch -p1
-CVE-2021-43057.patch -p1
-CVE-2021-3743.patch -p1
 0001-HSPP-1356-Do-not-gate-MCO1-clock-for-WiFi-module.patch -p1
 0002-HSPP-3326-dm-verity-reboot-handling.patch -p1
 0003-HSPP-2585-Adding-Epson-RX8130CE-driver.patch -p1
