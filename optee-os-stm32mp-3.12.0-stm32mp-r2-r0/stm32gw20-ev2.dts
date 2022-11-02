@@ -13,7 +13,7 @@
 #include <dt-bindings/soc/st,stm32-etzpc.h>
 
 / {
-	model = "IKEA home smart prototype. NOT FOR SALE";
+	model = "<<variable_model>>";
 	compatible = "st,stm32mp157c-ev1", "st,stm32mp157c-ed1", "st,stm32mp157";
 
 	chosen {
