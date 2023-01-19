@@ -168,6 +168,7 @@ set-blocking 2.0.0 : ISC License
 setprototypeof 1.1.1 : ISC License
 setprototypeof 1.2.0 : ISC License
 side-channel 1.0.4 : MIT License
+signal-exit 3.0.7 : ISC License
 split2 3.2.2 : ISC License
 statuses 1.5.0 : MIT License
 statuses 2.0.1 : MIT License
@@ -175,7 +176,6 @@ stream-shift 1.0.1 : MIT License
 string-width 4.2.3 : MIT License
 Strip ANSI 6.0.1 : MIT License
 swagger-ui 4.15.5 : Apache License 2.0
-tapjs/signal-exit 3.0.7 : ISC License
 tar 6.1.13 : ISC License
 toidentifier 1.0.0 : MIT License
 toidentifier 1.0.1 : MIT License
@@ -757,7 +757,7 @@ Permission to use, copy, modify, and/or distribute this software for any
 ---
 
 ISC License
-(tapjs/signal-exit 3.0.7)
+(signal-exit 3.0.7)
 
 The ISC License
 
@@ -4867,7 +4867,6 @@ GoDoc Text v0.2.0 : MIT License
 gogo-protobuf v1.3.2 : BSD 3-clause "New" or "Revised" License
 golang-github-docker-go-connections-dev 0.4.0 : Apache License 2.0
 golang-github-spf13-pflag-dev v1.0.5 : BSD 3-clause "New" or "Revised" License
-golang.org/x/crypto 20210502-snapshot-e9a32991 : BSD 3-clause "New" or "Revised" License
 golang.org/x/image 20191126-snapshot-da761ea9 : BSD 3-clause "New" or "Revised" License
 golang.org/x/net 20211105-snapshot-69e39bad : BSD 3-clause "New" or "Revised" License
 golang.org/x/net 20220126-snapshot-cd36cc07 : BSD 3-clause "New" or "Revised" License
@@ -4875,13 +4874,11 @@ golang.org/x/net v0.3.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sync 20210219-snapshot-036812b2 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sync v0.1.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys 20200216-snapshot-d5e6a3e2 : BSD 3-clause "New" or "Revised" License
-golang.org/x/sys 20210510-snapshot-b0526f3d : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys 20210614-snapshot-665e8c73 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys 20210620-snapshot-63515b42 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys v0.3.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/time 20220411-snapshot-583f2d63 : BSD 3-clause "New" or "Revised" License
 golang.org/x/xerrors 20190719-snapshot-9bdfabe6 : BSD 3-clause "New" or "Revised" License
-golang/text 20210430-snapshot-5c7c50eb : BSD 3-clause "New" or "Revised" License
 golang/text v0.3.7 : BSD 3-clause "New" or "Revised" License
 gomarkdown/markdown 20191123-snapshot-2c17d62f : BSD 2-clause "Simplified" License
 google.golang.org/protobuf v1.28.1 : BSD 3-clause "New" or "Revised" License
@@ -5587,7 +5584,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 ---
 
 BSD 3-clause "New" or "Revised" License
-(golang.org/x/crypto 20210502-snapshot-e9a32991, golang.org/x/image 20191126-snapshot-da761ea9, golang.org/x/net 20211105-snapshot-69e39bad, golang.org/x/net 20220126-snapshot-cd36cc07, golang.org/x/net v0.3.0, golang.org/x/sync 20210219-snapshot-036812b2, golang.org/x/sync v0.1.0, golang.org/x/sys 20200216-snapshot-d5e6a3e2, golang.org/x/sys 20210510-snapshot-b0526f3d, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys 20210620-snapshot-63515b42, golang.org/x/sys v0.3.0, golang.org/x/time 20220411-snapshot-583f2d63, golang.org/x/xerrors 20190719-snapshot-9bdfabe6, golang/text 20210430-snapshot-5c7c50eb, google.golang.org/protobuf v1.28.1, google/go-cmp v0.5.8, hybridgroup/ble 20220920-snapshot-9a45bebf)
+(golang.org/x/image 20191126-snapshot-da761ea9, golang.org/x/net 20211105-snapshot-69e39bad, golang.org/x/net 20220126-snapshot-cd36cc07, golang.org/x/net v0.3.0, golang.org/x/sync 20210219-snapshot-036812b2, golang.org/x/sync v0.1.0, golang.org/x/sys 20200216-snapshot-d5e6a3e2, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys 20210620-snapshot-63515b42, golang.org/x/sys v0.3.0, golang.org/x/time 20220411-snapshot-583f2d63, golang.org/x/xerrors 20190719-snapshot-9bdfabe6, google.golang.org/protobuf v1.28.1, google/go-cmp v0.5.8, hybridgroup/ble 20220920-snapshot-9a45bebf)
 
 Copyright (c) <YEAR>, <OWNER>
 All rights reserved.
