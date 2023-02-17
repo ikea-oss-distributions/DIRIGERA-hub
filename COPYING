@@ -761,6 +761,7 @@ Shadow Tool Suite 4.8.1 : (BSD 3-clause "New" or "Revised" License AND GNU Gener
 shadow-securetty 4.6 : MIT License
 SQLite 3.31.1 : Public Domain
 squashfs-tools 4.4 : GNU General Public License v2.0 only
+sudo 1.9.12p2 : ISC License
 systemd 244.5 : GNU Lesser General Public License v2.1 or later
 systemd-serialgetty 1.0 : GNU General Public License v2.0 or later
 Time Zone Database 2021e : Public Domain
@@ -5090,7 +5091,7 @@ their respective owners.
 ---
 
 ISC License
-(wireless-regdb 2021.08.28)
+(sudo 1.9.12p2, wireless-regdb 2021.08.28)
 
 ISC License (ISCL)
 ==================
