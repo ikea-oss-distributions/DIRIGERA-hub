@@ -5456,6 +5456,7 @@ aws/aws-sdk-go-v2 service/sso/v1.11.23 : Apache License 2.0
 aws/aws-sdk-go-v2 service/ssooidc/v1.13.6 : Apache License 2.0
 aws/aws-sdk-go-v2 service/sts/v1.16.19 : Apache License 2.0
 aws/aws-sdk-go-v2 v1.16.16 : Apache License 2.0
+bigfft 20200410-snapshot-eec4a21b : BSD 3-clause "New" or "Revised" License
 blang-semver v4.0.0 : MIT License
 bluesuncorp/go-validate-yourself v10.11.1 : MIT License
 creack/pty v1.1.13 : MIT License
@@ -5469,13 +5470,31 @@ eclipse-paho.mqtt.golang v1.4.1 :
 eliukblau/pixterm 20191210-snapshot-9fb6cf8c : Mozilla Public License 2.0
 fatih-color v1.10.0 : MIT License
 fatih-color v1.12.0 : MIT License
-fatih-color v1.9.0 : MIT License
+fatih-color v1.13.0 : MIT License
 fsnotify-fsnotify v1.5.0 : BSD 3-clause "New" or "Revised" License
 github.com/alecthomas/chroma 0.7.1 : MIT License
 github.com/aws/smithy-go v1.13.3 : Apache License 2.0
+github.com/gobuffalo/logger v1.0.6 : MIT License
+github.com/gobuffalo/packd 1.0.1 : MIT License
+github.com/markbates/oncer v1.0.0 : MIT License
+github.com/markbates/safe v1.0.1 : MIT License
 github.com/pkg/term v1.1.0 : BSD 2-clause "Simplified" License
 github.com/rivo/uniseg v0.1.0 : MIT License
 github.com/yuin/gluamapper 20170903-snapshot-d8369558 : MIT License
+gitlab.com/cznic/cc v3.40.0 : BSD 3-clause "New" or "Revised" License
+gitlab.com/cznic/ccgo v3.16.13 : BSD 3-clause "New" or "Revised" License
+gitlab.com/cznic/ccorpus v1.11.6 : BSD 3-clause "New" or "Revised" License
+gitlab.com/cznic/httpfs v1.0.6 : BSD 3-clause "New" or "Revised" License
+gitlab.com/cznic/libc v1.22.2 : BSD 3-clause "New" or "Revised" License
+gitlab.com/cznic/mathutil v1.5.0 : BSD 3-clause "New" or "Revised" License
+gitlab.com/cznic/memory v1.4.0 : BSD 3-clause "New" or "Revised" License
+gitlab.com/cznic/opt v0.1.3 : BSD 3-clause "New" or "Revised" License
+gitlab.com/cznic/sqlite v1.20.3 : BSD 3-clause "New" or "Revised" License
+gitlab.com/cznic/strutil v1.1.3 : BSD 3-clause "New" or "Revised" License
+gitlab.com/cznic/tcl v1.15.0 : BSD 3-clause "New" or "Revised" License
+gitlab.com/cznic/token v1.0.1 : BSD 3-clause "New" or "Revised" License
+gitlab.com/cznic/z v1.7.0 : (zlib License AND BSD 3-clause "New" or "Revised" License)
+go humanize v1.0.0 : MIT License
 Go Logrus v1.8.1 : MIT License
 Go Testify 1.7.0 : MIT License
 Go Testify 1.8.0 : MIT License
@@ -5483,30 +5502,40 @@ go-ansiterm d185dfc1b5a126116ea5a19e148e29d16b4574c9 : MIT License
 go-check-check 20171108-snapshot-20d25e28 : BSD 2-clause "Simplified" License
 go-check-check 20201130-snapshot-10cb9826 : BSD 2-clause "Simplified" License
 go-colorful v1.0.3 : MIT License
+go-gorp/gorp v3.0.2 : MIT License
 go-playground-universal-translator v0.18.0 : MIT License
 go-playground/assert v2.0.1 : MIT License
 go-playground/locales v0.14.0 : MIT License
+go-shellquote 20180428-snapshot-95032a82 : MIT License
 go-sonos 20171025-snapshot-05658505 : BSD 2-clause "Simplified" License
 go-spew v1.1.0 : ISC License
 go-spew v1.1.1 : ISC License
+go-sql-driver v1.6.0 : Mozilla Public License 2.0
 go-test/deep v1.0.8 : MIT License
 go.etcd.io/bbolt v1.3.6 : MIT License
+gobuffalo/packr v2.8.3 : MIT License
 godbus/go.dbus v5.1.0 : BSD 2-clause "Simplified" License
 GoDoc Text v0.2.0 : MIT License
 golang protobuf v1.3.2 : BSD 3-clause "New" or "Revised" License
 golang-github-docker-go-connections-dev 0.4.0 : Apache License 2.0
 golang-github-spf13-pflag-dev v1.0.5 : BSD 3-clause "New" or "Revised" License
+golang.org/x/crypto v0.5.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/image 20210215-snapshot-4410531f : BSD 3-clause "New" or "Revised" License
 golang.org/x/net 20211105-snapshot-69e39bad : BSD 3-clause "New" or "Revised" License
 golang.org/x/net 20220126-snapshot-cd36cc07 : BSD 3-clause "New" or "Revised" License
 golang.org/x/net v0.3.0 : BSD 3-clause "New" or "Revised" License
+golang.org/x/net v0.5.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sync 20210219-snapshot-036812b2 : BSD 3-clause "New" or "Revised" License
+golang.org/x/sync 20220722-snapshot-886fb937 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sync v0.1.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys 20200216-snapshot-d5e6a3e2 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys 20210614-snapshot-665e8c73 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys 20210620-snapshot-63515b42 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys v0.3.0 : BSD 3-clause "New" or "Revised" License
+golang.org/x/sys v0.4.0 : BSD 3-clause "New" or "Revised" License
+golang.org/x/term v0.4.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/time 20220411-snapshot-583f2d63 : BSD 3-clause "New" or "Revised" License
+golang.org/x/tools v0.1.12 : BSD 3-clause "New" or "Revised" License
 golang.org/x/xerrors 20190719-snapshot-9bdfabe6 : BSD 3-clause "New" or "Revised" License
 golang/text v0.3.7 : BSD 3-clause "New" or "Revised" License
 golang/text v0.6.0 : BSD 3-clause "New" or "Revised" License
@@ -5514,8 +5543,10 @@ gomarkdown/markdown 20191123-snapshot-2c17d62f : BSD 2-clause "Simplified" Licen
 google.golang.org/protobuf v1.28.1 : BSD 3-clause "New" or "Revised" License
 google/go-cmp v0.5.5 : BSD 3-clause "New" or "Revised" License
 google/go-cmp v0.5.8 : BSD 3-clause "New" or "Revised" License
+google/go-cmp v0.5.9 : BSD 3-clause "New" or "Revised" License
 google/uuid v1.3.0 : BSD 3-clause "New" or "Revised" License
 gorilla/mux v1.8.0 : BSD 3-clause "New" or "Revised" License
+gorilla/schema v1.2.0 : BSD 3-clause "New" or "Revised" License
 gorilla/websocket v1.4.2 : BSD 2-clause "Simplified" License
 gotest.tools v3.1.0 : Apache License 2.0
 holoplot/go-avahi v1.0.1 : MIT License
@@ -5523,16 +5554,19 @@ hybridgroup/ble 20220920-snapshot-9a45bebf : BSD 3-clause "New" or "Revised" Lic
 iancoleman/strcase v0.2.0 : MIT License
 jmespath-go-jmespath internal/testify/v1.5.1 : Apache License 2.0
 jmespath-go-jmespath v0.4.0 : Apache License 2.0
+karrick/godirwalk v1.16.1 : BSD 2-clause "Simplified" License
 kr/pretty v0.3.0 : MIT License
 kyokomi/emoji v2.2.8 : MIT License
 leodido/go-urn v1.2.1 : MIT License
+lukechampine/uint128 v1.2.0 : MIT License
 mapstructure v1.5.0 : MIT License
+markbates/errx v1.1.0 : MIT License
 Masterminds-semver v1.5.0 : MIT License
-mattn-go-colorable v0.1.4 : MIT License
+mattn-go-colorable 0.1.13 : (MIT License AND BSD 3-clause "New" or "Revised" License)
 mattn-go-colorable v0.1.6 : MIT License
 mattn-go-colorable v0.1.8 : MIT License
-mattn-go-isatty v0.0.11 : MIT License
 mattn-go-isatty v0.0.12 : MIT License
+mattn-go-isatty v0.0.17 : MIT License
 mattn-go-runewidth v0.0.12 : MIT License
 mgutz-ansi 20170206-snapshot-9520e82c : MIT License
 mgutz-logxi 20161027-snapshot-aebf8a7d : MIT License
@@ -5542,18 +5576,23 @@ Microsoft-go-winio v0.5.1 : MIT License
 moby/term 3f7ff695adc6a35abc925370dd0a4dafb48ec64d : Apache License 2.0
 mohae/deepcopy 20170929-snapshot-c48cc78d : MIT License
 morikuni/aec v1.0.0 : MIT License
+mymysql v1.5.4 : BSD 3-clause "New" or "Revised" License
 opencontainers/go-digest 1.0.0 : Apache License 2.0
 opencontainers/image-spec v1.0.2 : Apache License 2.0
 pkg/errors v0.8.1 : BSD 2-clause "Simplified" License
 pkg/errors v0.9.1 : BSD 2-clause "Simplified" License
 pmezard-go-difflib 1.0.0 : BSD 3-clause "New" or "Revised" License
+pq v1.10.0 : MIT License
 rogpeppe/go-internal v1.8.0 : BSD 3-clause "New" or "Revised" License
 rogpeppe/go-internal v1.8.1 : BSD 3-clause "New" or "Revised" License
+rqlite v1.14.15 : MIT License
 ryanuber-go-glob v1.0.0 : MIT License
 segmentio/textio v1.2.0 : MIT License
 sergi/go-diff v1.0.0 : (MIT License AND Apache License 2.0)
 sixdouglas/suncalc 20210131-snapshot-475bb71c : 
 spacemonkeygo-spacelog 20180419-snapshot-2296661a : Apache License 2.0
+sql-migrate v1.3.0 : MIT License
+sqlx v1.3.5 : MIT License
 stretchr/objx v0.4.0 : MIT License
 tarm-serial 20180830-snapshot-98f6abe2 : BSD 3-clause "New" or "Revised" License
 tevino/abool v2.1.0 : MIT License
@@ -5780,6 +5819,37 @@ PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
 LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+
+---
+
+BSD 2-clause "Simplified" License
+(karrick/godirwalk v1.16.1)
+
+BSD 2-Clause License
+
+Copyright (c) 2017, Karrick McDermott
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 
 ---
 
@@ -6047,6 +6117,36 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 ---
 
 BSD 3-clause "New" or "Revised" License
+(mymysql v1.5.4)
+
+Copyright (c) 2010, Michal Derkacz
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. The name of the author may not be used to endorse or promote products
+   derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+
+---
+
+BSD 3-clause "New" or "Revised" License
 (golang-github-spf13-pflag-dev v1.0.5)
 
 Copyright (c) 2012 Alex Ogier. All rights reserved.
@@ -6063,6 +6163,39 @@ copyright notice, this list of conditions and the following disclaimer
 in the documentation and/or other materials provided with the
 distribution.
    * Neither the name of Google Inc. nor the names of its
+contributors may be used to endorse or promote products derived from
+this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+
+---
+
+BSD 3-clause "New" or "Revised" License
+(gorilla/schema v1.2.0)
+
+Copyright (c) 2012 Rodrigo Moraes. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+	 * Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+	 * Redistributions in binary form must reproduce the above
+copyright notice, this list of conditions and the following disclaimer
+in the documentation and/or other materials provided with the
+distribution.
+	 * Neither the name of Google Inc. nor the names of its
 contributors may be used to endorse or promote products derived from
 this software without specific prior written permission.
 
@@ -6214,7 +6347,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 ---
 
 BSD 3-clause "New" or "Revised" License
-(golang.org/x/image 20210215-snapshot-4410531f, golang.org/x/net 20211105-snapshot-69e39bad, golang.org/x/net 20220126-snapshot-cd36cc07, golang.org/x/net v0.3.0, golang.org/x/sync 20210219-snapshot-036812b2, golang.org/x/sync v0.1.0, golang.org/x/sys 20200216-snapshot-d5e6a3e2, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys 20210620-snapshot-63515b42, golang.org/x/sys v0.3.0, golang.org/x/time 20220411-snapshot-583f2d63, golang.org/x/xerrors 20190719-snapshot-9bdfabe6, golang/text v0.6.0, google.golang.org/protobuf v1.28.1, google/go-cmp v0.5.8, hybridgroup/ble 20220920-snapshot-9a45bebf)
+(bigfft 20200410-snapshot-eec4a21b, gitlab.com/cznic/cc v3.40.0, gitlab.com/cznic/ccgo v3.16.13, gitlab.com/cznic/ccorpus v1.11.6, gitlab.com/cznic/httpfs v1.0.6, gitlab.com/cznic/libc v1.22.2, gitlab.com/cznic/mathutil v1.5.0, gitlab.com/cznic/memory v1.4.0, gitlab.com/cznic/opt v0.1.3, gitlab.com/cznic/sqlite v1.20.3, gitlab.com/cznic/strutil v1.1.3, gitlab.com/cznic/tcl v1.15.0, gitlab.com/cznic/token v1.0.1, gitlab.com/cznic/z v1.7.0, golang.org/x/crypto v0.5.0, golang.org/x/image 20210215-snapshot-4410531f, golang.org/x/net 20211105-snapshot-69e39bad, golang.org/x/net 20220126-snapshot-cd36cc07, golang.org/x/net v0.3.0, golang.org/x/net v0.5.0, golang.org/x/sync 20210219-snapshot-036812b2, golang.org/x/sync 20220722-snapshot-886fb937, golang.org/x/sync v0.1.0, golang.org/x/sys 20200216-snapshot-d5e6a3e2, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys 20210620-snapshot-63515b42, golang.org/x/sys v0.3.0, golang.org/x/sys v0.4.0, golang.org/x/term v0.4.0, golang.org/x/time 20220411-snapshot-583f2d63, golang.org/x/tools v0.1.12, golang.org/x/xerrors 20190719-snapshot-9bdfabe6, golang/text v0.6.0, google.golang.org/protobuf v1.28.1, google/go-cmp v0.5.8, google/go-cmp v0.5.9, hybridgroup/ble 20220920-snapshot-9a45bebf, mattn-go-colorable 0.1.13)
 
 Copyright (c) <YEAR>, <OWNER>
 All rights reserved.
@@ -6347,6 +6480,59 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE
 ---
 
 MIT License
+(go-gorp/gorp v3.0.2)
+
+(The MIT License)
+
+Copyright (c) 2012 James Cooper <james@bitmechanic.com>
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
+
+---
+
+MIT License
+(go-shellquote 20180428-snapshot-95032a82)
+
+Copyright (C) 2014 Kevin Ballard
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
+OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
+
+---
+
+MIT License
 (Masterminds-semver v1.5.0)
 
 Copyright (C) 2014-2019, Matt Butcher and Matt Farina
@@ -6397,6 +6583,31 @@ SOFTWARE
 ---
 
 MIT License
+(go humanize v1.0.0)
+
+Copyright (c) 2005-2008  Dustin Sallings <dustin@spy.net>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE
+
+---
+
+MIT License
 (creack/pty v1.1.13)
 
 Copyright (c) 2011 Keith Rarick
@@ -6422,6 +6633,20 @@ OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
 OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
+
+---
+
+MIT License
+(pq v1.10.0)
+
+Copyright (c) 2011-2013, 'pq' Contributors
+Portions Copyright (C) 2011 Blake Mizerany
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
 
 ---
 
@@ -6464,7 +6689,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ---
 
 MIT License
-(mattn-go-isatty v0.0.11, mattn-go-isatty v0.0.12)
+(mattn-go-isatty v0.0.12)
 
 Copyright (c) Yasuhiro MATSUMOTO <mattn.jp@gmail.com>
 
@@ -6817,7 +7042,7 @@ SOFTWARE
 ---
 
 MIT License
-(alecthomas/repr 20180818-snapshot-117648cd, bluesuncorp/go-validate-yourself v10.11.1, Go Testify 1.8.0, holoplot/go-avahi v1.0.1, mapstructure v1.5.0, MichaelMure/go-term-markdown v0.1.4, MichaelMure/go-term-text v0.3.1, tevino/abool v2.1.0, yaml for Go v3.0.1, yuin-gopher-lua 20220504-snapshot-65819353)
+(alecthomas/repr 20180818-snapshot-117648cd, bluesuncorp/go-validate-yourself v10.11.1, github.com/gobuffalo/logger v1.0.6, github.com/gobuffalo/packd 1.0.1, Go Testify 1.8.0, holoplot/go-avahi v1.0.1, lukechampine/uint128 v1.2.0, mapstructure v1.5.0, mattn-go-colorable 0.1.13, mattn-go-isatty v0.0.17, MichaelMure/go-term-markdown v0.1.4, MichaelMure/go-term-text v0.3.1, rqlite v1.14.15, sql-migrate v1.3.0, sqlx v1.3.5, tevino/abool v2.1.0, yaml for Go v3.0.1, yuin-gopher-lua 20220504-snapshot-65819353)
 
 The MIT License
 ===============
@@ -6870,7 +7095,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
 ---
 
 MIT License
-(fatih-color v1.10.0, fatih-color v1.12.0, fatih-color v1.9.0)
+(fatih-color v1.10.0, fatih-color v1.12.0, fatih-color v1.13.0)
 
 The MIT License (MIT)
 
@@ -7194,11 +7419,65 @@ SOFTWARE
 ---
 
 MIT License
-(mattn-go-colorable v0.1.4, mattn-go-colorable v0.1.6, mattn-go-colorable v0.1.8, mattn-go-runewidth v0.0.12)
+(mattn-go-colorable v0.1.6, mattn-go-colorable v0.1.8, mattn-go-runewidth v0.0.12)
 
 The MIT License (MIT)
 
 Copyright (c) 2016 Yasuhiro Matsumoto
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE
+
+---
+
+MIT License
+(github.com/markbates/oncer v1.0.0, github.com/markbates/safe v1.0.1)
+
+The MIT License (MIT)
+
+Copyright (c) 2018 Mark Bates
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE
+
+---
+
+MIT License
+(markbates/errx v1.1.0)
+
+The MIT License (MIT)
+
+Copyright (c) 2019 Mark Bates
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -7249,6 +7528,20 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ---
 
 MIT License
+(gobuffalo/packr v2.8.3)
+
+The MIT License (MIT)
+Copyright (c) 2016 Mark Bates
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
+
+---
+
+MIT License
 (go-playground/assert v2.0.1)
 
 Upstream-Contact: Dean Karn <dean.karn@gmail.com>
@@ -7287,7 +7580,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy
 ---
 
 Mozilla Public License 2.0
-(eliukblau/pixterm 20191210-snapshot-9fb6cf8c)
+(eliukblau/pixterm 20191210-snapshot-9fb6cf8c, go-sql-driver v1.6.0)
 
 Mozilla Public License
 Version 2.0
@@ -7697,6 +7990,34 @@ Exhibit B - "Incompatible With Secondary Licenses" Notice
 
   This Source Code Form is "Incompatible With Secondary Licenses", as defined
   by the Mozilla Public License, v. 2.0.
+
+---
+
+zlib License
+(gitlab.com/cznic/z v1.7.0)
+
+The zlib/libpng License
+=======================
+
+Copyright (c) <year> <copyright holders>
+
+This software is provided 'as-is', without any express or implied warranty. In no
+event will the authors be held liable for any damages arising from the use of
+this software.
+
+Permission is granted to anyone to use this software for any purpose, including
+commercial applications, and to alter it and redistribute it freely, subject to
+the following restrictions:
+
+      1. The origin of this software must not be misrepresented; you must not
+      claim that you wrote the original software. If you use this software in a
+      product, an acknowledgment in the product documentation would be
+      appreciated but is not required.
+
+      2. Altered source versions must be plainly marked as such, and must not be
+      misrepresented as being the original software.
+
+      3. This notice may not be removed or altered from any source distribution.
 
 Copyright 2023
 
