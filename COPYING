@@ -5461,11 +5461,13 @@ blang-semver v4.0.0 : MIT License
 bluesuncorp/go-validate-yourself v10.11.1 : MIT License
 creack/pty v1.1.13 : MIT License
 danwakefield/fnmatch 20160403-snapshot-cbb64ac3 : BSD 2-clause "Simplified" License
+DATA-DOG-go-sqlmock v1.5.0 : BSD 3-clause "New" or "Revised" License
 disintegration/imaging v1.6.2 : MIT License
 dlclark/regexp2 v1.1.6 : MIT License
 docker v20.10.18 : Apache License 2.0
 docker-go-units v0.4.0 : Apache License 2.0
 docker-registry 2.8.1 : Apache License 2.0
+doug-martin/gql v9.18.0 : MIT License
 eclipse-paho.mqtt.golang v1.4.1 : 
 eliukblau/pixterm 20191210-snapshot-9fb6cf8c : Mozilla Public License 2.0
 fatih-color v1.10.0 : MIT License
@@ -5582,7 +5584,7 @@ opencontainers/image-spec v1.0.2 : Apache License 2.0
 pkg/errors v0.8.1 : BSD 2-clause "Simplified" License
 pkg/errors v0.9.1 : BSD 2-clause "Simplified" License
 pmezard-go-difflib 1.0.0 : BSD 3-clause "New" or "Revised" License
-pq v1.10.0 : MIT License
+pq v1.10.1 : MIT License
 rogpeppe/go-internal v1.8.0 : BSD 3-clause "New" or "Revised" License
 rogpeppe/go-internal v1.8.1 : BSD 3-clause "New" or "Revised" License
 rqlite v1.14.15 : MIT License
@@ -6347,7 +6349,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 ---
 
 BSD 3-clause "New" or "Revised" License
-(bigfft 20200410-snapshot-eec4a21b, gitlab.com/cznic/cc v3.40.0, gitlab.com/cznic/ccgo v3.16.13, gitlab.com/cznic/ccorpus v1.11.6, gitlab.com/cznic/httpfs v1.0.6, gitlab.com/cznic/libc v1.22.2, gitlab.com/cznic/mathutil v1.5.0, gitlab.com/cznic/memory v1.4.0, gitlab.com/cznic/opt v0.1.3, gitlab.com/cznic/sqlite v1.20.3, gitlab.com/cznic/strutil v1.1.3, gitlab.com/cznic/tcl v1.15.0, gitlab.com/cznic/token v1.0.1, gitlab.com/cznic/z v1.7.0, golang.org/x/crypto v0.5.0, golang.org/x/image 20210215-snapshot-4410531f, golang.org/x/net 20211105-snapshot-69e39bad, golang.org/x/net 20220126-snapshot-cd36cc07, golang.org/x/net v0.3.0, golang.org/x/net v0.5.0, golang.org/x/sync 20210219-snapshot-036812b2, golang.org/x/sync 20220722-snapshot-886fb937, golang.org/x/sync v0.1.0, golang.org/x/sys 20200216-snapshot-d5e6a3e2, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys 20210620-snapshot-63515b42, golang.org/x/sys v0.3.0, golang.org/x/sys v0.4.0, golang.org/x/term v0.4.0, golang.org/x/time 20220411-snapshot-583f2d63, golang.org/x/tools v0.1.12, golang.org/x/xerrors 20190719-snapshot-9bdfabe6, golang/text v0.6.0, google.golang.org/protobuf v1.28.1, google/go-cmp v0.5.8, google/go-cmp v0.5.9, hybridgroup/ble 20220920-snapshot-9a45bebf, mattn-go-colorable 0.1.13)
+(bigfft 20200410-snapshot-eec4a21b, DATA-DOG-go-sqlmock v1.5.0, gitlab.com/cznic/cc v3.40.0, gitlab.com/cznic/ccgo v3.16.13, gitlab.com/cznic/ccorpus v1.11.6, gitlab.com/cznic/httpfs v1.0.6, gitlab.com/cznic/libc v1.22.2, gitlab.com/cznic/mathutil v1.5.0, gitlab.com/cznic/memory v1.4.0, gitlab.com/cznic/opt v0.1.3, gitlab.com/cznic/sqlite v1.20.3, gitlab.com/cznic/strutil v1.1.3, gitlab.com/cznic/tcl v1.15.0, gitlab.com/cznic/token v1.0.1, gitlab.com/cznic/z v1.7.0, golang.org/x/crypto v0.5.0, golang.org/x/image 20210215-snapshot-4410531f, golang.org/x/net 20211105-snapshot-69e39bad, golang.org/x/net 20220126-snapshot-cd36cc07, golang.org/x/net v0.3.0, golang.org/x/net v0.5.0, golang.org/x/sync 20210219-snapshot-036812b2, golang.org/x/sync 20220722-snapshot-886fb937, golang.org/x/sync v0.1.0, golang.org/x/sys 20200216-snapshot-d5e6a3e2, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys 20210620-snapshot-63515b42, golang.org/x/sys v0.3.0, golang.org/x/sys v0.4.0, golang.org/x/term v0.4.0, golang.org/x/time 20220411-snapshot-583f2d63, golang.org/x/tools v0.1.12, golang.org/x/xerrors 20190719-snapshot-9bdfabe6, golang/text v0.6.0, google.golang.org/protobuf v1.28.1, google/go-cmp v0.5.8, google/go-cmp v0.5.9, hybridgroup/ble 20220920-snapshot-9a45bebf, mattn-go-colorable 0.1.13)
 
 Copyright (c) <YEAR>, <OWNER>
 All rights reserved.
@@ -6637,7 +6639,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
 ---
 
 MIT License
-(pq v1.10.0)
+(pq v1.10.1)
 
 Copyright (c) 2011-2013, 'pq' Contributors
 Portions Copyright (C) 2011 Blake Mizerany
@@ -7042,7 +7044,7 @@ SOFTWARE
 ---
 
 MIT License
-(alecthomas/repr 20180818-snapshot-117648cd, bluesuncorp/go-validate-yourself v10.11.1, github.com/gobuffalo/logger v1.0.6, github.com/gobuffalo/packd 1.0.1, Go Testify 1.8.0, holoplot/go-avahi v1.0.1, lukechampine/uint128 v1.2.0, mapstructure v1.5.0, mattn-go-colorable 0.1.13, mattn-go-isatty v0.0.17, MichaelMure/go-term-markdown v0.1.4, MichaelMure/go-term-text v0.3.1, rqlite v1.14.15, sql-migrate v1.3.0, sqlx v1.3.5, tevino/abool v2.1.0, yaml for Go v3.0.1, yuin-gopher-lua 20220504-snapshot-65819353)
+(alecthomas/repr 20180818-snapshot-117648cd, bluesuncorp/go-validate-yourself v10.11.1, doug-martin/gql v9.18.0, github.com/gobuffalo/logger v1.0.6, github.com/gobuffalo/packd 1.0.1, Go Testify 1.8.0, holoplot/go-avahi v1.0.1, lukechampine/uint128 v1.2.0, mapstructure v1.5.0, mattn-go-colorable 0.1.13, mattn-go-isatty v0.0.17, MichaelMure/go-term-markdown v0.1.4, MichaelMure/go-term-text v0.3.1, rqlite v1.14.15, sql-migrate v1.3.0, sqlx v1.3.5, tevino/abool v2.1.0, yaml for Go v3.0.1, yuin-gopher-lua 20220504-snapshot-65819353)
 
 The MIT License
 ===============
@@ -8121,7 +8123,7 @@ mime-db 1.52.0 : MIT License
 minimatch 3.1.2 : ISC License
 minimist 1.2.8 : MIT License
 minipass 3.3.6 : ISC License
-minipass v4.2.4 : ISC License
+minipass 4.2.4 : ISC License
 minizlib v2.1.2 : MIT License
 mqtt-packet 6.10.0 : MIT License
 MQTT.js 4.3.7 : MIT License
@@ -8164,7 +8166,7 @@ qs -  QS Querystring 6.11.0 : BSD 3-clause "New" or "Revised" License
 range-parser v1.2.1 : MIT License
 raw-body 2.5.1 : MIT License
 raw-body 2.5.2 : MIT License
-readable-stream v3.6.1 : MIT License
+readable-stream 3.6.1 : MIT License
 reinterval 1.1.0 : MIT License
 rfdc 1.3.0 : MIT License
 rimraf 3.0.2 : ISC License
@@ -8672,7 +8674,7 @@ Permission to use, copy, modify, and/or distribute this software for any
 ---
 
 ISC License
-(apiserver 1.0.0, are-we-there-yet 2.0.0, Gozala/crypto 1.0.1, minipass 3.3.6, minipass v4.2.4, node-glob 7.2.3, node-semver 7.3.8, tar 6.1.13)
+(apiserver 1.0.0, are-we-there-yet 2.0.0, Gozala/crypto 1.0.1, minipass 3.3.6, minipass 4.2.4, node-glob 7.2.3, node-semver 7.3.8, tar 6.1.13)
 
 ISC License (ISCL)
 ==================
@@ -10335,7 +10337,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
 ---
 
 MIT License
-(@apidevtools/json-schema-ref-parser 9.1.2, async-mqtt 2.6.3, body-parser 1.20.1, body-parser 1.20.2, call-me-maybe 1.0.2, deepmerge 4.3.0, einaros/ws 7.5.9, expressjs/express 4.18.2, get-intrinsic 1.2.0, https-proxy-agent 5.0.1, js-sdsl 4.3.0, jshttp/content-type 1.0.5, jsonwebtoken 9.0.0, minimist 1.2.8, MQTT.js 4.3.7, nan 2.17.0, Node Cookie Parser 0.5.0, node-fetch 2.6.9, number-allocator 1.0.14, object-inspect 1.12.3, raw-body 2.5.2, readable-stream v3.6.1, tr46 0.0.3)
+(@apidevtools/json-schema-ref-parser 9.1.2, async-mqtt 2.6.3, body-parser 1.20.1, body-parser 1.20.2, call-me-maybe 1.0.2, deepmerge 4.3.0, einaros/ws 7.5.9, expressjs/express 4.18.2, get-intrinsic 1.2.0, https-proxy-agent 5.0.1, js-sdsl 4.3.0, jshttp/content-type 1.0.5, jsonwebtoken 9.0.0, minimist 1.2.8, MQTT.js 4.3.7, nan 2.17.0, Node Cookie Parser 0.5.0, node-fetch 2.6.9, number-allocator 1.0.14, object-inspect 1.12.3, raw-body 2.5.2, readable-stream 3.6.1, tr46 0.0.3)
 
 The MIT License
 ===============
