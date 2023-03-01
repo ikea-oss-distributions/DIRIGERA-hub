@@ -5470,7 +5470,6 @@ docker-registry 2.8.1 : Apache License 2.0
 doug-martin/gql v9.18.0 : MIT License
 eclipse-paho.mqtt.golang v1.4.1 : 
 eliukblau/pixterm 20191210-snapshot-9fb6cf8c : Mozilla Public License 2.0
-fatih-color v1.10.0 : MIT License
 fatih-color v1.12.0 : MIT License
 fatih-color v1.13.0 : MIT License
 fsnotify-fsnotify v1.5.0 : BSD 3-clause "New" or "Revised" License
@@ -5530,11 +5529,11 @@ golang.org/x/net v0.5.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sync 20210219-snapshot-036812b2 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sync 20220722-snapshot-886fb937 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sync v0.1.0 : BSD 3-clause "New" or "Revised" License
-golang.org/x/sys 20200216-snapshot-d5e6a3e2 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys 20210614-snapshot-665e8c73 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys 20210620-snapshot-63515b42 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys v0.3.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys v0.4.0 : BSD 3-clause "New" or "Revised" License
+golang.org/x/sys v0.5.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/term v0.4.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/time 20220411-snapshot-583f2d63 : BSD 3-clause "New" or "Revised" License
 golang.org/x/tools v0.1.12 : BSD 3-clause "New" or "Revised" License
@@ -5558,6 +5557,7 @@ jmespath-go-jmespath internal/testify/v1.5.1 : Apache License 2.0
 jmespath-go-jmespath v0.4.0 : Apache License 2.0
 karrick/godirwalk v1.16.1 : BSD 2-clause "Simplified" License
 kr/pretty v0.3.0 : MIT License
+kyokomi/emoji v2.2.12 : MIT License
 kyokomi/emoji v2.2.8 : MIT License
 leodido/go-urn v1.2.1 : MIT License
 lukechampine/uint128 v1.2.0 : MIT License
@@ -6349,7 +6349,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 ---
 
 BSD 3-clause "New" or "Revised" License
-(bigfft 20200410-snapshot-eec4a21b, DATA-DOG-go-sqlmock v1.5.0, gitlab.com/cznic/cc v3.40.0, gitlab.com/cznic/ccgo v3.16.13, gitlab.com/cznic/ccorpus v1.11.6, gitlab.com/cznic/httpfs v1.0.6, gitlab.com/cznic/libc v1.22.2, gitlab.com/cznic/mathutil v1.5.0, gitlab.com/cznic/memory v1.4.0, gitlab.com/cznic/opt v0.1.3, gitlab.com/cznic/sqlite v1.20.3, gitlab.com/cznic/strutil v1.1.3, gitlab.com/cznic/tcl v1.15.0, gitlab.com/cznic/token v1.0.1, gitlab.com/cznic/z v1.7.0, golang.org/x/crypto v0.5.0, golang.org/x/image 20210215-snapshot-4410531f, golang.org/x/net 20211105-snapshot-69e39bad, golang.org/x/net 20220126-snapshot-cd36cc07, golang.org/x/net v0.3.0, golang.org/x/net v0.5.0, golang.org/x/sync 20210219-snapshot-036812b2, golang.org/x/sync 20220722-snapshot-886fb937, golang.org/x/sync v0.1.0, golang.org/x/sys 20200216-snapshot-d5e6a3e2, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys 20210620-snapshot-63515b42, golang.org/x/sys v0.3.0, golang.org/x/sys v0.4.0, golang.org/x/term v0.4.0, golang.org/x/time 20220411-snapshot-583f2d63, golang.org/x/tools v0.1.12, golang.org/x/xerrors 20190719-snapshot-9bdfabe6, golang/text v0.6.0, google.golang.org/protobuf v1.28.1, google/go-cmp v0.5.8, google/go-cmp v0.5.9, hybridgroup/ble 20220920-snapshot-9a45bebf, mattn-go-colorable 0.1.13)
+(bigfft 20200410-snapshot-eec4a21b, DATA-DOG-go-sqlmock v1.5.0, gitlab.com/cznic/cc v3.40.0, gitlab.com/cznic/ccgo v3.16.13, gitlab.com/cznic/ccorpus v1.11.6, gitlab.com/cznic/httpfs v1.0.6, gitlab.com/cznic/libc v1.22.2, gitlab.com/cznic/mathutil v1.5.0, gitlab.com/cznic/memory v1.4.0, gitlab.com/cznic/opt v0.1.3, gitlab.com/cznic/sqlite v1.20.3, gitlab.com/cznic/strutil v1.1.3, gitlab.com/cznic/tcl v1.15.0, gitlab.com/cznic/token v1.0.1, gitlab.com/cznic/z v1.7.0, golang.org/x/crypto v0.5.0, golang.org/x/image 20210215-snapshot-4410531f, golang.org/x/net 20211105-snapshot-69e39bad, golang.org/x/net 20220126-snapshot-cd36cc07, golang.org/x/net v0.3.0, golang.org/x/net v0.5.0, golang.org/x/sync 20210219-snapshot-036812b2, golang.org/x/sync 20220722-snapshot-886fb937, golang.org/x/sync v0.1.0, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys 20210620-snapshot-63515b42, golang.org/x/sys v0.3.0, golang.org/x/sys v0.4.0, golang.org/x/sys v0.5.0, golang.org/x/term v0.4.0, golang.org/x/time 20220411-snapshot-583f2d63, golang.org/x/tools v0.1.12, golang.org/x/xerrors 20190719-snapshot-9bdfabe6, golang/text v0.6.0, google.golang.org/protobuf v1.28.1, google/go-cmp v0.5.8, google/go-cmp v0.5.9, hybridgroup/ble 20220920-snapshot-9a45bebf, mattn-go-colorable 0.1.13)
 
 Copyright (c) <YEAR>, <OWNER>
 All rights reserved.
@@ -7044,7 +7044,7 @@ SOFTWARE
 ---
 
 MIT License
-(alecthomas/repr 20180818-snapshot-117648cd, bluesuncorp/go-validate-yourself v10.11.1, doug-martin/gql v9.18.0, github.com/gobuffalo/logger v1.0.6, github.com/gobuffalo/packd 1.0.1, Go Testify 1.8.0, holoplot/go-avahi v1.0.1, lukechampine/uint128 v1.2.0, mapstructure v1.5.0, mattn-go-colorable 0.1.13, mattn-go-isatty v0.0.17, MichaelMure/go-term-markdown v0.1.4, MichaelMure/go-term-text v0.3.1, rqlite v1.14.15, sql-migrate v1.3.0, sqlx v1.3.5, tevino/abool v2.1.0, yaml for Go v3.0.1, yuin-gopher-lua 20220504-snapshot-65819353)
+(alecthomas/repr 20180818-snapshot-117648cd, bluesuncorp/go-validate-yourself v10.11.1, doug-martin/gql v9.18.0, github.com/gobuffalo/logger v1.0.6, github.com/gobuffalo/packd 1.0.1, Go Testify 1.8.0, holoplot/go-avahi v1.0.1, kyokomi/emoji v2.2.12, lukechampine/uint128 v1.2.0, mapstructure v1.5.0, mattn-go-colorable 0.1.13, mattn-go-isatty v0.0.17, MichaelMure/go-term-markdown v0.1.4, MichaelMure/go-term-text v0.3.1, rqlite v1.14.15, sql-migrate v1.3.0, sqlx v1.3.5, tevino/abool v2.1.0, yaml for Go v3.0.1, yuin-gopher-lua 20220504-snapshot-65819353)
 
 The MIT License
 ===============
@@ -7097,7 +7097,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
 ---
 
 MIT License
-(fatih-color v1.10.0, fatih-color v1.12.0, fatih-color v1.13.0)
+(fatih-color v1.12.0, fatih-color v1.13.0)
 
 The MIT License (MIT)
 
@@ -8182,7 +8182,6 @@ statuses 2.0.1 : MIT License
 stream-shift 1.0.1 : MIT License
 string-width 4.2.3 : MIT License
 Strip ANSI 6.0.1 : MIT License
-swagger-ui 4.16.1 : Apache License 2.0
 tapjs/signal-exit 3.0.7 : ISC License
 tar 6.1.13 : ISC License
 toidentifier 1.0.1 : MIT License
@@ -8204,7 +8203,7 @@ yallist 4.0.0 : ISC License
 Licenses: 
 
 Apache License 2.0
-(detect-libc 2.0.1, ecdsa-sig-formatter v1.0.11, swagger-ui 4.16.1)
+(detect-libc 2.0.1, ecdsa-sig-formatter v1.0.11)
 
 Apache License
 Version 2.0, January 2004
