@@ -745,7 +745,7 @@ libffi 3.3 : MIT License
 libmnl 1.0.4 : GNU Lesser General Public License v2.1 or later
 Linux Extended Attributes 2.4.48 : (GNU Lesser General Public License v2.1 or later OR GNU General Public License v2.0 or later)
 Linux Kernel 5.10.61-stm32mp-r2 : GNU General Public License v2.0 or later
-lz4 1.9.2 : (BSD 2-clause "Simplified" License AND GNU General Public License v2.0 only)
+lz4 1.9.2 : (BSD 2-clause "Simplified" License AND GNU General Public License v2.0 or later)
 LZO real-time data compression library 2.10 : GNU General Public License v2.0 or later
 mmc-utils 0.1 : GNU General Public License v2.0 or later
 mosquitto 1.6.10 : (BSD 3-clause "New" or "Revised" License OR Eclipse Public License 1.0)
@@ -2352,7 +2352,7 @@ That's all there is to it!
 ---
 
 GNU General Public License v2.0 only
-(base-files 3.0.14, busybox 1.31.1, ifmetric 0.3, IP sets 7.9, libcap 2.32, lz4 1.9.2, Shadow Tool Suite 4.8.1, squashfs-tools 4.4, util-linux 2.35.1)
+(base-files 3.0.14, busybox 1.31.1, ifmetric 0.3, IP sets 7.9, libcap 2.32, Shadow Tool Suite 4.8.1, squashfs-tools 4.4, util-linux 2.35.1)
 
 The GNU General Public License (GPL)
 ====================================
@@ -2620,7 +2620,7 @@ END OF TERMS AND CONDITIONS
 ---
 
 GNU General Public License v2.0 or later
-(ACL 2.2.53, base-passwd 3.5.29, D-Bus 1.12.20, devmem2 1.0, dnsmasq 2.81, e2fsprogs 1.45.7, I2C tools for Linux 4.1, IPTables v1.8.4, kmod 26, Linux Extended Attributes 2.4.48, Linux Kernel 5.10.61-stm32mp-r2, LZO real-time data compression library 2.10, mmc-utils 0.1, opkg-utils 0.4.2, systemd-serialgetty 1.0, update-rc.d 0.8, util-linux 2.35.1, XZ Utils 5.2.4)
+(ACL 2.2.53, base-passwd 3.5.29, D-Bus 1.12.20, devmem2 1.0, dnsmasq 2.81, e2fsprogs 1.45.7, I2C tools for Linux 4.1, IPTables v1.8.4, kmod 26, Linux Extended Attributes 2.4.48, Linux Kernel 5.10.61-stm32mp-r2, lz4 1.9.2, LZO real-time data compression library 2.10, mmc-utils 0.1, opkg-utils 0.4.2, systemd-serialgetty 1.0, update-rc.d 0.8, util-linux 2.35.1, XZ Utils 5.2.4)
 
 The GNU General Public License (GPL)
 ====================================
@@ -5461,6 +5461,7 @@ blang-semver v4.0.0 : MIT License
 creack/pty v1.1.13 : MIT License
 danwakefield/fnmatch 20160403-snapshot-cbb64ac3 : BSD 2-clause "Simplified" License
 DATA-DOG-go-sqlmock v1.5.0 : BSD 3-clause "New" or "Revised" License
+dave/goqu v9.18.0 : MIT License
 disintegration/imaging v1.6.2 : MIT License
 dlclark/regexp2 v1.1.6 : MIT License
 docker v20.10.18 : Apache License 2.0
@@ -7013,7 +7014,7 @@ SOFTWARE
 ---
 
 MIT License
-(alecthomas/repr 20180818-snapshot-117648cd, github.com/gobuffalo/logger v1.0.6, github.com/gobuffalo/packd 1.0.1, Go Testify 1.8.0, holoplot/go-avahi v1.0.1, kyokomi/emoji v2.2.12, lukechampine/uint128 v1.2.0, mapstructure v1.5.0, mattn-go-colorable 0.1.13, mattn-go-isatty v0.0.17, MichaelMure/go-term-markdown v0.1.4, MichaelMure/go-term-text v0.3.1, rqlite v1.14.15, sql-migrate v1.3.0, sqlx v1.3.5, tevino/abool v2.1.0, yaml for Go v3.0.1, yuin-gopher-lua 20220504-snapshot-65819353)
+(alecthomas/repr 20180818-snapshot-117648cd, dave/goqu v9.18.0, github.com/gobuffalo/logger v1.0.6, github.com/gobuffalo/packd 1.0.1, Go Testify 1.8.0, holoplot/go-avahi v1.0.1, kyokomi/emoji v2.2.12, lukechampine/uint128 v1.2.0, mapstructure v1.5.0, mattn-go-colorable 0.1.13, mattn-go-isatty v0.0.17, MichaelMure/go-term-markdown v0.1.4, MichaelMure/go-term-text v0.3.1, rqlite v1.14.15, sql-migrate v1.3.0, sqlx v1.3.5, tevino/abool v2.1.0, yaml for Go v3.0.1, yuin-gopher-lua 20220504-snapshot-65819353)
 
 The MIT License
 ===============
