@@ -5458,7 +5458,6 @@ aws/aws-sdk-go-v2 service/sts/v1.16.19 : Apache License 2.0
 aws/aws-sdk-go-v2 v1.16.16 : Apache License 2.0
 bigfft 20200410-snapshot-eec4a21b : BSD 3-clause "New" or "Revised" License
 blang-semver v4.0.0 : MIT License
-bluesuncorp/go-validate-yourself v10.11.1 : MIT License
 creack/pty v1.1.13 : MIT License
 danwakefield/fnmatch 20160403-snapshot-cbb64ac3 : BSD 2-clause "Simplified" License
 DATA-DOG-go-sqlmock v1.5.0 : BSD 3-clause "New" or "Revised" License
@@ -5467,7 +5466,6 @@ dlclark/regexp2 v1.1.6 : MIT License
 docker v20.10.18 : Apache License 2.0
 docker-go-units v0.4.0 : Apache License 2.0
 docker-registry 2.8.1 : Apache License 2.0
-doug-martin/gql v9.18.0 : MIT License
 eclipse-paho.mqtt.golang v1.4.1 : 
 eliukblau/pixterm 20191210-snapshot-9fb6cf8c : Mozilla Public License 2.0
 fatih-color v1.12.0 : MIT License
@@ -5516,7 +5514,6 @@ go-systemd v22.4.0 : Apache License 2.0
 go-test/deep v1.0.8 : MIT License
 go.etcd.io/bbolt v1.3.6 : MIT License
 gobuffalo/packr v2.8.3 : MIT License
-godbus/go.dbus v5.1.0 : BSD 2-clause "Simplified" License
 GoDoc Text v0.2.0 : MIT License
 golang protobuf v1.3.2 : BSD 3-clause "New" or "Revised" License
 golang-github-docker-go-connections-dev 0.4.0 : Apache License 2.0
@@ -5912,37 +5909,6 @@ ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
-
----
-
-BSD 2-clause "Simplified" License
-(godbus/go.dbus v5.1.0)
-
-Copyright (c) 2013, Georg Reinke (<guelfey at gmail dot com>), Google
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions
-are met:
-
-1. Redistributions of source code must retain the above copyright notice,
-this list of conditions and the following disclaimer.
-
-2. Redistributions in binary form must reproduce the above copyright
-notice, this list of conditions and the following disclaimer in the
-documentation and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 
 ---
@@ -7047,7 +7013,7 @@ SOFTWARE
 ---
 
 MIT License
-(alecthomas/repr 20180818-snapshot-117648cd, bluesuncorp/go-validate-yourself v10.11.1, doug-martin/gql v9.18.0, github.com/gobuffalo/logger v1.0.6, github.com/gobuffalo/packd 1.0.1, Go Testify 1.8.0, holoplot/go-avahi v1.0.1, kyokomi/emoji v2.2.12, lukechampine/uint128 v1.2.0, mapstructure v1.5.0, mattn-go-colorable 0.1.13, mattn-go-isatty v0.0.17, MichaelMure/go-term-markdown v0.1.4, MichaelMure/go-term-text v0.3.1, rqlite v1.14.15, sql-migrate v1.3.0, sqlx v1.3.5, tevino/abool v2.1.0, yaml for Go v3.0.1, yuin-gopher-lua 20220504-snapshot-65819353)
+(alecthomas/repr 20180818-snapshot-117648cd, github.com/gobuffalo/logger v1.0.6, github.com/gobuffalo/packd 1.0.1, Go Testify 1.8.0, holoplot/go-avahi v1.0.1, kyokomi/emoji v2.2.12, lukechampine/uint128 v1.2.0, mapstructure v1.5.0, mattn-go-colorable 0.1.13, mattn-go-isatty v0.0.17, MichaelMure/go-term-markdown v0.1.4, MichaelMure/go-term-text v0.3.1, rqlite v1.14.15, sql-migrate v1.3.0, sqlx v1.3.5, tevino/abool v2.1.0, yaml for Go v3.0.1, yuin-gopher-lua 20220504-snapshot-65819353)
 
 The MIT License
 ===============
@@ -8126,7 +8092,7 @@ mime-db 1.52.0 : MIT License
 minimatch 3.1.2 : ISC License
 minimist 1.2.8 : MIT License
 minipass 3.3.6 : ISC License
-minipass v4.2.5 : ISC License
+minipass 4.2.5 : ISC License
 minizlib v2.1.2 : MIT License
 mqtt-packet 6.10.0 : MIT License
 MQTT.js 4.3.7 : MIT License
@@ -8149,7 +8115,7 @@ node-mkdirp 1.0.4 : MIT License
 node-semver 6.3.0 : ISC License
 node-semver 7.3.8 : ISC License
 node-sqlite3 4.1.2 : BSD 3-clause "New" or "Revised" License
-node-sqlite3 5.1.0 : BSD 3-clause "New" or "Revised" License
+node-sqlite3 5.1.5 : BSD 3-clause "New" or "Revised" License
 node-uuid 8.3.2 : MIT License
 nodeca-argparse 2.0.1 : Python Software Foundation License 2.0
 nodejs Deprecate 2.0.0 : MIT License
@@ -8445,7 +8411,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ---
 
 BSD 3-clause "New" or "Revised" License
-(@hapi/hoek 9.3.0, @hapi/topo 5.1.0, @mapbox/node-pre-gyp 1.0.10, @sideway/formula 3.0.1, @sideway/pinpoint 2.0.0, joi 17.7.1, node-sqlite3 5.1.0, qs -  QS Querystring 6.11.0)
+(@hapi/hoek 9.3.0, @hapi/topo 5.1.0, @mapbox/node-pre-gyp 1.0.10, @sideway/formula 3.0.1, @sideway/pinpoint 2.0.0, joi 17.7.1, node-sqlite3 5.1.5, qs -  QS Querystring 6.11.0)
 
 Copyright (c) <YEAR>, <OWNER>
 All rights reserved.
@@ -8677,7 +8643,7 @@ Permission to use, copy, modify, and/or distribute this software for any
 ---
 
 ISC License
-(apiserver 1.0.0, are-we-there-yet 2.0.0, Gozala/crypto 1.0.1, minipass 3.3.6, minipass v4.2.5, node-glob 7.2.3, node-semver 7.3.8, tar 6.1.13)
+(apiserver 1.0.0, are-we-there-yet 2.0.0, Gozala/crypto 1.0.1, minipass 3.3.6, minipass 4.2.5, node-glob 7.2.3, node-semver 7.3.8, tar 6.1.13)
 
 ISC License (ISCL)
 ==================
