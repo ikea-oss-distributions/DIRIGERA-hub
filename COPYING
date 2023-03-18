@@ -5515,6 +5515,7 @@ go-systemd v22.4.0 : Apache License 2.0
 go-test/deep v1.0.8 : MIT License
 go.etcd.io/bbolt v1.3.6 : MIT License
 gobuffalo/packr v2.8.3 : MIT License
+godbus-dbus v5.1.0 : BSD 2-clause "Simplified" License
 GoDoc Text v0.2.0 : MIT License
 golang protobuf v1.3.2 : BSD 3-clause "New" or "Revised" License
 golang-github-docker-go-connections-dev 0.4.0 : Apache License 2.0
@@ -5910,6 +5911,37 @@ ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+
+---
+
+BSD 2-clause "Simplified" License
+(godbus-dbus v5.1.0)
+
+Copyright (c) 2013, Georg Reinke (<guelfey at gmail dot com>), Google
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+1. Redistributions of source code must retain the above copyright notice,
+this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
+TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 
 ---
@@ -8036,7 +8068,6 @@ content-disposition 0.5.4 : MIT License
 Cookie Parser 1.4.5 : MIT License
 debug-js/debug 2.6.9 : MIT License
 debug-js/debug 4.3.4 : MIT License
-deepmerge 4.3.0 : MIT License
 delegates 1.0.0 : MIT License
 destroy 1.2.0 : MIT License
 detect-libc 2.0.1 : Apache License 2.0
@@ -10307,7 +10338,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
 ---
 
 MIT License
-(@apidevtools/json-schema-ref-parser 9.1.2, async-mqtt 2.6.3, body-parser 1.20.1, body-parser 1.20.2, call-me-maybe 1.0.2, deepmerge 4.3.0, einaros/ws 7.5.9, expressjs/express 4.18.2, get-intrinsic 1.2.0, https-proxy-agent 5.0.1, js-sdsl 4.3.0, jshttp/content-type 1.0.5, jsonwebtoken 9.0.0, minimist 1.2.8, MQTT.js 4.3.7, nan 2.17.0, Node Cookie Parser 0.5.0, node-fetch 2.6.9, number-allocator 1.0.14, object-inspect 1.12.3, raw-body 2.5.2, readable-stream 3.6.2, tr46 0.0.3)
+(@apidevtools/json-schema-ref-parser 9.1.2, async-mqtt 2.6.3, body-parser 1.20.1, body-parser 1.20.2, call-me-maybe 1.0.2, einaros/ws 7.5.9, expressjs/express 4.18.2, get-intrinsic 1.2.0, https-proxy-agent 5.0.1, js-sdsl 4.3.0, jshttp/content-type 1.0.5, jsonwebtoken 9.0.0, minimist 1.2.8, MQTT.js 4.3.7, nan 2.17.0, Node Cookie Parser 0.5.0, node-fetch 2.6.9, number-allocator 1.0.14, object-inspect 1.12.3, raw-body 2.5.2, readable-stream 3.6.2, tr46 0.0.3)
 
 The MIT License
 ===============
