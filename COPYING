@@ -1,6 +1,6 @@
 ﻿Copyright 2023
 
-[HomeSmart/Bootchain : master]
+[HomeSmart/Bootchain : 2.256]
 
 
 Components: 
@@ -597,7 +597,7 @@ of this License.
 
 Copyright 2023
 
-[HomeSmart/M4-firmware : master]
+[HomeSmart/M4-firmware : 2.256]
 
 
 Components: 
@@ -702,7 +702,7 @@ SOFTWARE
 
 Copyright 2023
 
-[HomeSmart/Ikeix/runtime : master]
+[HomeSmart/Ikeix/runtime : 2.256]
 
 
 Components: 
@@ -771,7 +771,7 @@ util-linux 2.35.1 : (GNU Library General Public License v2 or later OR BSD 3-cla
 volatile-binds 1.0 : MIT License
 wireless-regdb 2021.08.28 : ISC License
 wpa_supplicant - IEEE 802.1X, WPA, WPA2, RSN, IEEE 802.11i 2.9 : BSD 3-clause "New" or "Revised" License
-XZ Utils 5.2.4 : (Public Domain AND GNU General Public License v2.0 or later)
+XZ Utils 5.2.4 : (GNU Lesser General Public License v2.1 or later AND Public Domain AND GNU General Public License v2.0 or later)
 zlib 1.2.11 : zlib License
 
 
@@ -4088,7 +4088,7 @@ That's all there is to it!
 ---
 
 GNU Lesser General Public License v2.1 or later
-(ACL 2.2.53, avahi 0.7, GNU C Library 2.31, kmod 26, libdaemon 0.14, libmnl 1.0.4, Linux Extended Attributes 2.4.48, systemd 244.5)
+(ACL 2.2.53, avahi 0.7, GNU C Library 2.31, kmod 26, libdaemon 0.14, libmnl 1.0.4, Linux Extended Attributes 2.4.48, systemd 244.5, XZ Utils 5.2.4)
 
 GNU Lesser General Public License
 =================================
@@ -5431,7 +5431,7 @@ the following restrictions:
 
 Copyright 2023
 
-[HomeSmart/Go : master]
+[HomeSmart/Go : 2.256]
 
 
 Components: 
@@ -5467,7 +5467,6 @@ dlclark/regexp2 v1.1.6 : MIT License
 docker v20.10.18 : Apache License 2.0
 docker-go-units v0.4.0 : Apache License 2.0
 docker-registry 2.8.1 : Apache License 2.0
-ebitengine/purego v0.3.0 : Apache License 2.0
 eclipse-paho.mqtt.golang v1.4.1 : 
 eliukblau/pixterm 20191210-snapshot-9fb6cf8c : Mozilla Public License 2.0
 fatih-color v1.12.0 : MIT License
@@ -5532,6 +5531,7 @@ golang.org/x/sync 20210219-snapshot-036812b2 : BSD 3-clause "New" or "Revised" L
 golang.org/x/sync 20220722-snapshot-886fb937 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sync v0.1.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys 20210614-snapshot-665e8c73 : BSD 3-clause "New" or "Revised" License
+golang.org/x/sys 20210620-snapshot-63515b42 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys 20220809-snapshot-27713097 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys v0.3.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys v0.4.0 : BSD 3-clause "New" or "Revised" License
@@ -5552,8 +5552,6 @@ gorilla/mux v1.8.0 : BSD 3-clause "New" or "Revised" License
 gorilla/schema v1.2.0 : BSD 3-clause "New" or "Revised" License
 gorilla/websocket v1.4.2 : BSD 2-clause "Simplified" License
 gotest.tools v3.1.0 : Apache License 2.0
-hajimehoshi/go-mp3 v0.3.4 : Apache License 2.0
-hajimehoshi/oto v2.4.0 : Apache License 2.0
 holoplot/go-avahi v1.0.1 : MIT License
 hybridgroup/ble 20220920-snapshot-9a45bebf : BSD 3-clause "New" or "Revised" License
 iancoleman/strcase v0.2.0 : MIT License
@@ -5610,7 +5608,7 @@ yuin-gopher-lua 20220504-snapshot-65819353 : MIT License
 Licenses: 
 
 Apache License 2.0
-(aws/aws-sdk-go-v2 aws/protocol/eventstream/v1.4.8, aws/aws-sdk-go-v2 config/v1.17.8, aws/aws-sdk-go-v2 credentials/v1.12.21, aws/aws-sdk-go-v2 feature/ec2/imds/v1.12.17, aws/aws-sdk-go-v2 feature/s3/manager/v1.11.34, aws/aws-sdk-go-v2 internal/configsources/v1.1.23, aws/aws-sdk-go-v2 internal/ini/v1.3.24, aws/aws-sdk-go-v2 internal/v4a/v1.0.14, aws/aws-sdk-go-v2 service/internal/accept-encoding/v1.9.9, aws/aws-sdk-go-v2 service/internal/checksum/v1.1.18, aws/aws-sdk-go-v2 service/internal/presigned-url/v1.9.17, aws/aws-sdk-go-v2 service/internal/s3shared/v1.13.17, aws/aws-sdk-go-v2 service/s3/v1.27.11, aws/aws-sdk-go-v2 service/sso/v1.11.23, aws/aws-sdk-go-v2 service/ssooidc/v1.13.6, aws/aws-sdk-go-v2 service/sts/v1.16.19, aws/aws-sdk-go-v2 v1.16.16, docker v20.10.18, docker-go-units v0.4.0, docker-registry 2.8.1, ebitengine/purego v0.3.0, github.com/aws/smithy-go v1.13.3, go-systemd v22.4.0, golang-github-docker-go-connections-dev 0.4.0, gotest.tools v3.1.0, hajimehoshi/go-mp3 v0.3.4, hajimehoshi/oto v2.4.0, jmespath-go-jmespath internal/testify/v1.5.1, jmespath-go-jmespath v0.4.0, moby/term 3f7ff695adc6a35abc925370dd0a4dafb48ec64d, opencontainers/go-digest 1.0.0, opencontainers/image-spec v1.0.2, sergi/go-diff v1.0.0, spacemonkeygo-spacelog 20180419-snapshot-2296661a, yaml for Go 20200512-snapshot-9f266ea9, yaml for Go v2.4.0, yaml for Go v3.0.1)
+(aws/aws-sdk-go-v2 aws/protocol/eventstream/v1.4.8, aws/aws-sdk-go-v2 config/v1.17.8, aws/aws-sdk-go-v2 credentials/v1.12.21, aws/aws-sdk-go-v2 feature/ec2/imds/v1.12.17, aws/aws-sdk-go-v2 feature/s3/manager/v1.11.34, aws/aws-sdk-go-v2 internal/configsources/v1.1.23, aws/aws-sdk-go-v2 internal/ini/v1.3.24, aws/aws-sdk-go-v2 internal/v4a/v1.0.14, aws/aws-sdk-go-v2 service/internal/accept-encoding/v1.9.9, aws/aws-sdk-go-v2 service/internal/checksum/v1.1.18, aws/aws-sdk-go-v2 service/internal/presigned-url/v1.9.17, aws/aws-sdk-go-v2 service/internal/s3shared/v1.13.17, aws/aws-sdk-go-v2 service/s3/v1.27.11, aws/aws-sdk-go-v2 service/sso/v1.11.23, aws/aws-sdk-go-v2 service/ssooidc/v1.13.6, aws/aws-sdk-go-v2 service/sts/v1.16.19, aws/aws-sdk-go-v2 v1.16.16, docker v20.10.18, docker-go-units v0.4.0, docker-registry 2.8.1, github.com/aws/smithy-go v1.13.3, go-systemd v22.4.0, golang-github-docker-go-connections-dev 0.4.0, gotest.tools v3.1.0, jmespath-go-jmespath internal/testify/v1.5.1, jmespath-go-jmespath v0.4.0, moby/term 3f7ff695adc6a35abc925370dd0a4dafb48ec64d, opencontainers/go-digest 1.0.0, opencontainers/image-spec v1.0.2, sergi/go-diff v1.0.0, spacemonkeygo-spacelog 20180419-snapshot-2296661a, yaml for Go 20200512-snapshot-9f266ea9, yaml for Go v2.4.0, yaml for Go v3.0.1)
 
 Apache License
 Version 2.0, January 2004
@@ -6353,7 +6351,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 ---
 
 BSD 3-clause "New" or "Revised" License
-(bigfft 20200410-snapshot-eec4a21b, DATA-DOG-go-sqlmock v1.5.0, gitlab.com/cznic/cc v3.40.0, gitlab.com/cznic/ccgo v3.16.13, gitlab.com/cznic/ccorpus v1.11.6, gitlab.com/cznic/httpfs v1.0.6, gitlab.com/cznic/libc v1.22.2, gitlab.com/cznic/mathutil v1.5.0, gitlab.com/cznic/memory v1.4.0, gitlab.com/cznic/opt v0.1.3, gitlab.com/cznic/sqlite v1.20.3, gitlab.com/cznic/strutil v1.1.3, gitlab.com/cznic/tcl v1.15.0, gitlab.com/cznic/token v1.0.1, gitlab.com/cznic/z v1.7.0, golang.org/x/crypto v0.5.0, golang.org/x/image 20210215-snapshot-4410531f, golang.org/x/mod 20220414-snapshot-86c51ed2, golang.org/x/net 20211105-snapshot-69e39bad, golang.org/x/net 20220126-snapshot-cd36cc07, golang.org/x/net v0.3.0, golang.org/x/net v0.5.0, golang.org/x/sync 20210219-snapshot-036812b2, golang.org/x/sync 20220722-snapshot-886fb937, golang.org/x/sync v0.1.0, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys 20220809-snapshot-27713097, golang.org/x/sys v0.3.0, golang.org/x/sys v0.4.0, golang.org/x/sys v0.5.0, golang.org/x/term v0.4.0, golang.org/x/time 20220411-snapshot-583f2d63, golang.org/x/tools v0.1.12, golang.org/x/xerrors 20190719-snapshot-9bdfabe6, golang/text v0.6.0, google.golang.org/protobuf v1.28.1, google/go-cmp v0.5.8, google/go-cmp v0.5.9, hybridgroup/ble 20220920-snapshot-9a45bebf, mattn-go-colorable 0.1.13)
+(bigfft 20200410-snapshot-eec4a21b, DATA-DOG-go-sqlmock v1.5.0, gitlab.com/cznic/cc v3.40.0, gitlab.com/cznic/ccgo v3.16.13, gitlab.com/cznic/ccorpus v1.11.6, gitlab.com/cznic/httpfs v1.0.6, gitlab.com/cznic/libc v1.22.2, gitlab.com/cznic/mathutil v1.5.0, gitlab.com/cznic/memory v1.4.0, gitlab.com/cznic/opt v0.1.3, gitlab.com/cznic/sqlite v1.20.3, gitlab.com/cznic/strutil v1.1.3, gitlab.com/cznic/tcl v1.15.0, gitlab.com/cznic/token v1.0.1, gitlab.com/cznic/z v1.7.0, golang.org/x/crypto v0.5.0, golang.org/x/image 20210215-snapshot-4410531f, golang.org/x/mod 20220414-snapshot-86c51ed2, golang.org/x/net 20211105-snapshot-69e39bad, golang.org/x/net 20220126-snapshot-cd36cc07, golang.org/x/net v0.3.0, golang.org/x/net v0.5.0, golang.org/x/sync 20210219-snapshot-036812b2, golang.org/x/sync 20220722-snapshot-886fb937, golang.org/x/sync v0.1.0, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys 20210620-snapshot-63515b42, golang.org/x/sys 20220809-snapshot-27713097, golang.org/x/sys v0.3.0, golang.org/x/sys v0.4.0, golang.org/x/sys v0.5.0, golang.org/x/term v0.4.0, golang.org/x/time 20220411-snapshot-583f2d63, golang.org/x/tools v0.1.12, golang.org/x/xerrors 20190719-snapshot-9bdfabe6, golang/text v0.6.0, google.golang.org/protobuf v1.28.1, google/go-cmp v0.5.8, google/go-cmp v0.5.9, hybridgroup/ble 20220920-snapshot-9a45bebf, mattn-go-colorable 0.1.13)
 
 Copyright (c) <YEAR>, <OWNER>
 All rights reserved.
@@ -8027,7 +8025,7 @@ the following restrictions:
 
 Copyright 2023
 
-[HomeSmart/Node.js : master]
+[HomeSmart/Node.js : 2.256]
 
 
 Components: 
@@ -8149,7 +8147,7 @@ node-mkdirp 1.0.4 : MIT License
 node-semver 6.3.0 : ISC License
 node-semver 7.3.8 : ISC License
 node-sqlite3 4.1.2 : BSD 3-clause "New" or "Revised" License
-node-sqlite3 5.1.5 : BSD 3-clause "New" or "Revised" License
+node-sqlite3 5.1.0 : BSD 3-clause "New" or "Revised" License
 node-uuid 8.3.2 : MIT License
 nodeca-argparse 2.0.1 : Python Software Foundation License 2.0
 nodejs Deprecate 2.0.0 : MIT License
@@ -8445,7 +8443,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ---
 
 BSD 3-clause "New" or "Revised" License
-(@hapi/hoek 9.3.0, @hapi/topo 5.1.0, @mapbox/node-pre-gyp 1.0.10, @sideway/formula 3.0.1, @sideway/pinpoint 2.0.0, joi 17.7.1, node-sqlite3 5.1.5, qs -  QS Querystring 6.11.0)
+(@hapi/hoek 9.3.0, @hapi/topo 5.1.0, @mapbox/node-pre-gyp 1.0.10, @sideway/formula 3.0.1, @sideway/pinpoint 2.0.0, joi 17.7.1, node-sqlite3 5.1.0, qs -  QS Querystring 6.11.0)
 
 Copyright (c) <YEAR>, <OWNER>
 All rights reserved.
