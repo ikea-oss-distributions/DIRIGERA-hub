@@ -8070,6 +8070,7 @@ content-disposition 0.5.4 : MIT License
 Cookie Parser 1.4.5 : MIT License
 debug-js/debug 2.6.9 : MIT License
 debug-js/debug 4.3.4 : MIT License
+deepmerge 4.3.1 : MIT License
 delegates 1.0.0 : MIT License
 destroy 1.2.0 : MIT License
 detect-libc 2.0.1 : Apache License 2.0
@@ -10340,7 +10341,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
 ---
 
 MIT License
-(@apidevtools/json-schema-ref-parser 9.1.2, async-mqtt 2.6.3, body-parser 1.20.1, body-parser 1.20.2, call-me-maybe 1.0.2, einaros/ws 7.5.9, expressjs/express 4.18.2, get-intrinsic 1.2.0, https-proxy-agent 5.0.1, js-sdsl 4.3.0, jshttp/content-type 1.0.5, jsonwebtoken 9.0.0, minimist 1.2.8, MQTT.js 4.3.7, nan 2.17.0, Node Cookie Parser 0.5.0, node-fetch 2.6.9, number-allocator 1.0.14, object-inspect 1.12.3, raw-body 2.5.2, readable-stream 3.6.2, tr46 0.0.3)
+(@apidevtools/json-schema-ref-parser 9.1.2, async-mqtt 2.6.3, body-parser 1.20.1, body-parser 1.20.2, call-me-maybe 1.0.2, deepmerge 4.3.1, einaros/ws 7.5.9, expressjs/express 4.18.2, get-intrinsic 1.2.0, https-proxy-agent 5.0.1, js-sdsl 4.3.0, jshttp/content-type 1.0.5, jsonwebtoken 9.0.0, minimist 1.2.8, MQTT.js 4.3.7, nan 2.17.0, Node Cookie Parser 0.5.0, node-fetch 2.6.9, number-allocator 1.0.14, object-inspect 1.12.3, raw-body 2.5.2, readable-stream 3.6.2, tr46 0.0.3)
 
 The MIT License
 ===============
