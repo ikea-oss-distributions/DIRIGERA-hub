@@ -14,7 +14,7 @@ ENABLE_FIP ?= 1
 
 # Set default TF-A config
 ifeq ($(ENABLE_FIP), 1)
-TF_A_CONFIG ?= optee trusted emmc trusted
+TF_A_CONFIG ?= optee trusted emmc
 else
 TF_A_CONFIG ?=  optee fastboot  serialboot
 endif
@@ -44,12 +44,6 @@ TF_A_DEVICETREE_emmc ?= stm32gw20-ev1
 TF_A_EXTRA_OPTFLAGS_emmc ?= AARCH32_SP=optee STM32MP_EMMC=1 PSA_FWU_SUPPORT=1 STM32MP_USE_STM32IMAGE=0 TRUSTED_BOARD_BOOT=1 DEBUG=0
 TF_A_BINARY_emmc ?= tf-a
 TF_A_MAKE_TARGET_emmc ?= all
-
-# Init default config settings
-TF_A_DEVICETREE_trusted ?= stm32gw20-ev1
-TF_A_EXTRA_OPTFLAGS_trusted ?= AARCH32_SP=sp_min STM32MP_EMMC=0 STM32MP_USB_PROGRAMMER=1 STM32MP_USE_STM32IMAGE=1 TRUSTED_BOARD_BOOT=1
-TF_A_BINARY_trusted ?= tf-a
-TF_A_MAKE_TARGET_trusted ?= all
 
 else
 
