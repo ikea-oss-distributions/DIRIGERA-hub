@@ -1,6 +1,6 @@
 ﻿Copyright 2023
 
-[HomeSmart/Bootchain : master]
+[HomeSmart/Bootchain : 2.256]
 
 
 Components: 
@@ -597,7 +597,7 @@ of this License.
 
 Copyright 2023
 
-[HomeSmart/M4-firmware : master]
+[HomeSmart/M4-firmware : 2.256]
 
 
 Components: 
@@ -605,12 +605,12 @@ Components:
 Amazon FreeRTOS 201906.00_Major : MIT License
 Amazon FreeRTOS 201910.00 : MIT License
 FreeRTOS Real Time Kernel V10.3.0 : MIT License
-open-amp 2020.10.0 : BSD 3-clause "New" or "Revised" License
+open-amp 2020.04.0 : BSD 3-clause "New" or "Revised" License
 
 Licenses: 
 
 BSD 3-clause "New" or "Revised" License
-(open-amp 2020.10.0)
+(open-amp 2020.04.0)
 
 Software License Agreement (BSD 3-Clause License)
 ========================================
@@ -702,7 +702,7 @@ SOFTWARE
 
 Copyright 2023
 
-[HomeSmart/Ikeix/runtime : master]
+[HomeSmart/Ikeix/runtime : 2.256]
 
 
 Components: 
@@ -714,7 +714,7 @@ base-passwd 3.5.29 : GNU General Public License v2.0 or later
 besser82/libxcrypt 4.4.15 : GNU Lesser General Public License v2.1 only
 brotli v1.0.7 : MIT License
 busybox 1.31.1 : (Bzip2 License AND GNU General Public License v2.0 only)
-c-ares cares-1_16_0 : MIT License
+c-ares 1.16.0 : MIT License
 curl 7.85.0 : MIT License
 D-Bus 1.12.20 : GNU General Public License v2.0 or later
 devmem2 1.0 : GNU General Public License v2.0 or later
@@ -5216,7 +5216,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ---
 
 MIT License
-(c-ares cares-1_16_0)
+(c-ares 1.16.0)
 
 The project in general is under the MIT License:
 
@@ -5431,7 +5431,7 @@ the following restrictions:
 
 Copyright 2023
 
-[HomeSmart/Go : master]
+[HomeSmart/Go : 2.256]
 
 
 Components: 
@@ -5439,23 +5439,23 @@ Components:
 alecthomas/assert 20170929-snapshot-405dbfeb : MIT License
 alecthomas/colour 20160524-snapshot-60882d9e : MIT License
 alecthomas/repr 20180818-snapshot-117648cd : MIT License
-aws/aws-sdk-go-v2 aws/protocol/eventstream/v1.4.10 : Apache License 2.0
-aws/aws-sdk-go-v2 config/v1.18.19 : Apache License 2.0
-aws/aws-sdk-go-v2 credentials/v1.13.18 : Apache License 2.0
-aws/aws-sdk-go-v2 feature/ec2/imds/v1.13.1 : Apache License 2.0
-aws/aws-sdk-go-v2 feature/s3/manager/v1.11.59 : Apache License 2.0
-aws/aws-sdk-go-v2 internal/configsources/v1.1.31 : Apache License 2.0
-aws/aws-sdk-go-v2 internal/ini/v1.3.32 : Apache License 2.0
-aws/aws-sdk-go-v2 internal/v4a/v1.0.23 : Apache License 2.0
-aws/aws-sdk-go-v2 service/internal/accept-encoding/v1.9.11 : Apache License 2.0
-aws/aws-sdk-go-v2 service/internal/checksum/v1.1.26 : Apache License 2.0
-aws/aws-sdk-go-v2 service/internal/presigned-url/v1.9.25 : Apache License 2.0
-aws/aws-sdk-go-v2 service/internal/s3shared/v1.14.0 : Apache License 2.0
-aws/aws-sdk-go-v2 service/s3/v1.31.0 : Apache License 2.0
-aws/aws-sdk-go-v2 service/sso/v1.12.6 : Apache License 2.0
-aws/aws-sdk-go-v2 service/ssooidc/v1.14.6 : Apache License 2.0
-aws/aws-sdk-go-v2 service/sts/v1.18.7 : Apache License 2.0
-aws/aws-sdk-go-v2 v1.17.7 : Apache License 2.0
+aws/aws-sdk-go-v2 aws/protocol/eventstream/v1.4.8 : Apache License 2.0
+aws/aws-sdk-go-v2 config/v1.17.8 : Apache License 2.0
+aws/aws-sdk-go-v2 credentials/v1.12.21 : Apache License 2.0
+aws/aws-sdk-go-v2 feature/ec2/imds/v1.12.17 : Apache License 2.0
+aws/aws-sdk-go-v2 feature/s3/manager/v1.11.34 : Apache License 2.0
+aws/aws-sdk-go-v2 internal/configsources/v1.1.23 : Apache License 2.0
+aws/aws-sdk-go-v2 internal/ini/v1.3.24 : Apache License 2.0
+aws/aws-sdk-go-v2 internal/v4a/v1.0.14 : Apache License 2.0
+aws/aws-sdk-go-v2 service/internal/accept-encoding/v1.9.9 : Apache License 2.0
+aws/aws-sdk-go-v2 service/internal/checksum/v1.1.18 : Apache License 2.0
+aws/aws-sdk-go-v2 service/internal/presigned-url/v1.9.17 : Apache License 2.0
+aws/aws-sdk-go-v2 service/internal/s3shared/v1.13.17 : Apache License 2.0
+aws/aws-sdk-go-v2 service/s3/v1.27.11 : Apache License 2.0
+aws/aws-sdk-go-v2 service/sso/v1.11.23 : Apache License 2.0
+aws/aws-sdk-go-v2 service/ssooidc/v1.13.6 : Apache License 2.0
+aws/aws-sdk-go-v2 service/sts/v1.16.19 : Apache License 2.0
+aws/aws-sdk-go-v2 v1.16.16 : Apache License 2.0
 bigfft 20200410-snapshot-eec4a21b : BSD 3-clause "New" or "Revised" License
 blang-semver v4.0.0 : MIT License
 creack/pty v1.1.13 : MIT License
@@ -5464,17 +5464,16 @@ DATA-DOG-go-sqlmock v1.5.0 : BSD 3-clause "New" or "Revised" License
 dave/goqu v9.18.0 : MIT License
 disintegration/imaging v1.6.2 : MIT License
 dlclark/regexp2 v1.1.6 : MIT License
-docker v23.0.1 : Apache License 2.0
-docker-go-units v0.5.0 : Apache License 2.0
+docker v20.10.18 : Apache License 2.0
+docker-go-units v0.4.0 : Apache License 2.0
 docker-registry 2.8.1 : Apache License 2.0
-ebitengine/purego v0.3.0 : Apache License 2.0
 eclipse-paho.mqtt.golang v1.4.1 : 
 eliukblau/pixterm 20191210-snapshot-9fb6cf8c : Mozilla Public License 2.0
 fatih-color v1.12.0 : MIT License
 fatih-color v1.13.0 : MIT License
 fsnotify-fsnotify v1.5.0 : BSD 3-clause "New" or "Revised" License
 github.com/alecthomas/chroma 0.7.1 : MIT License
-github.com/aws/smithy-go v1.13.5 : Apache License 2.0
+github.com/aws/smithy-go v1.13.3 : Apache License 2.0
 github.com/gobuffalo/logger v1.0.6 : MIT License
 github.com/gobuffalo/packd 1.0.1 : MIT License
 github.com/markbates/oncer v1.0.0 : MIT License
@@ -5499,22 +5498,20 @@ go humanize v1.0.0 : MIT License
 Go Logrus v1.8.1 : MIT License
 Go Testify 1.7.0 : MIT License
 Go Testify 1.8.0 : MIT License
-Go Testify v1.8.2 : MIT License
 go-ansiterm d185dfc1b5a126116ea5a19e148e29d16b4574c9 : MIT License
 go-check-check 20171108-snapshot-20d25e28 : BSD 2-clause "Simplified" License
 go-check-check 20201130-snapshot-10cb9826 : BSD 2-clause "Simplified" License
 go-colorful v1.0.3 : MIT License
 go-gorp/gorp v3.0.2 : MIT License
-go-playground-universal-translator v0.18.1 : MIT License
-go-playground/assert v2.2.0 : MIT License
-go-playground/locales v0.14.1 : MIT License
+go-playground-universal-translator v0.18.0 : MIT License
+go-playground/assert v2.0.1 : MIT License
+go-playground/locales v0.14.0 : MIT License
 go-shellquote 20180428-snapshot-95032a82 : MIT License
 go-sonos 20171025-snapshot-05658505 : BSD 2-clause "Simplified" License
 go-spew v1.1.0 : ISC License
 go-spew v1.1.1 : ISC License
 go-sql-driver v1.6.0 : Mozilla Public License 2.0
 go-systemd v22.4.0 : Apache License 2.0
-go-systemd v22.5.0 : Apache License 2.0
 go-test/deep v1.0.8 : MIT License
 go.etcd.io/bbolt v1.3.6 : MIT License
 gobuffalo/packr v2.8.3 : MIT License
@@ -5524,33 +5521,29 @@ golang protobuf v1.3.2 : BSD 3-clause "New" or "Revised" License
 golang-github-docker-go-connections-dev 0.4.0 : Apache License 2.0
 golang-github-spf13-pflag-dev v1.0.5 : BSD 3-clause "New" or "Revised" License
 golang.org/x/crypto v0.5.0 : BSD 3-clause "New" or "Revised" License
-golang.org/x/crypto v0.7.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/image 20210215-snapshot-4410531f : BSD 3-clause "New" or "Revised" License
 golang.org/x/mod 20220414-snapshot-86c51ed2 : BSD 3-clause "New" or "Revised" License
-golang.org/x/mod v0.8.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/net 20211105-snapshot-69e39bad : BSD 3-clause "New" or "Revised" License
+golang.org/x/net 20220126-snapshot-cd36cc07 : BSD 3-clause "New" or "Revised" License
 golang.org/x/net v0.3.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/net v0.5.0 : BSD 3-clause "New" or "Revised" License
-golang.org/x/net v0.8.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sync 20210219-snapshot-036812b2 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sync 20220722-snapshot-886fb937 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sync v0.1.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys 20210614-snapshot-665e8c73 : BSD 3-clause "New" or "Revised" License
+golang.org/x/sys 20210620-snapshot-63515b42 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys 20220809-snapshot-27713097 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys v0.3.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys v0.4.0 : BSD 3-clause "New" or "Revised" License
-golang.org/x/sys v0.6.0 : BSD 3-clause "New" or "Revised" License
+golang.org/x/sys v0.5.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/term v0.4.0 : BSD 3-clause "New" or "Revised" License
-golang.org/x/term v0.6.0 : BSD 3-clause "New" or "Revised" License
-golang.org/x/time v0.3.0 : BSD 3-clause "New" or "Revised" License
+golang.org/x/time 20220411-snapshot-583f2d63 : BSD 3-clause "New" or "Revised" License
 golang.org/x/tools v0.1.12 : BSD 3-clause "New" or "Revised" License
-golang.org/x/tools v0.6.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/xerrors 20190719-snapshot-9bdfabe6 : BSD 3-clause "New" or "Revised" License
+golang/text v0.3.7 : BSD 3-clause "New" or "Revised" License
 golang/text v0.6.0 : BSD 3-clause "New" or "Revised" License
-golang/text v0.8.0 : BSD 3-clause "New" or "Revised" License
 gomarkdown/markdown 20191123-snapshot-2c17d62f : BSD 2-clause "Simplified" License
 google.golang.org/protobuf v1.28.1 : BSD 3-clause "New" or "Revised" License
-google.golang.org/protobuf v1.30.0 : BSD 3-clause "New" or "Revised" License
 google/go-cmp v0.5.5 : BSD 3-clause "New" or "Revised" License
 google/go-cmp v0.5.8 : BSD 3-clause "New" or "Revised" License
 google/go-cmp v0.5.9 : BSD 3-clause "New" or "Revised" License
@@ -5558,9 +5551,7 @@ google/uuid v1.3.0 : BSD 3-clause "New" or "Revised" License
 gorilla/mux v1.8.0 : BSD 3-clause "New" or "Revised" License
 gorilla/schema v1.2.0 : BSD 3-clause "New" or "Revised" License
 gorilla/websocket v1.4.2 : BSD 2-clause "Simplified" License
-gotest.tools v3.4.0 : Apache License 2.0
-hajimehoshi/go-mp3 v0.3.4 : Apache License 2.0
-hajimehoshi/oto v2.4.0 : Apache License 2.0
+gotest.tools v3.1.0 : Apache License 2.0
 holoplot/go-avahi v1.0.1 : MIT License
 hybridgroup/ble 20220920-snapshot-9a45bebf : BSD 3-clause "New" or "Revised" License
 iancoleman/strcase v0.2.0 : MIT License
@@ -5571,7 +5562,6 @@ kr/pretty v0.3.0 : MIT License
 kyokomi/emoji v2.2.12 : MIT License
 kyokomi/emoji v2.2.8 : MIT License
 leodido/go-urn v1.2.1 : MIT License
-leodido/go-urn v1.2.2 : MIT License
 lukechampine/uint128 v1.2.0 : MIT License
 mapstructure v1.5.0 : MIT License
 markbates/errx v1.1.0 : MIT License
@@ -5586,7 +5576,8 @@ mgutz-ansi 20170206-snapshot-9520e82c : MIT License
 mgutz-logxi 20161027-snapshot-aebf8a7d : MIT License
 MichaelMure/go-term-markdown v0.1.4 : MIT License
 MichaelMure/go-term-text v0.3.1 : MIT License
-Microsoft-go-winio v0.6.0 : MIT License
+Microsoft-go-winio v0.5.1 : MIT License
+moby/term 3f7ff695adc6a35abc925370dd0a4dafb48ec64d : Apache License 2.0
 mohae/deepcopy 20170929-snapshot-c48cc78d : MIT License
 morikuni/aec v1.0.0 : MIT License
 mymysql v1.5.4 : BSD 3-clause "New" or "Revised" License
@@ -5607,11 +5598,9 @@ spacemonkeygo-spacelog 20180419-snapshot-2296661a : Apache License 2.0
 sql-migrate v1.3.0 : MIT License
 sqlx v1.3.5 : MIT License
 stretchr/objx v0.4.0 : MIT License
-stretchr/objx v0.5.0 : MIT License
 tarm-serial 20180830-snapshot-98f6abe2 : BSD 3-clause "New" or "Revised" License
 tevino/abool v2.1.0 : MIT License
 yaml for Go 20200512-snapshot-9f266ea9 : Apache License 2.0
-yaml for Go v2.2.8 : Apache License 2.0
 yaml for Go v2.4.0 : Apache License 2.0
 yaml for Go v3.0.1 : (MIT License AND Apache License 2.0)
 yuin-gopher-lua 20220504-snapshot-65819353 : MIT License
@@ -5619,7 +5608,7 @@ yuin-gopher-lua 20220504-snapshot-65819353 : MIT License
 Licenses: 
 
 Apache License 2.0
-(aws/aws-sdk-go-v2 aws/protocol/eventstream/v1.4.10, aws/aws-sdk-go-v2 config/v1.18.19, aws/aws-sdk-go-v2 credentials/v1.13.18, aws/aws-sdk-go-v2 feature/ec2/imds/v1.13.1, aws/aws-sdk-go-v2 feature/s3/manager/v1.11.59, aws/aws-sdk-go-v2 internal/configsources/v1.1.31, aws/aws-sdk-go-v2 internal/ini/v1.3.32, aws/aws-sdk-go-v2 internal/v4a/v1.0.23, aws/aws-sdk-go-v2 service/internal/accept-encoding/v1.9.11, aws/aws-sdk-go-v2 service/internal/checksum/v1.1.26, aws/aws-sdk-go-v2 service/internal/presigned-url/v1.9.25, aws/aws-sdk-go-v2 service/internal/s3shared/v1.14.0, aws/aws-sdk-go-v2 service/s3/v1.31.0, aws/aws-sdk-go-v2 service/sso/v1.12.6, aws/aws-sdk-go-v2 service/ssooidc/v1.14.6, aws/aws-sdk-go-v2 service/sts/v1.18.7, aws/aws-sdk-go-v2 v1.17.7, docker v23.0.1, docker-go-units v0.5.0, docker-registry 2.8.1, ebitengine/purego v0.3.0, github.com/aws/smithy-go v1.13.5, go-systemd v22.4.0, go-systemd v22.5.0, golang-github-docker-go-connections-dev 0.4.0, gotest.tools v3.4.0, hajimehoshi/go-mp3 v0.3.4, hajimehoshi/oto v2.4.0, jmespath-go-jmespath internal/testify/v1.5.1, jmespath-go-jmespath v0.4.0, opencontainers/go-digest 1.0.0, opencontainers/image-spec v1.0.2, sergi/go-diff v1.0.0, spacemonkeygo-spacelog 20180419-snapshot-2296661a, yaml for Go 20200512-snapshot-9f266ea9, yaml for Go v2.2.8, yaml for Go v2.4.0, yaml for Go v3.0.1)
+(aws/aws-sdk-go-v2 aws/protocol/eventstream/v1.4.8, aws/aws-sdk-go-v2 config/v1.17.8, aws/aws-sdk-go-v2 credentials/v1.12.21, aws/aws-sdk-go-v2 feature/ec2/imds/v1.12.17, aws/aws-sdk-go-v2 feature/s3/manager/v1.11.34, aws/aws-sdk-go-v2 internal/configsources/v1.1.23, aws/aws-sdk-go-v2 internal/ini/v1.3.24, aws/aws-sdk-go-v2 internal/v4a/v1.0.14, aws/aws-sdk-go-v2 service/internal/accept-encoding/v1.9.9, aws/aws-sdk-go-v2 service/internal/checksum/v1.1.18, aws/aws-sdk-go-v2 service/internal/presigned-url/v1.9.17, aws/aws-sdk-go-v2 service/internal/s3shared/v1.13.17, aws/aws-sdk-go-v2 service/s3/v1.27.11, aws/aws-sdk-go-v2 service/sso/v1.11.23, aws/aws-sdk-go-v2 service/ssooidc/v1.13.6, aws/aws-sdk-go-v2 service/sts/v1.16.19, aws/aws-sdk-go-v2 v1.16.16, docker v20.10.18, docker-go-units v0.4.0, docker-registry 2.8.1, github.com/aws/smithy-go v1.13.3, go-systemd v22.4.0, golang-github-docker-go-connections-dev 0.4.0, gotest.tools v3.1.0, jmespath-go-jmespath internal/testify/v1.5.1, jmespath-go-jmespath v0.4.0, moby/term 3f7ff695adc6a35abc925370dd0a4dafb48ec64d, opencontainers/go-digest 1.0.0, opencontainers/image-spec v1.0.2, sergi/go-diff v1.0.0, spacemonkeygo-spacelog 20180419-snapshot-2296661a, yaml for Go 20200512-snapshot-9f266ea9, yaml for Go v2.4.0, yaml for Go v3.0.1)
 
 Apache License
 Version 2.0, January 2004
@@ -6066,7 +6055,7 @@ Redistribution and use in source and binary forms, with or without
 ---
 
 BSD 3-clause "New" or "Revised" License
-(tarm-serial 20180830-snapshot-98f6abe2)
+(golang/text v0.3.7, tarm-serial 20180830-snapshot-98f6abe2)
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -6362,7 +6351,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 ---
 
 BSD 3-clause "New" or "Revised" License
-(bigfft 20200410-snapshot-eec4a21b, DATA-DOG-go-sqlmock v1.5.0, gitlab.com/cznic/cc v3.40.0, gitlab.com/cznic/ccgo v3.16.13, gitlab.com/cznic/ccorpus v1.11.6, gitlab.com/cznic/httpfs v1.0.6, gitlab.com/cznic/libc v1.22.2, gitlab.com/cznic/mathutil v1.5.0, gitlab.com/cznic/memory v1.4.0, gitlab.com/cznic/opt v0.1.3, gitlab.com/cznic/sqlite v1.20.3, gitlab.com/cznic/strutil v1.1.3, gitlab.com/cznic/tcl v1.15.0, gitlab.com/cznic/token v1.0.1, gitlab.com/cznic/z v1.7.0, golang.org/x/crypto v0.5.0, golang.org/x/crypto v0.7.0, golang.org/x/image 20210215-snapshot-4410531f, golang.org/x/mod 20220414-snapshot-86c51ed2, golang.org/x/mod v0.8.0, golang.org/x/net 20211105-snapshot-69e39bad, golang.org/x/net v0.3.0, golang.org/x/net v0.5.0, golang.org/x/net v0.8.0, golang.org/x/sync 20210219-snapshot-036812b2, golang.org/x/sync 20220722-snapshot-886fb937, golang.org/x/sync v0.1.0, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys 20220809-snapshot-27713097, golang.org/x/sys v0.3.0, golang.org/x/sys v0.4.0, golang.org/x/sys v0.6.0, golang.org/x/term v0.4.0, golang.org/x/term v0.6.0, golang.org/x/time v0.3.0, golang.org/x/tools v0.1.12, golang.org/x/tools v0.6.0, golang.org/x/xerrors 20190719-snapshot-9bdfabe6, golang/text v0.6.0, golang/text v0.8.0, google.golang.org/protobuf v1.28.1, google.golang.org/protobuf v1.30.0, google/go-cmp v0.5.8, google/go-cmp v0.5.9, hybridgroup/ble 20220920-snapshot-9a45bebf, mattn-go-colorable 0.1.13)
+(bigfft 20200410-snapshot-eec4a21b, DATA-DOG-go-sqlmock v1.5.0, gitlab.com/cznic/cc v3.40.0, gitlab.com/cznic/ccgo v3.16.13, gitlab.com/cznic/ccorpus v1.11.6, gitlab.com/cznic/httpfs v1.0.6, gitlab.com/cznic/libc v1.22.2, gitlab.com/cznic/mathutil v1.5.0, gitlab.com/cznic/memory v1.4.0, gitlab.com/cznic/opt v0.1.3, gitlab.com/cznic/sqlite v1.20.3, gitlab.com/cznic/strutil v1.1.3, gitlab.com/cznic/tcl v1.15.0, gitlab.com/cznic/token v1.0.1, gitlab.com/cznic/z v1.7.0, golang.org/x/crypto v0.5.0, golang.org/x/image 20210215-snapshot-4410531f, golang.org/x/mod 20220414-snapshot-86c51ed2, golang.org/x/net 20211105-snapshot-69e39bad, golang.org/x/net 20220126-snapshot-cd36cc07, golang.org/x/net v0.3.0, golang.org/x/net v0.5.0, golang.org/x/sync 20210219-snapshot-036812b2, golang.org/x/sync 20220722-snapshot-886fb937, golang.org/x/sync v0.1.0, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys 20210620-snapshot-63515b42, golang.org/x/sys 20220809-snapshot-27713097, golang.org/x/sys v0.3.0, golang.org/x/sys v0.4.0, golang.org/x/sys v0.5.0, golang.org/x/term v0.4.0, golang.org/x/time 20220411-snapshot-583f2d63, golang.org/x/tools v0.1.12, golang.org/x/xerrors 20190719-snapshot-9bdfabe6, golang/text v0.6.0, google.golang.org/protobuf v1.28.1, google/go-cmp v0.5.8, google/go-cmp v0.5.9, hybridgroup/ble 20220920-snapshot-9a45bebf, mattn-go-colorable 0.1.13)
 
 Copyright (c) <YEAR>, <OWNER>
 All rights reserved.
@@ -7057,7 +7046,7 @@ SOFTWARE
 ---
 
 MIT License
-(alecthomas/repr 20180818-snapshot-117648cd, dave/goqu v9.18.0, github.com/gobuffalo/logger v1.0.6, github.com/gobuffalo/packd 1.0.1, Go Testify 1.8.0, Go Testify v1.8.2, go-playground-universal-translator v0.18.1, go-playground/assert v2.2.0, go-playground/locales v0.14.1, holoplot/go-avahi v1.0.1, kyokomi/emoji v2.2.12, leodido/go-urn v1.2.2, lukechampine/uint128 v1.2.0, mapstructure v1.5.0, mattn-go-colorable 0.1.13, mattn-go-isatty v0.0.17, MichaelMure/go-term-markdown v0.1.4, MichaelMure/go-term-text v0.3.1, Microsoft-go-winio v0.6.0, rqlite v1.14.15, sql-migrate v1.3.0, sqlx v1.3.5, stretchr/objx v0.5.0, tevino/abool v2.1.0, yaml for Go v3.0.1, yuin-gopher-lua 20220504-snapshot-65819353)
+(alecthomas/repr 20180818-snapshot-117648cd, dave/goqu v9.18.0, github.com/gobuffalo/logger v1.0.6, github.com/gobuffalo/packd 1.0.1, Go Testify 1.8.0, holoplot/go-avahi v1.0.1, kyokomi/emoji v2.2.12, lukechampine/uint128 v1.2.0, mapstructure v1.5.0, mattn-go-colorable 0.1.13, mattn-go-isatty v0.0.17, MichaelMure/go-term-markdown v0.1.4, MichaelMure/go-term-text v0.3.1, rqlite v1.14.15, sql-migrate v1.3.0, sqlx v1.3.5, tevino/abool v2.1.0, yaml for Go v3.0.1, yuin-gopher-lua 20220504-snapshot-65819353)
 
 The MIT License
 ===============
@@ -7272,6 +7261,33 @@ SOFTWARE
 ---
 
 MIT License
+(Microsoft-go-winio v0.5.1)
+
+The MIT License (MIT)
+
+Copyright (c) 2015 Microsoft
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE
+
+---
+
+MIT License
 (go-ansiterm d185dfc1b5a126116ea5a19e148e29d16b4574c9)
 
 The MIT License (MIT)
@@ -7331,6 +7347,33 @@ MIT License
 The MIT License (MIT)
 
 Copyright (c) 2016 Alec Thomas
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE
+
+---
+
+MIT License
+(go-playground-universal-translator v0.18.0, go-playground/locales v0.14.0)
+
+The MIT License (MIT)
+
+Copyright (c) 2016 Go Playground
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -7499,6 +7542,44 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
+
+---
+
+MIT License
+(go-playground/assert v2.0.1)
+
+Upstream-Contact: Dean Karn <dean.karn@gmail.com>
+Source: https://github.com/go-playground/assert
+
+Files: *
+Copyright: 2015 Go Playgound
+           2015 Dean Karn Dean Karn <dean.karn@gmail.com>
+License: Expat
+
+Files: debian/*
+Copyright: 2020 Cyril Brulebois <cyril@debamax.com>
+License: Expat
+Comment: Debian packaging is licensed under the same terms as upstream
+
+License: Expat
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ .
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE
 
 ---
 
@@ -7944,7 +8025,7 @@ the following restrictions:
 
 Copyright 2023
 
-[HomeSmart/Node.js : master]
+[HomeSmart/Node.js : 2.256]
 
 
 Components: 
@@ -8067,7 +8148,7 @@ node-mkdirp 1.0.4 : MIT License
 node-semver 6.3.0 : ISC License
 node-semver 7.3.8 : ISC License
 node-sqlite3 4.1.2 : BSD 3-clause "New" or "Revised" License
-node-sqlite3 5.1.5 : BSD 3-clause "New" or "Revised" License
+node-sqlite3 5.1.0 : BSD 3-clause "New" or "Revised" License
 node-uuid 8.3.2 : MIT License
 nodeca-argparse 2.0.1 : Python Software Foundation License 2.0
 nodejs Deprecate 2.0.0 : MIT License
@@ -8363,7 +8444,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ---
 
 BSD 3-clause "New" or "Revised" License
-(@hapi/hoek 9.3.0, @hapi/topo 5.1.0, @mapbox/node-pre-gyp 1.0.10, @sideway/formula 3.0.1, @sideway/pinpoint 2.0.0, joi 17.7.1, node-sqlite3 5.1.5, qs -  QS Querystring 6.11.0)
+(@hapi/hoek 9.3.0, @hapi/topo 5.1.0, @mapbox/node-pre-gyp 1.0.10, @sideway/formula 3.0.1, @sideway/pinpoint 2.0.0, joi 17.7.1, node-sqlite3 5.1.0, qs -  QS Querystring 6.11.0)
 
 Copyright (c) <YEAR>, <OWNER>
 All rights reserved.
