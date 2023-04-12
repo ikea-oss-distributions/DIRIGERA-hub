@@ -77,13 +77,15 @@ new file mode 100644
 index 0000000000..d15a543942
 --- /dev/null
 +++ b/cmd/ikeix_restore_bootcount.c
-@@ -0,0 +1,55 @@
-+// SPDX-License-Identifier: GPL-2.0+
+@@ -0,0 +1,57 @@
 +/*
-+ * 'ikea_restore_bootcount' cmd
++ * Copyright © Inter IKEA Systems B.V. 2017, 2018, 2019, 2020, 2021, 2022, 2023.
++ * All Rights Reserved.
 + *
-+ * Copyright 2021, 2022, 2023 Inter IKEA Systems B.V.
-+ * Written by Christer Fletcher <christer.fletcher@inter.ikea.com>
++ * This is UNPUBLISHED PROPRIETARY SOURCE CODE of © Inter IKEA Systems B.V.;
++ * the contents of this file may not be disclosed to third parties, copied
++ * or duplicated in any form, in whole or in part, without the prior
++ * written permission of © Inter IKEA Systems B.V.
 + */
 +
 +#include <stdio.h>
