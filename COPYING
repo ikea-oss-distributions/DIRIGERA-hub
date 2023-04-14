@@ -8010,6 +8010,7 @@ mime-db 1.52.0 : MIT License
 minimatch 3.1.2 : ISC License
 minimist 1.2.8 : MIT License
 minipass 3.3.6 : ISC License
+minipass v4.2.8 : ISC License
 minizlib v2.1.2 : MIT License
 mqtt-packet 6.10.0 : MIT License
 MQTT.js 4.3.7 : MIT License
@@ -8559,7 +8560,7 @@ Permission to use, copy, modify, and/or distribute this software for any
 ---
 
 ISC License
-(apiserver 1.0.0, are-we-there-yet 2.0.0, Gozala/crypto 1.0.1, minipass 3.3.6, node-glob 7.2.3, tar 6.1.13)
+(apiserver 1.0.0, are-we-there-yet 2.0.0, Gozala/crypto 1.0.1, minipass 3.3.6, minipass v4.2.8, node-glob 7.2.3, tar 6.1.13)
 
 ISC License (ISCL)
 ==================
