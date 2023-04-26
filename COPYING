@@ -5524,6 +5524,7 @@ GoDoc Text v0.2.0 : MIT License
 golang protobuf v1.3.2 : BSD 3-clause "New" or "Revised" License
 golang-github-docker-go-connections-dev 0.4.0 : Apache License 2.0
 golang-github-spf13-pflag-dev v1.0.5 : BSD 3-clause "New" or "Revised" License
+golang.org/x/crypto 20221011-snapshot-56aed061 : BSD 3-clause "New" or "Revised" License
 golang.org/x/crypto v0.7.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/image 20210215-snapshot-4410531f : BSD 3-clause "New" or "Revised" License
 golang.org/x/mod 20220414-snapshot-86c51ed2 : BSD 3-clause "New" or "Revised" License
@@ -6383,7 +6384,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 ---
 
 BSD 3-clause "New" or "Revised" License
-(bigfft 20200410-snapshot-eec4a21b, DATA-DOG-go-sqlmock v1.5.0, gitlab.com/cznic/cc v3.40.0, gitlab.com/cznic/ccgo v3.16.13, gitlab.com/cznic/ccorpus v1.11.6, gitlab.com/cznic/httpfs v1.0.6, gitlab.com/cznic/libc v1.22.2, gitlab.com/cznic/mathutil v1.5.0, gitlab.com/cznic/memory v1.4.0, gitlab.com/cznic/opt v0.1.3, gitlab.com/cznic/sqlite v1.20.3, gitlab.com/cznic/strutil v1.1.3, gitlab.com/cznic/tcl v1.15.0, gitlab.com/cznic/token v1.0.1, gitlab.com/cznic/z v1.7.0, golang.org/x/crypto v0.7.0, golang.org/x/image 20210215-snapshot-4410531f, golang.org/x/mod 20220414-snapshot-86c51ed2, golang.org/x/mod v0.8.0, golang.org/x/net v0.8.0, golang.org/x/sync 20210219-snapshot-036812b2, golang.org/x/sync 20220722-snapshot-886fb937, golang.org/x/sync v0.1.0, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys v0.3.0, golang.org/x/sys v0.6.0, golang.org/x/term v0.6.0, golang.org/x/time v0.3.0, golang.org/x/tools v0.1.12, golang.org/x/tools v0.6.0, golang.org/x/xerrors 20190719-snapshot-9bdfabe6, golang/text v0.6.0, golang/text v0.8.0, google.golang.org/protobuf v1.28.1, google.golang.org/protobuf v1.30.0, google/go-cmp v0.5.8, google/go-cmp v0.5.9, hybridgroup/ble 20220920-snapshot-9a45bebf, mattn-go-colorable 0.1.13)
+(bigfft 20200410-snapshot-eec4a21b, DATA-DOG-go-sqlmock v1.5.0, gitlab.com/cznic/cc v3.40.0, gitlab.com/cznic/ccgo v3.16.13, gitlab.com/cznic/ccorpus v1.11.6, gitlab.com/cznic/httpfs v1.0.6, gitlab.com/cznic/libc v1.22.2, gitlab.com/cznic/mathutil v1.5.0, gitlab.com/cznic/memory v1.4.0, gitlab.com/cznic/opt v0.1.3, gitlab.com/cznic/sqlite v1.20.3, gitlab.com/cznic/strutil v1.1.3, gitlab.com/cznic/tcl v1.15.0, gitlab.com/cznic/token v1.0.1, gitlab.com/cznic/z v1.7.0, golang.org/x/crypto 20221011-snapshot-56aed061, golang.org/x/crypto v0.7.0, golang.org/x/image 20210215-snapshot-4410531f, golang.org/x/mod 20220414-snapshot-86c51ed2, golang.org/x/mod v0.8.0, golang.org/x/net v0.8.0, golang.org/x/sync 20210219-snapshot-036812b2, golang.org/x/sync 20220722-snapshot-886fb937, golang.org/x/sync v0.1.0, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys v0.3.0, golang.org/x/sys v0.6.0, golang.org/x/term v0.6.0, golang.org/x/time v0.3.0, golang.org/x/tools v0.1.12, golang.org/x/tools v0.6.0, golang.org/x/xerrors 20190719-snapshot-9bdfabe6, golang/text v0.6.0, golang/text v0.8.0, google.golang.org/protobuf v1.28.1, google.golang.org/protobuf v1.30.0, google/go-cmp v0.5.8, google/go-cmp v0.5.9, hybridgroup/ble 20220920-snapshot-9a45bebf, mattn-go-colorable 0.1.13)
 
 Copyright (c) <YEAR>, <OWNER>
 All rights reserved.
@@ -8071,7 +8072,6 @@ statuses 2.0.1 : MIT License
 stream-shift 1.0.1 : MIT License
 string-width 4.2.3 : MIT License
 Strip ANSI 6.0.1 : MIT License
-swagger-ui 4.18.2 : Apache License 2.0
 tapjs/signal-exit 3.0.7 : ISC License
 tar 6.1.13 : ISC License
 toidentifier 1.0.1 : MIT License
@@ -8093,7 +8093,7 @@ yallist 4.0.0 : ISC License
 Licenses: 
 
 Apache License 2.0
-(detect-libc 2.0.1, ecdsa-sig-formatter v1.0.11, swagger-ui 4.18.2)
+(detect-libc 2.0.1, ecdsa-sig-formatter v1.0.11)
 
 Apache License
 Version 2.0, January 2004
