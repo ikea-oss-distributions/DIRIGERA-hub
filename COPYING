@@ -5521,7 +5521,7 @@ go.etcd.io/bbolt v1.3.6 : MIT License
 gobuffalo/packr v2.8.3 : MIT License
 godbus-dbus v5.1.0 : BSD 2-clause "Simplified" License
 GoDoc Text v0.2.0 : MIT License
-golang protobuf v1.3.2 : BSD 3-clause "New" or "Revised" License
+Golang Protobuf v1.3.2 : BSD 3-clause "New" or "Revised" License
 golang-github-docker-go-connections-dev 0.4.0 : Apache License 2.0
 golang-github-spf13-pflag-dev v1.0.5 : BSD 3-clause "New" or "Revised" License
 golang.org/x/crypto 20221011-snapshot-56aed061 : BSD 3-clause "New" or "Revised" License
@@ -6418,7 +6418,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(golang protobuf v1.3.2)
+(Golang Protobuf v1.3.2)
 
 Copyright 2010 The Go Authors.  All rights reserved.
 https://github.com/golang/protobuf
@@ -8011,7 +8011,7 @@ mime-db 1.52.0 : MIT License
 minimatch 3.1.2 : ISC License
 minimist 1.2.8 : MIT License
 minipass 3.3.6 : ISC License
-minipass 4.2.8 : ISC License
+minipass 5.0.0 : ISC License
 minizlib v2.1.2 : MIT License
 moment-timezone 0.5.43 : MIT License
 moment/moment 2.29.4 : MIT License
@@ -8035,7 +8035,7 @@ node-lru-cache 6.0.0 : ISC License
 node-mkdirp 1.0.4 : MIT License
 node-semver 6.3.0 : ISC License
 node-semver 7.5.0 : ISC License
-node-sqlite3 4.1.2 : BSD 3-clause "New" or "Revised" License
+node-sqlite3 4.2.0 : BSD 3-clause "New" or "Revised" License
 node-sqlite3 5.1.5 : BSD 3-clause "New" or "Revised" License
 node-uuid 8.3.2 : MIT License
 nodeca-argparse 2.0.1 : Python Software Foundation License 2.0
@@ -8074,7 +8074,6 @@ string-width 4.2.3 : MIT License
 Strip ANSI 6.0.1 : MIT License
 swagger-ui 4.18.3 : Apache License 2.0
 tapjs/signal-exit 3.0.7 : ISC License
-tar 6.1.13 : ISC License
 toidentifier 1.0.1 : MIT License
 tr46 0.0.3 : MIT License
 type.is 1.6.18 : MIT License
@@ -8366,7 +8365,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(node-sqlite3 4.1.2)
+(node-sqlite3 4.2.0)
 
 Copyright (c) MapBox
 All rights reserved.
@@ -8564,7 +8563,7 @@ Permission to use, copy, modify, and/or distribute this software for any
 ---
 
 ISC License
-(apiserver 1.0.0, are-we-there-yet 2.0.0, Gozala/crypto 1.0.1, minipass 3.3.6, minipass 4.2.8, node-glob 7.2.3, node-semver 7.5.0, tar 6.1.13)
+(apiserver 1.0.0, are-we-there-yet 2.0.0, Gozala/crypto 1.0.1, minipass 3.3.6, minipass 5.0.0, node-glob 7.2.3, node-semver 7.5.0)
 
 ISC License (ISCL)
 ==================
