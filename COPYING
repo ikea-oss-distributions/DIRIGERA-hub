@@ -5577,6 +5577,7 @@ mattn-go-colorable v0.1.8 : MIT License
 mattn-go-isatty v0.0.12 : MIT License
 mattn-go-isatty v0.0.17 : MIT License
 mattn-go-runewidth v0.0.12 : MIT License
+mattn-go-sqlite3 v1.14.15 : MIT License
 mgutz-ansi 20170206-snapshot-9520e82c : MIT License
 mgutz-logxi 20161027-snapshot-aebf8a7d : MIT License
 MichaelMure/go-term-markdown v0.1.4 : MIT License
@@ -5593,7 +5594,6 @@ pmezard-go-difflib 1.0.0 : BSD 3-clause "New" or "Revised" License
 pq v1.10.1 : MIT License
 rogpeppe/go-internal v1.8.0 : BSD 3-clause "New" or "Revised" License
 rogpeppe/go-internal v1.8.1 : BSD 3-clause "New" or "Revised" License
-rqlite v1.14.15 : MIT License
 ryanuber-go-glob v1.0.0 : MIT License
 segmentio/textio v1.2.0 : MIT License
 sergi/go-diff v1.0.0 : (MIT License AND Apache License 2.0)
@@ -6997,7 +6997,7 @@ THE SOFTWARE
 ---
 
 MIT License
-(alecthomas/repr 20180818-snapshot-117648cd, dave/goqu v9.18.0, github.com/gobuffalo/logger v1.0.6, github.com/gobuffalo/packd 1.0.1, Go Testify v1.8.2, go-playground-universal-translator v0.18.1, go-playground/assert v2.2.0, go-playground/locales v0.14.1, go-test/deep v1.1.0, holoplot/go-avahi v1.0.1, kyokomi/emoji v2.2.12, leodido/go-urn v1.2.2, lukechampine/uint128 v1.2.0, mapstructure v1.5.0, mattn-go-colorable 0.1.13, mattn-go-isatty v0.0.17, MichaelMure/go-term-markdown v0.1.4, MichaelMure/go-term-text v0.3.1, Microsoft-go-winio v0.6.0, rqlite v1.14.15, sql-migrate v1.3.0, sqlx v1.3.5, stretchr/objx v0.5.0, tevino/abool v2.1.0, yaml for Go v3.0.1, yuin-gopher-lua 20220504-snapshot-65819353)
+(alecthomas/repr 20180818-snapshot-117648cd, dave/goqu v9.18.0, github.com/gobuffalo/logger v1.0.6, github.com/gobuffalo/packd 1.0.1, Go Testify v1.8.2, go-playground-universal-translator v0.18.1, go-playground/assert v2.2.0, go-playground/locales v0.14.1, go-test/deep v1.1.0, holoplot/go-avahi v1.0.1, kyokomi/emoji v2.2.12, leodido/go-urn v1.2.2, lukechampine/uint128 v1.2.0, mapstructure v1.5.0, mattn-go-colorable 0.1.13, mattn-go-isatty v0.0.17, mattn-go-sqlite3 v1.14.15, MichaelMure/go-term-markdown v0.1.4, MichaelMure/go-term-text v0.3.1, Microsoft-go-winio v0.6.0, sql-migrate v1.3.0, sqlx v1.3.5, stretchr/objx v0.5.0, tevino/abool v2.1.0, yaml for Go v3.0.1, yuin-gopher-lua 20220504-snapshot-65819353)
 
 The MIT License
 ===============
@@ -8074,6 +8074,7 @@ string-width 4.2.3 : MIT License
 Strip ANSI 6.0.1 : MIT License
 swagger-ui 4.18.3 : Apache License 2.0
 tapjs/signal-exit 3.0.7 : ISC License
+tar 6.1.14 : ISC License
 toidentifier 1.0.1 : MIT License
 tr46 0.0.3 : MIT License
 type.is 1.6.18 : MIT License
@@ -8563,7 +8564,7 @@ Permission to use, copy, modify, and/or distribute this software for any
 ---
 
 ISC License
-(apiserver 1.0.0, are-we-there-yet 2.0.0, Gozala/crypto 1.0.1, minipass 3.3.6, minipass 5.0.0, node-glob 7.2.3, node-semver 7.5.0)
+(apiserver 1.0.0, are-we-there-yet 2.0.0, Gozala/crypto 1.0.1, minipass 3.3.6, minipass 5.0.0, node-glob 7.2.3, node-semver 7.5.0, tar 6.1.14)
 
 ISC License (ISCL)
 ==================
