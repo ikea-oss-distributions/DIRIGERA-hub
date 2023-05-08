@@ -8028,7 +8028,6 @@ node-bindings 1.2.1 : MIT License
 node-concat-map 0.0.1 : MIT License
 node-cookie-signature 1.0.6 : MIT License
 node-cors v2.8.5 : MIT License
-node-fetch 2.6.9 : MIT License
 node-glob 7.2.3 : ISC License
 node-jws 3.2.2 : MIT License
 node-lru-cache 6.0.0 : ISC License
@@ -10227,7 +10226,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
 ---
 
 MIT License
-(@apidevtools/json-schema-ref-parser 9.1.2, async-mqtt 2.6.3, body-parser 1.20.1, body-parser 1.20.2, call-me-maybe 1.0.2, deepmerge 4.3.1, einaros/ws 7.5.9, expressjs/express 4.18.2, get-intrinsic 1.2.0, https-proxy-agent 5.0.1, js-sdsl 4.3.0, jshttp/content-type 1.0.5, jsonwebtoken 9.0.0, minimist 1.2.8, moment-timezone 0.5.43, moment/moment 2.29.4, MQTT.js 4.3.7, nan 2.17.0, Node Cookie Parser 0.5.0, node-fetch 2.6.9, number-allocator 1.0.14, object-inspect 1.12.3, raw-body 2.5.2, readable-stream 3.6.2, tr46 0.0.3)
+(@apidevtools/json-schema-ref-parser 9.1.2, async-mqtt 2.6.3, body-parser 1.20.1, body-parser 1.20.2, call-me-maybe 1.0.2, deepmerge 4.3.1, einaros/ws 7.5.9, expressjs/express 4.18.2, get-intrinsic 1.2.0, https-proxy-agent 5.0.1, js-sdsl 4.3.0, jshttp/content-type 1.0.5, jsonwebtoken 9.0.0, minimist 1.2.8, moment-timezone 0.5.43, moment/moment 2.29.4, MQTT.js 4.3.7, nan 2.17.0, Node Cookie Parser 0.5.0, number-allocator 1.0.14, object-inspect 1.12.3, raw-body 2.5.2, readable-stream 3.6.2, tr46 0.0.3)
 
 The MIT License
 ===============
