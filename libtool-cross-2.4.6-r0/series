@@ -12,7 +12,5 @@ unwind-opt-parsing.patch -p1
 0001-libtool-Check-for-static-libs-for-internal-compiler-.patch -p1
 0001-Makefile.am-make-sure-autoheader-run-before-autoconf.patch -p1
 0001-Makefile.am-make-sure-autoheader-run-before-automake.patch -p1
-lto-prefix.patch -p1
-debian-no_hostname.patch -p1
 prefix.patch -p1
 fixinstall.patch -p1

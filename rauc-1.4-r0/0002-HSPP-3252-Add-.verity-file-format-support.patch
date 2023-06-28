@@ -13,12 +13,11 @@ diff --git a/src/update_handler.c b/src/update_handler.c
 index c9576a2..a297ddd 100644
 --- a/src/update_handler.c
 +++ b/src/update_handler.c
-@@ -1708,6 +1708,8 @@ RaucUpdatePair updatepairs[] = {
+@@ -1708,6 +1708,7 @@ RaucUpdatePair updatepairs[] = {
  	{"*.ext4.caibx", "ext4", img_to_fs_handler},
  	{"*.ext4.caibx", "raw", img_to_raw_handler},
- 	{"*.bin", "raw", img_to_raw_handler},
+ 	{"*.stm32", "raw", img_to_raw_handler},
 +	{"*.verity", "raw", img_to_raw_handler},
-+	{"*.stm32", "raw", img_to_raw_handler},
  	{"*.vfat.caibx", "raw", img_to_raw_handler},
  	{"*.ubifs.caibx", "ubivol", img_to_ubivol_handler},
  	{"*.ubifs.caibx", "ubifs", img_to_ubifs_handler},

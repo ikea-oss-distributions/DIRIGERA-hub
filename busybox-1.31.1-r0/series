@@ -15,7 +15,5 @@ makefile-libbb-race.patch -p1
 0001-sysctl-ignore-EIO-of-stable_secret-below-proc-sys-ne.patch -p1
 busybox-CVE-2018-1000500.patch -p1
 0001-hwclock-make-glibc-2.31-compatible.patch -p1
-0001-decompress_gunzip-Fix-DoS-if-gzip-is-corrupt.patch -p1
-0001-mktemp-add-tmpdir-option.patch -p1
 0001-mount-support-the-sizelimit-and-offset-option-for-lo.patch -p1
 0001-miscutils-watchdog-Add-gettimeleft.patch -p1

@@ -1,0 +1,89 @@
+--- a/drivers/rtc/rtc-rv3028.c	2022-01-26 13:43:55.060900313 +0100
++++ b/drivers/rtc/rtc-rv3028.c	2022-01-26 13:52:12.136519950 +0100
+@@ -67,6 +67,7 @@
+ #define RV3028_EVT_CTRL_TSR		BIT(2)
+ 
+ #define RV3028_EEPROM_CMD_UPDATE	0x11
++#define RV3028_EEPROM_CMD_REFRESH	0x12
+ #define RV3028_EEPROM_CMD_WRITE		0x21
+ #define RV3028_EEPROM_CMD_READ		0x22
+ 
+@@ -257,6 +258,36 @@
+ 	return ret;
+ }
+ 
++static int rv3028_refresh_shadow_ram(struct rv3028_data *rv3028)
++{
++	u32 status;
++	u32 eerd;
++	int ret;
++
++	ret = rv3028_enter_eerd(rv3028, &eerd);
++	if (ret)
++		return ret;
++
++	ret = regmap_write(rv3028->regmap, RV3028_EEPROM_CMD, 0x0);
++	if (ret)
++		goto exit_eerd;
++
++	ret = regmap_write(rv3028->regmap, RV3028_EEPROM_CMD, RV3028_EEPROM_CMD_REFRESH);
++	if (ret)
++		goto exit_eerd;
++
++	usleep_range(63000, RV3028_EEBUSY_TIMEOUT);
++
++	ret = regmap_read_poll_timeout(rv3028->regmap, RV3028_STATUS, status,
++				       !(status & RV3028_STATUS_EEBUSY),
++				       RV3028_EEBUSY_POLL, RV3028_EEBUSY_TIMEOUT);
++
++exit_eerd:
++	rv3028_exit_eerd(rv3028, eerd);
++
++	return ret;
++}
++
+ static int rv3028_update_cfg(struct rv3028_data *rv3028, unsigned int reg,
+ 			     unsigned int mask, unsigned int val)
+ {
+@@ -748,6 +779,32 @@
+ 	return ret;
+ }
+ 
++static void rv3028_clockout_missing_check(struct rv3028_data *rv3028)
++{
++	u8 eeprom_clockout_val;
++
++	if (rv3028_eeprom_read(rv3028, RV3028_CLKOUT,
++				&eeprom_clockout_val,
++				sizeof(eeprom_clockout_val)) == 0) {
++		u32 nvram_clockout_val;
++		if (regmap_read(rv3028->regmap, RV3028_CLKOUT, &nvram_clockout_val) == 0) {
++			if (nvram_clockout_val != eeprom_clockout_val) {
++				dev_warn(&rv3028->rtc->dev, "Clockout shadow register differs (%02x != %02x)."
++					 " Restoring EEPROM shadow ram!\n",
++					 eeprom_clockout_val, (u8)nvram_clockout_val);
++
++				rv3028_refresh_shadow_ram(rv3028);
++			}
++		}
++		else {
++			dev_warn(&rv3028->rtc->dev, "Unable to read CLKOUT shadow register value!!!\n");
++		}
++	}
++	else {
++		dev_warn(&rv3028->rtc->dev, "Unable to read EEPROM CLKOUT register value!!!\n");
++	}
++}
++
+ static struct rtc_class_ops rv3028_rtc_ops = {
+ 	.read_time = rv3028_get_time,
+ 	.set_time = rv3028_set_time,
+@@ -875,6 +932,8 @@
+ 
+ 	rv3028->rtc->max_user_freq = 1;
+ 
++	rv3028_clockout_missing_check(rv3028);
++
+ 	return 0;
+ }
+ 

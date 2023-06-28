@@ -9,7 +9,6 @@
 
 [Unit]
 Description=Rauc Good-marking Service
-ConditionKernelCommandLine=!nfsroot
 After=network-online.target local-fs.target
 Requires=network-online.target
 JobTimeoutSec=900s

@@ -1,0 +1,24 @@
+From cafdb7e0355d1eae87dceb6bd46c403c61486dc8 Mon Sep 17 00:00:00 2001
+From: Christer Fletcher <christer.fletcher@inter.ikea.com>
+Date: Tue, 14 Dec 2021 08:48:04 +0000
+Subject: [PATCH] Add *.bin as raw type
+
+---
+ src/update_handler.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/update_handler.c b/src/update_handler.c
+index a297ddd..e3425c1 100644
+--- a/src/update_handler.c
++++ b/src/update_handler.c
+@@ -1709,6 +1709,7 @@ RaucUpdatePair updatepairs[] = {
+ 	{"*.ext4.caibx", "raw", img_to_raw_handler},
+ 	{"*.stm32", "raw", img_to_raw_handler},
+ 	{"*.verity", "raw", img_to_raw_handler},
++	{"*.bin", "raw", img_to_raw_handler},
+ 	{"*.vfat.caibx", "raw", img_to_raw_handler},
+ 	{"*.ubifs.caibx", "ubivol", img_to_ubivol_handler},
+ 	{"*.ubifs.caibx", "ubifs", img_to_ubifs_handler},
+-- 
+2.34.1
+

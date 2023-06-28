@@ -10,9 +10,9 @@
 # This script verifies that gateway.target is running then notifies systemd that this service is ready.
 # Before exit it validates that the system is running as a whole, when system is running $2 is touched.
 
-set -exuC -o
+set -euC -o
 PASSED="OTA Validation passed"
-FAILED="OTA validation failed"
+FAILED="OTA Validation failed"
 TIME_BEFORE_REBOOT=10
 if [ -f "/etc/devimage.flg" ]; then
     TIME_BEFORE_REBOOT=900
@@ -47,12 +47,12 @@ then
                 echo "${PASSED}"
                 exit 0
             else
-                logger -s -p 3 "${FAILED}: gateway.target was not reached waiting ${TIME_BEFORE_REBOOT} seconds before reboot"
+                echo "${FAILED}: gateway.target was not reached waiting ${TIME_BEFORE_REBOOT} seconds before reboot" | tee /dev/kmsg
                 teardown_before_reboot
                 exit 1
             fi
         elif system_is_degraded; then
-            logger -s -p 3 "${FAILED}: system is degraded waiting ${TIME_BEFORE_REBOOT} seconds before reboot"
+            echo "${FAILED}: system is degraded waiting ${TIME_BEFORE_REBOOT} seconds before reboot" | tee /dev/kmsg
             teardown_before_reboot
             exit 1
         fi
@@ -60,7 +60,7 @@ then
         CURRENT=$(( CURRENT+1 ))
     done
 
-    logger -s -p 3 "${FAILED}: Validation timeout reach ${END} seconds"
+    echo "${FAILED}: Validation timeout reach ${END} seconds" | tee /dev/kmsg
     exit 1
 fi
 echo "${PASSED}: Boot counter already disabled, will not verify system"

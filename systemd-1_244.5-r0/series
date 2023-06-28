@@ -1,13 +1,3 @@
 0001-binfmt-Don-t-install-dependency-links-at-install-tim.patch -p1
 0003-implment-systemd-sysv-install-for-OE.patch -p1
-CVE-2021-33910.patch -p1
-CVE-2020-13529.patch -p1
-basic-pass-allocation-info-for-ordered-set-new-and-introd.patch -p1
-introduce-ordered_set_clear-free-with-destructor.patch -p1
-network-add-skeleton-of-request-queue.patch -p1
-network-merge-link_drop-and-link_detach_from_manager.patch -p1
-network-also-drop-requests-when-link-enters-linger-state.patch -p1
-network-fix-Link-reference-counter-issue.patch -p1
 core-allow-overriding-the-system-hostname-with-systemd.hostname-on-the-cmdline.patch -p1
-0001-Let-datad-user-have-read-permissions-to-coredumps.patch -p1
-0002-Remove-checking-not-needed-rules-files-from-meson-sc.patch -p1
