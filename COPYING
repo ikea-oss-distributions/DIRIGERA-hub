@@ -5386,11 +5386,11 @@ aws/aws-sdk-go-v2 internal/v4a/v1.0.23 : Apache License 2.0
 aws/aws-sdk-go-v2 service/internal/accept-encoding/v1.9.11 : Apache License 2.0
 aws/aws-sdk-go-v2 service/internal/checksum/v1.1.26 : Apache License 2.0
 aws/aws-sdk-go-v2 service/internal/presigned-url/v1.9.25 : Apache License 2.0
+aws/aws-sdk-go-v2 service/internal/s3shared/v1.14.0 : Apache License 2.0
 aws/aws-sdk-go-v2 service/s3/v1.31.0 : Apache License 2.0
 aws/aws-sdk-go-v2 service/sso/v1.12.6 : Apache License 2.0
 aws/aws-sdk-go-v2 service/ssooidc/v1.14.6 : Apache License 2.0
 aws/aws-sdk-go-v2 service/sts/v1.18.7 : Apache License 2.0
-aws/aws-sdk-go-v2 v1.14.0 : Apache License 2.0
 aws/aws-sdk-go-v2 v1.17.7 : Apache License 2.0
 bigfft 20200410-snapshot-eec4a21b : BSD 3-clause "New" or "Revised" License
 blang-semver v4.0.0 : MIT License
@@ -5557,7 +5557,7 @@ yuin-gopher-lua 20220504-snapshot-65819353 : MIT License
 Licenses: 
 
 Apache License 2.0
-(aws/aws-sdk-go-v2 aws/protocol/eventstream/v1.4.10, aws/aws-sdk-go-v2 config/v1.18.19, aws/aws-sdk-go-v2 credentials/v1.13.18, aws/aws-sdk-go-v2 feature/ec2/imds/v1.13.1, aws/aws-sdk-go-v2 feature/s3/manager/v1.11.59, aws/aws-sdk-go-v2 internal/configsources/v1.1.31, aws/aws-sdk-go-v2 internal/ini/v1.3.32, aws/aws-sdk-go-v2 internal/v4a/v1.0.23, aws/aws-sdk-go-v2 service/internal/accept-encoding/v1.9.11, aws/aws-sdk-go-v2 service/internal/checksum/v1.1.26, aws/aws-sdk-go-v2 service/internal/presigned-url/v1.9.25, aws/aws-sdk-go-v2 service/s3/v1.31.0, aws/aws-sdk-go-v2 service/sso/v1.12.6, aws/aws-sdk-go-v2 service/ssooidc/v1.14.6, aws/aws-sdk-go-v2 service/sts/v1.18.7, aws/aws-sdk-go-v2 v1.14.0, aws/aws-sdk-go-v2 v1.17.7, docker v23.0.1, docker-go-units v0.5.0, docker-registry 2.8.1, ebitengine/purego v0.3.0, github.com/aws/smithy-go v1.13.5, go-systemd v22.4.0, go-systemd v22.5.0, golang-github-docker-go-connections-dev 0.4.0, gotest.tools v3.4.0, hajimehoshi/go-mp3 v0.3.4, hajimehoshi/oto v2.4.0, jmespath-go-jmespath internal/testify/v1.5.1, jmespath-go-jmespath v0.4.0, kubernetes/apimachinery v0.23.4, opencontainers/go-digest 1.0.0, opencontainers/image-spec v1.0.2, sergi/go-diff v1.0.0, spacemonkeygo-spacelog 20180419-snapshot-2296661a, yaml for Go 20200512-snapshot-9f266ea9, yaml for Go v2.4.0, yaml for Go v3.0.1)
+(aws/aws-sdk-go-v2 aws/protocol/eventstream/v1.4.10, aws/aws-sdk-go-v2 config/v1.18.19, aws/aws-sdk-go-v2 credentials/v1.13.18, aws/aws-sdk-go-v2 feature/ec2/imds/v1.13.1, aws/aws-sdk-go-v2 feature/s3/manager/v1.11.59, aws/aws-sdk-go-v2 internal/configsources/v1.1.31, aws/aws-sdk-go-v2 internal/ini/v1.3.32, aws/aws-sdk-go-v2 internal/v4a/v1.0.23, aws/aws-sdk-go-v2 service/internal/accept-encoding/v1.9.11, aws/aws-sdk-go-v2 service/internal/checksum/v1.1.26, aws/aws-sdk-go-v2 service/internal/presigned-url/v1.9.25, aws/aws-sdk-go-v2 service/internal/s3shared/v1.14.0, aws/aws-sdk-go-v2 service/s3/v1.31.0, aws/aws-sdk-go-v2 service/sso/v1.12.6, aws/aws-sdk-go-v2 service/ssooidc/v1.14.6, aws/aws-sdk-go-v2 service/sts/v1.18.7, aws/aws-sdk-go-v2 v1.17.7, docker v23.0.1, docker-go-units v0.5.0, docker-registry 2.8.1, ebitengine/purego v0.3.0, github.com/aws/smithy-go v1.13.5, go-systemd v22.4.0, go-systemd v22.5.0, golang-github-docker-go-connections-dev 0.4.0, gotest.tools v3.4.0, hajimehoshi/go-mp3 v0.3.4, hajimehoshi/oto v2.4.0, jmespath-go-jmespath internal/testify/v1.5.1, jmespath-go-jmespath v0.4.0, kubernetes/apimachinery v0.23.4, opencontainers/go-digest 1.0.0, opencontainers/image-spec v1.0.2, sergi/go-diff v1.0.0, spacemonkeygo-spacelog 20180419-snapshot-2296661a, yaml for Go 20200512-snapshot-9f266ea9, yaml for Go v2.4.0, yaml for Go v3.0.1)
 
 Apache License
 Version 2.0, January 2004
