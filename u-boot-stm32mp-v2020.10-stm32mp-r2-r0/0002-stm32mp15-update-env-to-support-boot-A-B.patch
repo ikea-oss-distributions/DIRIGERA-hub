@@ -1,0 +1,53 @@
+From 0924cf365c9bee403644591ce7fd0cd44379c4c0 Mon Sep 17 00:00:00 2001
+From: Christophe Guibout <christophe.guibout@st.com>
+Date: Wed, 17 Nov 2021 20:58:59 +0100
+Subject: [PATCH 2/2] stm32mp15: update env to support boot A/B
+
+Change-Id: I758d79c3760fd00a23397105bc9e37b9c0f02e83
+---
+ configs/stm32mp15_trusted_defconfig | 2 +-
+ include/config_distro_bootcmd.h     | 1 +
+ include/configs/stm32mp1.h          | 2 +-
+ 3 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/configs/stm32mp15_trusted_defconfig b/configs/stm32mp15_trusted_defconfig
+index e094cc1da8..0362f49536 100644
+--- a/configs/stm32mp15_trusted_defconfig
++++ b/configs/stm32mp15_trusted_defconfig
+@@ -13,7 +13,7 @@ CONFIG_DEFAULT_DEVICE_TREE="stm32mp157c-ev1"
+ CONFIG_DISTRO_DEFAULTS=y
+ CONFIG_FIT=y
+ CONFIG_BOOTDELAY=1
+-CONFIG_BOOTCOMMAND="run bootcmd_stm32mp"
++CONFIG_BOOTCOMMAND="echo 'Boot A';setenv altboot 0;run bootcmd_stm32mp"
+ # CONFIG_BOOTCOUNT_LIMIT is not set
+ # CONFIG_BOOTCOUNT_GENERIC is not set
+ CONFIG_FDT_SIMPLEFB=y
+diff --git a/include/config_distro_bootcmd.h b/include/config_distro_bootcmd.h
+index fc0935fa21..f5a4d13871 100644
+--- a/include/config_distro_bootcmd.h
++++ b/include/config_distro_bootcmd.h
+@@ -467,6 +467,7 @@
+ 		"part list ${devtype} ${devnum} -bootable devplist; "     \
+ 		"env exists devplist || setenv devplist 1; "              \
+ 		"for distro_bootpart in ${devplist}; do "                 \
++			"if test ${altboot} = 1;then setexpr distro_bootpart ${distro_bootpart} + 1; fi;" \
+ 			"if fstype ${devtype} "                           \
+ 					"${devnum}:${distro_bootpart} "   \
+ 					"bootfstype; then "               \
+diff --git a/include/configs/stm32mp1.h b/include/configs/stm32mp1.h
+index 72424abb8b..cc54a88af3 100644
+--- a/include/configs/stm32mp1.h
++++ b/include/configs/stm32mp1.h
+@@ -155,7 +155,7 @@
+ 	"pxefile_addr_r=0xc4200000\0" \
+ 	"splashimage=0xc4300000\0"  \
+ 	"ramdisk_addr_r=0xc4400000\0" \
+-	"altbootcmd=run bootcmd\0" \
++	"altbootcmd=echo 'Boot B';setenv altboot 1;run bootcmd_stm32mp\0" \
+ 	"env_check=if env info -p -d -q; then env save; fi\0" \
+ 	STM32MP_BOOTCMD \
+ 	BOOTENV \
+-- 
+2.17.1
+

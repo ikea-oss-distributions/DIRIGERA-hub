@@ -1,0 +1,61 @@
+From 48784ccb0778224d806cbe702ec5e57b0de8f475 Mon Sep 17 00:00:00 2001
+From: Manish V Badarkhe <Manish.Badarkhe@arm.com>
+Date: Sun, 20 Jun 2021 22:29:22 +0100
+Subject: [PATCH 10/18] feat(fwu): avoid NV counter upgrade in trial run state
+
+Avoided NV counter update when the system is running in
+trial run state.
+
+Change-Id: I5da6a6760f8a9faff777f2ff879156e9c3c76726
+Signed-off-by: Manish V Badarkhe <Manish.Badarkhe@arm.com>
+---
+ drivers/auth/auth_mod.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/auth/auth_mod.c b/drivers/auth/auth_mod.c
+index a84787fc3..af48c8d40 100644
+--- a/drivers/auth/auth_mod.c
++++ b/drivers/auth/auth_mod.c
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2015-2020, ARM Limited and Contributors. All rights reserved.
++ * Copyright (c) 2015-2021, ARM Limited and Contributors. All rights reserved.
+  *
+  * SPDX-License-Identifier: BSD-3-Clause
+  */
+@@ -16,6 +16,7 @@
+ #include <drivers/auth/auth_mod.h>
+ #include <drivers/auth/crypto_mod.h>
+ #include <drivers/auth/img_parser_mod.h>
++#include <drivers/fwu/fwu.h>
+ #include <lib/fconf/fconf_tbbr_getter.h>
+ #include <plat/common/platform.h>
+ 
+@@ -241,6 +242,7 @@ static int auth_nvctr(const auth_method_param_nv_ctr_t *param,
+ 	unsigned int data_len, len, i;
+ 	unsigned int cert_nv_ctr, plat_nv_ctr;
+ 	int rc = 0;
++	bool is_trial_run = false;
+ 
+ 	/* Get the counter value from current image. The AM expects the IPM
+ 	 * to return the counter value as a DER encoded integer */
+@@ -283,9 +285,14 @@ static int auth_nvctr(const auth_method_param_nv_ctr_t *param,
+ 		/* Invalid NV-counter */
+ 		return 1;
+ 	} else if (cert_nv_ctr > plat_nv_ctr) {
+-		rc = plat_set_nv_ctr2(param->plat_nv_ctr->cookie,
++#if PSA_FWU_SUPPORT && IMAGE_BL2
++		is_trial_run = fwu_is_trial_run_state();
++#endif /* PSA_FWU_SUPPORT && IMAGE_BL2 */
++		if (!is_trial_run) {
++			rc = plat_set_nv_ctr2(param->plat_nv_ctr->cookie,
+ 			img_desc, cert_nv_ctr);
+-		return_if_error(rc);
++			return_if_error(rc);
++		}
+ 	}
+ 
+ 	return 0;
+-- 
+2.17.1
+

@@ -1,0 +1,315 @@
+From f6027c9ebfb38ac1d2b51273015a77bed8679a7f Mon Sep 17 00:00:00 2001
+From: Manish V Badarkhe <Manish.Badarkhe@arm.com>
+Date: Mon, 22 Feb 2021 17:30:17 +0000
+Subject: [PATCH 06/18] feat(plat/arm): add GPT parser support
+
+Added GPT parser support in BL2 for Arm platforms to get the entry
+address and length of the FIP in the GPT image.
+
+Also, increased BL2 maximum size for FVP platform to successfully
+compile ROM-enabled build with this change.
+
+Verified this change using a patch:
+https://review.trustedfirmware.org/c/ci/tf-a-ci-scripts/+/9654
+
+Change-Id: Ie8026db054966653b739a82d9ba106d283f534d0
+Signed-off-by: Manish V Badarkhe <Manish.Badarkhe@arm.com>
+---
+ include/plat/arm/board/common/board_css_def.h | 12 +++++-
+ include/plat/arm/common/plat_arm.h            |  5 ++-
+ plat/arm/board/fvp/include/platform_def.h     | 14 ++++++-
+ plat/arm/common/arm_bl2_setup.c               | 17 +++++++-
+ plat/arm/common/arm_common.mk                 | 11 +++++
+ plat/arm/common/arm_io_storage.c              | 40 ++++++++++++++++++-
+ plat/arm/common/fconf/arm_fconf_io.c          | 40 +++++++++++++++++--
+ 7 files changed, 129 insertions(+), 10 deletions(-)
+
+diff --git a/include/plat/arm/board/common/board_css_def.h b/include/plat/arm/board/common/board_css_def.h
+index b79e0d572..59f877c04 100644
+--- a/include/plat/arm/board/common/board_css_def.h
++++ b/include/plat/arm/board/common/board_css_def.h
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2015-2020, ARM Limited and Contributors. All rights reserved.
++ * Copyright (c) 2015-2021, ARM Limited and Contributors. All rights reserved.
+  *
+  * SPDX-License-Identifier: BSD-3-Clause
+  */
+@@ -47,6 +47,16 @@
+ #define PLAT_ARM_FIP_BASE		V2M_FLASH0_BASE
+ #define PLAT_ARM_FIP_MAX_SIZE		(V2M_FLASH0_SIZE - V2M_FLASH_BLOCK_SIZE)
+ 
++#if ARM_GPT_SUPPORT
++/*
++ * Offset of the FIP in the GPT image. BL1 component uses this option
++ * as it does not load the partition table to get the FIP base
++ * address. At sector 34 by default (i.e. after reserved sectors 0-33)
++ * Offset = 34 * 512(sector size) = 17408 i.e. 0x4400
++ */
++#define PLAT_ARM_FIP_OFFSET_IN_GPT		0x4400
++#endif /* ARM_GPT_SUPPORT */
++
+ #define PLAT_ARM_NVM_BASE		V2M_FLASH0_BASE
+ #define PLAT_ARM_NVM_SIZE		(V2M_FLASH0_SIZE - V2M_FLASH_BLOCK_SIZE)
+ 
+diff --git a/include/plat/arm/common/plat_arm.h b/include/plat/arm/common/plat_arm.h
+index 95fc18ed8..846c9a449 100644
+--- a/include/plat/arm/common/plat_arm.h
++++ b/include/plat/arm/common/plat_arm.h
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2015-2020, ARM Limited and Contributors. All rights reserved.
++ * Copyright (c) 2015-2021, ARM Limited and Contributors. All rights reserved.
+  *
+  * SPDX-License-Identifier: BSD-3-Clause
+  */
+@@ -152,6 +152,9 @@ void arm_setup_romlib(void);
+ /* IO storage utility functions */
+ int arm_io_setup(void);
+ 
++/* Set image specification in IO block policy */
++int arm_set_image_source(unsigned int image_id, const char *part_name);
++
+ /* Security utility functions */
+ void arm_tzc400_setup(uintptr_t tzc_base,
+ 			const arm_tzc_regions_info_t *tzc_regions);
+diff --git a/plat/arm/board/fvp/include/platform_def.h b/plat/arm/board/fvp/include/platform_def.h
+index 8defcf837..52084758a 100644
+--- a/plat/arm/board/fvp/include/platform_def.h
++++ b/plat/arm/board/fvp/include/platform_def.h
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2014-2020, ARM Limited and Contributors. All rights reserved.
++ * Copyright (c) 2014-2021, ARM Limited and Contributors. All rights reserved.
+  *
+  * SPDX-License-Identifier: BSD-3-Clause
+  */
+@@ -115,7 +115,7 @@
+ #if USE_ROMLIB
+ #define PLAT_ARM_MAX_ROMLIB_RW_SIZE	UL(0x1000)
+ #define PLAT_ARM_MAX_ROMLIB_RO_SIZE	UL(0xe000)
+-#define FVP_BL2_ROMLIB_OPTIMIZATION UL(0x6000)
++#define FVP_BL2_ROMLIB_OPTIMIZATION	UL(0x5000)
+ #else
+ #define PLAT_ARM_MAX_ROMLIB_RW_SIZE	UL(0)
+ #define PLAT_ARM_MAX_ROMLIB_RO_SIZE	UL(0)
+@@ -188,6 +188,16 @@
+ #define PLAT_ARM_FIP_BASE		V2M_FLASH0_BASE
+ #define PLAT_ARM_FIP_MAX_SIZE		(V2M_FLASH0_SIZE - V2M_FLASH_BLOCK_SIZE)
+ 
++#if ARM_GPT_SUPPORT
++/*
++ * Offset of the FIP in the GPT image. BL1 component uses this option
++ * as it does not load the partition table to get the FIP base
++ * address. At sector 34 by default (i.e. after reserved sectors 0-33)
++ * Offset = 34 * 512(sector size) = 17408 i.e. 0x4400
++ */
++#define PLAT_ARM_FIP_OFFSET_IN_GPT	0x4400
++#endif /* ARM_GPT_SUPPORT */
++
+ #define PLAT_ARM_NVM_BASE		V2M_FLASH0_BASE
+ #define PLAT_ARM_NVM_SIZE		(V2M_FLASH0_SIZE - V2M_FLASH_BLOCK_SIZE)
+ 
+diff --git a/plat/arm/common/arm_bl2_setup.c b/plat/arm/common/arm_bl2_setup.c
+index c90e93cd8..63ed9fe17 100644
+--- a/plat/arm/common/arm_bl2_setup.c
++++ b/plat/arm/common/arm_bl2_setup.c
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2015-2020, ARM Limited and Contributors. All rights reserved.
++ * Copyright (c) 2015-2021, ARM Limited and Contributors. All rights reserved.
+  *
+  * SPDX-License-Identifier: BSD-3-Clause
+  */
+@@ -14,6 +14,7 @@
+ #include <common/debug.h>
+ #include <common/desc_image_load.h>
+ #include <drivers/generic_delay_timer.h>
++#include <drivers/partition/partition.h>
+ #include <lib/fconf/fconf.h>
+ #include <lib/fconf/fconf_dyn_cfg_getter.h>
+ #ifdef SPD_opteed
+@@ -70,6 +71,12 @@ void arm_bl2_early_platform_setup(uintptr_t fw_config,
+ 
+ 	/* Initialise the IO layer and register platform IO devices */
+ 	plat_arm_io_setup();
++
++	/* Load partition table */
++#if ARM_GPT_SUPPORT
++	partition_init(GPT_IMAGE_ID);
++#endif /* ARM_GPT_SUPPORT */
++
+ }
+ 
+ void bl2_early_platform_setup2(u_register_t arg0, u_register_t arg1, u_register_t arg2, u_register_t arg3)
+@@ -86,6 +93,14 @@ void bl2_early_platform_setup2(u_register_t arg0, u_register_t arg1, u_register_
+ void bl2_plat_preload_setup(void)
+ {
+ 	arm_bl2_dyn_cfg_init();
++
++#if ARM_GPT_SUPPORT
++	int result = arm_set_image_source(FIP_IMAGE_ID, "FIP_A");
++
++	if (result != 0) {
++		panic();
++	}
++#endif /* ARM_GPT_SUPPORT */
+ }
+ 
+ /*
+diff --git a/plat/arm/common/arm_common.mk b/plat/arm/common/arm_common.mk
+index 74afc53eb..8f77fbcd2 100644
+--- a/plat/arm/common/arm_common.mk
++++ b/plat/arm/common/arm_common.mk
+@@ -166,6 +166,17 @@ ifeq (${ARM_CRYPTOCELL_INTEG},1)
+     endif
+ endif
+ 
++# Disable GPT parser support, use FIP image by default
++ARM_GPT_SUPPORT			:=	0
++$(eval $(call assert_boolean,ARM_GPT_SUPPORT))
++$(eval $(call add_define,ARM_GPT_SUPPORT))
++
++# Include necessary sources to parse GPT image
++ifeq (${ARM_GPT_SUPPORT}, 1)
++  BL2_SOURCES	+=	drivers/partition/gpt.c		\
++			drivers/partition/partition.c
++endif
++
+ ifeq (${ARCH}, aarch64)
+ PLAT_INCLUDES		+=	-Iinclude/plat/arm/common/aarch64
+ endif
+diff --git a/plat/arm/common/arm_io_storage.c b/plat/arm/common/arm_io_storage.c
+index 34b4101e1..c5d913e28 100644
+--- a/plat/arm/common/arm_io_storage.c
++++ b/plat/arm/common/arm_io_storage.c
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2015-2020, ARM Limited. All rights reserved.
++ * Copyright (c) 2015-2021, ARM Limited. All rights reserved.
+  *
+  * SPDX-License-Identifier: BSD-3-Clause
+  */
+@@ -9,6 +9,7 @@
+ #include <drivers/io/io_fip.h>
+ #include <drivers/io/io_memmap.h>
+ #include <drivers/io/io_storage.h>
++#include <drivers/partition/partition.h>
+ #include <lib/utils.h>
+ 
+ #include <plat/arm/common/arm_fconf_getter.h>
+@@ -136,3 +137,40 @@ bool arm_io_is_toc_valid(void)
+ {
+ 	return (io_dev_init(fip_dev_handle, (uintptr_t)FIP_IMAGE_ID) == 0);
+ }
++
++#if ARM_GPT_SUPPORT
++/**********************************************************************
++ * arm_set_image_source: Set image specification in IO policy
++ *
++ * @image_id: id of the image whose specification to be set
++ *
++ * @part_name: name of the partition that to be read for entry details
++ *
++ * set the entry and offset details of partition in global IO policy
++ * of the image
++ *********************************************************************/
++int arm_set_image_source(unsigned int image_id, const char *part_name)
++{
++	const partition_entry_t *entry = get_partition_entry(part_name);
++
++	if (entry == NULL) {
++		ERROR("Unable to find the %s partition\n", part_name);
++		return -ENOENT;
++	}
++
++	const struct plat_io_policy *policy = FCONF_GET_PROPERTY(arm,
++								 io_policies,
++								 image_id);
++
++	assert(policy != NULL);
++	assert(policy->image_spec != 0UL);
++
++	/* set offset and length of the image */
++	io_block_spec_t *image_spec = (io_block_spec_t *)policy->image_spec;
++
++	image_spec->offset = PLAT_ARM_FLASH_IMAGE_BASE + entry->start;
++	image_spec->length = entry->length;
++
++	return 0;
++}
++#endif
+diff --git a/plat/arm/common/fconf/arm_fconf_io.c b/plat/arm/common/fconf/arm_fconf_io.c
+index 48286c2f2..5da40680b 100644
+--- a/plat/arm/common/fconf/arm_fconf_io.c
++++ b/plat/arm/common/fconf/arm_fconf_io.c
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2019-2020, ARM Limited. All rights reserved.
++ * Copyright (c) 2019-2021, ARM Limited. All rights reserved.
+  *
+  * SPDX-License-Identifier: BSD-3-Clause
+  */
+@@ -9,6 +9,7 @@
+ #include <common/debug.h>
+ #include <common/fdt_wrappers.h>
+ #include <drivers/io/io_storage.h>
++#include <drivers/partition/partition.h>
+ #include <lib/object_pool.h>
+ #include <libfdt.h>
+ #include <tools_share/firmware_image_package.h>
+@@ -17,10 +18,34 @@
+ #include <plat/arm/common/arm_fconf_io_storage.h>
+ #include <platform_def.h>
+ 
+-const io_block_spec_t fip_block_spec = {
+-	.offset = PLAT_ARM_FIP_BASE,
+-	.length = PLAT_ARM_FIP_MAX_SIZE
++io_block_spec_t fip_block_spec = {
++/*
++ * This is fixed FIP address used by BL1, BL2 loads partition table
++ * to get FIP address.
++ */
++#if ARM_GPT_SUPPORT
++	.offset = PLAT_ARM_FLASH_IMAGE_BASE + PLAT_ARM_FIP_OFFSET_IN_GPT,
++#else
++	.offset = PLAT_ARM_FLASH_IMAGE_BASE,
++#endif /* ARM_GPT_SUPPORT */
++	.length = PLAT_ARM_FLASH_IMAGE_MAX_SIZE
++};
++
++#if ARM_GPT_SUPPORT
++static const io_block_spec_t gpt_spec = {
++	.offset         = PLAT_ARM_FLASH_IMAGE_BASE,
++	/*
++	 * PLAT_PARTITION_BLOCK_SIZE = 512
++	 * PLAT_PARTITION_MAX_ENTRIES = 128
++	 * each sector has 4 partition entries, and there are
++	 * 2 reserved sectors i.e. protective MBR and primary
++	 * GPT header hence length gets calculated as,
++	 * length = 512 * (128/4 + 2)
++	 */
++	.length         = PLAT_PARTITION_BLOCK_SIZE *
++			  (PLAT_PARTITION_MAX_ENTRIES / 4 + 2),
+ };
++#endif /* ARM_GPT_SUPPORT */
+ 
+ const io_uuid_spec_t arm_uuid_spec[MAX_NUMBER_IDS] = {
+ 	[BL2_IMAGE_ID] = {UUID_TRUSTED_BOOT_FIRMWARE_BL2},
+@@ -60,6 +85,13 @@ const io_uuid_spec_t arm_uuid_spec[MAX_NUMBER_IDS] = {
+ 
+ /* By default, ARM platforms load images from the FIP */
+ struct plat_io_policy policies[MAX_NUMBER_IDS] = {
++#if ARM_GPT_SUPPORT
++	[GPT_IMAGE_ID] = {
++		&memmap_dev_handle,
++		(uintptr_t)&gpt_spec,
++		open_memmap
++	},
++#endif /* ARM_GPT_SUPPORT */
+ 	[FIP_IMAGE_ID] = {
+ 		&memmap_dev_handle,
+ 		(uintptr_t)&fip_block_spec,
+-- 
+2.17.1
+

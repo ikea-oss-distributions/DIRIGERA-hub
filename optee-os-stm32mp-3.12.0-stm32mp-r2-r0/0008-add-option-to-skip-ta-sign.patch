@@ -1,0 +1,42 @@
+From 03108754f6d9907a9977f7c04f70c224b80a3446 Mon Sep 17 00:00:00 2001
+From: Christer Fletcher <christer.fletcher@inter.ikea.com>
+Date: Mon, 21 Jun 2021 21:15:41 +0200
+Subject: [PATCH] Add possibility to skip signing of TAs.
+
+Add the CFG_SIGN_TA flag which defaults to y. If it's set to n, no
+uuid.ta files will be generated.
+---
+ ta/arch/arm/link.mk | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/ta/arch/arm/link.mk b/ta/arch/arm/link.mk
+index cca6e6f4a..19928543d 100644
+--- a/ta/arch/arm/link.mk
++++ b/ta/arch/arm/link.mk
+@@ -5,6 +5,8 @@ link-script-dep$(sm) = $(link-out-dir$(sm))/.ta.ld.d
+ SIGN_ENC ?= $(PYTHON3) $(ta-dev-kit-dir$(sm))/scripts/sign_encrypt.py
+ TA_SIGN_KEY ?= $(ta-dev-kit-dir$(sm))/keys/default_ta.pem
+ 
++CFG_SIGN_TA ?= y
++
+ ifeq ($(CFG_ENCRYPT_TA),y)
+ # Default TA encryption key is a dummy key derived from default
+ # hardware unique key (an array of 16 zero bytes) to demonstrate
+@@ -16,9 +18,15 @@ ifeq ($(CFG_ENCRYPT_TA),y)
+ TA_ENC_KEY ?= 'b64d239b1f3c7d3b06506229cd8ff7c8af2bb4db2168621ac62c84948468c4f4'
+ endif
+ 
++ifeq ($(CFG_SIGN_TA),y)
+ all: $(link-out-dir$(sm))/$(user-ta-uuid).dmp \
+ 	$(link-out-dir$(sm))/$(user-ta-uuid).stripped.elf \
+ 	$(link-out-dir$(sm))/$(user-ta-uuid).ta
++else
++all: $(link-out-dir$(sm))/$(user-ta-uuid).dmp \
++	$(link-out-dir$(sm))/$(user-ta-uuid).stripped.elf
++endif
++
+ cleanfiles += $(link-out-dir$(sm))/$(user-ta-uuid).elf
+ cleanfiles += $(link-out-dir$(sm))/$(user-ta-uuid).dmp
+ cleanfiles += $(link-out-dir$(sm))/$(user-ta-uuid).map
+-- 
+2.27.0

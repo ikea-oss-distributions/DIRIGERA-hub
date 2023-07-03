@@ -1,0 +1,68 @@
+## This is an example RAUC system configuration. This file will be installed
+## into /etc/rauc/system.conf on your target and describes your system from the
+## perspective of the RAUC update service.
+##
+## Adapt and extend the below configuration to your needs and place it in the
+## BSP layer of you project. Create a rauc .bbappend file that adds this file
+## to your build:
+##
+##   FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+##
+##   SRC_URI_append := " file://system.conf"
+##
+## ---
+##
+
+[system]
+compatible=stm32mp1
+bootloader=custom
+mountprefix=/usr/local/rauc
+max-bundle-download-size=805306368
+
+[keyring]
+path=/etc/rauc/ca.cert.pem
+
+[handlers]
+pre-install=/usr/lib/rauc/pre-install.sh
+post-install=/usr/lib/rauc/post-install.sh
+bootloader-custom-backend=/usr/lib/rauc/st-boot-script.sh
+
+[slot.rootfs.0]
+device=/dev/mmcblk1p9
+type=ext4
+bootname=A
+
+[slot.rootfs.1]
+device=/dev/mmcblk1p10
+type=ext4
+bootname=B
+
+[slot.ssbl.0]
+device=/dev/mmcblk1p3
+type=raw
+parent=rootfs.0
+
+[slot.ssbl.1]
+device=/dev/mmcblk1p4
+type=raw
+parent=rootfs.1
+
+[slot.bootfs.0]
+device=/dev/mmcblk1p5
+type=ext4
+parent=rootfs.0
+
+[slot.bootfs.1]
+device=/dev/mmcblk1p6
+type=ext4
+parent=rootfs.1
+
+[slot.vendorfs.0]
+device=/dev/mmcblk1p7
+type=ext4
+parent=rootfs.0
+
+[slot.vendorfs.1]
+device=/dev/mmcblk1p8
+type=ext4
+parent=rootfs.1

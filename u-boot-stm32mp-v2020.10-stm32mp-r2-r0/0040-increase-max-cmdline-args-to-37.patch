@@ -1,0 +1,28 @@
+From 4bacb4b13fe1e67941eb0f829e0e07e6ad773982 Mon Sep 17 00:00:00 2001
+From: Christer Fletcher <christer.fletcher@inter.ikea.com>
+Date: Thu, 14 Oct 2021 11:58:35 +0200
+Subject: [PATCH] Increase max cmdline args to 37
+
+---
+ include/configs/stm32mp1.h | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/include/configs/stm32mp1.h b/include/configs/stm32mp1.h
+index c991075164..725c5735e0 100644
+--- a/include/configs/stm32mp1.h
++++ b/include/configs/stm32mp1.h
+@@ -28,6 +28,11 @@
+  */
+ #define CONFIG_SYS_CBSIZE			SZ_1K
+ 
++/*
++ * Max arguments to commands
++ */
++#define CONFIG_SYS_MAXARGS 			37
++
+ /*
+  * default load address used for command tftp,  bootm , loadb, ...
+  */
+-- 
+2.33.1
+

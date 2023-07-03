@@ -1,0 +1,91 @@
+From abd0ea323caf089909b44172a11a189cee6cdaba Mon Sep 17 00:00:00 2001
+From: Manish V Badarkhe <Manish.Badarkhe@arm.com>
+Date: Fri, 25 Jun 2021 23:28:59 +0100
+Subject: [PATCH 05/18] feat(fwu): initialize FWU driver in BL2
+
+Initialized FWU driver module in BL2 component under
+build flag PSA_FWU_SUPPORT.
+
+Change-Id: I08b191599835925c355981d695667828561b9a21
+Signed-off-by: Manish V Badarkhe <Manish.Badarkhe@arm.com>
+---
+ Makefile                 | 6 ++++++
+ bl2/bl2_main.c           | 7 ++++++-
+ make_helpers/defaults.mk | 3 +++
+ 3 files changed, 15 insertions(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index c8576c345..f9ea2df2d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -708,6 +708,10 @@ ifeq ($(MEASURED_BOOT),1)
+     endif
+ endif
+ 
++ifeq ($(PSA_FWU_SUPPORT),1)
++    $(info PSA_FWU_SUPPORT is an experimental feature)
++endif
++
+ ifeq (${ARM_XLAT_TABLES_LIB_V1}, 1)
+     ifeq (${ALLOW_RO_XLAT_TABLES}, 1)
+         $(error "ALLOW_RO_XLAT_TABLES requires translation tables library v2")
+@@ -917,6 +921,7 @@ $(eval $(call assert_booleans,\
+         COT_DESC_IN_DTB \
+         USE_SP804_TIMER \
+         AARCH32_EXCEPTION_DEBUG \
++        PSA_FWU_SUPPORT \
+ )))
+ 
+ $(eval $(call assert_numerics,\
+@@ -1011,6 +1016,7 @@ $(eval $(call add_defines,\
+         AARCH32_EXCEPTION_DEBUG \
+         NR_OF_FW_BANKS \
+         NR_OF_IMAGES_IN_FW_BANK \
++        PSA_FWU_SUPPORT \
+ )))
+ 
+ ifeq (${SANITIZE_UB},trap)
+diff --git a/bl2/bl2_main.c b/bl2/bl2_main.c
+index 203e1d4b1..d2de1350d 100644
+--- a/bl2/bl2_main.c
++++ b/bl2/bl2_main.c
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2013-2020, ARM Limited and Contributors. All rights reserved.
++ * Copyright (c) 2013-2021, ARM Limited and Contributors. All rights reserved.
+  *
+  * SPDX-License-Identifier: BSD-3-Clause
+  */
+@@ -14,6 +14,7 @@
+ #include <common/debug.h>
+ #include <drivers/auth/auth_mod.h>
+ #include <drivers/console.h>
++#include <drivers/fwu/fwu.h>
+ #if MEASURED_BOOT
+ #include <drivers/measured_boot/measured_boot.h>
+ #endif
+@@ -88,6 +89,10 @@ void bl2_main(void)
+ 	/* Perform remaining generic architectural setup in S-EL1 */
+ 	bl2_arch_setup();
+ 
++#if PSA_FWU_SUPPORT
++	fwu_init();
++#endif /* PSA_FWU_SUPPORT */
++
+ #if TRUSTED_BOARD_BOOT
+ 	/* Initialize authentication module */
+ 	auth_mod_init();
+diff --git a/make_helpers/defaults.mk b/make_helpers/defaults.mk
+index 047b19a0f..6cd28508e 100644
+--- a/make_helpers/defaults.mk
++++ b/make_helpers/defaults.mk
+@@ -336,3 +336,6 @@ NR_OF_FW_BANKS			:= 2
+ # Build option to define number of images in firmware bank, used in firmware
+ # update metadata structure.
+ NR_OF_IMAGES_IN_FW_BANK		:= 1
++
++# Disable Firmware update support by default
++PSA_FWU_SUPPORT			:= 0
+-- 
+2.17.1
+

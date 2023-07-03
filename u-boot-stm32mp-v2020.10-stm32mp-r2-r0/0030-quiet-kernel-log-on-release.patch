@@ -1,0 +1,57 @@
+From 7562499b17900170ba90a1808f017aa502a5524c Mon Sep 17 00:00:00 2001
+From: Christer Fletcher <christer.fletcher@inter.ikea.com>
+Date: Tue, 15 Jun 2021 13:22:23 +0200
+Subject: [PATCH] [HSPP-5700] Remove verbose kernel logging to console in
+ release build.
+
+Add "quiet" on kernel cmdline if CONFIG_IKEIX_DEBUG is not set.
+---
+ Kconfig                         |  3 ++-
+ include/config_distro_bootcmd.h | 10 +++++++++-
+ 2 files changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/Kconfig b/Kconfig
+index 5a5d5d23cc..f026c2f4fc 100644
+--- a/Kconfig
++++ b/Kconfig
+@@ -31,7 +31,8 @@ config IKEIX_DEBUG
+ 	bool "Debug variant"
+ 	default n
+ 	help
+-	  Enables console.
++	  Enables U-Boot console.
++	  Enables verbose kernel logging to console.
+ 
+ config LOCALVERSION
+ 	string "Local version - append to U-Boot release"
+diff --git a/include/config_distro_bootcmd.h b/include/config_distro_bootcmd.h
+index 5625266f7b..eb3ad99575 100644
+--- a/include/config_distro_bootcmd.h
++++ b/include/config_distro_bootcmd.h
+@@ -403,6 +403,12 @@
+ #define BOOTENV_BOOT_TARGETS \
+ 	"boot_targets=" BOOT_TARGET_DEVICES(BOOTENV_DEV_NAME) "\0"
+ 
++#ifdef CONFIG_IKEIX_DEBUG
++#define BOOTENV_QUIET
++#else
++#define BOOTENV_QUIET "quiet "
++#endif
++
+ #define BOOTENV_DEV(devtypeu, devtypel, instance) \
+ 	BOOTENV_DEV_##devtypeu(devtypeu, devtypel, instance)
+ #define BOOTENV \
+@@ -535,7 +541,9 @@
+ 	"set_bootargs="                                                   \
+ 		"env set bootargs "                                       \
+ 			"root=/dev/mmcblk${devnum}p${rootpart} "          \
+-			"rootwait ro console=ttySTM0,115200 "             \
++			"rootwait ro "                                    \
++			"console=ttySTM0,115200 "                         \
++			BOOTENV_QUIET                                     \
+ 			"rauc.slot=${rauc_slot} "                         \
+ 			"${reset_reason} "                                \
+ 			"${verity_fail} "                                 \
+-- 
+2.31.1
+

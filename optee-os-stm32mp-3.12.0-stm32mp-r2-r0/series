@@ -1,0 +1,12 @@
+0001-3.12.0-stm32mp-r1.patch -p1
+0002-3.12.0-stm32mp-r1.1-rc1.patch -p1
+0003-3.12.0-stm32mp-r2.patch -p1
+0001-drivers-stm32_i2c-add-NACK-detection.patch -p1
+0002-core-add-HUK-from-OTP-with-stm32-BSEC.patch -p1
+0003-drivers-add-STSAFE-A-driver-and-HUK-dependencies.patch -p1
+0004-Adding-I2C5-driver-for-STSAFE-A-DK2.patch -p1
+0001-core-fix-shared-memory-buffer-rpc-allocation.patch -p1
+0002-core-verify-size-of-allocated-shared-memory.patch -p1
+0006-platform-adjustment-for-gw2.0.patch -p1
+0007-exclude-st-safe-mp-area-checks.patch -p1
+0008-add-option-to-skip-ta-sign.patch -p1

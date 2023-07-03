@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -x
 # Copyright © Inter IKEA Systems B.V. 2017, 2018, 2019, 2020, 2021.
 # All Rights Reserved.
 #
@@ -9,16 +9,35 @@
 #
 # shellcheck disable=SC2046
 
-for file in "${RAUC_BUNDLE_MOUNT_POINT}"/*; do
-    if [ -f "${file}" ]; then
-        if echo "${file##*/}" | grep -q "^fip-"; then
-            echo "Updating to OpenSTLinux 3.x"
-            "${0%/*}/post-install-3.x.sh"
-            exit $?
-        fi
-    fi
-done
+get_cur_rauc_slot() {
+    set -- $(cat /proc/cmdline)
+    for x; do
+        case "$x" in
+            rauc.slot=*)
+                echo "${x#rauc.slot=}"
+                ;;
+        esac
+    done
+}
 
-echo "Updating to OpenSTLinux 2.x"
-"${0%/*}/post-install-2.x.sh"
-exit $?
+set_next_rauc_slot() {
+    case "$(get_cur_rauc_slot)" in
+        B)
+            # current is B, switch to A
+            mmc bootpart enable 1 1 /dev/mmcblk1
+            ;;
+        *)
+            # current is A or unknown, switch to B
+            mmc bootpart enable 2 1 /dev/mmcblk1
+            ;;
+    esac
+}
+
+clear_ota_ongoing() {
+    devmem2 0x5c00a14c w $(( $(devmem2 0x5c00a14c | tail -n 1 | grep -oE '\S+$') & ~0x00000002 ))
+    rm -f /usr/local/gw/.verity_ota_ongoing
+}
+
+clear_ota_ongoing
+set_next_rauc_slot
+/usr/sbin/boot-count.sh enable

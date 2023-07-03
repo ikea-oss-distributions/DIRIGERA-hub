@@ -1,0 +1,89 @@
+From 7bf0bdff7fa379331d059331f31f5da8faec0e30 Mon Sep 17 00:00:00 2001
+From: Ronnie Olsson <ronnie.olsson@inter.ikea.com>
+Date: Tue, 15 Sep 2020 14:17:58 +0200
+Subject: [PATCH] Adding support for configuring keys in device tree
+
+Keys can be added and configured from device tree files.
+---
+ drivers/st/pmic/stm32mp_pmic.c | 59 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 59 insertions(+)
+
+diff --git a/drivers/st/pmic/stm32mp_pmic.c b/drivers/st/pmic/stm32mp_pmic.c
+index e8cadcda0..469e48f7b 100644
+--- a/drivers/st/pmic/stm32mp_pmic.c
++++ b/drivers/st/pmic/stm32mp_pmic.c
+@@ -185,6 +185,64 @@ static void register_pmic_shared_peripherals(void)
+ 	}
+ }
+ 
++static int dt_pmic_configure_user_keys(void)
++{
++	int pmic_node, keys_node, key_node;
++	void *fdt;
++	const fdt32_t *cuint;
++	uint32_t ponkey_time;
++	uint8_t rval, wval;
++	int status;
++
++	if (fdt_get_address(&fdt) == 0) {
++		return -ENOENT;
++	}
++
++	pmic_node = dt_get_pmic_node(fdt);
++	if (pmic_node < 0)
++		return -FDT_ERR_NOTFOUND;
++
++	keys_node = fdt_subnode_offset(fdt, pmic_node, "user-keys");
++
++	fdt_for_each_subnode(key_node, fdt, keys_node) {
++		cuint = fdt_getprop(fdt, key_node, "ponkey-longpress-time",
++				NULL);
++		if (cuint == NULL)
++			continue;
++
++		ponkey_time = fdt32_to_cpu(*cuint);
++		if (ponkey_time > 16 || ponkey_time < 1) {
++			NOTICE("Invalid time setting, must be between 1-16\n");
++			ponkey_time = 6;
++		}
++
++		status = stpmic1_register_read(PONKEY_TIMER_REG, &rval);
++		if (status)
++			return -EIO;
++
++		wval = rval | (16 - ponkey_time);
++		status = stpmic1_register_write(PONKEY_TIMER_REG, wval);
++		if (status)
++			return -EIO;
++
++		cuint = fdt_getprop(fdt, key_node, "ponkey-reset-on-longpress",
++				NULL);
++		if (cuint == NULL)
++			continue;
++
++		status = stpmic1_register_read(MAIN_CONTROL_REG, &rval);
++		if (status)
++			return -EIO;
++
++		wval = rval | 0x02;
++		status = stpmic1_register_write(MAIN_CONTROL_REG, wval);
++		if (status)
++			return -EIO;
++	}
++
++	return 0;
++}
++
+ void initialize_pmic(void)
+ {
+ 	if (!initialize_pmic_i2c()) {
+@@ -193,6 +251,7 @@ void initialize_pmic(void)
+ 	}
+ 
+ 	register_pmic_shared_peripherals();
++	dt_pmic_configure_user_keys();
+ 
+ 	if (register_pmic() < 0) {
+ 		panic();
+-- 
+2.27.0

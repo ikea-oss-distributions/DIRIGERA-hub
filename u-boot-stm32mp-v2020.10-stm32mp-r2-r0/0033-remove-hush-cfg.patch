@@ -1,0 +1,30 @@
+From 65fb0d3ee930abf97ab942cff1d6f72b94944267 Mon Sep 17 00:00:00 2001
+From: Ronnie Olsson <ronnie.olsson@inter.ikea.com>
+Date: Thu, 16 Sep 2021 14:24:01 +0200
+Subject: [PATCH] [HSPP-7344] Remove parser configs
+
+Remove:
+	ENV_VARS_UBOOT_CONFIG
+	HUSH_PARSER
+---
+ Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Kconfig b/Kconfig
+index f026c2f4fc..4765e2f629 100644
+--- a/Kconfig
++++ b/Kconfig
+@@ -96,8 +96,8 @@ config DISTRO_DEFAULTS
+ 	select CMD_PING if CMD_NET
+ 	select CMD_PXE if NET
+ 	select CMD_SYSBOOT
+-	select ENV_VARS_UBOOT_CONFIG
+-	select HUSH_PARSER
++#	select ENV_VARS_UBOOT_CONFIG
++#	select HUSH_PARSER
+ 	select SUPPORT_RAW_INITRD
+ 	select SYS_LONGHELP
+ 	imply CMD_MII if NET
+-- 
+2.17.1
+

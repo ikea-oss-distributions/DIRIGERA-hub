@@ -1,0 +1,53 @@
+From f73bf5d1739035953cbea3a0419d14873f2b7d5d Mon Sep 17 00:00:00 2001
+From: Manish V Badarkhe <Manish.Badarkhe@arm.com>
+Date: Fri, 2 Jul 2021 20:29:56 +0100
+Subject: [PATCH 09/18] refactor(hw_crc32): renamed hw_crc32 to tf_crc32
+
+Renamed hw_crc32 to tf_crc32 to make the file and function
+name more generic so that the same name can be used in upcoming
+software CRC32 implementation.
+
+Change-Id: Idff8f70c50ca700a4328a27b49d5e1f14d2095eb
+Signed-off-by: Manish V Badarkhe <Manish.Badarkhe@arm.com>
+---
+ drivers/fwu/fwu.c             | 4 ++--
+ plat/arm/common/arm_common.mk | 1 +
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/fwu/fwu.c b/drivers/fwu/fwu.c
+index f155519af..7cb4c2982 100644
+--- a/drivers/fwu/fwu.c
++++ b/drivers/fwu/fwu.c
+@@ -7,7 +7,7 @@
+ #include <assert.h>
+ 
+ #include <common/debug.h>
+-#include <common/hw_crc32.h>
++#include <common/tf_crc32.h>
+ #include <common/tbbr/tbbr_img_def.h>
+ #include <drivers/fwu/fwu.h>
+ #include <drivers/fwu/fwu_metadata.h>
+@@ -37,7 +37,7 @@ static int fwu_metadata_crc_check(void)
+ {
+ 	unsigned char *data = (unsigned char *)&metadata;
+ 
+-	uint32_t calc_crc = hw_crc32(0U, data + sizeof(metadata.crc_32),
++	uint32_t calc_crc = tf_crc32(0U, data + sizeof(metadata.crc_32),
+ 				     (sizeof(metadata) -
+ 				      sizeof(metadata.crc_32)));
+ 
+diff --git a/plat/arm/common/arm_common.mk b/plat/arm/common/arm_common.mk
+index 8f77fbcd2..138276f01 100644
+--- a/plat/arm/common/arm_common.mk
++++ b/plat/arm/common/arm_common.mk
+@@ -222,6 +222,7 @@ BL2_SOURCES		+=	drivers/delay_timer/delay_timer.c		\
+ 				drivers/io/io_storage.c				\
+ 				plat/arm/common/arm_bl2_setup.c			\
+ 				plat/arm/common/arm_err.c			\
++				common/tf_crc32.c				\
+ 				${ARM_IO_SOURCES}
+ 
+ # Firmware Configuration Framework sources
+-- 
+2.17.1
+

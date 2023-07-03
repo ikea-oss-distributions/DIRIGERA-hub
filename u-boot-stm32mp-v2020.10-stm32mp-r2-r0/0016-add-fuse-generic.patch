@@ -1,0 +1,123 @@
+From cba1e6eea57950ea95f06cf2626d30dafd2ff6b3 Mon Sep 17 00:00:00 2001
+From: Ronnie Olsson <ronnie.olsson@inter.ikea.com>
+Date: Thu, 18 Mar 2021 15:50:08 +0100
+Subject: [PATCH] [HSPP-3430] Fuse generic
+
+Adds a generic function for fusing that locks the register after. This
+way it cannot be unintentionally or maliciously altered later.
+---
+ drivers/fastboot/fb_command.c | 72 +++++++++++++++++++++++++++++++++++
+ include/fastboot.h            |  1 +
+ 2 files changed, 73 insertions(+)
+
+diff --git a/drivers/fastboot/fb_command.c b/drivers/fastboot/fb_command.c
+index 2b9c75c40c..7d80257aa3 100644
+--- a/drivers/fastboot/fb_command.c
++++ b/drivers/fastboot/fb_command.c
+@@ -42,6 +42,7 @@ static void reboot_recovery(char *, char *);
+ #if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_FORMAT)
+ static void oem_format(char *, char *);
+ #endif
++static void oem_fusegen(char *, char *);
+ #if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_PARTCONF)
+ static void oem_partconf(char *, char *);
+ #endif
+@@ -131,6 +132,10 @@ static const struct {
+ 		.command = "oem fusewifimac",
+ 		.dispatch = oem_fusewifimac,
+ 	},
++	[FASTBOOT_COMMAND_OEM_FUSEGEN] = {
++		.command = "oem fusegen",
++		.dispatch = oem_fusegen,
++	},
+ #endif
+ };
+ 
+@@ -463,6 +468,73 @@ static void oem_bootbus(char *cmd_parameter, char *response)
+ }
+ #endif
+ 
++/* General fusing function. Fuse from 1 to 4 registers
++ * Syntax:
++ * fastboot oem fusegen:<num>:<reg>:<val1>,<val2>,...,<valn>
++ * valid num is: 1-4
++ * valid reg is: 32-95
++ */
++static void oem_fusegen(char *cmd_parameter, char *response)
++{
++	char cmdbuf[64];
++	char *cmd_copy = NULL;
++	char *token = NULL;
++	int fuse_address, num_regs_to_fuse, i;
++	u32 fuseval;
++
++	/* Create a copy of input param for parsing and checking */
++	cmd_copy = strdup(cmd_parameter);
++	if (!cmd_copy) {
++		printf("Out of memory\n");
++		fastboot_fail("Out of memory", response);
++		return;
++	}
++
++	token = strsep(&cmd_copy, ":");
++	num_regs_to_fuse = strtoul(token, NULL, 10);
++
++	/* Sanity check */
++	if (num_regs_to_fuse < 1 || num_regs_to_fuse > 4) {
++		fastboot_fail("Bad input parameters", response);
++		goto exit;
++	}
++
++	token = strsep(&cmd_copy, ":");
++	fuse_address = strtoul(token, NULL, 10);
++
++	/* Sanity check */
++	if (fuse_address < 32 || fuse_address + num_regs_to_fuse > 96) {
++		fastboot_fail("Bad input parameters", response);
++		goto exit;
++	}
++
++	/* Do the fuse programming */
++	for (i = 0; i < num_regs_to_fuse; i++) {
++		token = strsep(&cmd_copy, ",");
++		fuseval = strtoul(token, NULL, 16);
++		snprintf(cmdbuf, sizeof(cmdbuf), "fuse prog -y 0 %d 0x%08x",
++				fuse_address + i, fuseval);
++		printf("fuse command \"%s\"\n", cmdbuf);
++
++		/* If fusing failed we move on to next, assuming OTP locked */
++		if (run_command(cmdbuf, 0))
++			continue;
++
++		/* Lock fuse from further fusing */
++		snprintf(cmdbuf, sizeof(cmdbuf), "fuse prog -y 0 0x1%07x 1",
++				fuse_address + i);
++		printf("fuse lock command=\"%s\"\n", cmdbuf);
++		if (run_command(cmdbuf, 0)) {
++			fastboot_fail("Cannot lock fuse", response);
++			goto exit;
++		}
++	}
++
++	fastboot_okay(NULL, response);
++exit:
++	return;
++}
++
+ #if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_FUSEMAC)
+ 
+ static void oem_fusewifimac(char *cmd_parameter, char *response)
+diff --git a/include/fastboot.h b/include/fastboot.h
+index 131a7b1a36..bbc281de3c 100644
+--- a/include/fastboot.h
++++ b/include/fastboot.h
+@@ -47,6 +47,7 @@ enum {
+ #if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_FUSEMAC)
+ 	FASTBOOT_COMMAND_OEM_FUSEETHMAC,
+ 	FASTBOOT_COMMAND_OEM_FUSEWIFIMAC,
++	FASTBOOT_COMMAND_OEM_FUSEGEN,
+ #endif
+ 
+ 	FASTBOOT_COMMAND_COUNT
+-- 
+2.27.0

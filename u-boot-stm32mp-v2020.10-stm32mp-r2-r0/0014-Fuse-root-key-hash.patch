@@ -1,0 +1,144 @@
+From 50eba4d483359da20bfcf0d34ed836212467b05c Mon Sep 17 00:00:00 2001
+From: Ronnie Olsson <ronnie.olsson@inter.ikea.com>
+Date: Thu, 4 Mar 2021 15:15:13 +0100
+Subject: [PATCH] Fuse root key hash
+
+Uses flash routine to download the rkh and then fuse.
+---
+ cmd/fuse.c                    |  6 ++++--
+ disk/part.c                   |  8 ++++++++
+ drivers/fastboot/fb_command.c | 36 +++++++++++++++++++++++++++++++++++
+ drivers/fastboot/fb_mmc.c     | 26 ++++++++++++++++++++++++-
+ include/fastboot-internal.h   |  2 ++
+ 5 files changed, 75 insertions(+), 3 deletions(-)
+
+diff --git a/cmd/fuse.c b/cmd/fuse.c
+index 8abe1bdbc1..e888e9faf9 100644
+--- a/cmd/fuse.c
++++ b/cmd/fuse.c
+@@ -89,8 +89,10 @@ static int do_fuse(struct cmd_tbl *cmdtp, int flag, int argc,
+ 				goto err;
+ 
+ 			printf(" %.8x", val);
+-			if (!strcmp(op, "isempty") && val)
+-			goto err;
++			if (!strcmp(op, "isempty") && val) {
++				printf("\n\n");
++				return CMD_RET_SUCCESS;
++			}
+ 		}
+ 		putc('\n');
+ 	} else if (!strcmp(op, "prog")) {
+diff --git a/disk/part.c b/disk/part.c
+index b69fd345f3..995d95316a 100644
+--- a/disk/part.c
++++ b/disk/part.c
+@@ -680,6 +680,14 @@ int part_get_info_by_name_type(struct blk_desc *dev_desc, const char *name,
+ int part_get_info_by_name(struct blk_desc *dev_desc, const char *name,
+ 			  struct disk_partition *info)
+ {
++	/* Check for virtual partition */
++	if (!strncmp(name, "rkh", strlen("rkh"))) {
++		strcpy((char *)info->type, "virtual");
++		strcpy((char *)info->name, name);
++
++		return 0;
++	}
++
+ 	return part_get_info_by_name_type(dev_desc, name, info, PART_TYPE_ALL);
+ }
+ 
+diff --git a/drivers/fastboot/fb_command.c b/drivers/fastboot/fb_command.c
+index dd21ae6732..51d078ad02 100644
+--- a/drivers/fastboot/fb_command.c
++++ b/drivers/fastboot/fb_command.c
+@@ -432,3 +432,39 @@ static void oem_fusemac(char *cmd_parameter, char *response)
+ 	}
+ }
+ #endif
++
++/**
++ * oem_fuserkh() - Execute the OEM fuse property command
++ *
++ * Do the actual fusing.
++ */
++void oem_fuserkh(void)
++{
++	char *cmd = NULL;
++	int size, res;
++
++	size = snprintf(NULL, 0, "stm32key fuse -y 0x%08x", CONFIG_FASTBOOT_BUF_ADDR);
++	if (!size) {
++		printf("Failed to create string\n");
++		return;
++	}
++
++	size++;
++	cmd = malloc(size);
++
++	if (!cmd) {
++		printf("Out of memory\n");
++		return;
++	}
++
++	res = snprintf(cmd, size, "stm32key fuse -y 0x%08x", CONFIG_FASTBOOT_BUF_ADDR);
++	if (res < 0) {
++		printf("Failed to create command for fusing\n");
++		free(cmd);
++		return;
++	}
++
++	printf("%s\n", cmd);
++	run_command(cmd, 0);
++	free(cmd);
++}
+diff --git a/drivers/fastboot/fb_mmc.c b/drivers/fastboot/fb_mmc.c
+index ae8e8e512f..fba50d98a3 100644
+--- a/drivers/fastboot/fb_mmc.c
++++ b/drivers/fastboot/fb_mmc.c
+@@ -540,7 +540,31 @@ void fastboot_mmc_flash_write(const char *cmd, void *download_buffer,
+ 		return;
+ 	}
+ 
+-	if (is_sparse_image(download_buffer)) {
++	if (!strcmp((const char *)info.type, "virtual")) {
++		int i;
++		uint8_t *p = (uint8_t *)CONFIG_FASTBOOT_BUF_ADDR;
++
++		if (!strncmp((const char *)info.name, "rkh", strlen("rkh"))) {
++			if (download_bytes == 32) {
++				printf("Fuse root key hash\n");
++				for (i = 0; i < download_bytes; i++) {
++					printf("%02x", p[i]);
++					if (!((i+1)%4) && ((i+1)%16) )
++						printf(" ");
++					if (!((i + 1)%16))
++						printf("\n");
++				}
++			} else {
++				printf("Incorrect length of root key hash\n");
++				fastboot_fail(NULL, "Bad RKH length");
++				return;
++			}
++
++			oem_fuserkh();
++		}
++
++		fastboot_okay(NULL, response);
++	} else if (is_sparse_image(download_buffer)) {
+ 		struct fb_mmc_sparse sparse_priv;
+ 		struct sparse_storage sparse;
+ 		int err;
+diff --git a/include/fastboot-internal.h b/include/fastboot-internal.h
+index bf2f2b3c89..54e35ed7a0 100644
+--- a/include/fastboot-internal.h
++++ b/include/fastboot-internal.h
+@@ -33,4 +33,6 @@ extern void (*fastboot_progress_callback)(const char *msg);
+  */
+ void fastboot_getvar(char *cmd_parameter, char *response);
+ 
++void oem_fuserkh(void);
++
+ #endif
+-- 
+2.27.0

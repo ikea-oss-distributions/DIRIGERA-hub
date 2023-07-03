@@ -1,0 +1,55 @@
+From a592db2963e940c7905f196c1d0b471f9a5c0a26 Mon Sep 17 00:00:00 2001
+From: Manish V Badarkhe <Manish.Badarkhe@arm.com>
+Date: Fri, 2 Jul 2021 20:18:57 +0100
+Subject: [PATCH 11/18] feat(sw_crc32): add software CRC32 support
+
+Added software CRC32 support in case platform doesn't support
+hardware CRC32.
+
+Platform must include necessary Zlib source files for compilation
+to use software CRC32 implementation.
+
+Change-Id: Iecb649b2edf951944b1a7e4c250c40fe7a3bde25
+Signed-off-by: Manish V Badarkhe <Manish.Badarkhe@arm.com>
+---
+ lib/zlib/tf_gunzip.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
+
+diff --git a/lib/zlib/tf_gunzip.c b/lib/zlib/tf_gunzip.c
+index fd56dfc7c..3ac80bc5b 100644
+--- a/lib/zlib/tf_gunzip.c
++++ b/lib/zlib/tf_gunzip.c
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2018, ARM Limited and Contributors. All rights reserved.
++ * Copyright (c) 2018-2021, ARM Limited and Contributors. All rights reserved.
+  *
+  * SPDX-License-Identifier: BSD-3-Clause
+  */
+@@ -9,6 +9,7 @@
+ #include <string.h>
+ 
+ #include <common/debug.h>
++#include <common/tf_crc32.h>
+ #include <lib/utils.h>
+ #include <tf_gunzip.h>
+ 
+@@ -100,3 +101,15 @@ int gunzip(uintptr_t *in_buf, size_t in_len, uintptr_t *out_buf,
+ 
+ 	return ret;
+ }
++
++/* Wrapper function to calculate CRC
++ * @crc: previous accumulated CRC
++ * @buf: buffer base address
++ * @size: size of the buffer
++ *
++ * Return calculated CRC32 value
++ */
++uint32_t tf_crc32(uint32_t crc, const unsigned char *buf, size_t size)
++{
++	return (uint32_t)crc32((unsigned long)crc, buf, size);
++}
+-- 
+2.17.1
+

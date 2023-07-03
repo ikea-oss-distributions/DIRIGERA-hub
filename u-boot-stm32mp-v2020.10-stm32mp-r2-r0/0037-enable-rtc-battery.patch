@@ -1,0 +1,155 @@
+From 087d8afffd5424558c6f6736d0583f0d383b79b8 Mon Sep 17 00:00:00 2001
+From: Ronnie Olsson <ronnie.olsson@inter.ikea.com>
+Date: Fri, 1 Oct 2021 13:46:41 +0200
+Subject: [PATCH] [HSPP-6768] Enable RTC battery and detection
+
+Fastboot oem command "settime" enables battery backup and also sets a
+time meant to differentiate device from one that does not have battery.
+
+Also a getvar rtc is added to qeuery device which rtc-variant it has.
+old RTC vendor 8130 response: 1
+new RTC vendor 3028 response: 2
+---
+ drivers/fastboot/fb_command.c | 54 +++++++++++++++++++++++++++++++++++
+ drivers/fastboot/fb_getvar.c  | 19 ++++++++++++
+ include/fastboot.h            |  1 +
+ 3 files changed, 74 insertions(+)
+
+diff --git a/drivers/fastboot/fb_command.c b/drivers/fastboot/fb_command.c
+index 606da6cbcf..1c400639b0 100644
+--- a/drivers/fastboot/fb_command.c
++++ b/drivers/fastboot/fb_command.c
+@@ -54,6 +54,7 @@ static void oem_fusewifimac(char *, char *);
+ static void oem_fuseethmac(char *, char *);
+ static void oem_fusemac(char *, char *, int);
+ #endif
++static void oem_settime(char *, char *);
+ 
+ static const struct {
+ 	const char *command;
+@@ -133,6 +134,10 @@ static const struct {
+ 		.dispatch = oem_fusefactory,
+ 	},
+ #endif
++	[FASTBOOT_COMMAND_OEM_SETTIME] = {
++		.command = "oem settime",
++		.dispatch = oem_settime,
++	},
+ };
+ 
+ /**
+@@ -609,6 +614,55 @@ static void oem_fusefactory(char *cmd_parameter, char *response) {
+ 
+ #endif
+ 
++
++static void oem_settime(char *cmd_parameter, char *response)
++{
++	char cmdbuf[64];
++
++	/* Set i2c bus */
++	snprintf(cmdbuf, sizeof(cmdbuf), "i2c dev 2");
++	printf("settime command \"%s\"\n", cmdbuf);
++
++	if (run_command(cmdbuf, 0)) {
++		fastboot_fail("Failed to set time", response);
++		return;
++	}
++
++	/* Check that we have the right RTC circuit */
++	snprintf(cmdbuf, sizeof(cmdbuf), "i2c probe 0x52");
++	printf("settime command \"%s\"\n", cmdbuf);
++
++	if (run_command(cmdbuf, 0)) {
++		fastboot_fail("Failed to set time", response);
++		return;
++	}
++
++	/*
++	 * Disable trickle charger
++	 * Enable fast edge detection
++	 * Enable switchover (battery)
++	 */
++	snprintf(cmdbuf, sizeof(cmdbuf), "i2c mw 0x52 0x37 0x9c 1");
++	printf("settime command \"%s\"\n", cmdbuf);
++
++	if (run_command(cmdbuf, 0)) {
++		fastboot_fail("Failed to write to rtc", response);
++		return;
++	}
++
++	/* Set a year */
++	snprintf(cmdbuf, sizeof(cmdbuf), "i2c mw 0x52 6 %s 1",
++			cmd_parameter ? cmd_parameter:"20");
++	printf("settime command \"%s\"\n", cmdbuf);
++
++	if (run_command(cmdbuf, 0)) {
++		fastboot_fail("Failed to write to rtc", response);
++		return;
++	}
++
++	fastboot_okay(NULL, response);
++}
++
+ /**
+  * oem_fuserkh() - Execute the OEM fuse property command
+  *
+diff --git a/drivers/fastboot/fb_getvar.c b/drivers/fastboot/fb_getvar.c
+index 914bd2f92a..c849858d5c 100644
+--- a/drivers/fastboot/fb_getvar.c
++++ b/drivers/fastboot/fb_getvar.c
+@@ -31,6 +31,7 @@ static void getvar_partition_size(char *part_name, char *response);
+ #endif
+ static void getvar_is_userspace(char *var_parameter, char *response);
+ static void getvar_gateway_id(char *gateway_id, char *response);
++static void getvar_rtc(char *gateway_id, char *response);
+ 
+ static const struct {
+ 	const char *variable;
+@@ -84,6 +85,9 @@ static const struct {
+ 	}, {
+ 		.variable = "gateway-id",
+ 		.dispatch = getvar_gateway_id
++	}, {
++		.variable = "rtc",
++		.dispatch = getvar_rtc
+ 	}
+ };
+ 
+@@ -283,6 +287,21 @@ static void getvar_gateway_id(char *gateway_id, char *response)
+ 	}
+ }
+ 
++static void getvar_rtc(char *rtc, char *response)
++{
++	char cmdbuf[32];
++
++	snprintf(cmdbuf, sizeof(cmdbuf), "i2c dev 2");
++	if (run_command(cmdbuf, 0))
++		fastboot_fail("IO", response);
++
++	snprintf(cmdbuf, sizeof(cmdbuf), "i2c probe 0x52");
++	if (run_command(cmdbuf, 0))
++		fastboot_response("OKAY", response, "%d", 1);
++	else
++		fastboot_response("OKAY", response, "%d", 2);
++}
++
+ /**
+  * fastboot_getvar() - Writes variable indicated by cmd_parameter to response.
+  *
+diff --git a/include/fastboot.h b/include/fastboot.h
+index 6087bdf4fd..3d7c2f6468 100644
+--- a/include/fastboot.h
++++ b/include/fastboot.h
+@@ -48,6 +48,7 @@ enum {
+ 	FASTBOOT_COMMAND_OEM_FUSEGEN,
+ 	FASTBOOT_COMMAND_OEM_FUSEFACTORY,
+ #endif
++	FASTBOOT_COMMAND_OEM_SETTIME,
+ 
+ 	FASTBOOT_COMMAND_COUNT
+ };
+-- 
+2.17.1
+

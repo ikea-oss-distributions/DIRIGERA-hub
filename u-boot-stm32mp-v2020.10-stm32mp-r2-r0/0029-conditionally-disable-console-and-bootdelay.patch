@@ -1,0 +1,69 @@
+From b60f81ea3dea0ab1f15a4d9b40d9a71aa98e40b4 Mon Sep 17 00:00:00 2001
+From: Christer Fletcher <christer.fletcher@inter.ikea.com>
+Date: Mon, 14 Jun 2021 22:38:22 +0200
+Subject: [PATCH] [HSPP-5488] CONFIG_DISABLE_CONSOLE disables console and
+ bootdelay
+
+---
+ Kconfig                     | 6 ++++++
+ arch/arm/mach-stm32mp/cpu.c | 4 ++++
+ include/configs/stm32mp1.h  | 11 +++++++
+ 3 files changed, 21 insertions(+)
+
+diff --git a/Kconfig b/Kconfig
+index 883e3f71d0..5aeeb18fef 100644
+--- a/Kconfig
++++ b/Kconfig
+@@ -27,6 +27,12 @@ config DEPRECATED
+ 	  code that relies on deprecated features that will be removed and
+ 	  the conversion deadline has passed.
+ 
++config IKEIX_DEBUG
++	bool "Debug variant"
++	default n
++	help
++	  Enables console.
++
+ config LOCALVERSION
+ 	string "Local version - append to U-Boot release"
+ 	help
+diff --git a/arch/arm/mach-stm32mp/cpu.c b/arch/arm/mach-stm32mp/cpu.c
+index 04d5bba2e9..4a5d0571a5 100644
+--- a/arch/arm/mach-stm32mp/cpu.c
++++ b/arch/arm/mach-stm32mp/cpu.c
+@@ -285,6 +285,10 @@ int arch_cpu_init(void)
+ {
+ 	u32 boot_mode;
+ 
++#if !defined(CONFIG_IKEIX_DEBUG)
++	gd->flags |= GD_FLG_SILENT | GD_FLG_DISABLE_CONSOLE;
++#endif
++
+ 	early_enable_caches();
+ 
+ 	/* early armv7 timer init: needed for polling */
+diff --git a/include/configs/stm32mp1.h b/include/configs/stm32mp1.h
+index 3fc1a8a37c..509a83f94f 100644
+--- a/include/configs/stm32mp1.h
++++ b/include/configs/stm32mp1.h
+@@ -198,7 +198,18 @@
+ #define SAVE_DEFAULT " then env set env_default 0;fi\0"
+ #endif
+ 
++#ifndef CONFIG_SYS_MMC_ENV_DEV
++#define CONFIG_SYS_MMC_ENV_DEV 0
++#endif
++
++#ifndef CONFIG_IKEIX_DEBUG
++#define BOOT_DELAY "bootdelay=0\0"
++#else
++#define BOOT_DELAY "bootdelay=1\0"
++#endif
++
+ #define CONFIG_EXTRA_ENV_SETTINGS \
++	BOOT_DELAY \
+ 	"kernel_addr_r=0xc2000000\0" \
+ 	"fdt_addr_r=0xc4000000\0" \
+ 	"fdtoverlay_addr_r=0xc4100000\0" \
+-- 
+2.27.0

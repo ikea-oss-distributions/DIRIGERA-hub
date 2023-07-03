@@ -1,0 +1,71 @@
+From 36fb8dd5ebc9e1141b914ddc4562993cfcd81d3a Mon Sep 17 00:00:00 2001
+From: Michal Frynas <michal.frynas@sigma.se>
+Date: Tue, 13 Oct 2020 15:16:35 +0200
+Subject: [PATCH 2/5] Detect which rootfs to boot in runtime
+
+Rootfs detection is made in runtime now and does not depend on
+stored u-boot environment that needs to be kept updated and
+also requires special handling when creating images.
+Also inform RAUC which lun we are booting from via kernel cmdline.
+---
+ include/config_distro_bootcmd.h | 31 +++++++++++++++++++++++++++++--
+ 1 file changed, 29 insertions(+), 2 deletions(-)
+
+diff --git a/include/config_distro_bootcmd.h b/include/config_distro_bootcmd.h
+index f5a4d13871..fb7352aedf 100644
+--- a/include/config_distro_bootcmd.h
++++ b/include/config_distro_bootcmd.h
+@@ -422,12 +422,25 @@
+ 	"boot_script_dhcp=boot.scr.uimg\0" \
+ 	BOOTENV_BOOT_TARGETS \
+ 	\
+-	"boot_syslinux_conf=extlinux/extlinux.conf\0" \
++	"set_rootpart="                                                   \
++		"echo Running set_rootpart; "                             \
++		"mmc partconf 1; "                                        \
++		"if itest ${bootpart} -eq 1; "                            \
++			"then echo partition 1; "                         \
++			"setenv rootpart 13; "                            \
++		"fi; "                                                    \
++		"if itest ${bootpart} -eq 2; "                            \
++			"then echo partition 2; "                         \
++			"setenv rootpart 14; "                            \
++		"fi;\0 "                                                  \
++	\
++	"boot_syslinux_conf=extlinux/extlinux.conf\0"                     \
+ 	"boot_extlinux="                                                  \
+ 		"sysboot ${devtype} ${devnum}:${distro_bootpart} any "    \
+ 			"${scriptaddr} ${prefix}${boot_syslinux_conf}\0"  \
+ 	\
+ 	"scan_dev_for_extlinux="                                          \
++	    "env set prefix /mmc1_${board_name}-optee_;"                  \
+ 		"if test -e ${devtype} "                                  \
+ 				"${devnum}:${distro_bootpart} "           \
+ 				"${prefix}${boot_syslinux_conf}; then "   \
+@@ -465,9 +478,23 @@
+ 	\
+ 	"scan_dev_for_boot_part="                                         \
+ 		"part list ${devtype} ${devnum} -bootable devplist; "     \
++	"run set_rootpart; "                                      \
++		"if itest ${bootpart} -eq 1; then "                       \
++			"env set bootargs "                               \
++				"root=/dev/mmcblk${devnum}p${rootpart} "  \
++				"rootwait ro console=ttySTM0,115200 "     \
++				"rauc.slot=A; "                           \
++		"fi; "							  \
++		"if itest ${bootpart} -eq 2; then "                       \
++			"env set bootargs "                               \
++				"root=/dev/mmcblk${devnum}p${rootpart} "  \
++				"rootwait ro console=ttySTM0,115200 "     \
++				"rauc.slot=B; "                           \
++		"fi; " 							  \
++		"echo bootargs = ${bootargs}; "				  \
+ 		"env exists devplist || setenv devplist 1; "              \
++		"if test ${altboot} = 1;then setenv devplist A;else setenv devplist 9; fi;" \
+ 		"for distro_bootpart in ${devplist}; do "                 \
+-			"if test ${altboot} = 1;then setexpr distro_bootpart ${distro_bootpart} + 1; fi;" \
+ 			"if fstype ${devtype} "                           \
+ 					"${devnum}:${distro_bootpart} "   \
+ 					"bootfstype; then "               \
+-- 
+2.27.0

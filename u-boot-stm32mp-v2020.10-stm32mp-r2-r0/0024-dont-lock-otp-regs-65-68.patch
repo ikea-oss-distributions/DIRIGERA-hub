@@ -1,0 +1,37 @@
+From e3db172c43c73c4e556f570642082569d3cb52e4 Mon Sep 17 00:00:00 2001
+From: Ronnie Olsson <ronnie.olsson@inter.ikea.com>
+Date: Thu, 22 Apr 2021 10:24:12 +0200
+Subject: [PATCH] [HSPP-3636] Don't lock 65-68
+
+These registers will be written twice and intentionally broken in order
+to remove traces of master password after device is done with it during
+provisioning of ST-Safe.
+
+A subsequent read of this register will result in an error since the
+ECC will be wrong. This is OK.
+---
+ drivers/fastboot/fb_command.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/drivers/fastboot/fb_command.c b/drivers/fastboot/fb_command.c
+index c2d53e2a79..08599acd17 100644
+--- a/drivers/fastboot/fb_command.c
++++ b/drivers/fastboot/fb_command.c
+@@ -451,6 +451,14 @@ static bool fuse_word(int fuse_address, u32 fuseval) {
+ 		return 0;
+ 	}
+ 
++	/* These regs will be written twice and intentionally broken
++	 * (bad ECC), so they must not be locked.
++	 */
++	if (fuse_address >= 65 && fuse_address <= 68) {
++		printf("Don't lock reg #%d\n", fuse_address);
++		return 0;
++	}
++
+ 	/* Lock fuse from further fusing */
+ 	snprintf(cmdbuf, sizeof(cmdbuf), "fuse prog -y 0 0x1%07x 1",
+ 			fuse_address);
+-- 
+2.17.1
+

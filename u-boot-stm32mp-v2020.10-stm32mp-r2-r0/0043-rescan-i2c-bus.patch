@@ -1,0 +1,38 @@
+From 67e058572ead9fabaa28ed8219f9135fc2c17c80 Mon Sep 17 00:00:00 2001
+From: Ronnie Olsson <ronnie.olsson@inter.ikea.com>
+Date: Wed, 24 Nov 2021 14:12:22 +0100
+Subject: [PATCH] [HSPP-8776] Re-scan i2c-bus
+
+ST-Safe sometimes take longer to respond to i2c probe. Repeat
+for guaranteed response.
+---
+ drivers/fastboot/fb_getvar.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/drivers/fastboot/fb_getvar.c b/drivers/fastboot/fb_getvar.c
+index 4707e1c333..9a556772f6 100644
+--- a/drivers/fastboot/fb_getvar.c
++++ b/drivers/fastboot/fb_getvar.c
+@@ -290,12 +290,19 @@ static void getvar_rtc(char *rtc, char *response)
+ static void getvar_hwconf(char *gateway_id, char *response)
+ {
+ 	char cmdbuf[32];
++	int i;
+ 
+ 	snprintf(cmdbuf, sizeof(cmdbuf), "i2c dev 2");
+ 	if (run_command(cmdbuf, 0))
+ 		fastboot_fail("IO", response);
+ 
+ 	snprintf(cmdbuf, sizeof(cmdbuf), "i2c probe 0x10");
++
++	/* ST-Safe sometimes take a few probes to repsond */
++	for (i = 0; i < 4; i++)
++		if (!run_command(cmdbuf, 0))
++			break;
++
+ 	if (run_command(cmdbuf, 0))
+ 		fastboot_response("OKAY", response, "%d", 1);
+ 	else
+-- 
+2.17.1
+

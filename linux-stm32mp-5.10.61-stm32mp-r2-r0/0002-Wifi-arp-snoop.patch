@@ -1,0 +1,13 @@
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
+index 3dd28f5fe..072724346 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
+@@ -99,7 +99,7 @@ void brcmf_configure_arp_nd_offload(struct brcmf_if *ifp, bool enable)
+ 	u32 mode;
+ 
+ 	if (enable)
+-		mode = BRCMF_ARP_OL_AGENT | BRCMF_ARP_OL_PEER_AUTO_REPLY;
++		mode = BRCMF_ARP_OL_AGENT | BRCMF_ARP_OL_PEER_AUTO_REPLY | BRCMF_ARP_OL_SNOOP;
+ 	else
+ 		mode = 0;
+ 

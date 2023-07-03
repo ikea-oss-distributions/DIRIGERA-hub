@@ -1,0 +1,70 @@
+From 09ce6215ef265b0a62cc8a66b441c69de4bc49f9 Mon Sep 17 00:00:00 2001
+From: Christer Fletcher <christer.fletcher@inter.ikea.com>
+Date: Wed, 10 Feb 2021 14:04:15 +0100
+Subject: [PATCH] [HSPP-2641] Add getvar gateway-id
+
+---
+ drivers/fastboot/fb_getvar.c | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
+
+diff --git a/drivers/fastboot/fb_getvar.c b/drivers/fastboot/fb_getvar.c
+index 95cb434189..914bd2f92a 100644
+--- a/drivers/fastboot/fb_getvar.c
++++ b/drivers/fastboot/fb_getvar.c
+@@ -30,6 +30,7 @@ static void getvar_partition_type(char *part_name, char *response);
+ static void getvar_partition_size(char *part_name, char *response);
+ #endif
+ static void getvar_is_userspace(char *var_parameter, char *response);
++static void getvar_gateway_id(char *gateway_id, char *response);
+ 
+ static const struct {
+ 	const char *variable;
+@@ -80,6 +81,9 @@ static const struct {
+ 	}, {
+ 		.variable = "is-userspace",
+ 		.dispatch = getvar_is_userspace
++	}, {
++		.variable = "gateway-id",
++		.dispatch = getvar_gateway_id
+ 	}
+ };
+ 
+@@ -250,6 +254,35 @@ static void getvar_is_userspace(char *var_parameter, char *response)
+ 	fastboot_okay("no", response);
+ }
+ 
++static void getvar_gateway_id(char *gateway_id, char *response)
++{
++	char data[20] = {0};
++	loff_t fileSize = 0;
++	int ret;
++
++	ret = fs_set_blk_dev("mmc", "1:f", FS_TYPE_ANY);
++	if (ret == 0) {
++		ret = fs_size("/gwid/hostname", &fileSize);
++
++		if (ret == 0 && fileSize > sizeof(data) - 1)
++			ret = -EINVAL;
++	}
++
++	if (ret == 0)
++		ret = fs_set_blk_dev("mmc", "1:f", FS_TYPE_ANY);
++
++	if (ret == 0) {
++		loff_t actualRead = 0;
++		ret = fs_read("/gwid/hostname", (ulong)data, 0, fileSize, &actualRead);
++	}
++
++	if (ret == 0) {
++		fastboot_response("OKAY", response, "%s", data);
++	} else {
++		fastboot_fail("Failed to read gwid", response);
++	}
++}
++
+ /**
+  * fastboot_getvar() - Writes variable indicated by cmd_parameter to response.
+  *
+-- 
+2.30.0
+

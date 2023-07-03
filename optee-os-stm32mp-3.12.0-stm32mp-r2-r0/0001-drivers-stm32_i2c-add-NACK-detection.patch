@@ -1,0 +1,73 @@
+From bd69ff4aa6a9ff09d71a9c086fab2ba13ed7b7f8 Mon Sep 17 00:00:00 2001
+From: Benjamin Baratte <benjamin.baratte@st.com>
+Date: Tue, 9 Mar 2021 14:30:18 +0100
+Subject: [PATCH 1/4] drivers : stm32_i2c add NACK detection
+
+Change-Id: I9d139932db6c8b6e78a673843eefcc714bdf9bdc
+
+%% original patch: 0002-drivers-stm32_i2c-add-NACK-detection.patch
+---
+ core/drivers/stm32_i2c.c | 34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
+
+diff --git a/core/drivers/stm32_i2c.c b/core/drivers/stm32_i2c.c
+index bc10960dc..8b8aac409 100644
+--- a/core/drivers/stm32_i2c.c
++++ b/core/drivers/stm32_i2c.c
+@@ -897,6 +897,33 @@ static int wait_isr_event_nack(struct i2c_handle_s *hi2c, uint32_t bit_mask,
+ 	return -1;
+ }
+ 
++static int wait_isr_event_NACK(struct i2c_handle_s *hi2c, uint32_t bit_mask,
++			       unsigned int awaited_value, uint64_t timeout_ref)
++{
++	vaddr_t isr = get_base(hi2c) + I2C_ISR;
++	uint32_t val;
++
++	assert(IS_POWER_OF_TWO(bit_mask) && !(awaited_value & ~1U));
++
++	/* May timeout while TEE thread is suspended */
++	while (!timeout_elapsed(timeout_ref))
++	{
++		val = io_read32(isr);
++		if (val & I2C_ISR_NACKF)
++			return -1;
++		if (!!(val & bit_mask) == awaited_value)
++			break;
++	}
++	val = io_read32(isr);
++	if (val & I2C_ISR_NACKF)
++		return -1;
++	if (!!(val & bit_mask) == awaited_value)
++		return 0;
++
++	notif_i2c_timeout(hi2c);
++	return -1;
++}
++
+ /* Handle Acknowledge-Failed sequence detection during an I2C Communication */
+ static int i2c_ack_failed(struct i2c_handle_s *hi2c, uint64_t timeout_ref)
+ {
+@@ -1362,6 +1389,8 @@ static int i2c_read(struct i2c_handle_s *hi2c, struct i2c_request *request,
+ 		goto bail;
+ 	}
+ 
++	if (wait_isr_event_NACK(hi2c, I2C_ISR_RXNE, 1, timeout_ref))
++		goto nack;
+ 	do {
+ 		if (wait_isr_event(hi2c, I2C_ISR_RXNE, 1, timeout_ref))
+ 			goto bail;
+@@ -1406,6 +1435,11 @@ static int i2c_read(struct i2c_handle_s *hi2c, struct i2c_request *request,
+ 	hi2c->i2c_state = I2C_STATE_READY;
+ 
+ 	rc = 0;
++	goto bail;
++nack:
++	/* check slave Address TX */
++	if (i2c_ack_failed(hi2c, timeout_ref))
++		goto bail;
+ 
+ bail:
+ 	clk_disable(hi2c->clock);
+-- 
+2.27.0

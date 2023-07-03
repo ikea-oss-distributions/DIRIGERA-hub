@@ -1,0 +1,208 @@
+From 558e7d62d6db0ba04fca357cfb61c9bc42beb3a6 Mon Sep 17 00:00:00 2001
+From: Benjamin Baratte <benjamin.baratte@st.com>
+Date: Thu, 14 Oct 2021 11:23:56 +0200
+Subject: [PATCH 2/4] core add HUK from OTP with stm32 BSEC
+
+Change-Id: I69fb0e15be93033e02e23c94ae802d82ab8e0bf9
+---
+ core/arch/arm/dts/stm32mp151.dtsi     |  9 +++-
+ core/arch/arm/dts/stm32mp157c-dk2.dts | 25 ++++++++++
+ core/arch/arm/plat-stm32mp1/conf.mk   |  1 +
+ core/drivers/clk/clk-stm32mp15.c      |  2 +-
+ core/drivers/stm32_bsec.c             |  2 +-
+ core/drivers/stm32_huk.c              | 65 +++++++++++++++++++++++++++
+ core/drivers/sub.mk                   |  3 ++
+ 7 files changed, 103 insertions(+), 4 deletions(-)
+ create mode 100644 core/drivers/stm32_huk.c
+
+diff --git a/core/arch/arm/dts/stm32mp151.dtsi b/core/arch/arm/dts/stm32mp151.dtsi
+index 714d94710..c6441e927 100644
+--- a/core/arch/arm/dts/stm32mp151.dtsi
++++ b/core/arch/arm/dts/stm32mp151.dtsi
+@@ -42,7 +42,8 @@
+ 			      <&uid_otp>,
+ 			      <&package_otp>,
+ 			      <&hw2_otp>,
+-			      <&pkh_otp>;
++			      <&pkh_otp>,
++			      <&huk_otp>;
+ 
+ 		nvmem-cell-names = "cfg0_otp",
+ 				   "part_number_otp",
+@@ -51,7 +52,8 @@
+ 				   "uid_otp",
+ 				   "package_otp",
+ 				   "hw2_otp",
+-				   "pkh_otp";
++				   "pkh_otp",
++ 				   "huk_otp";
+ 	};
+ 
+ 	psci {
+@@ -503,6 +505,9 @@
+ 				reg = <0xe4 0x8>;
+ 				st,non-secure-otp;
+ 			};
++			huk_otp: huk_otp@f4 {
++				reg = <0xf4 0x10>;
++			};
+ 		};
+ 
+ 		etzpc: etzpc@5c007000 {
+diff --git a/core/arch/arm/dts/stm32mp157c-dk2.dts b/core/arch/arm/dts/stm32mp157c-dk2.dts
+index ff5c4509f..ea242cd30 100644
+--- a/core/arch/arm/dts/stm32mp157c-dk2.dts
++++ b/core/arch/arm/dts/stm32mp157c-dk2.dts
+@@ -49,3 +49,28 @@
+ 		DECPROT(STM32MP1_ETZPC_IWDG1_ID, DECPROT_S_RW, DECPROT_LOCK)
+ 	>;
+ };
++
++&nvmem_layout {
++	nvmem-cells = <&cfg0_otp>,
++			<&part_number_otp>,
++			<&monotonic_otp>,
++			<&nand_otp>,
++			<&uid_otp>,
++			<&package_otp>,
++			<&hw2_otp>,
++			<&pkh_otp>,
++			<&board_id>,
++			<&huk_otp>,
++
++	nvmem-cell-names = "cfg0_otp",
++			 "part_number_otp",
++			 "monotonic_otp",
++			 "nand_otp",
++			 "uid_otp",
++			 "package_otp",
++			 "hw2_otp",
++			 "pkh_otp",
++			 "board_id",
++			 "huk_otp",
++};
++
+diff --git a/core/arch/arm/plat-stm32mp1/conf.mk b/core/arch/arm/plat-stm32mp1/conf.mk
+index d01a430d9..b3616ed8e 100644
+--- a/core/arch/arm/plat-stm32mp1/conf.mk
++++ b/core/arch/arm/plat-stm32mp1/conf.mk
+@@ -128,6 +128,7 @@ CFG_STM32_RTC ?= y
+ CFG_STM32_TIM ?= y
+ CFG_STM32_TAMP ?= y
+ CFG_STM32_UART ?= y
++CFG_STM32_HUK ?= y
+ CFG_STM32MP15_CLK ?= y
+ CFG_STPMIC1 ?= y
+ CFG_TZC400 ?= y
+diff --git a/core/drivers/clk/clk-stm32mp15.c b/core/drivers/clk/clk-stm32mp15.c
+index 31d9ab6d6..c2d628f71 100644
+--- a/core/drivers/clk/clk-stm32mp15.c
++++ b/core/drivers/clk/clk-stm32mp15.c
+@@ -2664,4 +2664,4 @@ static TEE_Result stm32_clk_probe(void)
+ 	return TEE_SUCCESS;
+ }
+ /* Setup clock support before driver initialization */
+-service_init(stm32_clk_probe);
++early_init(stm32_clk_probe);
+diff --git a/core/drivers/stm32_bsec.c b/core/drivers/stm32_bsec.c
+index a8eba5f7d..7bed6ad0f 100644
+--- a/core/drivers/stm32_bsec.c
++++ b/core/drivers/stm32_bsec.c
+@@ -768,4 +768,4 @@ static TEE_Result initialize_bsec(void)
+ 	return TEE_SUCCESS;
+ }
+ 
+-driver_init(initialize_bsec);
++service_init(initialize_bsec);
+\ No newline at end of file
+diff --git a/core/drivers/stm32_huk.c b/core/drivers/stm32_huk.c
+new file mode 100644
+index 000000000..4c5d4ea22
+--- /dev/null
++++ b/core/drivers/stm32_huk.c
+@@ -0,0 +1,65 @@
++#include <assert.h>
++#include <config.h>
++#include <drivers/stm32_bsec.h>
++#include <platform_config.h>
++#include <stm32_util.h>
++#include <string.h>
++#include <stdio.h>
++#include <types_ext.h>
++#include <util.h>
++#include <tee_api_defines.h>
++#include <stdint.h>
++#include <kernel/tee_common_otp.h>
++
++
++TEE_Result tee_otp_get_hw_unique_key(struct tee_hw_unique_key *hwkey)
++{
++	uint32_t otp_id;
++	size_t otp_bit_len;
++	uint32_t check = 0;
++	uint32_t closed = 0;
++	TEE_Result ret;
++
++
++	ret = stm32_bsec_find_otp_in_nvmem_layout("huk_otp", &otp_id, &otp_bit_len);
++	if (ret != TEE_SUCCESS)
++	{
++		EMSG("%s : huk_otp not present in the otp layout %x\n", __func__, ret);
++		return ret;
++	}
++	if (otp_bit_len != (HW_UNIQUE_KEY_LENGTH * CHAR_BIT))
++	{
++		EMSG("%s : huk_otp not properly defined shall be %d bytes but is %d\n", __func__, HW_UNIQUE_KEY_LENGTH, otp_bit_len);
++		return TEE_ERROR_BAD_PARAMETERS;
++	}
++	for (int i = 0; i < (int)(otp_bit_len/32); i++)
++	{
++		ret = stm32_bsec_shadow_read_otp(&((uint32_t*)hwkey->data)[i], otp_id + i);
++		if (ret != TEE_SUCCESS)
++		{
++			EMSG("%s : huk_otp unable to read otp from bsec %x\n", __func__, ret);
++			return ret;
++		}
++		check += (hwkey->data)[i];
++	}
++	/* if closed_device == 1 (OTP 0 bit 6) */
++
++	ret = stm32_bsec_shadow_read_otp(&closed, 0);
++	if (ret != TEE_SUCCESS)
++	{
++		EMSG("%s : huk_otp unable to read otp from bsec %x\n", __func__, ret);
++		return ret;
++	}
++
++	if ((closed & 0x40) == 0x40)
++	{
++		if (check == 0)
++		{
++			EMSG("%s : huk_otp is NULL\n", __func__);
++			return TEE_ERROR_BAD_PARAMETERS;
++		}
++	}
++
++	return TEE_SUCCESS;
++}
++
+diff --git a/core/drivers/sub.mk b/core/drivers/sub.mk
+index 10a641b9d..09f4ecc28 100644
+--- a/core/drivers/sub.mk
++++ b/core/drivers/sub.mk
+@@ -32,6 +32,7 @@ srcs-$(CFG_STM32_RTC) += stm32_rtc.c
+ srcs-$(CFG_STM32_TIM) += stm32_tim.c
+ srcs-$(CFG_STM32_TAMP) += stm32_tamp.c
+ srcs-$(CFG_STM32_UART) += stm32_uart.c
++srcs-$(CFG_STM32_HUK) += stm32_huk.c
+ srcs-$(CFG_STPMIC1) += stpmic1.c
+ srcs-$(CFG_BCM_HWRNG) += bcm_hwrng.c
+ srcs-$(CFG_BCM_SOTP) += bcm_sotp.c
+@@ -41,3 +42,5 @@ subdirs-y += clk
+ subdirs-y += crypto
+ subdirs-$(CFG_BNXT_FW) += bnxt
+ subdirs-$(CFG_SCMI_MSG_DRIVERS) += scmi-msg
++
++cflags-stm32_huk.c-y += -Wno-cast-align -Wno-sign-compare
+-- 
+2.27.0

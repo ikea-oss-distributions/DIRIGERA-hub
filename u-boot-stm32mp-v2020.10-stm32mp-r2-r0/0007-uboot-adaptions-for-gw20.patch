@@ -1,0 +1,572 @@
+From 1c271beb182e7be900c95b0b3746d7afa3476b06 Mon Sep 17 00:00:00 2001
+From: Michal Frynas <michal.frynas@sigma.se>
+Date: Fri, 1 Oct 2021 14:25:11 +0200
+Subject: [PATCH] U-Boot adoptions for gw20
+
+---
+ arch/arm/dts/Makefile                      |  3 +-
+ arch/arm/mach-stm32mp/cpu.c                | 32 ++++++++++
+ arch/arm/mach-stm32mp/include/mach/stm32.h |  2 +-
+ board/st/stm32mp1/extlinux.conf            |  6 +-
+ drivers/fastboot/Kconfig                   | 67 ++++++++++++++++++----
+ drivers/fastboot/fb_command.c              | 72 +++++++++++++++++++++
+ drivers/fastboot/fb_mmc.c                  | 46 +++++++++-----
+ include/config_distro_bootcmd.h            | 38 ++++++------
+ include/configs/stm32mp1.h                 | 18 ++++++
+ include/fastboot.h                         |  6 ++
+ 10 files changed, 248 insertions(+), 47 deletions(-)
+
+diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
+index 167d68a902..7df0e9cf5d 100644
+--- a/arch/arm/dts/Makefile
++++ b/arch/arm/dts/Makefile
+@@ -965,7 +965,8 @@ dtb-$(CONFIG_STM32MP15x) += \
+ 	stm32mp157f-ed1.dtb \
+ 	stm32mp157f-ev1.dtb \
+ 	stm32mp15xx-dhcom-pdk2.dtb \
+-	stm32mp15xx-dhcor-avenger96.dtb
++	stm32mp15xx-dhcor-avenger96.dtb \
++	stm32gw20-ev1.dtb
+ 
+ dtb-$(CONFIG_SOC_K3_AM6) += k3-am654-base-board.dtb k3-am654-r5-base-board.dtb
+ dtb-$(CONFIG_SOC_K3_J721E) += k3-j721e-common-proc-board.dtb \
+diff --git a/arch/arm/mach-stm32mp/cpu.c b/arch/arm/mach-stm32mp/cpu.c
+index b81825a0bf..f1a78de5c3 100644
+--- a/arch/arm/mach-stm32mp/cpu.c
++++ b/arch/arm/mach-stm32mp/cpu.c
+@@ -19,6 +19,7 @@
+ #include <dm/device.h>
+ #include <dm/uclass.h>
+ #include <linux/bitops.h>
++#include <power/pmic.h>
+ 
+ /* RCC register */
+ #define RCC_TZCR		(STM32_RCC_BASE + 0x00)
+@@ -81,6 +82,11 @@
+ #define PKG_SHIFT	27
+ #define PKG_MASK	GENMASK(2, 0)
+ 
++/* PMIG Status register */
++#define TURN_OFF_SR 0x02
++/* Turn off reason longpress */
++#define PKEYLKP 0x20
++
+ /*
+  * early TLB into the .data section so that it not get cleared
+  * with 16kB allignment (see TTBR0_BASE_ADDR_MASK)
+@@ -661,11 +667,37 @@ static int setup_serial_number(void)
+ 	return 0;
+ }
+ 
++static void get_longpress_ponkey(void)
++{
++	int ret;
++	u8 val = 0;
++	struct udevice *dev;
++
++	ret = uclass_get_device_by_driver(UCLASS_PMIC,
++					  DM_GET_DRIVER(pmic_stpmic1),
++					  &dev);
++	if (ret)
++		return;
++
++	ret = pmic_read(dev, TURN_OFF_SR, &val, 1);
++	if (ret) {
++		debug("Failed to read PMIC register (%d)\n", ret);
++		return;
++	}
++
++	if (val & PKEYLKP) {
++		/* Set uboot_env variable */
++		printf("Longpress detected!\n");
++		env_set("factory_reset", "factory_reset");
++	}
++}
++
+ int arch_misc_init(void)
+ {
+ 	setup_boot_mode();
+ 	setup_mac_address();
+ 	setup_serial_number();
++	get_longpress_ponkey();
+ 
+ 	return 0;
+ }
+diff --git a/arch/arm/mach-stm32mp/include/mach/stm32.h b/arch/arm/mach-stm32mp/include/mach/stm32.h
+index af7ccdcc48..a40c1babf5 100644
+--- a/arch/arm/mach-stm32mp/include/mach/stm32.h
++++ b/arch/arm/mach-stm32mp/include/mach/stm32.h
+@@ -36,7 +36,7 @@
+ #define STM32_SYSRAM_SIZE		SZ_256K
+ 
+ #define STM32_DDR_BASE			0xC0000000
+-#define STM32_DDR_SIZE			SZ_1G
++#define STM32_DDR_SIZE			SZ_512M
+ 
+ #ifndef __ASSEMBLY__
+ /* enumerated used to identify the SYSCON driver instance */
+diff --git a/board/st/stm32mp1/extlinux.conf b/board/st/stm32mp1/extlinux.conf
+index 2b4632804d..7c014b3afa 100644
+--- a/board/st/stm32mp1/extlinux.conf
++++ b/board/st/stm32mp1/extlinux.conf
+@@ -1,7 +1,11 @@
+ # Generic Distro Configuration for STM32MP157
+ menu title Select the boot mode
+ TIMEOUT 20
+-DEFAULT stm32mp157c-ev1
++DEFAULT gw20-ev1
++
++LABEL gw20-ev1
++	KERNEL /fit_kernel_dtb.itb#gw20
++	APPEND root=/dev/mmcblk0p6 rootwait ro earlyprintk console=ttyS3,115200
+ 
+ LABEL stm32mp157c-ev1
+ 	KERNEL /fit_kernel_dtb.itb#ev1
+diff --git a/drivers/fastboot/Kconfig b/drivers/fastboot/Kconfig
+index f3d897379c..3bad072a66 100644
+--- a/drivers/fastboot/Kconfig
++++ b/drivers/fastboot/Kconfig
+@@ -104,18 +104,19 @@ config FASTBOOT_FLASH_NAND_TRIMFFS
+ 	  When flashing NAND enable the DROP_FFS flag to drop trailing all-0xff
+ 	  pages.
+ 
+-config FASTBOOT_MMC_BOOT1_SUPPORT
+-	bool "Enable EMMC_BOOT1 flash/erase"
+-	depends on FASTBOOT_FLASH_MMC && EFI_PARTITION && ARCH_MEDIATEK
++config FASTBOOT_MMC_BOOT_SUPPORT
++	bool "Enable EMMC_BOOT flash/erase"
++	depends on FASTBOOT_FLASH_MMC
+ 	help
+ 	  The fastboot "flash" and "erase" commands normally does operations
+-	  on EMMC userdata. Define this to enable the special commands to
+-	  flash/erase EMMC_BOOT1.
+-	  The default target name for updating EMMC_BOOT1 is "mmc0boot0".
++	  on eMMC userdata. Define this to enable the special commands to
++	  flash/erase eMMC boot partition.
++	  The default target name for updating eMMC boot partition 1/2 is
++	  CONFIG_FASTBOOT_MMC_BOOT1_NAME/CONFIG_FASTBOOT_MMC_BOOT2_NAME.
+ 
+ config FASTBOOT_MMC_BOOT1_NAME
+ 	string "Target name for updating EMMC_BOOT1"
+-	depends on FASTBOOT_MMC_BOOT1_SUPPORT
++	depends on FASTBOOT_MMC_BOOT_SUPPORT
+ 	default "mmc0boot0"
+ 	help
+ 	  The fastboot "flash" and "erase" commands support operations on
+@@ -124,14 +125,37 @@ config FASTBOOT_MMC_BOOT1_NAME
+ 	  defined here.
+ 	  The default target name for updating EMMC_BOOT1 is "mmc0boot0".
+ 
++config FASTBOOT_MMC_BOOT2_NAME
++	string "Target name for updating EMMC_BOOT2"
++	depends on FASTBOOT_MMC_BOOT_SUPPORT
++	default "mmc0boot1"
++	help
++	  The fastboot "flash" and "erase" commands support operations on
++	  EMMC_BOOT2. This occurs when the specified "EMMC_BOOT2 name" on
++	  the "fastboot flash" and "fastboot erase" commands match the value
++	  defined here.
++	  The default target name for updating EMMC_BOOT2 is "mmc0boot1".
++
++config FASTBOOT_MMC_USER_SUPPORT
++	bool "Enable eMMC userdata partition flash/erase"
++	depends on FASTBOOT_FLASH_MMC
++	help
++	  Define this to enable the support "flash" and "erase" command on
++	  eMMC userdata. The "flash" command only update the MBR and GPT
++	  header when CONFIG_EFI_PARTITION is supported.
++	  The "erase" command erase all the userdata.
++	  This occurs when the specified "partition name" on the
++	  fastboot command line matches the value CONFIG_FASTBOOT_MMC_USER_NAME.
++
+ config FASTBOOT_MMC_USER_NAME
+-	string "Target name for erasing EMMC_USER"
+-	depends on FASTBOOT_FLASH_MMC && EFI_PARTITION && ARCH_MEDIATEK
++	string "Target name for updating EMMC_USER"
++	depends on FASTBOOT_MMC_USER_SUPPORT
+ 	default "mmc0"
+ 	help
+-	  The fastboot "erase" command supports erasing EMMC_USER. This occurs
+-	  when the specified "EMMC_USER name" on the "fastboot erase" commands
+-	  match the value defined here.
++	  The fastboot "flash" and "erase" command supports EMMC_USER.
++	  This occurs when the specified "EMMC_USER name" on the
++	  "fastboot flash" and the "fastboot erase" commands match the value
++	  defined here.
+ 	  The default target name for erasing EMMC_USER is "mmc0".
+ 
+ config FASTBOOT_GPT_NAME
+@@ -177,6 +201,20 @@ config FASTBOOT_USE_BCB_SET_REBOOT_FLAG
+ 	  implementation if your platform supports BCB commands and doesn't
+ 	  require any specific reboot reason handling.
+ 
++config FASTBOOT_CMD_OEM_PARTCONF
++	bool "Enable the 'oem partconf' command"
++	depends on FASTBOOT_FLASH_MMC && SUPPORT_EMMC_BOOT
++	help
++	  Add support for the "oem partconf" command from a client. This set
++	  the mmc boot-partition for the selecting eMMC device.
++
++config FASTBOOT_CMD_OEM_BOOTBUS
++	bool "Enable the 'oem bootbus' command"
++	depends on FASTBOOT_FLASH_MMC && SUPPORT_EMMC_BOOT
++	help
++	  Add support for the "oem bootbus" command from a client. This set
++	  the mmc boot configuration for the selecting eMMC device.
++
+ config FASTBOOT_CMD_OEM_FUSEMAC
+ 	bool "Enable the 'oem fusemac' command"
+ 	depends on FASTBOOT_FLASH_MMC && SUPPORT_EMMC_BOOT
+@@ -184,6 +222,11 @@ config FASTBOOT_CMD_OEM_FUSEMAC
+ 	  Add support for the "oem fusemac" command from a client. This command
+ 	  allows to program MAC address into OTP area.
+ 
++config FASTBOOT_DEFAULT
++	bool "Enable forcing fastboot"
++	help
++	  Used for flashing without pressing any service keys
++
+ endif # FASTBOOT
+ 
+ endmenu
+diff --git a/drivers/fastboot/fb_command.c b/drivers/fastboot/fb_command.c
+index dd21ae6732..e112c56e87 100644
+--- a/drivers/fastboot/fb_command.c
++++ b/drivers/fastboot/fb_command.c
+@@ -42,6 +42,12 @@ static void reboot_recovery(char *, char *);
+ #if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_FORMAT)
+ static void oem_format(char *, char *);
+ #endif
++#if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_PARTCONF)
++static void oem_partconf(char *, char *);
++#endif
++#if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_BOOTBUS)
++static void oem_bootbus(char *, char *);
++#endif
+ #if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_FUSEMAC)
+ static void oem_fusemac(char *, char *);
+ #endif
+@@ -102,6 +108,18 @@ static const struct {
+ 		.dispatch = oem_format,
+ 	},
+ #endif
++#if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_PARTCONF)
++	[FASTBOOT_COMMAND_OEM_PARTCONF] = {
++		.command = "oem partconf",
++		.dispatch = oem_partconf,
++	},
++#endif
++#if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_BOOTBUS)
++	[FASTBOOT_COMMAND_OEM_BOOTBUS] = {
++		.command = "oem bootbus",
++		.dispatch = oem_bootbus,
++	},
++#endif
+ #if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_FUSEMAC)
+ 	[FASTBOOT_COMMAND_OEM_FUSEMAC] = {
+ 		.command = "oem fusemac",
+@@ -385,6 +403,60 @@ static void oem_format(char *cmd_parameter, char *response)
+ }
+ #endif
+ 
++#if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_PARTCONF)
++/**
++ * oem_partconf() - Execute the OEM partconf command
++ *
++ * @cmd_parameter: Pointer to command parameter
++ * @response: Pointer to fastboot response buffer
++ */
++static void oem_partconf(char *cmd_parameter, char *response)
++{
++	char cmdbuf[32];
++
++	if (!cmd_parameter) {
++		fastboot_fail("Expected command parameter", response);
++		return;
++	}
++
++	/* execute 'mmc partconfg' command with cmd_parameter arguments*/
++	snprintf(cmdbuf, sizeof(cmdbuf), "mmc partconf %x %s 0",
++		 CONFIG_FASTBOOT_FLASH_MMC_DEV, cmd_parameter);
++	printf("Execute: %s\n", cmdbuf);
++	if (run_command(cmdbuf, 0))
++		fastboot_fail("Cannot set oem partconf", response);
++	else
++		fastboot_okay(NULL, response);
++}
++#endif
++
++#if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_BOOTBUS)
++/**
++ * oem_bootbus() - Execute the OEM bootbus command
++ *
++ * @cmd_parameter: Pointer to command parameter
++ * @response: Pointer to fastboot response buffer
++ */
++static void oem_bootbus(char *cmd_parameter, char *response)
++{
++	char cmdbuf[32];
++
++	if (!cmd_parameter) {
++		fastboot_fail("Expected command parameter", response);
++		return;
++	}
++
++	/* execute 'mmc bootbus' command with cmd_parameter arguments*/
++	snprintf(cmdbuf, sizeof(cmdbuf), "mmc bootbus %x %s",
++		 CONFIG_FASTBOOT_FLASH_MMC_DEV, cmd_parameter);
++	printf("Execute: %s\n", cmdbuf);
++	if (run_command(cmdbuf, 0))
++		fastboot_fail("Cannot set oem bootbus", response);
++	else
++		fastboot_okay(NULL, response);
++}
++#endif
++
+ #if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_FUSEMAC)
+ /**
+  * oem_fusemac() - Execute the OEM fuse property command
+diff --git a/drivers/fastboot/fb_mmc.c b/drivers/fastboot/fb_mmc.c
+index ae8e8e512f..2d954f3c89 100644
+--- a/drivers/fastboot/fb_mmc.c
++++ b/drivers/fastboot/fb_mmc.c
+@@ -174,7 +174,8 @@ static void write_raw_image(struct blk_desc *dev_desc,
+ 	fastboot_okay(NULL, response);
+ }
+ 
+-#ifdef CONFIG_FASTBOOT_MMC_BOOT1_SUPPORT
++#if defined(CONFIG_FASTBOOT_MMC_BOOT_SUPPORT) || \
++	defined(CONFIG_FASTBOOT_MMC_USER_SUPPORT)
+ static int fb_mmc_erase_mmc_hwpart(struct blk_desc *dev_desc)
+ {
+ 	lbaint_t blks;
+@@ -193,16 +194,18 @@ static int fb_mmc_erase_mmc_hwpart(struct blk_desc *dev_desc)
+ 
+ 	return 0;
+ }
++#endif
+ 
+-static void fb_mmc_boot1_ops(struct blk_desc *dev_desc, void *buffer,
+-			     u32 buff_sz, char *response)
++#ifdef CONFIG_FASTBOOT_MMC_BOOT_SUPPORT
++static void fb_mmc_boot_ops(struct blk_desc *dev_desc, void *buffer,
++			    int hwpart, u32 buff_sz, char *response)
+ {
+ 	lbaint_t blkcnt;
+ 	lbaint_t blks;
+ 	unsigned long blksz;
+ 
+-	// To operate on EMMC_BOOT1 (mmc0boot0), we first change the hwpart
+-	if (blk_dselect_hwpart(dev_desc, 1)) {
++	// To operate on EMMC_BOOT1/2 (mmc0boot0/1) we first change the hwpart
++	if (blk_dselect_hwpart(dev_desc, hwpart)) {
+ 		pr_err("Failed to select hwpart\n");
+ 		fastboot_fail("Failed to select hwpart", response);
+ 		return;
+@@ -221,21 +224,24 @@ static void fb_mmc_boot1_ops(struct blk_desc *dev_desc, void *buffer,
+ 			return;
+ 		}
+ 
+-		debug("Start Flashing Image to EMMC_BOOT1...\n");
++		debug("Start Flashing Image to EMMC_BOOT%d...\n", hwpart);
+ 
+ 		blks = fb_mmc_blk_write(dev_desc, 0, blkcnt, buffer);
+ 
+ 		if (blks != blkcnt) {
+-			pr_err("Failed to write EMMC_BOOT1\n");
+-			fastboot_fail("Failed to write EMMC_BOOT1", response);
++			pr_err("Failed to write EMMC_BOOT%d\n", hwpart);
++			fastboot_fail("Failed to write EMMC_BOOT part",
++				      response);
+ 			return;
+ 		}
+ 
+-		printf("........ wrote %lu bytes to EMMC_BOOT1\n",
+-		       blkcnt * blksz);
++		printf("........ wrote %lu bytes to EMMC_BOOT%d\n",
++		       blkcnt * blksz, hwpart);
+ 	} else { /* erase */
+ 		if (fb_mmc_erase_mmc_hwpart(dev_desc)) {
+-			fastboot_fail("Failed to erase EMMC_BOOT1", response);
++			pr_err("Failed to erase EMMC_BOOT%d\n", hwpart);
++			fastboot_fail("Failed to erase EMMC_BOOT part",
++				      response);
+ 			return;
+ 		}
+ 	}
+@@ -464,12 +470,17 @@ void fastboot_mmc_flash_write(const char *cmd, void *download_buffer,
+ 		return;
+ 	}
+ 
+-#ifdef CONFIG_FASTBOOT_MMC_BOOT1_SUPPORT
++#ifdef CONFIG_FASTBOOT_MMC_BOOT_SUPPORT
+ 	if (strcmp(cmd, CONFIG_FASTBOOT_MMC_BOOT1_NAME) == 0) {
+-		fb_mmc_boot1_ops(dev_desc, download_buffer,
++		fb_mmc_boot_ops(dev_desc, download_buffer, 1,
+ 				 download_bytes, response);
+ 		return;
+ 	}
++	if (strcmp(cmd, CONFIG_FASTBOOT_MMC_BOOT2_NAME) == 0) {
++		fb_mmc_boot_ops(dev_desc, download_buffer, 2,
++				download_bytes, response);
++		return;
++	}
+ #endif
+ 
+ #if CONFIG_IS_ENABLED(EFI_PARTITION)
+@@ -595,10 +606,15 @@ void fastboot_mmc_erase(const char *cmd, char *response)
+ 		return;
+ 	}
+ 
+-#ifdef CONFIG_FASTBOOT_MMC_BOOT1_SUPPORT
++#ifdef CONFIG_FASTBOOT_MMC_BOOT_SUPPORT
+ 	if (strcmp(cmd, CONFIG_FASTBOOT_MMC_BOOT1_NAME) == 0) {
+ 		/* erase EMMC boot1 */
+-		fb_mmc_boot1_ops(dev_desc, NULL, 0, response);
++		fb_mmc_boot_ops(dev_desc, NULL, 1, 0, response);
++		return;
++	}
++	if (strcmp(cmd, CONFIG_FASTBOOT_MMC_BOOT2_NAME) == 0) {
++		/* erase EMMC boot2 */
++		fb_mmc_boot_ops(dev_desc, NULL, 2, 0, response);
+ 		return;
+ 	}
+ #endif
+diff --git a/include/config_distro_bootcmd.h b/include/config_distro_bootcmd.h
+index 723726e285..8ec2efa0a9 100644
+--- a/include/config_distro_bootcmd.h
++++ b/include/config_distro_bootcmd.h
+@@ -428,23 +428,24 @@
+ 		"if itest ${bootpart} -eq 1; "                            \
+ 			"then echo partition 1; "                         \
+ 			"setenv rootpart 13; "                            \
++			"setenv rootpart_hex D; "                         \
+ 		"fi; "                                                    \
+ 		"if itest ${bootpart} -eq 2; "                            \
+ 			"then echo partition 2; "                         \
+ 			"setenv rootpart 14; "                            \
++			"setenv rootpart_hex E; "                         \
+ 		"fi;\0 "                                                  \
+ 	\
+-	"boot_syslinux_conf=extlinux/extlinux.conf\0"                     \
++	"boot_syslinux_conf=/extlinux/extlinux.conf\0"                    \
+ 	"boot_extlinux="                                                  \
+ 		"sysboot ${devtype} ${devnum}:${distro_bootpart} any "    \
+ 			"${scriptaddr} ${prefix}${boot_syslinux_conf}\0"  \
+ 	\
+ 	"scan_dev_for_extlinux="                                          \
+-	    "env set prefix /mmc1_${board_name}-optee_;"                  \
+ 		"if test -e ${devtype} "                                  \
+ 				"${devnum}:${distro_bootpart} "           \
+-				"${prefix}${boot_syslinux_conf}; then "   \
+-			"echo Found ${prefix}${boot_syslinux_conf}; "     \
++				"${boot_syslinux_conf}; then "            \
++			"echo Found ${boot_syslinux_conf}; "              \
+ 			"run boot_extlinux; "                             \
+ 			"echo SCRIPT FAILED: continuing...; "             \
+ 		"fi\0"                                                    \
+@@ -480,18 +481,12 @@
+ 		"part list ${devtype} ${devnum} -bootable devplist; "     \
+ 	"run set_rootpart; "                                      \
+ 		"if itest ${bootpart} -eq 1; then "                       \
+-			"env set bootargs "                               \
+-				"root=/dev/mmcblk${devnum}p${rootpart} "  \
+-				"rootwait ro console=ttySTM0,115200 "     \
+-				"rauc.slot=A; "                           \
+-		"fi; "							  \
+-		"if itest ${bootpart} -eq 2; then "                       \
+-			"env set bootargs "                               \
+-				"root=/dev/mmcblk${devnum}p${rootpart} "  \
+-				"rootwait ro console=ttySTM0,115200 "     \
+-				"rauc.slot=B; "                           \
+-		"fi; " 							  \
+-		"echo bootargs = ${bootargs}; "				  \
++			"env set rauc_slot A; "                           \
++		"else "                                                   \
++			"env set rauc_slot B; "                           \
++		"fi; "                                                    \
++		"run set_bootargs; "                                      \
++		"echo bootargs = ${bootargs}; "                           \
+ 		"env exists devplist || setenv devplist 1; "              \
+ 		"if test ${altboot} = 1;then setenv devplist A;else setenv devplist 9; fi;" \
+ 		"for distro_bootpart in ${devplist}; do "                 \
+@@ -511,7 +506,16 @@
+ 		BOOTENV_SET_VIRTIO_NEED_INIT                              \
+ 		"for target in ${boot_targets}; do "                      \
+ 			"run bootcmd_${target}; "                         \
+-		"done\0"
++		"done\0"                                                  \
++	\
++	"rauc_slot=A\0"                                                   \
++	\
++	"set_bootargs="                                                   \
++		"env set bootargs "                                       \
++			"root=/dev/mmcblk${devnum}p${rootpart} "          \
++			"rootwait ro console=ttySTM0,115200 "             \
++			"rauc.slot=${rauc_slot} "                         \
++			"${factory_reset} \0"                             \
+ 
+ #ifndef CONFIG_BOOTCOMMAND
+ #define CONFIG_BOOTCOMMAND "run distro_bootcmd"
+diff --git a/include/configs/stm32mp1.h b/include/configs/stm32mp1.h
+index 5975668587..47530059a2 100644
+--- a/include/configs/stm32mp1.h
++++ b/include/configs/stm32mp1.h
+@@ -124,6 +124,22 @@
+  * for nand or spi-nand boot, boot with on ubifs partition on UBI partition
+  * for nor boot, use SD card = mmc0
+  */
++
++#ifdef CONFIG_FASTBOOT_DEFAULT
++#define STM32MP_BOOTCMD "bootcmd_stm32mp=" \
++	"echo \"Boot over ${boot_device}${boot_instance}!\";" \
++	"if test ${boot_device} = serial || test ${boot_device} = usb;" \
++	"echo \"Forcing fastboot mode \";" \
++	"then fastboot usb 0; " \
++	"else " \
++		"run env_check;" \
++		"if test ${boot_device} = mmc;" \
++		"then env set boot_targets \"mmc${boot_instance}\"; fi;" \
++		"if test ${boot_device} = nand;" \
++		"then env set boot_targets ubifs0; fi;" \
++		"run distro_bootcmd;" \
++	"fi;\0"
++#else
+ #define STM32MP_BOOTCMD "bootcmd_stm32mp=" \
+ 	"echo \"Boot over ${boot_device}${boot_instance}!\";" \
+ 	"if test ${boot_device} = serial || test ${boot_device} = usb;" \
+@@ -139,6 +155,7 @@
+ 		"then env set boot_targets mmc0; fi;" \
+ 		"run distro_bootcmd;" \
+ 	"fi;\0"
++#endif
+ 
+ #include <config_distro_bootcmd.h>
+ 
+@@ -160,6 +177,7 @@
+ 	"name=vendorfs2,size=16M;" \
+ 	"name=rootfs1,size=746M;" \
+ 	"name=rootfs2,size=746M;" \
++	"name=factory,size=4M;" \
+ 	"name=userfs,size=-\0"
+ #else
+ #define PARTS_DEFAULT
+diff --git a/include/fastboot.h b/include/fastboot.h
+index f453adedd0..4801623270 100644
+--- a/include/fastboot.h
++++ b/include/fastboot.h
+@@ -38,6 +38,12 @@ enum {
+ #if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_FORMAT)
+ 	FASTBOOT_COMMAND_OEM_FORMAT,
+ #endif
++#if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_PARTCONF)
++	FASTBOOT_COMMAND_OEM_PARTCONF,
++#endif
++#if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_BOOTBUS)
++	FASTBOOT_COMMAND_OEM_BOOTBUS,
++#endif
+ #if CONFIG_IS_ENABLED(FASTBOOT_CMD_OEM_FUSEMAC)
+ 	FASTBOOT_COMMAND_OEM_FUSEMAC,
+ #endif
+-- 
+2.27.0
