@@ -111,7 +111,6 @@ Signed-off-by: Romuald JEANNE <romuald.jeanne@st.com>
  core/kernel/panic.c                           |   23 +-
  core/mm/vm.c                                  |   42 +-
  core/sub.mk                                   |    7 +-
- keys/default_rproc.pem                        |   27 +
  lib/libutee/include/remoteproc_pta.h          |  157 ++
  mk/config.mk                                  |    4 +
  mk/gcc.mk                                     |    6 +-
@@ -174,7 +173,6 @@ Signed-off-by: Romuald JEANNE <romuald.jeanne@st.com>
  create mode 100644 core/include/dt-bindings/clock/stm32mp1-clksrc.h
  create mode 100644 core/include/dt-bindings/power/stm32mp1-power.h
  rename core/{arch/arm/plat-stm32mp1/drivers/stm32mp1_etzpc.h => include/dt-bindings/soc/st,stm32-etzpc.h} (83%)
- create mode 100644 keys/default_rproc.pem
  create mode 100644 lib/libutee/include/remoteproc_pta.h
  create mode 100755 scripts/sign_rproc_fw.py
  create mode 100644 ta/remoteproc/Makefile
@@ -18131,39 +18129,6 @@ index 5a17cd923..faaf21c74 100644
  endef
  $(foreach f, $(EARLY_TA_PATHS), $(eval $(call process_early_ta,$(f))))
  $(foreach f, $(CFG_IN_TREE_EARLY_TAS), $(eval $(call \
-diff --git a/keys/default_rproc.pem b/keys/default_rproc.pem
-new file mode 100644
-index 000000000..d54476f35
---- /dev/null
-+++ b/keys/default_rproc.pem
-@@ -0,0 +1,27 @@
-+-----BEGIN RSA PRIVATE KEY-----
-+MIIEpAIBAAKCAQEA1TD3AMwyJhzsliOhEStPrCrgnG9Gy8z+OCtialVngW/rkqQB
-+cb/oOdiMPjfLoSio8zaUA86mTHo6DINZIopTZvs9pysnpvrOwbjCVRXTcIhgM/YZ
-+GyN9c+Qo5fCbOlCsxD0PG40hP4O0dktWyzmWQfjy0+9BDAyMoW59lPeYZcJAKSWT
-+M10V5h3JTabA4dqVroeztuTow3ftNImNuzMFYDqGDUcJy0EdluRsBfhOOKXE7ZaQ
-+RXnwY9CTCGqgsuNKwE1g8evkseaLcJk4/JpVFOgZp4fUgsxU6EBRD2i+C+Jq9KXg
-+qBcK0QwXNr2IwG3i76QmLzGGkpW7bKPn/QhGMQIDAQABAoIBAQCHBnAqzSmmAgPG
-+Q+KroSbhAHcqHUBVrAwHP1Mhzd20mVI2mjFf/g/zMzf/4A7Uj5ASGqs8jhG9tlw1
-+uKsnuTyBqPavfiGrHIb/IynSAfTc/UMRJflYuu2mDQfqOq3WDWqfD50V8hjwxVXy
-+5lyecma8ehQyLwKfwwL+66AWTYr0Rx+OdXkGdGj1SXbJU39nv7UH8ZggpICFhUXO
-+r7NgJr2UOyhEje4stTGSb86SrvxHRm07JG1WSOJ2GV0EBhWNqbRtsnvH1NKNm03m
-+yM+zMbqvtdg1Wkfcfxtx6h7MGHhUUIHwotDoKgZ1lz1EdVWk8clmlKCLFEBxcwIp
-+sdbrodnBAoGBAPFQ1J7B+3eDBJjgrEFu9soygrjulhiA2+3qrra95RyuIE0wE8CO
-+DPjAGHOnxAoUt8H+TEGF2Wo2HVQauz2ElPOlIxQctr3w2Xpi1DibKEdooQLRlaSS
-+LHWAxTLZj9EI3NuYhdRvFHUW2ExEqCADOKY4+1xRSXuIbIkaLMaah8R9AoGBAOIq
-+BEiqoaQM/EA4z+m7RuOjc1PtA0qo9DJIEb4Mj92gEGzSHCdNN+eDCKbqyd8BGo/w
-+Pf6N8+dotjYvzlz3MqwfV1aczvQqbfkivzahO7GlK2KmwwLG3Vm8dZAZCZKEglOg
-+ex6h/L8gOgqSP+C4OmdEU4jdA24BSHr+1ZArHPrFAoGBAL27l/DbBCSLVun8fHNW
-+E6QW4sEUld7eMg12H7h+xc0u+ya1TlJvXbOXFaKZnYFvmKtmjf5WhwMDWTvvaJiN
-+za9jf5kommXtIJEhc0quc5TxpubYcpfadipM/L9mX7UzCrN90Hueeq81LwuIT8gb
-+wEaxNrD3GJeQRAXoFpxwk57hAoGAaeqLfwyKDq4WJG120VtnY4xUomVJOVnOow2l
-+YX+4kG45wvzTOoSrPbzb/G/QgqOdsPMt1VzdcO5VByN0XY1XKcyztlhRg3+raRWg
-+vxDbR+K2Ysj+YvqHB1N/KzDOjtOHxWpOvpXWLBwHkpPTXoZos5wIEvyOcqIfM5rM
-+oWvPcpECgYBCtncnPQQJfYcFebw3+rzm9OodF/s6G9afOrzqgEk/0Z6mi20x1c23
-+dzcZUpLl9p7fCFg0iz9NwLUYR9tZ/4zy+J4ZET7PduxoLG3m1TVzxSJM+dU+GtQi
-+fBcdQuC6od9K9MJD2egwmes/I+aWhrIAatrG2iMtrOTG5N0mUMUc+w==
-+-----END RSA PRIVATE KEY-----
 diff --git a/lib/libutee/include/remoteproc_pta.h b/lib/libutee/include/remoteproc_pta.h
 new file mode 100644
 index 000000000..cede192eb
