@@ -605,12 +605,12 @@ Components:
 Amazon FreeRTOS 201906.00_Major : MIT License
 Amazon FreeRTOS 201910.00 : MIT License
 FreeRTOS Real Time Kernel V10.3.0 : MIT License
-open-amp 2020.10.0 : BSD 3-clause "New" or "Revised" License
+open-amp 2020.04.0 : BSD 3-clause "New" or "Revised" License
 
 Licenses: 
 
 BSD 3-clause "New" or "Revised" License
-(open-amp 2020.10.0)
+(open-amp 2020.04.0)
 
 Software License Agreement (BSD 3-Clause License)
 ========================================
@@ -714,7 +714,7 @@ base-passwd 3.5.29 : GNU General Public License v2.0 or later
 besser82/libxcrypt 4.4.15 : GNU Lesser General Public License v2.1 only
 brotli v1.0.7 : MIT License
 busybox 1.31.1 : (Bzip2 License AND GNU General Public License v2.0 only)
-c-ares cares-1_16_0 : MIT License
+c-ares 1.16.0 : MIT License
 curl 7.85.0 : MIT License
 D-Bus 1.12.20 : GNU General Public License v2.0 or later
 devmem2 1.0 : GNU General Public License v2.0 or later
@@ -5216,7 +5216,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ---
 
 MIT License
-(c-ares cares-1_16_0)
+(c-ares 1.16.0)
 
 The project in general is under the MIT License:
 
