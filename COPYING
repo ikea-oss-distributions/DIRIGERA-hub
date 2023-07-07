@@ -1,6 +1,6 @@
 ﻿Copyright 2023
 
-[HomeSmart/Bootchain : 2.287]
+[HomeSmart/Bootchain : 2.313]
 
 
 Components: 
@@ -597,7 +597,7 @@ of this License.
 
 Copyright 2023
 
-[HomeSmart/M4-firmware : 2.287]
+[HomeSmart/M4-firmware : 2.313]
 
 
 Components: 
@@ -702,7 +702,7 @@ SOFTWARE
 
 Copyright 2023
 
-[HomeSmart/Ikeix/runtime : 2.287]
+[HomeSmart/Ikeix/runtime : 2.313]
 
 
 Components: 
@@ -716,7 +716,7 @@ brotli v1.0.7 : MIT License
 busybox 1.31.1 : (Bzip2 License AND GNU General Public License v2.0 only)
 c-ares 1.16.0 : MIT License
 curl 7.85.0 : MIT License
-D-Bus 1.12.20 : GNU General Public License v2.0 or later
+D-Bus 1.12.20 : (GNU General Public License v2.0 or later OR Academic Free License v2.1)
 devmem2 1.0 : GNU General Public License v2.0 or later
 dhcpcd 8.1.6 : BSD 2-clause "Simplified" License
 dnsmasq 2.81 : (GNU General Public License v2.0 or later OR GNU General Public License v3.0 or later)
@@ -739,7 +739,7 @@ JsonCpp 1.9.2 : MIT License
 kmod 26 : (GNU Lesser General Public License v2.1 or later AND GNU General Public License v2.0 or later)
 lathiat/nss-mdns 0.14.1 : GNU Lesser General Public License v2.1 only
 libbsd 0.10.0 : BSD 3-clause "New" or "Revised" License
-libcap 2.32 : (BSD 3-clause "New" or "Revised" License AND GNU General Public License v2.0 only)
+libcap 2.32 : (BSD 3-clause "New" or "Revised" License OR GNU General Public License v2.0 or later)
 libdaemon 0.14 : GNU Lesser General Public License v2.1 or later
 libffi 3.3 : MIT License
 libmnl 1.0.4 : GNU Lesser General Public License v2.1 or later
@@ -752,7 +752,7 @@ mosquitto 1.6.10 : (BSD 3-clause "New" or "Revised" License OR Eclipse Public Li
 Netlink Protocol Library Suite (libnl) 3.5.0 : GNU Lesser General Public License v2.1 only
 nodejs 14.16.1 : (MIT License AND Artistic License 2.0 AND BSD 3-clause "New" or "Revised" License)
 OpenSSL 1.1.1l : (SSLeay License AND OpenSSL License)
-opkg-utils 0.4.2 : GNU General Public License v2.0 or later
+opkg 0.4.2 : GNU General Public License v2.0 or later
 paho.mqtt.c v1.3.2 : (BSD 3-clause "New" or "Revised" License OR Eclipse Public License 2.0)
 PCRE 8.44 : BSD 3-clause "New" or "Revised" License
 Perl 5.30.1 : (GNU General Public License v1.0 or later OR Artistic License 1.0 (Perl))
@@ -780,6 +780,156 @@ Copyright Text:
 
 
 Licenses: 
+
+Academic Free License v2.1
+(D-Bus 1.12.20)
+
+Academic Free License
+=====================
+
+
+v. 2.1
+------
+
+This Academic Free License (the "License") applies to any original work of
+authorship (the "Original Work") whose owner (the "Licensor") has placed the
+following notice immediately following the copyright notice for the Original
+Work:
+
+  Licensed under the Academic Free License version 2.1
+
+1) Grant of Copyright License. Licensor hereby grants You a world-wide,
+royalty-free, non-exclusive, perpetual, sublicenseable license to do the
+following:
+
+  * to reproduce the Original Work in copies;
+  * to prepare derivative works ("Derivative Works") based upon the Original
+  Work;
+  * to distribute copies of the Original Work and Derivative Works to the
+  public;
+  * to perform the Original Work publicly; and
+  * to display the Original Work publicly.
+
+2) Grant of Patent License. Licensor hereby grants You a world-wide,
+royalty-free, non-exclusive, perpetual, sublicenseable license, under patent
+claims owned or controlled by the Licensor that are embodied in the Original Work
+as furnished by the Licensor, to make, use, sell and offer for sale the Original
+Work and Derivative Works.
+
+3) Grant of Source Code License. The term "Source Code" means the preferred form
+of the Original Work for making modifications to it and all available
+documentation describing how to modify the Original Work. Licensor hereby agrees
+to provide a machine-readable copy of the Source Code of the Original Work along
+with each copy of the Original Work that Licensor distributes. Licensor reserves
+the right to satisfy this obligation by placing a machine-readable copy of the
+Source Code in an information repository reasonably calculated to permit
+inexpensive and convenient access by You for as long as Licensor continues to
+distribute the Original Work, and by publishing the address of that information
+repository in a notice immediately following the copyright notice that applies to
+the Original Work.
+
+4) Exclusions From License Grant. Neither the names of Licensor, nor the names of
+any contributors to the Original Work, nor any of their trademarks or service
+marks, may be used to endorse or promote products derived from this Original Work
+without express prior written permission of the Licensor. Nothing in this License
+shall be deemed to grant any rights to trademarks, copyrights, patents, trade
+secrets or any other intellectual property of Licensor except as expressly stated
+herein. No patent license is granted to make, use, sell or offer to sell
+embodiments of any patent claims other than the licensed claims defined in
+Section 2. No right is granted to the trademarks of Licensor even if such marks
+are included in the Original Work. Nothing in this License shall be interpreted
+to prohibit Licensor from licensing under different terms from this License any
+Original Work that Licensor otherwise would have a right to license.
+
+5) This section intentionally omitted.
+
+6) Attribution Rights. You must retain, in the Source Code of any Derivative
+Works that You create, all copyright, patent or trademark notices from the Source
+Code of the Original Work, as well as any notices of licensing and any
+descriptive text identified therein as an "Attribution Notice." You must cause
+the Source Code for any Derivative Works that You create to carry a prominent
+Attribution Notice reasonably calculated to inform recipients that You have
+modified the Original Work.
+
+7) Warranty of Provenance and Disclaimer of Warranty. Licensor warrants that the
+copyright in and to the Original Work and the patent rights granted herein by
+Licensor are owned by the Licensor or are sublicensed to You under the terms of
+this License with the permission of the contributor(s) of those copyrights and
+patent rights. Except as expressly stated in the immediately proceeding sentence,
+the Original Work is provided under this License on an "AS IS" BASIS and WITHOUT
+WARRANTY, either express or implied, including, without limitation, the
+warranties of NON-INFRINGEMENT, MERCHANTABILITY or FITNESS FOR A PARTICULAR
+PURPOSE. THE ENTIRE RISK AS TO THE QUALITY OF THE ORIGINAL WORK IS WITH YOU. This
+DISCLAIMER OF WARRANTY constitutes an essential part of this License. No license
+to Original Work is granted hereunder except under this disclaimer.
+
+8) Limitation of Liability. Under no circumstances and under no legal theory,
+whether in tort (including negligence), contract, or otherwise, shall the
+Licensor be liable to any person for any direct, indirect, special, incidental,
+or consequential damages of any character arising as a result of this License or
+the use of the Original Work including, without limitation, damages for loss of
+goodwill, work stoppage, computer failure or malfunction, or any and all other
+commercial damages or losses. This limitation of liability shall not apply to
+liability for death or personal injury resulting from Licensor's negligence to
+the extent applicable law prohibits such limitation. Some jurisdictions do not
+allow the exclusion or limitation of incidental or consequential damages, so this
+exclusion and limitation may not apply to You.
+
+9) Acceptance and Termination. If You distribute copies of the Original Work or a
+Derivative Work, You must make a reasonable effort under the circumstances to
+obtain the express assent of recipients to the terms of this License. Nothing
+else but this License (or another written agreement between Licensor and You)
+grants You permission to create Derivative Works based upon the Original Work or
+to exercise any of the rights granted in Section 1 herein, and any attempt to do
+so except under the terms of this License (or another written agreement between
+Licensor and You) is expressly prohibited by U.S. copyright law, the equivalent
+laws of other countries, and by international treaty. Therefore, by exercising
+any of the rights granted to You in Section 1 herein, You indicate Your
+acceptance of this License and all of its terms and conditions.
+
+10) Termination for Patent Action. This License shall terminate automatically and
+You may no longer exercise any of the rights granted to You by this License as of
+the date You commence an action, including a cross-claim or counterclaim, against
+Licensor or any licensee alleging that the Original Work infringes a patent. This
+termination provision shall not apply for an action alleging patent infringement
+by combinations of the Original Work with other software or hardware.
+
+11) Jurisdiction, Venue and Governing Law. Any action or suit relating to this
+License may be brought only in the courts of a jurisdiction wherein the Licensor
+resides or in which Licensor conducts its primary business, and under the laws of
+that jurisdiction excluding its conflict-of-law provisions. The application of
+the United Nations Convention on Contracts for the International Sale of Goods is
+expressly excluded. Any use of the Original Work outside the scope of this
+License or after its termination shall be subject to the requirements and
+penalties of the U.S. Copyright Act, 17 U.S.C. ยง 101 et seq., the equivalent laws
+of other countries, and international treaty. This section shall survive the
+termination of this License.
+
+12) Attorneys Fees. In any action to enforce the terms of this License or seeking
+damages relating thereto, the prevailing party shall be entitled to recover its
+costs and expenses, including, without limitation, reasonable attorneys' fees and
+costs incurred in connection with such action, including any appeal of such
+action. This section shall survive the termination of this License.
+
+13) Miscellaneous. This License represents the complete agreement concerning the
+subject matter hereof. If any provision of this License is held to be
+unenforceable, such provision shall be reformed only to the extent necessary to
+make it enforceable.
+
+14) Definition of "You" in This License. "You" throughout this License, whether
+in upper or lower case, means an individual or a legal entity exercising rights
+under, and complying with all of the terms of, this License. For legal entities,
+"You" includes any entity that controls, is controlled by, or is under common
+control with you. For purposes of this definition, "control" means (i) the power,
+direct or indirect, to cause the direction or management of such entity, whether
+by contract or otherwise, or (ii) ownership of fifty percent (50%) or more of the
+outstanding shares, or (iii) beneficial ownership of such entity.
+
+15) Right to Use. You may use the Original Work in all ways not otherwise
+restricted or conditioned by this License or by law, and Licensor promises not to
+interfere with or be responsible for such uses by You.
+
+---
 
 Apache License 2.0
 (fluentbit 1.9.6)
@@ -2352,7 +2502,7 @@ That's all there is to it!
 ---
 
 GNU General Public License v2.0 only
-(base-files 3.0.14, busybox 1.31.1, ifmetric 0.3, IP sets 7.9, libcap 2.32, Shadow Tool Suite 4.8.1, squashfs-tools 4.4, util-linux 2.35.1)
+(base-files 3.0.14, busybox 1.31.1, ifmetric 0.3, IP sets 7.9, Shadow Tool Suite 4.8.1, squashfs-tools 4.4, util-linux 2.35.1)
 
 The GNU General Public License (GPL)
 ====================================
@@ -2620,7 +2770,7 @@ END OF TERMS AND CONDITIONS
 ---
 
 GNU General Public License v2.0 or later
-(ACL 2.2.53, base-passwd 3.5.29, D-Bus 1.12.20, devmem2 1.0, dnsmasq 2.81, e2fsprogs 1.45.7, I2C tools for Linux 4.1, IPTables v1.8.4, kmod 26, Linux Extended Attributes 2.4.48, Linux Kernel 5.10.61-stm32mp-r2, lz4 1.9.2, LZO real-time data compression library 2.10, mmc-utils 0.1, opkg-utils 0.4.2, systemd-serialgetty 1.0, update-rc.d 0.8, util-linux 2.35.1, XZ Utils 5.2.4)
+(ACL 2.2.53, base-passwd 3.5.29, D-Bus 1.12.20, devmem2 1.0, dnsmasq 2.81, e2fsprogs 1.45.7, I2C tools for Linux 4.1, IPTables v1.8.4, kmod 26, libcap 2.32, Linux Extended Attributes 2.4.48, Linux Kernel 5.10.61-stm32mp-r2, lz4 1.9.2, LZO real-time data compression library 2.10, mmc-utils 0.1, opkg 0.4.2, systemd-serialgetty 1.0, update-rc.d 0.8, util-linux 2.35.1, XZ Utils 5.2.4)
 
 The GNU General Public License (GPL)
 ====================================
@@ -5431,7 +5581,7 @@ the following restrictions:
 
 Copyright 2023
 
-[HomeSmart/Go : 2.287]
+[HomeSmart/Go : 2.313]
 
 
 Components: 
@@ -5521,9 +5671,10 @@ go.etcd.io/bbolt v1.3.6 : MIT License
 gobuffalo/packr v2.8.3 : MIT License
 godbus-dbus v5.1.0 : BSD 2-clause "Simplified" License
 GoDoc Text v0.2.0 : MIT License
-golang protobuf v1.3.2 : BSD 3-clause "New" or "Revised" License
+Golang Protobuf v1.3.2 : BSD 3-clause "New" or "Revised" License
 golang-github-docker-go-connections-dev 0.4.0 : Apache License 2.0
 golang-github-spf13-pflag-dev v1.0.5 : BSD 3-clause "New" or "Revised" License
+golang.org/x/crypto 20221011-snapshot-56aed061 : BSD 3-clause "New" or "Revised" License
 golang.org/x/crypto v0.7.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/image 20210215-snapshot-4410531f : BSD 3-clause "New" or "Revised" License
 golang.org/x/mod 20220414-snapshot-86c51ed2 : BSD 3-clause "New" or "Revised" License
@@ -5576,6 +5727,7 @@ mattn-go-colorable v0.1.8 : MIT License
 mattn-go-isatty v0.0.12 : MIT License
 mattn-go-isatty v0.0.17 : MIT License
 mattn-go-runewidth v0.0.12 : MIT License
+mattn-go-sqlite3 v1.14.15 : MIT License
 mgutz-ansi 20170206-snapshot-9520e82c : MIT License
 mgutz-logxi 20161027-snapshot-aebf8a7d : MIT License
 MichaelMure/go-term-markdown v0.1.4 : MIT License
@@ -5592,7 +5744,6 @@ pmezard-go-difflib 1.0.0 : BSD 3-clause "New" or "Revised" License
 pq v1.10.1 : MIT License
 rogpeppe/go-internal v1.8.0 : BSD 3-clause "New" or "Revised" License
 rogpeppe/go-internal v1.8.1 : BSD 3-clause "New" or "Revised" License
-rqlite v1.14.15 : MIT License
 ryanuber-go-glob v1.0.0 : MIT License
 segmentio/textio v1.2.0 : MIT License
 sergi/go-diff v1.0.0 : (MIT License AND Apache License 2.0)
@@ -5920,7 +6071,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 ---
 
 BSD 2-clause "Simplified" License
-(gorilla/websocket v1.5.0)
+(gorilla/websocket v1.4.2, gorilla/websocket v1.5.0)
 
 Copyright (c) 2013 The Gorilla WebSocket Authors. All rights reserved.
 
@@ -6049,40 +6200,6 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
-
----
-
-BSD 2-clause "Simplified" License
-(gorilla/websocket v1.4.2)
-
-Files: debian/*
-Copyright: 2013 Vincent Bernat <bernat@debian.org>
-License: BSD-2-clause
-
-License: BSD-2-clause
-
-Redistribution and use in source and binary forms, with or without
- modification, are permitted provided that the following conditions are
- met:
- .
-  * Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
-  * Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in the
-    documentation and/or other materials provided with the
-    distribution.
- .
- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 
 ---
 
@@ -6383,7 +6500,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 ---
 
 BSD 3-clause "New" or "Revised" License
-(bigfft 20200410-snapshot-eec4a21b, DATA-DOG-go-sqlmock v1.5.0, gitlab.com/cznic/cc v3.40.0, gitlab.com/cznic/ccgo v3.16.13, gitlab.com/cznic/ccorpus v1.11.6, gitlab.com/cznic/httpfs v1.0.6, gitlab.com/cznic/libc v1.22.2, gitlab.com/cznic/mathutil v1.5.0, gitlab.com/cznic/memory v1.4.0, gitlab.com/cznic/opt v0.1.3, gitlab.com/cznic/sqlite v1.20.3, gitlab.com/cznic/strutil v1.1.3, gitlab.com/cznic/tcl v1.15.0, gitlab.com/cznic/token v1.0.1, gitlab.com/cznic/z v1.7.0, golang.org/x/crypto v0.7.0, golang.org/x/image 20210215-snapshot-4410531f, golang.org/x/mod 20220414-snapshot-86c51ed2, golang.org/x/mod v0.8.0, golang.org/x/net v0.8.0, golang.org/x/sync 20210219-snapshot-036812b2, golang.org/x/sync 20220722-snapshot-886fb937, golang.org/x/sync v0.1.0, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys v0.3.0, golang.org/x/sys v0.6.0, golang.org/x/term v0.6.0, golang.org/x/time v0.3.0, golang.org/x/tools v0.1.12, golang.org/x/tools v0.6.0, golang.org/x/xerrors 20190719-snapshot-9bdfabe6, golang/text v0.6.0, golang/text v0.8.0, google.golang.org/protobuf v1.28.1, google.golang.org/protobuf v1.30.0, google/go-cmp v0.5.8, google/go-cmp v0.5.9, hybridgroup/ble 20220920-snapshot-9a45bebf, mattn-go-colorable 0.1.13)
+(bigfft 20200410-snapshot-eec4a21b, DATA-DOG-go-sqlmock v1.5.0, gitlab.com/cznic/cc v3.40.0, gitlab.com/cznic/ccgo v3.16.13, gitlab.com/cznic/ccorpus v1.11.6, gitlab.com/cznic/httpfs v1.0.6, gitlab.com/cznic/libc v1.22.2, gitlab.com/cznic/mathutil v1.5.0, gitlab.com/cznic/memory v1.4.0, gitlab.com/cznic/opt v0.1.3, gitlab.com/cznic/sqlite v1.20.3, gitlab.com/cznic/strutil v1.1.3, gitlab.com/cznic/tcl v1.15.0, gitlab.com/cznic/token v1.0.1, gitlab.com/cznic/z v1.7.0, golang.org/x/crypto 20221011-snapshot-56aed061, golang.org/x/crypto v0.7.0, golang.org/x/image 20210215-snapshot-4410531f, golang.org/x/mod 20220414-snapshot-86c51ed2, golang.org/x/mod v0.8.0, golang.org/x/net v0.8.0, golang.org/x/sync 20210219-snapshot-036812b2, golang.org/x/sync 20220722-snapshot-886fb937, golang.org/x/sync v0.1.0, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys v0.3.0, golang.org/x/sys v0.6.0, golang.org/x/term v0.6.0, golang.org/x/time v0.3.0, golang.org/x/tools v0.1.12, golang.org/x/tools v0.6.0, golang.org/x/xerrors 20190719-snapshot-9bdfabe6, golang/text v0.6.0, golang/text v0.8.0, google.golang.org/protobuf v1.28.1, google.golang.org/protobuf v1.30.0, google/go-cmp v0.5.8, google/go-cmp v0.5.9, hybridgroup/ble 20220920-snapshot-9a45bebf, mattn-go-colorable 0.1.13)
 
 Copyright (c) <YEAR>, <OWNER>
 All rights reserved.
@@ -6417,7 +6534,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(golang protobuf v1.3.2)
+(Golang Protobuf v1.3.2)
 
 Copyright 2010 The Go Authors.  All rights reserved.
 https://github.com/golang/protobuf
@@ -6996,7 +7113,7 @@ THE SOFTWARE
 ---
 
 MIT License
-(alecthomas/repr 20180818-snapshot-117648cd, dave/goqu v9.18.0, github.com/gobuffalo/logger v1.0.6, github.com/gobuffalo/packd 1.0.1, Go Testify v1.8.2, go-playground-universal-translator v0.18.1, go-playground/assert v2.2.0, go-playground/locales v0.14.1, go-test/deep v1.1.0, holoplot/go-avahi v1.0.1, kyokomi/emoji v2.2.12, leodido/go-urn v1.2.2, lukechampine/uint128 v1.2.0, mapstructure v1.5.0, mattn-go-colorable 0.1.13, mattn-go-isatty v0.0.17, MichaelMure/go-term-markdown v0.1.4, MichaelMure/go-term-text v0.3.1, Microsoft-go-winio v0.6.0, rqlite v1.14.15, sql-migrate v1.3.0, sqlx v1.3.5, stretchr/objx v0.5.0, tevino/abool v2.1.0, yaml for Go v3.0.1, yuin-gopher-lua 20220504-snapshot-65819353)
+(alecthomas/repr 20180818-snapshot-117648cd, dave/goqu v9.18.0, github.com/gobuffalo/logger v1.0.6, github.com/gobuffalo/packd 1.0.1, Go Testify v1.8.2, go-playground-universal-translator v0.18.1, go-playground/assert v2.2.0, go-playground/locales v0.14.1, go-test/deep v1.1.0, holoplot/go-avahi v1.0.1, kyokomi/emoji v2.2.12, leodido/go-urn v1.2.2, lukechampine/uint128 v1.2.0, mapstructure v1.5.0, mattn-go-colorable 0.1.13, mattn-go-isatty v0.0.17, mattn-go-sqlite3 v1.14.15, MichaelMure/go-term-markdown v0.1.4, MichaelMure/go-term-text v0.3.1, Microsoft-go-winio v0.6.0, sql-migrate v1.3.0, sqlx v1.3.5, stretchr/objx v0.5.0, tevino/abool v2.1.0, yaml for Go v3.0.1, yuin-gopher-lua 20220504-snapshot-65819353)
 
 The MIT License
 ===============
@@ -7910,7 +8027,7 @@ the following restrictions:
 
 Copyright 2023
 
-[HomeSmart/Node.js : 2.287]
+[HomeSmart/Node.js : 2.313]
 
 
 Components: 
@@ -7923,7 +8040,7 @@ Components:
 @sideway/address 4.1.4 : BSD 3-clause "New" or "Revised" License
 @sideway/formula 3.0.1 : BSD 3-clause "New" or "Revised" License
 @sideway/pinpoint 2.0.0 : BSD 3-clause "New" or "Revised" License
-@types/json-schema 7.0.11 : MIT License
+@types/json-schema 7.0.12 : MIT License
 abbrev 1.1.1 : ISC License
 agent-base 6.0.2 : MIT License
 ansi-regex 5.0.1 : MIT License
@@ -7968,14 +8085,16 @@ escape-html 1.0.3 : MIT License
 etag 1.8.1 : MIT License
 expressjs/accepts 1.3.8 : MIT License
 expressjs/express 4.18.2 : MIT License
+expressjs/mime-types 2.1.35 : MIT License
 finalhandler 1.2.0 : MIT License
 forwarded 0.2.0 : MIT License
 fs-minipass v2.1.0 : ISC License
 fs.realpath 1.0.0 : ISC License
 function-bind 1.1.1 : MIT License
-get-intrinsic 1.2.0 : MIT License
+get-intrinsic 1.2.1 : MIT License
 Gozala/crypto 1.0.1 : ISC License
 has 1.0.3 : MIT License
+has-proto 1.0.1 : MIT License
 has-symbols 1.0.3 : MIT License
 has-unicode 2.0.1 : ISC License
 help-me 3.0.0 : MIT License
@@ -7994,7 +8113,6 @@ JS-YAML. Native JS port of PyYAML. 4.1.0 : MIT License
 JSHTTP's negotiator 0.6.3 : MIT License
 jshttp/content-type 1.0.5 : MIT License
 jshttp/fresh 0.5.2 : MIT License
-jshttp/mime-types 2.1.35 : MIT License
 jsonwebtoken 9.0.0 : MIT License
 jwa v1.4.1 : MIT License
 leven 2.1.0 : MIT License
@@ -8010,7 +8128,10 @@ mime-db 1.52.0 : MIT License
 minimatch 3.1.2 : ISC License
 minimist 1.2.8 : MIT License
 minipass 3.3.6 : ISC License
+minipass 5.0.0 : ISC License
 minizlib v2.1.2 : MIT License
+moment-timezone 0.5.43 : MIT License
+moment/moment 2.29.4 : MIT License
 mqtt-packet 6.10.0 : MIT License
 MQTT.js 4.3.7 : MIT License
 ms.js 2.0.0 : MIT License
@@ -8024,13 +8145,14 @@ node-bindings 1.2.1 : MIT License
 node-concat-map 0.0.1 : MIT License
 node-cookie-signature 1.0.6 : MIT License
 node-cors v2.8.5 : MIT License
-node-fetch 2.6.9 : MIT License
+node-fetch 2.6.11 : MIT License
 node-glob 7.2.3 : ISC License
 node-jws 3.2.2 : MIT License
 node-lru-cache 6.0.0 : ISC License
 node-mkdirp 1.0.4 : MIT License
 node-semver 6.3.0 : ISC License
-node-sqlite3 4.1.2 : BSD 3-clause "New" or "Revised" License
+node-semver 7.5.1 : ISC License
+node-sqlite3 4.2.1 : MIT License
 node-sqlite3 5.1.5 : BSD 3-clause "New" or "Revised" License
 node-uuid 8.3.2 : MIT License
 nodeca-argparse 2.0.1 : Python Software Foundation License 2.0
@@ -8067,9 +8189,9 @@ statuses 2.0.1 : MIT License
 stream-shift 1.0.1 : MIT License
 string-width 4.2.3 : MIT License
 Strip ANSI 6.0.1 : MIT License
-swagger-ui 4.18.2 : Apache License 2.0
+swagger-ui 4.19.0 : Apache License 2.0
 tapjs/signal-exit 3.0.7 : ISC License
-tar 6.1.13 : ISC License
+tar 6.1.15 : ISC License
 toidentifier 1.0.1 : MIT License
 tr46 0.0.3 : MIT License
 type.is 1.6.18 : MIT License
@@ -8089,7 +8211,7 @@ yallist 4.0.0 : ISC License
 Licenses: 
 
 Apache License 2.0
-(detect-libc 2.0.1, ecdsa-sig-formatter v1.0.11, swagger-ui 4.18.2)
+(detect-libc 2.0.1, ecdsa-sig-formatter v1.0.11, swagger-ui 4.19.0)
 
 Apache License
 Version 2.0, January 2004
@@ -8361,37 +8483,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(node-sqlite3 4.1.2)
-
-Copyright (c) MapBox
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-- Redistributions of source code must retain the above copyright notice, this
-  list of conditions and the following disclaimer.
-- Redistributions in binary form must reproduce the above copyright notice, this
-  list of conditions and the following disclaimer in the documentation and/or
-  other materials provided with the distribution.
-- Neither the name "MapBox" nor the names of its contributors may be
-  used to endorse or promote products derived from this software without
-  specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
-
----
-
-BSD 3-clause "New" or "Revised" License
 (ieee754 v1.2.1)
 
 Upstream-Contact: https://github.com/feross/ieee754/issues
@@ -8559,7 +8650,7 @@ Permission to use, copy, modify, and/or distribute this software for any
 ---
 
 ISC License
-(apiserver 1.0.0, are-we-there-yet 2.0.0, Gozala/crypto 1.0.1, minipass 3.3.6, node-glob 7.2.3, tar 6.1.13)
+(apiserver 1.0.0, are-we-there-yet 2.0.0, Gozala/crypto 1.0.1, minipass 3.3.6, minipass 5.0.0, node-glob 7.2.3, node-semver 7.5.1, tar 6.1.15)
 
 ISC License (ISCL)
 ==================
@@ -9959,7 +10050,7 @@ Permission is hereby granted, free of charge, to any person
 ---
 
 MIT License
-(@types/json-schema 7.0.11, jshttp/mime-types 2.1.35)
+(expressjs/mime-types 2.1.35)
 
 MIT License
 
@@ -10222,7 +10313,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
 ---
 
 MIT License
-(@apidevtools/json-schema-ref-parser 9.1.2, async-mqtt 2.6.3, body-parser 1.20.1, body-parser 1.20.2, call-me-maybe 1.0.2, deepmerge 4.3.1, einaros/ws 7.5.9, expressjs/express 4.18.2, get-intrinsic 1.2.0, https-proxy-agent 5.0.1, js-sdsl 4.3.0, jshttp/content-type 1.0.5, jsonwebtoken 9.0.0, minimist 1.2.8, MQTT.js 4.3.7, nan 2.17.0, Node Cookie Parser 0.5.0, node-fetch 2.6.9, number-allocator 1.0.14, object-inspect 1.12.3, raw-body 2.5.2, readable-stream 3.6.2, tr46 0.0.3)
+(@apidevtools/json-schema-ref-parser 9.1.2, @types/json-schema 7.0.12, async-mqtt 2.6.3, body-parser 1.20.1, body-parser 1.20.2, call-me-maybe 1.0.2, deepmerge 4.3.1, einaros/ws 7.5.9, expressjs/express 4.18.2, get-intrinsic 1.2.1, has-proto 1.0.1, https-proxy-agent 5.0.1, js-sdsl 4.3.0, jshttp/content-type 1.0.5, jsonwebtoken 9.0.0, minimist 1.2.8, moment-timezone 0.5.43, moment/moment 2.29.4, MQTT.js 4.3.7, nan 2.17.0, Node Cookie Parser 0.5.0, node-fetch 2.6.11, node-sqlite3 4.2.1, number-allocator 1.0.14, object-inspect 1.12.3, raw-body 2.5.2, readable-stream 3.6.2, tr46 0.0.3)
 
 The MIT License
 ===============
