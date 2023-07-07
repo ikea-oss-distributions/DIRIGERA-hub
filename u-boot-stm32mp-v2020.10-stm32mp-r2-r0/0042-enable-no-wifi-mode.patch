@@ -1,0 +1,45 @@
+From 4fd28bf95899068e4e58aad03bcc934dbdd3a1ee Mon Sep 17 00:00:00 2001
+From: Michal Frynas <michal.frynas@sigma.se>
+Date: Tue, 30 May 2023 15:27:19 +0200
+Subject: [PATCH] No-wifi mode
+
+---
+ arch/arm/mach-stm32mp/cpu.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+
+diff --git a/arch/arm/mach-stm32mp/cpu.c b/arch/arm/mach-stm32mp/cpu.c
+index 586c1fdfdb..a7ee27d0d4 100644
+--- a/arch/arm/mach-stm32mp/cpu.c
++++ b/arch/arm/mach-stm32mp/cpu.c
+@@ -771,6 +771,19 @@ static int setup_wifi_mac_address(void)
+ 	return 0;
+ }
+ 
++static int setup_nowifi_mode(void)
++{
++	int hwrev;
++
++	hwrev = env_get_hex("board_hwrev", 0x00);
++	if (hwrev >= 0x03) {
++		printf("Enabling no-wifi mode\n");
++		env_set("wifimac", "nowifi");
++	}
++
++	return 0;
++}
++
+ static int setup_factory_rootfs_hash(void)
+ {
+ 	bool written = false;
+@@ -972,3 +985,8 @@ int arch_misc_init(void)
+ 
+ 	return 0;
+ }
++
++int last_stage_init(void)
++{
++	return setup_nowifi_mode();
++}
+-- 
+2.27.0
+
