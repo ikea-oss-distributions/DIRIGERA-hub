@@ -8,7 +8,7 @@ Components:
 arm-trusted-firmware 2.4 : BSD 3-clause "New" or "Revised" License
 mbed TLS 2.24.0 : Apache License 2.0
 Mbed-TLS/mbedtls v2.24.0 : Apache License 2.0
-optee 3.12.0 : BSD 2-clause "Simplified" License
+optee_os 3.12.0 : BSD 2-clause "Simplified" License
 U-Boot 2020.10 : GNU General Public License v2.0 or later
 
 Licenses: 
@@ -201,7 +201,7 @@ third-party archives.
 ---
 
 BSD 2-clause "Simplified" License
-(optee 3.12.0)
+(optee_os 3.12.0)
 
 Copyright (c) 2015, Linaro Limited
 All rights reserved.
@@ -5646,7 +5646,6 @@ gitlab.com/cznic/tcl v1.15.0 : BSD 3-clause "New" or "Revised" License
 gitlab.com/cznic/token v1.0.1 : BSD 3-clause "New" or "Revised" License
 gitlab.com/cznic/z v1.7.0 : (zlib License AND BSD 3-clause "New" or "Revised" License)
 go humanize v1.0.0 : MIT License
-Go Logrus v1.8.1 : MIT License
 Go Testify 1.7.0 : MIT License
 Go Testify v1.8.2 : MIT License
 go-ansiterm d185dfc1b5a126116ea5a19e148e29d16b4574c9 : MIT License
@@ -5747,6 +5746,7 @@ rogpeppe/go-internal v1.8.1 : BSD 3-clause "New" or "Revised" License
 ryanuber-go-glob v1.0.0 : MIT License
 segmentio/textio v1.2.0 : MIT License
 sergi/go-diff v1.0.0 : (MIT License AND Apache License 2.0)
+Sirupsen/logrus v1.8.1 : MIT License
 sixdouglas/suncalc 20210131-snapshot-475bb71c : 
 spacemonkeygo-spacelog 20180419-snapshot-2296661a : Apache License 2.0
 sql-migrate v1.3.0 : MIT License
@@ -7246,7 +7246,7 @@ SOFTWARE
 ---
 
 MIT License
-(Go Logrus v1.8.1)
+(Sirupsen/logrus v1.8.1)
 
 The MIT License (MIT)
 
