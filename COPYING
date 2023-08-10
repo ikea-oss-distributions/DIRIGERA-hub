@@ -5,7 +5,7 @@
 
 Components: 
 
-arm-trusted-firmware 2.4 : BSD 3-Clause "New" or "Revised" License
+arm-trusted-firmware 2.4 : BSD 3-clause "New" or "Revised" License
 mbed TLS 2.24.0 : Apache License 2.0
 Mbed-TLS/mbedtls v2.24.0 : Apache License 2.0
 optee_os 3.12.0 : BSD 2-clause "Simplified" License
@@ -232,7 +232,7 @@ POSSIBILITY OF SUCH DAMAGE
 
 ---
 
-BSD 3-Clause "New" or "Revised" License
+BSD 3-clause "New" or "Revised" License
 (arm-trusted-firmware 2.4)
 
 Copyright (c) [XXXX-]YYYY, <OWNER>. All rights reserved.
@@ -875,11 +875,11 @@ Components:
 Amazon FreeRTOS 201906.00_Major : MIT License
 Amazon FreeRTOS 201910.00 : MIT License
 FreeRTOS Real Time Kernel V10.3.0 : MIT License
-open-amp 2020.04.0 : BSD 3-Clause "New" or "Revised" License
+open-amp 2020.04.0 : BSD 3-clause "New" or "Revised" License
 
 Licenses: 
 
-BSD 3-Clause "New" or "Revised" License
+BSD 3-clause "New" or "Revised" License
 (open-amp 2020.04.0)
 
 Software License Agreement (BSD 3-Clause License)
@@ -989,13 +989,13 @@ D-Bus 1.12.20 : (GNU General Public License v2.0 or later OR Academic Free Licen
 devmem2 1.0 : GNU General Public License v2.0 or later
 dhcpcd 8.1.6 : BSD 2-clause "Simplified" License
 dnsmasq 2.81 : (GNU General Public License v2.0 or later OR GNU General Public License v3.0 or later)
-e2fsprogs 1.45.7 : (GNU Library General Public License v2 or later AND MIT License AND BSD 3-Clause "New" or "Revised" License AND GNU General Public License v2.0 or later)
+e2fsprogs 1.45.7 : (GNU Library General Public License v2 or later AND MIT License AND BSD 3-clause "New" or "Revised" License AND GNU General Public License v2.0 or later)
 fluentbit 1.9.6 : Apache License 2.0
 fmtlib/fmt 6.2.0 : MIT License
 GLib 2.62.6 : GNU Lesser General Public License v2.1 only
 GNU C Library 2.31 : GNU Lesser General Public License v2.1 or later
 GNU Compiler Collection 9.3.0 : GNU General Public License v3.0 or later
-hostapd 2.9 : BSD 3-Clause "New" or "Revised" License
+hostapd 2.9 : BSD 3-clause "New" or "Revised" License
 I2C tools for Linux 4.1 : GNU General Public License v2.0 or later
 ICU for C/C++ (ICU4C) 71.1 : ICU License
 ifmetric 0.3 : GNU General Public License v2.0 only
@@ -1007,8 +1007,8 @@ json-glib 1.4.4 : GNU Lesser General Public License v2.1 only
 JsonCpp 1.9.2 : MIT License
 kmod 26 : (GNU Lesser General Public License v2.1 or later AND GNU General Public License v2.0 or later)
 lathiat/nss-mdns 0.14.1 : GNU Lesser General Public License v2.1 only
-libbsd 0.10.0 : BSD 3-Clause "New" or "Revised" License
-libcap 2.32 : (BSD 3-Clause "New" or "Revised" License OR GNU General Public License v2.0 or later)
+libbsd 0.10.0 : BSD 3-clause "New" or "Revised" License
+libcap 2.32 : (BSD 3-clause "New" or "Revised" License OR GNU General Public License v2.0 or later)
 libdaemon 0.14 : GNU Lesser General Public License v2.1 or later
 libffi 3.3 : MIT License
 libmnl 1.0.4 : GNU Lesser General Public License v2.1 or later
@@ -1022,12 +1022,12 @@ Mosquitto 1.6.10 : (Eclipse Distribution License - v 1.0 OR Eclipse Public Licen
 Netlink Protocol Library Suite (libnl) 3.5.0 : GNU Lesser General Public License v2.1 only
 OpenSSL 1.1.1l : (SSLeay License AND OpenSSL License)
 opkg 0.4.2 : GNU General Public License v2.0 or later
-paho.mqtt.c v1.3.2 : (BSD 3-Clause "New" or "Revised" License OR Eclipse Public License 2.0)
-PCRE 8.44 : BSD 3-Clause "New" or "Revised" License
+paho.mqtt.c v1.3.2 : (BSD 3-clause "New" or "Revised" License OR Eclipse Public License 2.0)
+PCRE 8.44 : BSD 3-clause "New" or "Revised" License
 Perl 5.30.1 : (GNU General Public License v1.0 or later OR Artistic License 1.0 (Perl))
 protobuf-c 1.3.3 : BSD 2-clause "Simplified" License
 rauc 1.4 : GNU Lesser General Public License v2.1 only
-Shadow Tool Suite 4.8.1 : (BSD 3-Clause "New" or "Revised" License AND GNU General Public License v2.0 only)
+Shadow Tool Suite 4.8.1 : (BSD 3-clause "New" or "Revised" License AND GNU General Public License v2.0 only)
 shadow-securetty 4.6 : MIT License
 SQLite 3.31.1 : Public Domain
 squashfs-tools 4.4 : GNU General Public License v2.0 only
@@ -1036,10 +1036,10 @@ systemd 244.5 : GNU Lesser General Public License v2.1 or later
 systemd-serialgetty 1.0 : GNU General Public License v2.0 or later
 Time Zone Database 2021e : Public Domain
 update-rc.d 0.8 : GNU General Public License v2.0 or later
-util-linux 2.35.1 : (GNU Library General Public License v2 or later OR BSD 3-Clause "New" or "Revised" License OR Public Domain OR GNU General Public License v2.0 or later OR GNU General Public License v2.0 only)
+util-linux 2.35.1 : (GNU Library General Public License v2 or later OR BSD 3-clause "New" or "Revised" License OR Public Domain OR GNU General Public License v2.0 or later OR GNU General Public License v2.0 only)
 volatile-binds 1.0 : MIT License
 wireless-regdb 2021.08.28 : ISC License
-wpa_supplicant - IEEE 802.1X, WPA, WPA2, RSN, IEEE 802.11i 2.9 : BSD 3-Clause "New" or "Revised" License
+wpa_supplicant - IEEE 802.1X, WPA, WPA2, RSN, IEEE 802.11i 2.9 : BSD 3-clause "New" or "Revised" License
 XZ Utils 5.2.4 : (GNU Lesser General Public License v2.1 or later AND Public Domain AND GNU General Public License v2.0 or later)
 zlib 1.2.11 : zlib License
 
@@ -1637,7 +1637,7 @@ Redistribution and use in source and binary forms, with or without
 
 ---
 
-BSD 3-Clause "New" or "Revised" License
+BSD 3-clause "New" or "Revised" License
 (e2fsprogs 1.45.7, hostapd 2.9, libcap 2.32, paho.mqtt.c v1.3.2, PCRE 8.44)
 
 Copyright (c) <YEAR>, <OWNER>
@@ -1671,7 +1671,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ---
 
-BSD 3-Clause "New" or "Revised" License
+BSD 3-clause "New" or "Revised" License
 (Shadow Tool Suite 4.8.1)
 
 Copyright:
@@ -1714,7 +1714,7 @@ SUCH DAMAGE
 
 ---
 
-BSD 3-Clause "New" or "Revised" License
+BSD 3-clause "New" or "Revised" License
 (wpa_supplicant - IEEE 802.1X, WPA, WPA2, RSN, IEEE 802.11i 2.9)
 
 License: BSD-3-clause
@@ -1750,7 +1750,7 @@ Redistribution and use in source and binary forms, with or without
 
 ---
 
-BSD 3-Clause "New" or "Revised" License
+BSD 3-clause "New" or "Revised" License
 (util-linux 2.35.1)
 
 License: BSD-3-clause
@@ -1783,7 +1783,7 @@ Redistribution and use in source and binary forms, with or without
 
 ---
 
-BSD 3-Clause "New" or "Revised" License
+BSD 3-clause "New" or "Revised" License
 (libbsd 0.10.0)
 
 License: BSD-3-clause-Regents
@@ -5484,11 +5484,11 @@ aws/aws-sdk-go-v2 service/sso/v1.12.6 : Apache License 2.0
 aws/aws-sdk-go-v2 service/ssooidc/v1.14.6 : Apache License 2.0
 aws/aws-sdk-go-v2 service/sts/v1.18.7 : Apache License 2.0
 aws/aws-sdk-go-v2 v1.17.7 : Apache License 2.0
-bigfft 20200410-snapshot-eec4a21b : BSD 3-Clause "New" or "Revised" License
+bigfft 20200410-snapshot-eec4a21b : BSD 3-clause "New" or "Revised" License
 blang-semver v4.0.0 : MIT License
 creack/pty v1.1.13 : MIT License
 danwakefield/fnmatch 20160403-snapshot-cbb64ac3 : BSD 2-clause "Simplified" License
-DATA-DOG-go-sqlmock v1.5.0 : BSD 3-Clause "New" or "Revised" License
+DATA-DOG-go-sqlmock v1.5.0 : BSD 3-clause "New" or "Revised" License
 dave/goqu v9.18.0 : MIT License
 disintegration/imaging v1.6.2 : MIT License
 dlclark/regexp2 v1.1.6 : MIT License
@@ -5502,7 +5502,7 @@ errwrap v1.1.0 : Mozilla Public License 2.0
 fatih-color v1.12.0 : MIT License
 fatih-color v1.13.0 : MIT License
 fatih/structs v1.1.0 : MIT License
-fsnotify-fsnotify v1.5.0 : BSD 3-Clause "New" or "Revised" License
+fsnotify-fsnotify v1.5.0 : BSD 3-clause "New" or "Revised" License
 github.com/alecthomas/chroma 0.7.1 : MIT License
 github.com/aws/smithy-go v1.13.5 : Apache License 2.0
 github.com/gobuffalo/logger v1.0.6 : MIT License
@@ -5513,19 +5513,19 @@ github.com/markbates/safe v1.0.1 : MIT License
 github.com/pkg/term v1.1.0 : BSD 2-clause "Simplified" License
 github.com/rivo/uniseg v0.1.0 : MIT License
 github.com/yuin/gluamapper 20170903-snapshot-d8369558 : MIT License
-gitlab.com/cznic/cc v3.40.0 : BSD 3-Clause "New" or "Revised" License
-gitlab.com/cznic/ccgo v3.16.13 : BSD 3-Clause "New" or "Revised" License
-gitlab.com/cznic/ccorpus v1.11.6 : BSD 3-Clause "New" or "Revised" License
-gitlab.com/cznic/httpfs v1.0.6 : BSD 3-Clause "New" or "Revised" License
-gitlab.com/cznic/libc v1.22.2 : BSD 3-Clause "New" or "Revised" License
-gitlab.com/cznic/mathutil v1.5.0 : BSD 3-Clause "New" or "Revised" License
-gitlab.com/cznic/memory v1.4.0 : BSD 3-Clause "New" or "Revised" License
-gitlab.com/cznic/opt v0.1.3 : BSD 3-Clause "New" or "Revised" License
-gitlab.com/cznic/sqlite v1.20.3 : BSD 3-Clause "New" or "Revised" License
-gitlab.com/cznic/strutil v1.1.3 : BSD 3-Clause "New" or "Revised" License
-gitlab.com/cznic/tcl v1.15.0 : BSD 3-Clause "New" or "Revised" License
-gitlab.com/cznic/token v1.0.1 : BSD 3-Clause "New" or "Revised" License
-gitlab.com/cznic/z v1.7.0 : (zlib License AND BSD 3-Clause "New" or "Revised" License)
+gitlab.com/cznic/cc v3.40.0 : BSD 3-clause "New" or "Revised" License
+gitlab.com/cznic/ccgo v3.16.13 : BSD 3-clause "New" or "Revised" License
+gitlab.com/cznic/ccorpus v1.11.6 : BSD 3-clause "New" or "Revised" License
+gitlab.com/cznic/httpfs v1.0.6 : BSD 3-clause "New" or "Revised" License
+gitlab.com/cznic/libc v1.22.2 : BSD 3-clause "New" or "Revised" License
+gitlab.com/cznic/mathutil v1.5.0 : BSD 3-clause "New" or "Revised" License
+gitlab.com/cznic/memory v1.4.0 : BSD 3-clause "New" or "Revised" License
+gitlab.com/cznic/opt v0.1.3 : BSD 3-clause "New" or "Revised" License
+gitlab.com/cznic/sqlite v1.20.3 : BSD 3-clause "New" or "Revised" License
+gitlab.com/cznic/strutil v1.1.3 : BSD 3-clause "New" or "Revised" License
+gitlab.com/cznic/tcl v1.15.0 : BSD 3-clause "New" or "Revised" License
+gitlab.com/cznic/token v1.0.1 : BSD 3-clause "New" or "Revised" License
+gitlab.com/cznic/z v1.7.0 : (zlib License AND BSD 3-clause "New" or "Revised" License)
 go humanize v1.0.0 : MIT License
 Go Testify 1.7.0 : MIT License
 Go Testify v1.8.2 : MIT License
@@ -5551,43 +5551,43 @@ go.etcd.io/bbolt v1.3.6 : MIT License
 gobuffalo/packr v2.8.3 : MIT License
 godbus-dbus v5.1.0 : BSD 2-clause "Simplified" License
 GoDoc Text v0.2.0 : MIT License
-gogo/protobuf v1.3.2 : BSD 3-Clause "New" or "Revised" License
-Golang Protobuf v1.28.1 : BSD 3-Clause "New" or "Revised" License
-Golang Protobuf v1.30.0 : BSD 3-Clause "New" or "Revised" License
+gogo/protobuf v1.3.2 : BSD 3-clause "New" or "Revised" License
+Golang Protobuf v1.28.1 : BSD 3-clause "New" or "Revised" License
+Golang Protobuf v1.30.0 : BSD 3-clause "New" or "Revised" License
 golang-github-docker-go-connections-dev 0.4.0 : Apache License 2.0
-golang-github-spf13-pflag-dev v1.0.5 : BSD 3-Clause "New" or "Revised" License
-golang.org/x/crypto 20221011-snapshot-56aed061 : BSD 3-Clause "New" or "Revised" License
-golang.org/x/crypto v0.7.0 : BSD 3-Clause "New" or "Revised" License
-golang.org/x/image 20210215-snapshot-4410531f : BSD 3-Clause "New" or "Revised" License
-golang.org/x/mod 20220414-snapshot-86c51ed2 : BSD 3-Clause "New" or "Revised" License
-golang.org/x/mod v0.8.0 : BSD 3-Clause "New" or "Revised" License
-golang.org/x/net v0.8.0 : BSD 3-Clause "New" or "Revised" License
-golang.org/x/sync 20210219-snapshot-036812b2 : BSD 3-Clause "New" or "Revised" License
-golang.org/x/sync 20220722-snapshot-886fb937 : BSD 3-Clause "New" or "Revised" License
-golang.org/x/sync v0.1.0 : BSD 3-Clause "New" or "Revised" License
-golang.org/x/sys 20200903-snapshot-eff7692f : BSD 3-Clause "New" or "Revised" License
-golang.org/x/sys 20210614-snapshot-665e8c73 : BSD 3-Clause "New" or "Revised" License
-golang.org/x/sys v0.6.0 : BSD 3-Clause "New" or "Revised" License
-golang.org/x/term v0.6.0 : BSD 3-Clause "New" or "Revised" License
-golang.org/x/time v0.3.0 : BSD 3-Clause "New" or "Revised" License
-golang.org/x/tools v0.1.12 : BSD 3-Clause "New" or "Revised" License
-golang.org/x/tools v0.6.0 : BSD 3-Clause "New" or "Revised" License
-golang.org/x/xerrors 20200804-snapshot-5ec99f83 : BSD 3-Clause "New" or "Revised" License
-golang/text v0.6.0 : BSD 3-Clause "New" or "Revised" License
-golang/text v0.8.0 : BSD 3-Clause "New" or "Revised" License
+golang-github-spf13-pflag-dev v1.0.5 : BSD 3-clause "New" or "Revised" License
+golang.org/x/crypto 20221011-snapshot-56aed061 : BSD 3-clause "New" or "Revised" License
+golang.org/x/crypto v0.7.0 : BSD 3-clause "New" or "Revised" License
+golang.org/x/image 20210215-snapshot-4410531f : BSD 3-clause "New" or "Revised" License
+golang.org/x/mod 20220414-snapshot-86c51ed2 : BSD 3-clause "New" or "Revised" License
+golang.org/x/mod v0.8.0 : BSD 3-clause "New" or "Revised" License
+golang.org/x/net v0.8.0 : BSD 3-clause "New" or "Revised" License
+golang.org/x/sync 20210219-snapshot-036812b2 : BSD 3-clause "New" or "Revised" License
+golang.org/x/sync 20220722-snapshot-886fb937 : BSD 3-clause "New" or "Revised" License
+golang.org/x/sync v0.1.0 : BSD 3-clause "New" or "Revised" License
+golang.org/x/sys 20200903-snapshot-eff7692f : BSD 3-clause "New" or "Revised" License
+golang.org/x/sys 20210614-snapshot-665e8c73 : BSD 3-clause "New" or "Revised" License
+golang.org/x/sys v0.6.0 : BSD 3-clause "New" or "Revised" License
+golang.org/x/term v0.6.0 : BSD 3-clause "New" or "Revised" License
+golang.org/x/time v0.3.0 : BSD 3-clause "New" or "Revised" License
+golang.org/x/tools v0.1.12 : BSD 3-clause "New" or "Revised" License
+golang.org/x/tools v0.6.0 : BSD 3-clause "New" or "Revised" License
+golang.org/x/xerrors 20200804-snapshot-5ec99f83 : BSD 3-clause "New" or "Revised" License
+golang/text v0.6.0 : BSD 3-clause "New" or "Revised" License
+golang/text v0.8.0 : BSD 3-clause "New" or "Revised" License
 gomarkdown/markdown 20191123-snapshot-2c17d62f : BSD 2-clause "Simplified" License
-google/go-cmp v0.5.5 : BSD 3-Clause "New" or "Revised" License
-google/go-cmp v0.5.8 : BSD 3-Clause "New" or "Revised" License
-google/go-cmp v0.5.9 : BSD 3-Clause "New" or "Revised" License
-google/uuid v1.3.0 : BSD 3-Clause "New" or "Revised" License
-gorilla/mux v1.8.0 : BSD 3-Clause "New" or "Revised" License
-gorilla/schema v1.2.0 : BSD 3-Clause "New" or "Revised" License
+google/go-cmp v0.5.5 : BSD 3-clause "New" or "Revised" License
+google/go-cmp v0.5.8 : BSD 3-clause "New" or "Revised" License
+google/go-cmp v0.5.9 : BSD 3-clause "New" or "Revised" License
+google/uuid v1.3.0 : BSD 3-clause "New" or "Revised" License
+gorilla/mux v1.8.0 : BSD 3-clause "New" or "Revised" License
+gorilla/schema v1.2.0 : BSD 3-clause "New" or "Revised" License
 gorilla/websocket v1.4.2 : BSD 2-clause "Simplified" License
 gorilla/websocket v1.5.0 : BSD 2-clause "Simplified" License
 gotest.tools v3.4.0 : Apache License 2.0
 hashicorp-go-multierror v1.1.1 : Mozilla Public License 2.0
 holoplot/go-avahi v1.0.1 : MIT License
-hybridgroup/ble 20220920-snapshot-9a45bebf : BSD 3-Clause "New" or "Revised" License
+hybridgroup/ble 20220920-snapshot-9a45bebf : BSD 3-clause "New" or "Revised" License
 iancoleman/strcase v0.2.0 : MIT License
 jbenet-go-base58 20150317-snapshot-6237cf65 : ISC License
 jdkato/prose v1.2.1 : MIT License
@@ -5603,7 +5603,7 @@ lukechampine/uint128 v1.2.0 : MIT License
 mapstructure v1.5.0 : MIT License
 markbates/errx v1.1.0 : MIT License
 Masterminds-semver v1.5.0 : MIT License
-mattn-go-colorable 0.1.13 : (MIT License AND BSD 3-Clause "New" or "Revised" License)
+mattn-go-colorable 0.1.13 : (MIT License AND BSD 3-clause "New" or "Revised" License)
 mattn-go-colorable v0.1.12 : MIT License
 mattn-go-colorable v0.1.8 : MIT License
 mattn-go-isatty v0.0.12 : MIT License
@@ -5618,16 +5618,16 @@ MichaelMure/go-term-text v0.3.1 : MIT License
 Microsoft-go-winio v0.6.0 : MIT License
 mohae/deepcopy 20170929-snapshot-c48cc78d : MIT License
 morikuni/aec v1.0.0 : MIT License
-mymysql v1.5.4 : BSD 3-Clause "New" or "Revised" License
+mymysql v1.5.4 : BSD 3-clause "New" or "Revised" License
 neurosnap/sentences v1.0.6 : MIT License
 opencontainers/go-digest 1.0.0 : Apache License 2.0
 opencontainers/image-spec v1.0.2 : Apache License 2.0
 PerformLine/go-stockutil v1.9.3 : MIT License
 pkg/errors v0.9.1 : BSD 2-clause "Simplified" License
-pmezard-go-difflib 1.0.0 : BSD 3-Clause "New" or "Revised" License
+pmezard-go-difflib 1.0.0 : BSD 3-clause "New" or "Revised" License
 pq v1.10.4 : MIT License
-rogpeppe/go-internal v1.8.0 : BSD 3-Clause "New" or "Revised" License
-rogpeppe/go-internal v1.8.1 : BSD 3-Clause "New" or "Revised" License
+rogpeppe/go-internal v1.8.0 : BSD 3-clause "New" or "Revised" License
+rogpeppe/go-internal v1.8.1 : BSD 3-clause "New" or "Revised" License
 ryanuber-go-glob v1.0.0 : MIT License
 segmentio/textio v1.2.0 : MIT License
 sergi/go-diff v1.0.0 : (MIT License AND Apache License 2.0)
@@ -5637,7 +5637,7 @@ spacemonkeygo-spacelog 20180419-snapshot-2296661a : Apache License 2.0
 sql-migrate v1.3.0 : MIT License
 sqlx v1.3.5 : MIT License
 stretchr/objx v0.5.0 : MIT License
-tarm-serial 20180830-snapshot-98f6abe2 : BSD 3-Clause "New" or "Revised" License
+tarm-serial 20180830-snapshot-98f6abe2 : BSD 3-clause "New" or "Revised" License
 tevino/abool v2.1.0 : MIT License
 yaml for Go 20200512-snapshot-9f266ea9 : Apache License 2.0
 yaml for Go v2.4.0 : Apache License 2.0
@@ -6121,7 +6121,7 @@ Redistribution and use in source and binary forms, with or without
 
 ---
 
-BSD 3-Clause "New" or "Revised" License
+BSD 3-clause "New" or "Revised" License
 (tarm-serial 20180830-snapshot-98f6abe2)
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
@@ -6154,7 +6154,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 
 ---
 
-BSD 3-Clause "New" or "Revised" License
+BSD 3-clause "New" or "Revised" License
 (google/uuid v1.3.0)
 
 Copyright (c) 2009,2014 Google Inc. All rights reserved.
@@ -6187,7 +6187,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 
 ---
 
-BSD 3-Clause "New" or "Revised" License
+BSD 3-clause "New" or "Revised" License
 (mymysql v1.5.4)
 
 Copyright (c) 2010, Michal Derkacz
@@ -6217,7 +6217,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 
 ---
 
-BSD 3-Clause "New" or "Revised" License
+BSD 3-clause "New" or "Revised" License
 (golang-github-spf13-pflag-dev v1.0.5)
 
 Copyright (c) 2012 Alex Ogier. All rights reserved.
@@ -6251,7 +6251,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 
 ---
 
-BSD 3-Clause "New" or "Revised" License
+BSD 3-clause "New" or "Revised" License
 (gorilla/schema v1.2.0)
 
 Copyright (c) 2012 Rodrigo Moraes. All rights reserved.
@@ -6284,7 +6284,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 
 ---
 
-BSD 3-Clause "New" or "Revised" License
+BSD 3-clause "New" or "Revised" License
 (fsnotify-fsnotify v1.5.0)
 
 Copyright (c) 2012 The Go Authors. All rights reserved.
@@ -6318,7 +6318,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 
 ---
 
-BSD 3-Clause "New" or "Revised" License
+BSD 3-clause "New" or "Revised" License
 (gorilla/mux v1.8.0)
 
 Copyright (c) 2012-2018 The Gorilla Authors. All rights reserved.
@@ -6351,7 +6351,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 
 ---
 
-BSD 3-Clause "New" or "Revised" License
+BSD 3-clause "New" or "Revised" License
 (google/go-cmp v0.5.5)
 
 Copyright (c) 2017 The Go Authors. All rights reserved.
@@ -6384,7 +6384,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 
 ---
 
-BSD 3-Clause "New" or "Revised" License
+BSD 3-clause "New" or "Revised" License
 (rogpeppe/go-internal v1.8.0, rogpeppe/go-internal v1.8.1)
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
@@ -6417,7 +6417,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 
 ---
 
-BSD 3-Clause "New" or "Revised" License
+BSD 3-clause "New" or "Revised" License
 (bigfft 20200410-snapshot-eec4a21b, DATA-DOG-go-sqlmock v1.5.0, gitlab.com/cznic/cc v3.40.0, gitlab.com/cznic/ccgo v3.16.13, gitlab.com/cznic/ccorpus v1.11.6, gitlab.com/cznic/httpfs v1.0.6, gitlab.com/cznic/libc v1.22.2, gitlab.com/cznic/mathutil v1.5.0, gitlab.com/cznic/memory v1.4.0, gitlab.com/cznic/opt v0.1.3, gitlab.com/cznic/sqlite v1.20.3, gitlab.com/cznic/strutil v1.1.3, gitlab.com/cznic/tcl v1.15.0, gitlab.com/cznic/token v1.0.1, gitlab.com/cznic/z v1.7.0, Golang Protobuf v1.28.1, Golang Protobuf v1.30.0, golang.org/x/crypto 20221011-snapshot-56aed061, golang.org/x/crypto v0.7.0, golang.org/x/image 20210215-snapshot-4410531f, golang.org/x/mod 20220414-snapshot-86c51ed2, golang.org/x/mod v0.8.0, golang.org/x/net v0.8.0, golang.org/x/sync 20210219-snapshot-036812b2, golang.org/x/sync 20220722-snapshot-886fb937, golang.org/x/sync v0.1.0, golang.org/x/sys 20200903-snapshot-eff7692f, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys v0.6.0, golang.org/x/term v0.6.0, golang.org/x/time v0.3.0, golang.org/x/tools v0.1.12, golang.org/x/tools v0.6.0, golang.org/x/xerrors 20200804-snapshot-5ec99f83, golang/text v0.6.0, golang/text v0.8.0, google/go-cmp v0.5.8, google/go-cmp v0.5.9, hybridgroup/ble 20220920-snapshot-9a45bebf, mattn-go-colorable 0.1.13)
 
 Copyright (c) <YEAR>, <OWNER>
@@ -6451,7 +6451,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ---
 
-BSD 3-Clause "New" or "Revised" License
+BSD 3-clause "New" or "Revised" License
 (gogo/protobuf v1.3.2)
 
 Copyright 2010 The Go Authors.  All rights reserved.
@@ -6485,7 +6485,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 
 ---
 
-BSD 3-Clause "New" or "Revised" License
+BSD 3-clause "New" or "Revised" License
 (pmezard-go-difflib 1.0.0)
 
 Source: https://github.com/pmezard/go-difflib
