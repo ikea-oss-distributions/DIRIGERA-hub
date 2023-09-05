@@ -1,13 +1,12 @@
 ﻿Copyright 2023
 
-[HomeSmart/Bootchain : 2.391]
+[HomeSmart/Bootchain : master]
 
 
 Components: 
 
 arm-trusted-firmware 2.4 : BSD 3-clause "New" or "Revised" License
 mbed TLS 2.24.0 : Apache License 2.0
-mbed TLS v2.24.0 : Apache License 2.0
 optee 3.12.0 : BSD 2-clause "Simplified" License
 QEMU v8.0.2 : GNU General Public License v2.0 only
 rust-psa-crypto-sys-devel 0.7.0 : Apache License 2.0
@@ -16,7 +15,7 @@ U-Boot 2020.10 : GNU General Public License v2.0 or later
 Licenses: 
 
 Apache License 2.0
-(mbed TLS 2.24.0, mbed TLS v2.24.0, rust-psa-crypto-sys-devel 0.7.0)
+(mbed TLS 2.24.0, rust-psa-crypto-sys-devel 0.7.0)
 
 Apache License
 Version 2.0, January 2004
@@ -867,7 +866,7 @@ of this License.
 
 Copyright 2023
 
-[HomeSmart/M4-firmware : 2.391]
+[HomeSmart/M4-firmware : master]
 
 
 Components: 
@@ -972,7 +971,7 @@ SOFTWARE
 
 Copyright 2023
 
-[HomeSmart/Ikeix/runtime : 2.391]
+[HomeSmart/Ikeix/runtime : master]
 
 
 Components: 
@@ -5459,7 +5458,7 @@ the following restrictions:
 
 Copyright 2023
 
-[HomeSmart/Go : 2.391]
+[HomeSmart/Go : master]
 
 
 Components: 
@@ -8352,7 +8351,7 @@ the following restrictions:
 
 Copyright 2023
 
-[HomeSmart/Node.js : 2.391]
+[HomeSmart/Node.js : master]
 
 
 Components: 
