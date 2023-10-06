@@ -1131,6 +1131,7 @@ Copyright 2023
 
 Components: 
 
+Amazon FreeRTOS 201906.00_Major : MIT License
 Amazon FreeRTOS 201910.00 : MIT License
 FreeRTOS Real Time Kernel V10.3.0 : MIT License
 open-amp 2020.04.0 : BSD 3-clause "New" or "Revised" License
@@ -1204,7 +1205,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
 ---
 
 MIT License
-(Amazon FreeRTOS 201910.00)
+(Amazon FreeRTOS 201906.00_Major, Amazon FreeRTOS 201910.00)
 
 MIT License
 
