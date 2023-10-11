@@ -1,6 +1,6 @@
 ﻿Copyright 2023
 
-[HomeSmart/Bootchain : 2.411]
+[HomeSmart/Bootchain : master]
 
 
 Components: 
@@ -8,7 +8,7 @@ Components:
 arm-trusted-firmware 2.4 : BSD 3-clause "New" or "Revised" License
 mbed TLS 2.24.0 : Apache License 2.0
 optee 3.12.0 : BSD 2-clause "Simplified" License
-optee_os 3.22.0 : ((zlib License AND MIT License AND BSD 2-clause "Simplified" License AND ISC License AND BSD Source Code Attribution AND Apache License 2.0 AND BSD 3-clause "New" or "Revised" License AND Boost Software License 1.0 AND The Unlicense) AND ((BSD 2-clause "Simplified" License OR GNU General Public License v2.0 only) AND (MIT License OR GNU General Public License v2.0 only) AND (BSD 3-clause "New" or "Revised" License OR GNU General Public License v2.0 or later) AND (BSD 2-clause "Simplified" License AND BSD 3-clause "New" or "Revised" License) AND (BSD 2-clause "Simplified" License OR GNU General Public License v2.0 or later) AND (CMU License AND BSD 2-clause "Simplified" License) AND (MIT License OR GNU General Public License v2.0 or later) AND (MIT License AND BSD 2-clause "Simplified" License) AND (BSD 3-clause "New" or "Revised" License OR GNU General Public License v2.0 only) AND (BSD 2-clause "Simplified" License AND The Unlicense)))
+optee_os 3.22.0 : ((zlib License AND MIT License AND BSD 2-clause "Simplified" License AND ISC License AND BSD Source Code Attribution AND Apache License 2.0 AND BSD 3-clause "New" or "Revised" License AND Boost Software License 1.0 AND The Unlicense) AND ((BSD 3-clause "New" or "Revised" License OR GNU General Public License v2.0 or later) AND (MIT License OR GNU General Public License v2.0 only) AND (BSD 2-clause "Simplified" License AND The Unlicense) AND (BSD 2-clause "Simplified" License AND BSD 3-clause "New" or "Revised" License) AND (MIT License OR GNU General Public License v2.0 or later) AND (BSD 2-clause "Simplified" License OR GNU General Public License v2.0 or later) AND (CMU License AND BSD 2-clause "Simplified" License) AND (MIT License AND BSD 2-clause "Simplified" License) AND (BSD 2-clause "Simplified" License OR GNU General Public License v2.0 only) AND (BSD 3-clause "New" or "Revised" License OR GNU General Public License v2.0 only)))
 U-Boot 2020.10 : GNU General Public License v2.0 or later
 
 Licenses: 
@@ -1126,7 +1126,7 @@ the following restrictions:
 
 Copyright 2023
 
-[HomeSmart/M4-firmware : 2.411]
+[HomeSmart/M4-firmware : master]
 
 
 Components: 
@@ -1231,7 +1231,7 @@ SOFTWARE
 
 Copyright 2023
 
-[HomeSmart/Ikeix/runtime : 2.411]
+[HomeSmart/Ikeix/runtime : master]
 
 
 Components: 
@@ -1258,33 +1258,29 @@ hostapd 2.9 : BSD 3-clause "New" or "Revised" License
 I2C tools for Linux 4.1 : GNU General Public License v2.0 or later
 ICU for C/C++ (ICU4C) 71.1 : ICU License
 ifmetric 0.3 : GNU General Public License v2.0 only
-IP sets 7.9 : GNU General Public License v2.0 only
 IPTables v1.8.4 : GNU General Public License v2.0 or later
 iw 5.4 : BSD 2-clause "Simplified" License
 jansson 2.13.1 : MIT License
 json-glib 1.4.4 : GNU Lesser General Public License v2.1 only
-JsonCpp 1.9.2 : MIT License
 kmod 26 : (GNU Lesser General Public License v2.1 or later AND GNU General Public License v2.0 or later)
 lathiat/nss-mdns 0.14.1 : GNU Lesser General Public License v2.1 only
 libbsd 0.10.0 : BSD 3-clause "New" or "Revised" License
 libcap 2.32 : (BSD 3-clause "New" or "Revised" License OR GNU General Public License v2.0 or later)
 libdaemon 0.14 : GNU Lesser General Public License v2.1 or later
 libffi 3.3 : MIT License
-libmnl 1.0.4 : GNU Lesser General Public License v2.1 or later
 Linux Extended Attributes 2.4.48 : (GNU Lesser General Public License v2.1 or later OR GNU General Public License v2.0 or later)
 Linux Kernel 5.10.61-stm32mp-r2 : GNU General Public License v2.0 or later
 lz4 1.9.2 : (BSD 2-clause "Simplified" License AND GNU General Public License v2.0 or later)
 LZO real-time data compression library 2.10 : GNU General Public License v2.0 or later
 memtester 4.6.0 : GNU General Public License v2.0 only
 mmc-utils 0.1 : GNU General Public License v2.0 or later
-Mosquitto 1.6.10 : (Eclipse Distribution License - v 1.0 OR Eclipse Public License 1.0)
+Mosquitto 1.6.10 : (Eclipse Distribution License - v 1.0 OR Eclipse Public License 2.0)
 Netlink Protocol Library Suite (libnl) 3.5.0 : GNU Lesser General Public License v2.1 only
 OpenSSL 1.1.1l : (SSLeay License AND OpenSSL License)
 opkg 0.4.2 : GNU General Public License v2.0 or later
 paho.mqtt.c v1.3.2 : (BSD 3-clause "New" or "Revised" License OR Eclipse Public License 2.0)
 PCRE 8.44 : BSD 3-clause "New" or "Revised" License
 Perl 5.30.1 : (GNU General Public License v1.0 or later OR Artistic License 1.0 (Perl))
-Protobuf 3.11.4 : BSD 3-clause "New" or "Revised" License
 protobuf-c 1.3.3 : BSD 2-clause "Simplified" License
 rauc 1.4 : GNU Lesser General Public License v2.1 only
 Shadow Tool Suite 4.8.1 : (BSD 3-clause "New" or "Revised" License AND GNU General Public License v2.0 only)
@@ -1932,39 +1928,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(Protobuf 3.11.4)
-
-Copyright 2008 Google Inc.  All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are
-met:
-
-    * Redistributions of source code must retain the above copyright
-notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above
-copyright notice, this list of conditions and the following disclaimer
-in the documentation and/or other materials provided with the
-distribution.
-    * Neither the name of Google Inc. nor the names of its
-contributors may be used to endorse or promote products derived from
-this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
-
----
-
-BSD 3-clause "New" or "Revised" License
 (Shadow Tool Suite 4.8.1)
 
 Copyright:
@@ -2183,223 +2146,8 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ---
 
-Eclipse Public License 1.0
-(Mosquitto 1.6.10)
-
-Eclipse Public License - v 1.0
-==============================
-
-THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
-LICENSE ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM
-CONSTITUTES RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
-
-1. DEFINITIONS
-
-"Contribution" means:
-
-a) in the case of the initial Contributor, the initial code and documentation
-distributed under this Agreement, and
-b) in the case of each subsequent Contributor:
-
-i) changes to the Program, and
-
-ii) additions to the Program;
-
-where such changes and/or additions to the Program originate from and are
-distributed by that particular Contributor. A Contribution 'originates' from a
-Contributor if it was added to the Program by such Contributor itself or anyone
-acting on such Contributor's behalf. Contributions do not include additions to
-the Program which: (i) are separate modules of software distributed in
-conjunction with the Program under their own license agreement, and (ii) are not
-derivative works of the Program.
-
-"Contributor" means any person or entity that distributes the Program.
-
-"Licensed Patents " mean patent claims licensable by a Contributor which are
-necessarily infringed by the use or sale of its Contribution alone or when
-combined with the Program.
-
-"Program" means the Contributions distributed in accordance with this Agreement.
-
-"Recipient" means anyone who receives the Program under this Agreement, including
-all Contributors.
-
-2. GRANT OF RIGHTS
-
-a) Subject to the terms of this Agreement, each Contributor hereby grants
-Recipient a non-exclusive, worldwide, royalty-free copyright license to reproduce,
-prepare derivative works of, publicly display, publicly perform, distribute and
-sublicense the Contribution of such Contributor, if any, and such derivative
-works, in source code and object code form.
-
-b) Subject to the terms of this Agreement, each Contributor hereby grants
-Recipient a non-exclusive, worldwide, royalty-free patent license under Licensed
-Patents to make, use, sell, offer to sell, import and otherwise transfer the
-Contribution of such Contributor, if any, in source code and object code form.
-This patent license shall apply to the combination of the Contribution and the
-Program if, at the time the Contribution is added by the Contributor, such
-addition of the Contribution causes such combination to be covered by the
-Licensed Patents. The patent license shall not apply to any other combinations
-which include the Contribution. No hardware per se is licensed hereunder.
-
-c) Recipient understands that although each Contributor grants the licenses to
-its Contributions set forth herein, no assurances are provided by any Contributor
-that the Program does not infringe the patent or other intellectual property
-rights of any other entity. Each Contributor disclaims any liability to Recipient
-for claims brought by any other entity based on infringement of intellectual
-property rights or otherwise. As a condition to exercising the rights and
-licenses granted hereunder, each Recipient hereby assumes sole responsibility to
-secure any other intellectual property rights needed, if any. For example, if a
-third party patent license is required to allow Recipient to distribute the
-Program, it is Recipient's responsibility to acquire that license before
-distributing the Program.
-
-d) Each Contributor represents that to its knowledge it has sufficient copyright
-rights in its Contribution, if any, to grant the copyright license set forth in
-this Agreement.
-
-3. REQUIREMENTS
-
-A Contributor may choose to distribute the Program in object code form under its
-own license agreement, provided that:
-
-a) it complies with the terms and conditions of this Agreement; and
-
-b) its license agreement:
-
-i) effectively disclaims on behalf of all Contributors all warranties and
-conditions, express and implied, including warranties or conditions of title and
-non-infringement, and implied warranties or conditions of merchantability and
-fitness for a particular purpose;
-
-ii) effectively excludes on behalf of all Contributors all liability for damages,
-including direct, indirect, special, incidental and consequential damages, such
-as lost profits;
-
-iii) states that any provisions which differ from this Agreement are offered by
-that Contributor alone and not by any other party; and
-
-iv) states that source code for the Program is available from such Contributor,
-and informs licensees how to obtain it in a reasonable manner on or through a
-medium customarily used for software exchange.
-
-When the Program is made available in source code form:
-
-a) it must be made available under this Agreement; and
-
-b) a copy of this Agreement must be included with each copy of the Program.
-
-Contributors may not remove or alter any copyright notices contained within the
-Program.
-
-Each Contributor must identify itself as the originator of its Contribution, if
-any, in a manner that reasonably allows subsequent Recipients to identify the
-originator of the Contribution.
-
-4. COMMERCIAL DISTRIBUTION
-
-Commercial distributors of software may accept certain responsibilities with
-respect to end users, business partners and the like. While this license is
-intended to facilitate the commercial use of the Program, the Contributor who
-includes the Program in a commercial product offering should do so in a manner
-which does not create potential liability for other Contributors. Therefore, if a
-Contributor includes the Program in a commercial product offering, such
-Contributor ("Commercial Contributor") hereby agrees to defend and indemnify
-every other Contributor ("Indemnified Contributor") against any losses, damages
-and costs (collectively "Losses") arising from claims, lawsuits and other legal
-actions brought by a third party against the Indemnified Contributor to the
-extent caused by the acts or omissions of such Commercial Contributor in
-connection with its distribution of the Program in a commercial product offering.
-The obligations in this section do not apply to any claims or Losses relating to
-any actual or alleged intellectual property infringement. In order to qualify, an
-Indemnified Contributor must: a) promptly notify the Commercial Contributor in
-writing of such claim, and b) allow the Commercial Contributor to control, and
-cooperate with the Commercial Contributor in, the defense and any related
-settlement negotiations. The Indemnified Contributor may participate in any such
-claim at its own expense.
-
-For example, a Contributor might include the Program in a commercial product
-offering, Product X. That Contributor is then a Commercial Contributor. If that
-Commercial Contributor then makes performance claims, or offers warranties
-related to Product X, those performance claims and warranties are such Commercial
-Contributor's responsibility alone. Under this section, the Commercial
-Contributor would have to defend claims against the other Contributors related to
-those performance claims and warranties, and if a court requires any other
-Contributor to pay any damages as a result, the Commercial Contributor must pay
-those damages.
-
-5. NO WARRANTY
-
-EXCEPT AS EXPRESSLY SET FORTH IN THIS AGREEMENT, THE PROGRAM IS PROVIDED ON AN
-"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR
-IMPLIED INCLUDING, WITHOUT LIMITATION, ANY WARRANTIES OR CONDITIONS OF TITLE,
-NON-INFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. Each
-Recipient is solely responsible for determining the appropriateness of using and
-distributing the Program and assumes all risks associated with its exercise of
-rights under this Agreement , including but not limited to the risks and costs of
-program errors, compliance with applicable laws, damage to or loss of data,
-programs or equipment, and unavailability or interruption of operations.
-
-6. DISCLAIMER OF LIABILITY
-
-EXCEPT AS EXPRESSLY SET FORTH IN THIS AGREEMENT, NEITHER RECIPIENT NOR ANY
-CONTRIBUTORS SHALL HAVE ANY LIABILITY FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING WITHOUT LIMITATION LOST
-PROFITS), HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-OUT OF THE USE OR DISTRIBUTION OF THE PROGRAM OR THE EXERCISE OF ANY RIGHTS
-GRANTED HEREUNDER, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-
-7. GENERAL
-
-If any provision of this Agreement is invalid or unenforceable under applicable
-law, it shall not affect the validity or enforceability of the remainder of the
-terms of this Agreement, and without further action by the parties hereto, such
-provision shall be reformed to the minimum extent necessary to make such
-provision valid and enforceable.
-
-If Recipient institutes patent litigation against any entity (including a
-cross-claim or counterclaim in a lawsuit) alleging that the Program itself
-(excluding combinations of the Program with other software or hardware) infringes
-such Recipient's patent(s), then such Recipient's rights granted under Section
-2(b) shall terminate as of the date such litigation is filed.
-
-All Recipient's rights under this Agreement shall terminate if it fails to comply
-with any of the material terms or conditions of this Agreement and does not cure
-such failure in a reasonable period of time after becoming aware of such
-noncompliance. If all Recipient's rights under this Agreement terminate,
-Recipient agrees to cease use and distribution of the Program as soon as
-reasonably practicable. However, Recipient's obligations under this Agreement and
-any licenses granted by Recipient relating to the Program shall continue and
-survive.
-
-Everyone is permitted to copy and distribute copies of this Agreement, but in
-order to avoid inconsistency the Agreement is copyrighted and may only be
-modified in the following manner. The Agreement Steward reserves the right to
-publish new versions (including revisions) of this Agreement from time to time.
-No one other than the Agreement Steward has the right to modify this Agreement.
-The Eclipse Foundation is the initial Agreement Steward. The Eclipse Foundation
-may assign the responsibility to serve as the Agreement Steward to a suitable
-separate entity. Each new version of the Agreement will be given a distinguishing
-version number. The Program (including Contributions) may always be distributed
-subject to the version of the Agreement under which it was received. In addition,
-after a new version of the Agreement is published, Contributor may elect to
-distribute the Program (including its Contributions) under the new version.
-Except as expressly stated in Sections 2(a) and 2(b) above, Recipient receives no
-rights or licenses to the intellectual property of any Contributor under this
-Agreement, whether expressly, by implication, estoppel or otherwise. All rights
-in the Program not expressly granted under this Agreement are reserved.
-
-This Agreement is governed by the laws of the State of New York and the
-intellectual property laws of the United States of America. No party to this
-Agreement will bring a legal action under this Agreement more than one year after
-the cause of action arose. Each party waives its rights to a jury trial in any
-resulting litigation.
-
----
-
 Eclipse Public License 2.0
-(paho.mqtt.c v1.3.2)
+(Mosquitto 1.6.10, paho.mqtt.c v1.3.2)
 
 Eclipse Public License - v 2.0
 ==============================
@@ -2918,7 +2666,7 @@ That's all there is to it!
 ---
 
 GNU General Public License v2.0 only
-(base-files 3.0.14, busybox 1.31.1, ifmetric 0.3, IP sets 7.9, memtester 4.6.0, Shadow Tool Suite 4.8.1, squashfs-tools 4.4, util-linux 2.35.1)
+(base-files 3.0.14, busybox 1.31.1, ifmetric 0.3, memtester 4.6.0, Shadow Tool Suite 4.8.1, squashfs-tools 4.4, util-linux 2.35.1)
 
 The GNU General Public License (GPL)
 ====================================
@@ -4654,7 +4402,7 @@ That's all there is to it!
 ---
 
 GNU Lesser General Public License v2.1 or later
-(ACL 2.2.53, avahi 0.7, GNU C Library 2.31, kmod 26, libdaemon 0.14, libmnl 1.0.4, Linux Extended Attributes 2.4.48, systemd 244.5, XZ Utils 5.2.4)
+(ACL 2.2.53, avahi 0.7, GNU C Library 2.31, kmod 26, libdaemon 0.14, Linux Extended Attributes 2.4.48, systemd 244.5, XZ Utils 5.2.4)
 
 GNU Lesser General Public License
 =================================
@@ -5781,38 +5529,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ---
 
-MIT License
-(JsonCpp 1.9.2)
-
-http://en.wikipedia.org/wiki/MIT_License
-   
-The full text of the MIT License follows:
-
-========================================================================
-Copyright (c) 2007-2010 Baptiste Lepilleur and The JsonCpp Authors
-
-Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the "Software"), to deal in the Software without
-restriction, including without limitation the rights to use, copy,
-modify, merge, publish, distribute, sublicense, and/or sell copies
-of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE
-
----
-
 OpenSSL License
 (OpenSSL 1.1.1l)
 
@@ -5995,7 +5711,7 @@ the following restrictions:
 
 Copyright 2023
 
-[HomeSmart/Go : 2.411]
+[HomeSmart/Go : master]
 
 
 Components: 
@@ -6031,10 +5747,11 @@ dlclark/regexp2 v1.1.6 : MIT License
 docker v23.0.1 : Apache License 2.0
 docker-go-units v0.5.0 : Apache License 2.0
 docker-registry 2.8.1 : Apache License 2.0
-eclipse-paho.mqtt.golang v1.4.1 : (Eclipse Distribution License - v 1.0 AND Eclipse Public License 2.0)
+eclipse-paho.mqtt.golang V1.4.3 : (Eclipse Distribution License - v 1.0 AND Eclipse Public License 2.0)
 eliukblau/pixterm 20191210-snapshot-9fb6cf8c : Mozilla Public License 2.0
 errwrap v1.0.0 : Mozilla Public License 2.0
 errwrap v1.1.0 : Mozilla Public License 2.0
+exp 20230905-snapshot-92128663 : BSD 3-clause "New" or "Revised" License
 fatih-color v1.12.0 : MIT License
 fatih-color v1.13.0 : MIT License
 fatih/structs v1.1.0 : MIT License
@@ -6047,6 +5764,7 @@ github.com/markbates/oncer v1.0.0 : MIT License
 github.com/markbates/safe v1.0.1 : MIT License
 github.com/pkg/term v1.1.0 : BSD 2-clause "Simplified" License
 github.com/rivo/uniseg v0.1.0 : MIT License
+github.com/rivo/uniseg v0.2.0 : MIT License
 github.com/yuin/gluamapper 20170903-snapshot-d8369558 : MIT License
 gitlab.com/cznic/cc v3.40.0 : BSD 3-clause "New" or "Revised" License
 gitlab.com/cznic/ccgo v3.16.13 : BSD 3-clause "New" or "Revised" License
@@ -6061,9 +5779,10 @@ gitlab.com/cznic/strutil v1.1.3 : BSD 3-clause "New" or "Revised" License
 gitlab.com/cznic/tcl v1.15.0 : BSD 3-clause "New" or "Revised" License
 gitlab.com/cznic/token v1.0.1 : BSD 3-clause "New" or "Revised" License
 gitlab.com/cznic/z v1.7.0 : (zlib License AND BSD 3-clause "New" or "Revised" License)
-go humanize v1.0.0 : MIT License
+go humanize 1.0.1 : MIT License
 Go Logrus v1.8.1 : MIT License
 Go Testify 1.7.0 : MIT License
+Go Testify v1.3.0 : MIT License
 Go Testify v1.8.2 : MIT License
 go-ansiterm d185dfc1b5a126116ea5a19e148e29d16b4574c9 : MIT License
 go-check-check 20171108-snapshot-20d25e28 : BSD 2-clause "Simplified" License
@@ -6085,40 +5804,36 @@ go-systemd v22.5.0 : Apache License 2.0
 go-test/deep v1.1.0 : MIT License
 go.etcd.io/bbolt v1.3.6 : MIT License
 gobuffalo/packr v2.8.3 : MIT License
+goconvey v1.8.1 : MIT License
 godbus-dbus v5.1.0 : BSD 2-clause "Simplified" License
 GoDoc Text v0.2.0 : MIT License
 gogo/protobuf v1.3.2 : BSD 3-clause "New" or "Revised" License
-Golang Protobuf v1.28.1 : BSD 3-clause "New" or "Revised" License
-Golang Protobuf v1.30.0 : BSD 3-clause "New" or "Revised" License
+Golang Protobuf v1.31.0 : BSD 3-clause "New" or "Revised" License
 golang-github-docker-go-connections-dev 0.4.0 : Apache License 2.0
 golang-github-spf13-pflag-dev v1.0.5 : BSD 3-clause "New" or "Revised" License
 golang.org/x/crypto 20221011-snapshot-56aed061 : BSD 3-clause "New" or "Revised" License
+golang.org/x/crypto v0.13.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/crypto v0.7.0 : BSD 3-clause "New" or "Revised" License
-golang.org/x/image 20210215-snapshot-4410531f : BSD 3-clause "New" or "Revised" License
-golang.org/x/mod 20220414-snapshot-86c51ed2 : BSD 3-clause "New" or "Revised" License
-golang.org/x/mod v0.8.0 : BSD 3-clause "New" or "Revised" License
-golang.org/x/net v0.8.0 : BSD 3-clause "New" or "Revised" License
-golang.org/x/sync 20210219-snapshot-036812b2 : BSD 3-clause "New" or "Revised" License
-golang.org/x/sync 20220722-snapshot-886fb937 : BSD 3-clause "New" or "Revised" License
-golang.org/x/sync v0.1.0 : BSD 3-clause "New" or "Revised" License
+golang.org/x/image v0.12.0 : BSD 3-clause "New" or "Revised" License
+golang.org/x/mod v0.12.0 : BSD 3-clause "New" or "Revised" License
+golang.org/x/net v0.15.0 : BSD 3-clause "New" or "Revised" License
+golang.org/x/sync v0.3.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys 20200903-snapshot-eff7692f : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys 20210614-snapshot-665e8c73 : BSD 3-clause "New" or "Revised" License
+golang.org/x/sys v0.12.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/sys v0.6.0 : BSD 3-clause "New" or "Revised" License
+golang.org/x/term v0.12.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/term v0.6.0 : BSD 3-clause "New" or "Revised" License
 golang.org/x/time v0.3.0 : BSD 3-clause "New" or "Revised" License
-golang.org/x/tools v0.1.12 : BSD 3-clause "New" or "Revised" License
-golang.org/x/tools v0.6.0 : BSD 3-clause "New" or "Revised" License
-golang.org/x/xerrors 20200804-snapshot-5ec99f83 : BSD 3-clause "New" or "Revised" License
+golang.org/x/tools v0.12.0 : BSD 3-clause "New" or "Revised" License
+golang/text v0.13.0 : BSD 3-clause "New" or "Revised" License
 golang/text v0.6.0 : BSD 3-clause "New" or "Revised" License
-golang/text v0.8.0 : BSD 3-clause "New" or "Revised" License
-gomarkdown/markdown 20191123-snapshot-2c17d62f : BSD 2-clause "Simplified" License
-google/go-cmp v0.5.5 : BSD 3-clause "New" or "Revised" License
-google/go-cmp v0.5.8 : BSD 3-clause "New" or "Revised" License
+gomarkdown/markdown 20230922-snapshot-5421fefb : BSD 2-clause "Simplified" License
 google/go-cmp v0.5.9 : BSD 3-clause "New" or "Revised" License
 google/uuid v1.3.0 : BSD 3-clause "New" or "Revised" License
+gopherjs v1.17.2 : BSD 2-clause "Simplified" License
 gorilla/mux v1.8.0 : BSD 3-clause "New" or "Revised" License
 gorilla/schema v1.2.0 : BSD 3-clause "New" or "Revised" License
-gorilla/websocket v1.4.2 : BSD 2-clause "Simplified" License
 gorilla/websocket v1.5.0 : BSD 2-clause "Simplified" License
 gotest.tools v3.4.0 : Apache License 2.0
 hashicorp-go-multierror v1.1.1 : Mozilla Public License 2.0
@@ -6129,6 +5844,7 @@ jbenet-go-base58 20150317-snapshot-6237cf65 : ISC License
 jdkato/prose v1.2.1 : MIT License
 jmespath-go-jmespath internal/testify/v1.5.1 : Apache License 2.0
 jmespath-go-jmespath v0.4.0 : Apache License 2.0
+jtolds-gls v4.20.0 : MIT License
 karrick/godirwalk v1.16.1 : BSD 2-clause "Simplified" License
 kr/pretty v0.3.0 : MIT License
 kubernetes/apimachinery v0.23.4 : Apache License 2.0
@@ -6143,15 +5859,16 @@ mattn-go-colorable 0.1.13 : (MIT License AND BSD 3-clause "New" or "Revised" Lic
 mattn-go-colorable v0.1.12 : MIT License
 mattn-go-colorable v0.1.8 : MIT License
 mattn-go-isatty v0.0.12 : MIT License
-mattn-go-isatty v0.0.14 : MIT License
 mattn-go-isatty v0.0.17 : MIT License
 mattn-go-runewidth v0.0.12 : MIT License
+mattn-go-runewidth v0.0.14 : MIT License
 mattn-go-sqlite3 v1.14.15 : MIT License
 mgutz-ansi 20200706-snapshot-d51e80ef : MIT License
 mgutz-logxi 20161027-snapshot-aebf8a7d : MIT License
 MichaelMure/go-term-markdown v0.1.4 : MIT License
 MichaelMure/go-term-text v0.3.1 : MIT License
-Microsoft-go-winio v0.6.0 : MIT License
+Microsoft-go-winio v0.6.1 : MIT License
+mitchellh-colorstring 20190613-snapshot-d06e56a5 : Apache License 2.0
 mohae/deepcopy 20170929-snapshot-c48cc78d : MIT License
 morikuni/aec v1.0.0 : MIT License
 mymysql v1.5.4 : BSD 3-clause "New" or "Revised" License
@@ -6162,12 +5879,15 @@ PerformLine/go-stockutil v1.9.3 : MIT License
 pkg/errors v0.9.1 : BSD 2-clause "Simplified" License
 pmezard-go-difflib 1.0.0 : BSD 3-clause "New" or "Revised" License
 pq v1.10.4 : MIT License
+robfig/cron v3.0.1 : MIT License
 rogpeppe/go-internal v1.8.0 : BSD 3-clause "New" or "Revised" License
 rogpeppe/go-internal v1.8.1 : BSD 3-clause "New" or "Revised" License
 ryanuber-go-glob v1.0.0 : MIT License
+schollz/progressbar v3.13.1 : MIT License
 segmentio/textio v1.2.0 : MIT License
-sergi/go-diff v1.0.0 : (MIT License AND Apache License 2.0)
+sergi/go-diff 1.3.1 : (MIT License AND Apache License 2.0)
 sixdouglas/suncalc 20210131-snapshot-475bb71c : 
+smartystreets-assertions v1.15.1 : MIT License
 spacemonkeygo-spacelog 20180419-snapshot-2296661a : Apache License 2.0
 sql-migrate v1.3.0 : MIT License
 sqlx v1.3.5 : MIT License
@@ -6177,12 +5897,12 @@ tevino/abool v2.1.0 : MIT License
 yaml for Go 20200512-snapshot-9f266ea9 : Apache License 2.0
 yaml for Go v2.4.0 : Apache License 2.0
 yaml for Go v3.0.1 : (MIT License AND Apache License 2.0)
-yuin-gopher-lua 20220504-snapshot-65819353 : MIT License
+yuin-gopher-lua v1.1.0 : MIT License
 
 Licenses: 
 
 Apache License 2.0
-(aws/aws-sdk-go-v2 aws/protocol/eventstream/v1.4.10, aws/aws-sdk-go-v2 config/v1.18.19, aws/aws-sdk-go-v2 credentials/v1.13.18, aws/aws-sdk-go-v2 feature/ec2/imds/v1.13.1, aws/aws-sdk-go-v2 feature/s3/manager/v1.11.59, aws/aws-sdk-go-v2 internal/configsources/v1.1.31, aws/aws-sdk-go-v2 internal/ini/v1.3.32, aws/aws-sdk-go-v2 internal/v4a/v1.0.23, aws/aws-sdk-go-v2 service/internal/accept-encoding/v1.9.11, aws/aws-sdk-go-v2 service/internal/checksum/v1.1.26, aws/aws-sdk-go-v2 service/internal/presigned-url/v1.9.25, aws/aws-sdk-go-v2 service/internal/s3shared/v1.14.0, aws/aws-sdk-go-v2 service/s3/v1.31.0, aws/aws-sdk-go-v2 service/sso/v1.12.6, aws/aws-sdk-go-v2 service/ssooidc/v1.14.6, aws/aws-sdk-go-v2 service/sts/v1.18.7, aws/aws-sdk-go-v2 v1.17.7, docker v23.0.1, docker-go-units v0.5.0, docker-registry 2.8.1, github.com/aws/smithy-go v1.13.5, go-systemd v22.4.0, go-systemd v22.5.0, golang-github-docker-go-connections-dev 0.4.0, gotest.tools v3.4.0, jmespath-go-jmespath internal/testify/v1.5.1, jmespath-go-jmespath v0.4.0, kubernetes/apimachinery v0.23.4, opencontainers/go-digest 1.0.0, opencontainers/image-spec v1.0.2, sergi/go-diff v1.0.0, spacemonkeygo-spacelog 20180419-snapshot-2296661a, yaml for Go 20200512-snapshot-9f266ea9, yaml for Go v2.4.0, yaml for Go v3.0.1)
+(aws/aws-sdk-go-v2 aws/protocol/eventstream/v1.4.10, aws/aws-sdk-go-v2 config/v1.18.19, aws/aws-sdk-go-v2 credentials/v1.13.18, aws/aws-sdk-go-v2 feature/ec2/imds/v1.13.1, aws/aws-sdk-go-v2 feature/s3/manager/v1.11.59, aws/aws-sdk-go-v2 internal/configsources/v1.1.31, aws/aws-sdk-go-v2 internal/ini/v1.3.32, aws/aws-sdk-go-v2 internal/v4a/v1.0.23, aws/aws-sdk-go-v2 service/internal/accept-encoding/v1.9.11, aws/aws-sdk-go-v2 service/internal/checksum/v1.1.26, aws/aws-sdk-go-v2 service/internal/presigned-url/v1.9.25, aws/aws-sdk-go-v2 service/internal/s3shared/v1.14.0, aws/aws-sdk-go-v2 service/s3/v1.31.0, aws/aws-sdk-go-v2 service/sso/v1.12.6, aws/aws-sdk-go-v2 service/ssooidc/v1.14.6, aws/aws-sdk-go-v2 service/sts/v1.18.7, aws/aws-sdk-go-v2 v1.17.7, docker v23.0.1, docker-go-units v0.5.0, docker-registry 2.8.1, github.com/aws/smithy-go v1.13.5, go-systemd v22.4.0, go-systemd v22.5.0, golang-github-docker-go-connections-dev 0.4.0, gotest.tools v3.4.0, jmespath-go-jmespath internal/testify/v1.5.1, jmespath-go-jmespath v0.4.0, kubernetes/apimachinery v0.23.4, mitchellh-colorstring 20190613-snapshot-d06e56a5, opencontainers/go-digest 1.0.0, opencontainers/image-spec v1.0.2, sergi/go-diff 1.3.1, spacemonkeygo-spacelog 20180419-snapshot-2296661a, yaml for Go 20200512-snapshot-9f266ea9, yaml for Go v2.4.0, yaml for Go v3.0.1)
 
 Apache License
 Version 2.0, January 2004
@@ -6432,7 +6152,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 ---
 
 BSD 2-clause "Simplified" License
-(go-check-check 20201130-snapshot-10cb9826, gomarkdown/markdown 20191123-snapshot-2c17d62f)
+(go-check-check 20201130-snapshot-10cb9826, gomarkdown/markdown 20230922-snapshot-5421fefb, gopherjs v1.17.2)
 
 BSD Two Clause License
 ======================
@@ -6619,40 +6339,6 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
-
----
-
-BSD 2-clause "Simplified" License
-(gorilla/websocket v1.4.2)
-
-Files: debian/*
-Copyright: 2013 Vincent Bernat <bernat@debian.org>
-License: BSD-2-clause
-
-License: BSD-2-clause
-
-Redistribution and use in source and binary forms, with or without
- modification, are permitted provided that the following conditions are
- met:
- .
-  * Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
-  * Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in the
-    documentation and/or other materials provided with the
-    distribution.
- .
- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 
 ---
 
@@ -6887,39 +6573,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 ---
 
 BSD 3-clause "New" or "Revised" License
-(google/go-cmp v0.5.5)
-
-Copyright (c) 2017 The Go Authors. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are
-met:
-
-   * Redistributions of source code must retain the above copyright
-notice, this list of conditions and the following disclaimer.
-   * Redistributions in binary form must reproduce the above
-copyright notice, this list of conditions and the following disclaimer
-in the documentation and/or other materials provided with the
-distribution.
-   * Neither the name of Google Inc. nor the names of its
-contributors may be used to endorse or promote products derived from
-this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
-
----
-
-BSD 3-clause "New" or "Revised" License
 (rogpeppe/go-internal v1.8.0, rogpeppe/go-internal v1.8.1)
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
@@ -6953,7 +6606,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 ---
 
 BSD 3-clause "New" or "Revised" License
-(bigfft 20200410-snapshot-eec4a21b, DATA-DOG-go-sqlmock v1.5.0, gitlab.com/cznic/cc v3.40.0, gitlab.com/cznic/ccgo v3.16.13, gitlab.com/cznic/ccorpus v1.11.6, gitlab.com/cznic/httpfs v1.0.6, gitlab.com/cznic/libc v1.22.2, gitlab.com/cznic/mathutil v1.5.0, gitlab.com/cznic/memory v1.4.0, gitlab.com/cznic/opt v0.1.3, gitlab.com/cznic/sqlite v1.20.3, gitlab.com/cznic/strutil v1.1.3, gitlab.com/cznic/tcl v1.15.0, gitlab.com/cznic/token v1.0.1, gitlab.com/cznic/z v1.7.0, Golang Protobuf v1.28.1, Golang Protobuf v1.30.0, golang.org/x/crypto 20221011-snapshot-56aed061, golang.org/x/crypto v0.7.0, golang.org/x/image 20210215-snapshot-4410531f, golang.org/x/mod 20220414-snapshot-86c51ed2, golang.org/x/mod v0.8.0, golang.org/x/net v0.8.0, golang.org/x/sync 20210219-snapshot-036812b2, golang.org/x/sync 20220722-snapshot-886fb937, golang.org/x/sync v0.1.0, golang.org/x/sys 20200903-snapshot-eff7692f, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys v0.6.0, golang.org/x/term v0.6.0, golang.org/x/time v0.3.0, golang.org/x/tools v0.1.12, golang.org/x/tools v0.6.0, golang.org/x/xerrors 20200804-snapshot-5ec99f83, golang/text v0.6.0, golang/text v0.8.0, google/go-cmp v0.5.8, google/go-cmp v0.5.9, hybridgroup/ble 20220920-snapshot-9a45bebf, mattn-go-colorable 0.1.13)
+(bigfft 20200410-snapshot-eec4a21b, DATA-DOG-go-sqlmock v1.5.0, exp 20230905-snapshot-92128663, gitlab.com/cznic/cc v3.40.0, gitlab.com/cznic/ccgo v3.16.13, gitlab.com/cznic/ccorpus v1.11.6, gitlab.com/cznic/httpfs v1.0.6, gitlab.com/cznic/libc v1.22.2, gitlab.com/cznic/mathutil v1.5.0, gitlab.com/cznic/memory v1.4.0, gitlab.com/cznic/opt v0.1.3, gitlab.com/cznic/sqlite v1.20.3, gitlab.com/cznic/strutil v1.1.3, gitlab.com/cznic/tcl v1.15.0, gitlab.com/cznic/token v1.0.1, gitlab.com/cznic/z v1.7.0, Golang Protobuf v1.31.0, golang.org/x/crypto 20221011-snapshot-56aed061, golang.org/x/crypto v0.13.0, golang.org/x/crypto v0.7.0, golang.org/x/image v0.12.0, golang.org/x/mod v0.12.0, golang.org/x/net v0.15.0, golang.org/x/sync v0.3.0, golang.org/x/sys 20200903-snapshot-eff7692f, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys v0.12.0, golang.org/x/sys v0.6.0, golang.org/x/term v0.12.0, golang.org/x/term v0.6.0, golang.org/x/time v0.3.0, golang.org/x/tools v0.12.0, golang/text v0.13.0, golang/text v0.6.0, google/go-cmp v0.5.9, hybridgroup/ble 20220920-snapshot-9a45bebf, mattn-go-colorable 0.1.13)
 
 Copyright (c) <YEAR>, <OWNER>
 All rights reserved.
@@ -7065,7 +6718,7 @@ Redistribution and use in source and binary forms, with or without
 ---
 
 Eclipse Distribution License - v 1.0
-(eclipse-paho.mqtt.golang v1.4.1)
+(eclipse-paho.mqtt.golang V1.4.3)
 
 Eclipse Distribution License - v 1.0
 ====================================
@@ -7102,7 +6755,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 Eclipse Public License 2.0
-(eclipse-paho.mqtt.golang v1.4.1)
+(eclipse-paho.mqtt.golang V1.4.3)
 
 Eclipse Public License - v 2.0
 ==============================
@@ -7478,6 +7131,33 @@ Permission is hereby granted, free of charge, to any person obtaining a copy
 ---
 
 MIT License
+(robfig/cron v3.0.1)
+
+Copyright (C) 2012 Rob Figueiredo
+All Rights Reserved.
+
+MIT LICENSE
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
+
+---
+
+MIT License
 (go-shellquote 20180428-snapshot-95032a82)
 
 Copyright (C) 2014 Kevin Ballard
@@ -7553,31 +7233,6 @@ SOFTWARE
 ---
 
 MIT License
-(go humanize v1.0.0)
-
-Copyright (c) 2005-2008  Dustin Sallings <dustin@spy.net>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE
-
----
-
-MIT License
 (creack/pty v1.1.13)
 
 Copyright (c) 2011 Keith Rarick
@@ -7621,31 +7276,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ---
 
 MIT License
-(sergi/go-diff v1.0.0)
-
-Copyright (c) 2012-2016 The go-diff Authors. All rights reserved.
-
-Permission is hereby granted, free of charge, to any person obtaining a
-copy of this software and associated documentation files (the "Software"),
-to deal in the Software without restriction, including without limitation
-the rights to use, copy, modify, merge, publish, distribute, sublicense,
-and/or sell copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included
-in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-DEALINGS IN THE SOFTWARE
-
----
-
-MIT License
 (go-colorful v1.0.3)
 
 Copyright (c) 2013 Lucas Beyer
@@ -7659,7 +7289,31 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ---
 
 MIT License
-(mattn-go-isatty v0.0.12, mattn-go-isatty v0.0.14)
+(jtolds-gls v4.20.0)
+
+Copyright (c) 2013, Space Monkey, Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
+
+---
+
+MIT License
+(mattn-go-isatty v0.0.12)
 
 Copyright (c) Yasuhiro MATSUMOTO <mattn.jp@gmail.com>
 
@@ -7761,6 +7415,33 @@ Permission is hereby granted, free of charge, to any person obtaining a copy
 ---
 
 MIT License
+(Go Testify v1.3.0)
+
+MIT License
+
+Copyright (c) 2012-2018 Mat Ryer and Tyler Bunnell
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE
+
+---
+
+MIT License
 (Go Testify 1.7.0)
 
 MIT License
@@ -7815,7 +7496,7 @@ SOFTWARE
 ---
 
 MIT License
-(github.com/rivo/uniseg v0.1.0)
+(github.com/rivo/uniseg v0.1.0, github.com/rivo/uniseg v0.2.0)
 
 MIT License
 
@@ -7892,7 +7573,7 @@ THE SOFTWARE
 ---
 
 MIT License
-(alecthomas/repr 20180818-snapshot-117648cd, dave/goqu v9.18.0, github.com/gobuffalo/logger v1.0.6, github.com/gobuffalo/packd 1.0.1, Go Testify v1.8.2, go-playground-universal-translator v0.18.1, go-playground/assert v2.2.0, go-playground/locales v0.14.1, go-test/deep v1.1.0, holoplot/go-avahi v1.0.1, kyokomi/emoji v2.2.12, leodido/go-urn v1.2.2, lukechampine/uint128 v1.2.0, mapstructure v1.5.0, mattn-go-colorable 0.1.13, mattn-go-isatty v0.0.17, mattn-go-sqlite3 v1.14.15, MichaelMure/go-term-markdown v0.1.4, MichaelMure/go-term-text v0.3.1, Microsoft-go-winio v0.6.0, PerformLine/go-stockutil v1.9.3, sql-migrate v1.3.0, sqlx v1.3.5, stretchr/objx v0.5.0, tevino/abool v2.1.0, yaml for Go v3.0.1, yuin-gopher-lua 20220504-snapshot-65819353)
+(alecthomas/repr 20180818-snapshot-117648cd, dave/goqu v9.18.0, github.com/gobuffalo/logger v1.0.6, github.com/gobuffalo/packd 1.0.1, go humanize 1.0.1, Go Testify v1.8.2, go-playground-universal-translator v0.18.1, go-playground/assert v2.2.0, go-playground/locales v0.14.1, go-test/deep v1.1.0, goconvey v1.8.1, holoplot/go-avahi v1.0.1, kyokomi/emoji v2.2.12, leodido/go-urn v1.2.2, lukechampine/uint128 v1.2.0, mapstructure v1.5.0, mattn-go-colorable 0.1.13, mattn-go-isatty v0.0.17, mattn-go-runewidth v0.0.14, mattn-go-sqlite3 v1.14.15, MichaelMure/go-term-markdown v0.1.4, MichaelMure/go-term-text v0.3.1, Microsoft-go-winio v0.6.1, PerformLine/go-stockutil v1.9.3, schollz/progressbar v3.13.1, sergi/go-diff 1.3.1, smartystreets-assertions v1.15.1, sql-migrate v1.3.0, sqlx v1.3.5, stretchr/objx v0.5.0, tevino/abool v2.1.0, yaml for Go v3.0.1, yuin-gopher-lua v1.1.0)
 
 The MIT License
 ===============
@@ -8888,7 +8569,7 @@ the following restrictions:
 
 Copyright 2023
 
-[HomeSmart/Node.js : 2.411]
+[HomeSmart/Node.js : master]
 
 
 Components: 
