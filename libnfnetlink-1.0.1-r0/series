@@ -1,0 +1,6 @@
+0001-build-resolve-automake-1.12-warnings.patch -p1
+0002-src-get-source-code-license-header-in-sync-with-curr.patch -p1
+0003-configure-uclinux-is-also-linux.patch -p1
+0004-libnfnetlink-initialize-attribute-padding-to-resolve.patch -p1
+0005-include-Sync-with-kernel-headers.patch -p1
+0006-src-Use-stdint-types-everywhere.patch -p1
