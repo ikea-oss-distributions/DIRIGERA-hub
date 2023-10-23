@@ -6076,6 +6076,8 @@ eliukblau/pixterm 20191210-snapshot-9fb6cf8c : Mozilla Public License 2.0
 errwrap v1.0.0 : Mozilla Public License 2.0
 errwrap v1.1.0 : Mozilla Public License 2.0
 exp 20230905-snapshot-92128663 : BSD 3-clause "New" or "Revised" License
+fatih-color 1.14.1 : (MIT License AND BSD 3-clause "New" or "Revised" License)
+fatih-color 1.15.0 : (MIT License AND BSD 3-clause "New" or "Revised" License)
 fatih-color v1.12.0 : MIT License
 fatih-color v1.13.0 : MIT License
 fatih/structs v1.1.0 : MIT License
@@ -6930,7 +6932,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 ---
 
 BSD 3-clause "New" or "Revised" License
-(bigfft 20200410-snapshot-eec4a21b, DATA-DOG-go-sqlmock v1.5.0, exp 20230905-snapshot-92128663, gitlab.com/cznic/cc v3.40.0, gitlab.com/cznic/ccgo v3.16.13, gitlab.com/cznic/ccorpus v1.11.6, gitlab.com/cznic/httpfs v1.0.6, gitlab.com/cznic/libc v1.22.2, gitlab.com/cznic/mathutil v1.5.0, gitlab.com/cznic/memory v1.4.0, gitlab.com/cznic/opt v0.1.3, gitlab.com/cznic/sqlite v1.20.3, gitlab.com/cznic/strutil v1.1.3, gitlab.com/cznic/tcl v1.15.0, gitlab.com/cznic/token v1.0.1, gitlab.com/cznic/z v1.7.0, Golang Protobuf v1.31.0, golang.org/x/crypto 20221011-snapshot-56aed061, golang.org/x/crypto v0.13.0, golang.org/x/crypto v0.7.0, golang.org/x/image v0.12.0, golang.org/x/mod v0.12.0, golang.org/x/net v0.15.0, golang.org/x/sync v0.3.0, golang.org/x/sys 20200903-snapshot-eff7692f, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys v0.12.0, golang.org/x/sys v0.6.0, golang.org/x/term v0.12.0, golang.org/x/term v0.6.0, golang.org/x/time v0.3.0, golang.org/x/tools v0.12.0, golang/text v0.13.0, golang/text v0.6.0, google/go-cmp v0.5.9, hybridgroup/ble 20220920-snapshot-9a45bebf, mattn-go-colorable 0.1.13)
+(bigfft 20200410-snapshot-eec4a21b, DATA-DOG-go-sqlmock v1.5.0, exp 20230905-snapshot-92128663, fatih-color 1.14.1, fatih-color 1.15.0, gitlab.com/cznic/cc v3.40.0, gitlab.com/cznic/ccgo v3.16.13, gitlab.com/cznic/ccorpus v1.11.6, gitlab.com/cznic/httpfs v1.0.6, gitlab.com/cznic/libc v1.22.2, gitlab.com/cznic/mathutil v1.5.0, gitlab.com/cznic/memory v1.4.0, gitlab.com/cznic/opt v0.1.3, gitlab.com/cznic/sqlite v1.20.3, gitlab.com/cznic/strutil v1.1.3, gitlab.com/cznic/tcl v1.15.0, gitlab.com/cznic/token v1.0.1, gitlab.com/cznic/z v1.7.0, Golang Protobuf v1.31.0, golang.org/x/crypto 20221011-snapshot-56aed061, golang.org/x/crypto v0.13.0, golang.org/x/crypto v0.7.0, golang.org/x/image v0.12.0, golang.org/x/mod v0.12.0, golang.org/x/net v0.15.0, golang.org/x/sync v0.3.0, golang.org/x/sys 20200903-snapshot-eff7692f, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys v0.12.0, golang.org/x/sys v0.6.0, golang.org/x/term v0.12.0, golang.org/x/term v0.6.0, golang.org/x/time v0.3.0, golang.org/x/tools v0.12.0, golang/text v0.13.0, golang/text v0.6.0, google/go-cmp v0.5.9, hybridgroup/ble 20220920-snapshot-9a45bebf, mattn-go-colorable 0.1.13)
 
 Copyright (c) <YEAR>, <OWNER>
 All rights reserved.
@@ -7897,7 +7899,7 @@ THE SOFTWARE
 ---
 
 MIT License
-(alecthomas/repr 20180818-snapshot-117648cd, dave/goqu v9.18.0, github.com/gobuffalo/logger v1.0.6, github.com/gobuffalo/packd 1.0.1, go humanize 1.0.1, Go Testify v1.8.2, go-playground-universal-translator v0.18.1, go-playground/assert v2.2.0, go-playground/locales v0.14.1, go-test/deep v1.1.0, goconvey v1.8.1, holoplot/go-avahi v1.0.1, kyokomi/emoji v2.2.12, leodido/go-urn v1.2.2, lukechampine/uint128 v1.2.0, mapstructure v1.5.0, mattn-go-colorable 0.1.13, mattn-go-isatty v0.0.17, mattn-go-runewidth v0.0.14, mattn-go-sqlite3 v1.14.15, MichaelMure/go-term-markdown v0.1.4, MichaelMure/go-term-text v0.3.1, Microsoft-go-winio v0.6.1, PerformLine/go-stockutil v1.9.3, schollz/progressbar v3.13.1, sergi/go-diff 1.3.1, smartystreets-assertions v1.15.1, sql-migrate v1.3.0, sqlx v1.3.5, stretchr/objx v0.5.0, tevino/abool v2.1.0, yaml for Go v3.0.1, yuin-gopher-lua v1.1.0)
+(alecthomas/repr 20180818-snapshot-117648cd, dave/goqu v9.18.0, fatih-color 1.14.1, fatih-color 1.15.0, github.com/gobuffalo/logger v1.0.6, github.com/gobuffalo/packd 1.0.1, go humanize 1.0.1, Go Testify v1.8.2, go-playground-universal-translator v0.18.1, go-playground/assert v2.2.0, go-playground/locales v0.14.1, go-test/deep v1.1.0, goconvey v1.8.1, holoplot/go-avahi v1.0.1, kyokomi/emoji v2.2.12, leodido/go-urn v1.2.2, lukechampine/uint128 v1.2.0, mapstructure v1.5.0, mattn-go-colorable 0.1.13, mattn-go-isatty v0.0.17, mattn-go-runewidth v0.0.14, mattn-go-sqlite3 v1.14.15, MichaelMure/go-term-markdown v0.1.4, MichaelMure/go-term-text v0.3.1, Microsoft-go-winio v0.6.1, PerformLine/go-stockutil v1.9.3, schollz/progressbar v3.13.1, sergi/go-diff 1.3.1, smartystreets-assertions v1.15.1, sql-migrate v1.3.0, sqlx v1.3.5, stretchr/objx v0.5.0, tevino/abool v2.1.0, yaml for Go v3.0.1, yuin-gopher-lua v1.1.0)
 
 The MIT License
 ===============
