@@ -1243,6 +1243,7 @@ base-passwd 3.5.29 : GNU General Public License v2.0 or later
 besser82/libxcrypt 4.4.15 : GNU Lesser General Public License v2.1 only
 brotli v1.0.7 : MIT License
 busybox 1.31.1 : (Bzip2 License AND GNU General Public License v2.0 only)
+c-ares 1.19.0 : MIT License
 curl 7.85.0 : curl License
 D-Bus 1.12.20 : (GNU General Public License v2.0 or later OR Academic Free License v2.1)
 devmem2 1.0 : GNU General Public License v2.0 or later
@@ -1276,6 +1277,7 @@ memtester 4.6.0 : GNU General Public License v2.0 only
 mmc-utils 0.1 : GNU General Public License v2.0 or later
 Mosquitto 1.6.10 : (Eclipse Distribution License - v 1.0 OR Eclipse Public License 1.0)
 Netlink Protocol Library Suite (libnl) 3.5.0 : GNU Lesser General Public License v2.1 only
+nodejs 18.14.2 : (MIT License AND BSD 2-clause "Simplified" License AND ISC License AND Artistic License 2.0 AND Apache License 2.0 AND BSD 3-clause "New" or "Revised" License)
 OpenSSL 1.1.1l : (SSLeay License AND OpenSSL License)
 opkg 0.4.2 : GNU General Public License v2.0 or later
 paho.mqtt.c v1.3.2 : (BSD 3-clause "New" or "Revised" License OR Eclipse Public License 2.0)
@@ -1457,7 +1459,7 @@ interfere with or be responsible for such uses by You.
 ---
 
 Apache License 2.0
-(fluentbit 1.9.6)
+(fluentbit 1.9.6, nodejs 18.14.2)
 
 Apache License
 Version 2.0, January 2004
@@ -1771,8 +1773,191 @@ The End
 
 ---
 
+Artistic License 2.0
+(nodejs 18.14.2)
+
+Artistic License 2.0
+====================
+
+Copyright (c) 2000-2006, The Perl Foundation.
+
+Everyone is permitted to copy and distribute verbatim copies of this license
+document, but changing it is not allowed.
+
+
+Preamble
+
+This license establishes the terms under which a given free software Package may
+be copied, modified, distributed, and/or redistributed. The intent is that the
+Copyright Holder maintains some artistic control over the development of that
+Package while still keeping the Package available as open source and free
+software.
+
+You are always permitted to make arrangements wholly outside of this license
+directly with the Copyright Holder of a given Package. If the terms of this
+license do not permit the full use that you propose to make of the Package, you
+should contact the Copyright Holder and seek a different licensing arrangement.
+
+
+Definitions
+
+"Copyright Holder" means the individual(s) or organization(s) named in the
+copyright notice for the entire Package.
+
+"Contributor" means any party that has contributed code or other material to the
+Package, in accordance with the Copyright Holder's procedures.
+
+"You" and "your" means any person who would like to copy, distribute, or modify
+the Package.
+
+"Package" means the collection of files distributed by the Copyright Holder, and
+derivatives of that collection and/or of those files. A given Package may consist
+of either the Standard Version, or a Modified Version.
+
+"Distribute" means providing a copy of the Package or making it accessible to
+anyone else, or in the case of a company or organization, to others outside of
+your company or organization.
+
+"Distributor Fee" means any fee that you charge for Distributing this Package or
+providing support for this Package to another party. It does not mean licensing
+fees.
+
+"Standard Version" refers to the Package if it has not been modified, or has been
+modified only in ways explicitly requested by the Copyright Holder.
+
+"Modified Version" means the Package, if it has been changed, and such changes
+were not explicitly requested by the Copyright Holder.
+
+"Original License" means this Artistic License as Distributed with the Standard
+Version of the Package, in its current version or as it may be modified by The
+Perl Foundation in the future.
+
+"Source" form means the source code, documentation source, and configuration
+files for the Package.
+
+"Compiled" form means the compiled bytecode, object code, binary, or any other
+form resulting from mechanical transformation or translation of the Source form.
+
+
+Permission for Use and Modification Without Distribution
+
+(1) You are permitted to use the Standard Version and create and use Modified
+Versions for any purpose without restriction, provided that you do not Distribute
+the Modified Version.
+
+
+Permissions for Redistribution of the Standard Version
+
+(2) You may Distribute verbatim copies of the Source form of the Standard Version
+of this Package in any medium without restriction, either gratis or for a
+Distributor Fee, provided that you duplicate all of the original copyright
+notices and associated disclaimers. At your discretion, such verbatim copies may
+or may not include a Compiled form of the Package.
+
+(3) You may apply any bug fixes, portability changes, and other modifications
+made available from the Copyright Holder. The resulting Package will still be
+considered the Standard Version, and as such will be subject to the Original
+License.
+
+
+Distribution of Modified Versions of the Package as Source
+
+(4) You may Distribute your Modified Version as Source (either gratis or for a
+Distributor Fee, and with or without a Compiled form of the Modified Version)
+provided that you clearly document how it differs from the Standard Version,
+including, but not limited to, documenting any non-standard features,
+executables, or modules, and provided that you do at least ONE of the following:
+
+(a) make the Modified Version available to the Copyright Holder of the Standard
+Version, under the Original License, so that the Copyright Holder may include
+your modifications in the Standard Version.
+(b) ensure that installation of your Modified Version does not prevent the user
+installing or running the Standard Version. In addition, the Modified Version
+must bear a name that is different from the name of the Standard Version.
+(c) allow anyone who receives a copy of the Modified Version to make the Source
+form of the Modified Version available to others under
+(i) the Original License or
+(ii) a license that permits the licensee to freely copy, modify and redistribute
+the Modified Version using the same licensing terms that apply to the copy that
+the licensee received, and requires that the Source form of the Modified Version,
+and of any works derived from it, be made freely available in that license fees
+are prohibited but Distributor Fees are allowed.
+Distribution of Compiled Forms of the Standard Version or Modified Versions
+without the Source
+
+(5) You may Distribute Compiled forms of the Standard Version without the Source,
+provided that you include complete instructions on how to get the Source of the
+Standard Version. Such instructions must be valid at the time of your
+distribution. If these instructions, at any time while you are carrying out such
+distribution, become invalid, you must provide new instructions on demand or
+cease further distribution. If you provide valid instructions or cease
+distribution within thirty days after you become aware that the instructions are
+invalid, then you do not forfeit any of your rights under this license.
+
+(6) You may Distribute a Modified Version in Compiled form without the Source,
+provided that you comply with Section 4 with respect to the Source of the
+Modified Version.
+
+
+Aggregating or Linking the Package
+
+(7) You may aggregate the Package (either the Standard Version or Modified
+Version) with other packages and Distribute the resulting aggregation provided
+that you do not charge a licensing fee for the Package. Distributor Fees are
+permitted, and licensing fees for other components in the aggregation are
+permitted. The terms of this license apply to the use and Distribution of the
+Standard or Modified Versions as included in the aggregation.
+
+(8) You are permitted to link Modified and Standard Versions with other works, to
+embed the Package in a larger work of your own, or to build stand-alone binary or
+bytecode versions of applications that include the Package, and Distribute the
+result without restriction, provided the result does not expose a direct
+interface to the Package.
+
+
+Items That are Not Considered Part of a Modified Version
+
+(9) Works (including, but not limited to, modules and scripts) that merely extend
+or make use of the Package, do not, by themselves, cause the Package to be a
+Modified Version. In addition, such works are not considered parts of the Package
+itself, and are not subject to the terms of this license.
+
+
+General Provisions
+
+(10) Any use, modification, and distribution of the Standard or Modified Versions
+is governed by this Artistic License. By using, modifying or distributing the
+Package, you accept this license. Do not use, modify, or distribute the Package,
+if you do not accept this license.
+
+(11) If your Modified Version has been derived from a Modified Version made by
+someone other than you, you are nevertheless required to ensure that your
+Modified Version complies with the requirements of this license.
+
+(12) This license does not grant you the right to use any trademark, service
+mark, tradename, or logo of the Copyright Holder.
+
+(13) This license includes the non-exclusive, worldwide, free-of-charge patent
+license to make, have made, use, offer to sell, sell, import and otherwise
+transfer the Package with respect to any patent claims licensable by the
+Copyright Holder that are necessarily infringed by the Package. If you institute
+patent litigation (including a cross-claim or counterclaim) against any party
+alleging that the Package constitutes direct or contributory patent infringement,
+then this Artistic License to you shall terminate on the date that such
+litigation is filed.
+
+(14) Disclaimer of Warranty: THE PACKAGE IS PROVIDED BY THE COPYRIGHT HOLDER AND
+CONTRIBUTORS "AS IS' AND WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES. THE IMPLIED
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR
+NON-INFRINGEMENT ARE DISCLAIMED TO THE EXTENT PERMITTED BY YOUR LOCAL LAW. UNLESS
+REQUIRED BY LAW, NO COPYRIGHT HOLDER OR CONTRIBUTOR WILL BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING IN ANY WAY OUT OF
+THE USE OF THE PACKAGE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+---
+
 BSD 2-clause "Simplified" License
-(iw 5.4)
+(iw 5.4, nodejs 18.14.2)
 
 BSD Two Clause License
 ======================
@@ -1894,7 +2079,7 @@ Redistribution and use in source and binary forms, with or without
 ---
 
 BSD 3-clause "New" or "Revised" License
-(e2fsprogs 1.45.7, hostapd 2.9, libcap 2.32, paho.mqtt.c v1.3.2, PCRE 8.44)
+(e2fsprogs 1.45.7, hostapd 2.9, libcap 2.32, nodejs 18.14.2, paho.mqtt.c v1.3.2, PCRE 8.44)
 
 Copyright (c) <YEAR>, <OWNER>
 All rights reserved.
@@ -5661,7 +5846,7 @@ their respective owners.
 ---
 
 ISC License
-(sudo 1.9.13p2, wireless-regdb 2021.08.28)
+(nodejs 18.14.2, sudo 1.9.13p2, wireless-regdb 2021.08.28)
 
 ISC License (ISCL)
 ==================
@@ -5758,7 +5943,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
 ---
 
 MIT License
-(e2fsprogs 1.45.7, jansson 2.13.1, shadow-securetty 4.6, volatile-binds 1.0)
+(c-ares 1.19.0, e2fsprogs 1.45.7, jansson 2.13.1, nodejs 18.14.2, shadow-securetty 4.6, volatile-binds 1.0)
 
 The MIT License
 ===============
@@ -6088,6 +6273,7 @@ golang/text v0.6.0 : BSD 3-clause "New" or "Revised" License
 gomarkdown/markdown 20230922-snapshot-5421fefb : BSD 2-clause "Simplified" License
 google/go-cmp v0.5.9 : BSD 3-clause "New" or "Revised" License
 google/uuid v1.3.0 : BSD 3-clause "New" or "Revised" License
+google/uuid v1.4.0 : BSD 3-clause "New" or "Revised" License
 gopherjs v1.17.2 : BSD 2-clause "Simplified" License
 gorilla/mux v1.8.0 : BSD 3-clause "New" or "Revised" License
 gorilla/schema v1.2.0 : BSD 3-clause "New" or "Revised" License
@@ -6105,9 +6291,11 @@ jtolds-gls v4.20.0 : MIT License
 karrick/godirwalk v1.16.1 : BSD 2-clause "Simplified" License
 kr/pretty v0.3.0 : MIT License
 kubernetes/apimachinery v0.23.4 : Apache License 2.0
+kubernetes/apimachinery v0.28.3 : Apache License 2.0
 kyokomi/emoji v2.2.12 : MIT License
 kyokomi/emoji v2.2.8 : MIT License
 leodido/go-urn v1.2.2 : MIT License
+leodido/go-urn v1.2.4 : MIT License
 lukechampine/uint128 v1.2.0 : MIT License
 mapstructure v1.5.0 : MIT License
 markbates/errx v1.1.0 : MIT License
@@ -6130,9 +6318,11 @@ mohae/deepcopy 20170929-snapshot-c48cc78d : MIT License
 morikuni/aec v1.0.0 : MIT License
 mymysql v1.5.4 : BSD 3-clause "New" or "Revised" License
 neurosnap/sentences v1.0.6 : MIT License
+neurosnap/sentences v1.0.7 : MIT License
 opencontainers/go-digest 1.0.0 : Apache License 2.0
 opencontainers/image-spec v1.0.2 : Apache License 2.0
 PerformLine/go-stockutil v1.9.3 : MIT License
+PerformLine/go-stockutil v1.9.5 : MIT License
 pkg/errors v0.9.1 : BSD 2-clause "Simplified" License
 pmezard-go-difflib 1.0.0 : BSD 3-clause "New" or "Revised" License
 pq v1.10.4 : MIT License
@@ -6143,6 +6333,7 @@ ryanuber-go-glob v1.0.0 : MIT License
 schollz/progressbar v3.13.1 : MIT License
 segmentio/textio v1.2.0 : MIT License
 sergi/go-diff 1.3.1 : (MIT License AND Apache License 2.0)
+sigs.k8s.io/json 20221116-snapshot-bc3834ca : (Apache License 2.0 AND BSD 3-clause "New" or "Revised" License)
 sixdouglas/suncalc 20210131-snapshot-475bb71c : 
 smartystreets-assertions v1.15.1 : MIT License
 spacemonkeygo-spacelog 20180419-snapshot-2296661a : Apache License 2.0
@@ -6159,7 +6350,7 @@ yuin-gopher-lua v1.1.0 : MIT License
 Licenses: 
 
 Apache License 2.0
-(aws/aws-sdk-go-v2 aws/protocol/eventstream/v1.4.10, aws/aws-sdk-go-v2 config/v1.18.19, aws/aws-sdk-go-v2 credentials/v1.13.18, aws/aws-sdk-go-v2 feature/ec2/imds/v1.13.1, aws/aws-sdk-go-v2 feature/s3/manager/v1.11.59, aws/aws-sdk-go-v2 internal/configsources/v1.1.31, aws/aws-sdk-go-v2 internal/ini/v1.3.32, aws/aws-sdk-go-v2 internal/v4a/v1.0.23, aws/aws-sdk-go-v2 service/internal/accept-encoding/v1.9.11, aws/aws-sdk-go-v2 service/internal/checksum/v1.1.26, aws/aws-sdk-go-v2 service/internal/presigned-url/v1.9.25, aws/aws-sdk-go-v2 service/internal/s3shared/v1.14.0, aws/aws-sdk-go-v2 service/s3/v1.31.0, aws/aws-sdk-go-v2 service/sso/v1.12.6, aws/aws-sdk-go-v2 service/ssooidc/v1.14.6, aws/aws-sdk-go-v2 service/sts/v1.18.7, aws/aws-sdk-go-v2 v1.17.7, docker v23.0.1, docker-go-units v0.5.0, docker-registry 2.8.1, github.com/aws/smithy-go v1.13.5, go-systemd v22.4.0, go-systemd v22.5.0, golang-github-docker-go-connections-dev 0.4.0, gotest.tools v3.4.0, jmespath-go-jmespath internal/testify/v1.5.1, jmespath-go-jmespath v0.4.0, kubernetes/apimachinery v0.23.4, mitchellh-colorstring 20190613-snapshot-d06e56a5, opencontainers/go-digest 1.0.0, opencontainers/image-spec v1.0.2, sergi/go-diff 1.3.1, spacemonkeygo-spacelog 20180419-snapshot-2296661a, yaml for Go 20200512-snapshot-9f266ea9, yaml for Go v2.4.0, yaml for Go v3.0.1)
+(aws/aws-sdk-go-v2 aws/protocol/eventstream/v1.4.10, aws/aws-sdk-go-v2 config/v1.18.19, aws/aws-sdk-go-v2 credentials/v1.13.18, aws/aws-sdk-go-v2 feature/ec2/imds/v1.13.1, aws/aws-sdk-go-v2 feature/s3/manager/v1.11.59, aws/aws-sdk-go-v2 internal/configsources/v1.1.31, aws/aws-sdk-go-v2 internal/ini/v1.3.32, aws/aws-sdk-go-v2 internal/v4a/v1.0.23, aws/aws-sdk-go-v2 service/internal/accept-encoding/v1.9.11, aws/aws-sdk-go-v2 service/internal/checksum/v1.1.26, aws/aws-sdk-go-v2 service/internal/presigned-url/v1.9.25, aws/aws-sdk-go-v2 service/internal/s3shared/v1.14.0, aws/aws-sdk-go-v2 service/s3/v1.31.0, aws/aws-sdk-go-v2 service/sso/v1.12.6, aws/aws-sdk-go-v2 service/ssooidc/v1.14.6, aws/aws-sdk-go-v2 service/sts/v1.18.7, aws/aws-sdk-go-v2 v1.17.7, docker v23.0.1, docker-go-units v0.5.0, docker-registry 2.8.1, github.com/aws/smithy-go v1.13.5, go-systemd v22.4.0, go-systemd v22.5.0, golang-github-docker-go-connections-dev 0.4.0, gotest.tools v3.4.0, jmespath-go-jmespath internal/testify/v1.5.1, jmespath-go-jmespath v0.4.0, kubernetes/apimachinery v0.23.4, kubernetes/apimachinery v0.28.3, mitchellh-colorstring 20190613-snapshot-d06e56a5, opencontainers/go-digest 1.0.0, opencontainers/image-spec v1.0.2, sergi/go-diff 1.3.1, sigs.k8s.io/json 20221116-snapshot-bc3834ca, spacemonkeygo-spacelog 20180419-snapshot-2296661a, yaml for Go 20200512-snapshot-9f266ea9, yaml for Go v2.4.0, yaml for Go v3.0.1)
 
 Apache License
 Version 2.0, January 2004
@@ -6863,7 +7054,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 ---
 
 BSD 3-clause "New" or "Revised" License
-(bigfft 20200410-snapshot-eec4a21b, DATA-DOG-go-sqlmock v1.5.0, exp 20230905-snapshot-92128663, fatih-color 1.14.1, fatih-color 1.15.0, gitlab.com/cznic/cc v3.40.0, gitlab.com/cznic/ccgo v3.16.13, gitlab.com/cznic/ccorpus v1.11.6, gitlab.com/cznic/httpfs v1.0.6, gitlab.com/cznic/libc v1.22.2, gitlab.com/cznic/mathutil v1.5.0, gitlab.com/cznic/memory v1.4.0, gitlab.com/cznic/opt v0.1.3, gitlab.com/cznic/sqlite v1.20.3, gitlab.com/cznic/strutil v1.1.3, gitlab.com/cznic/tcl v1.15.0, gitlab.com/cznic/token v1.0.1, gitlab.com/cznic/z v1.7.0, Golang Protobuf v1.31.0, golang.org/x/crypto 20221011-snapshot-56aed061, golang.org/x/crypto v0.13.0, golang.org/x/crypto v0.7.0, golang.org/x/image v0.12.0, golang.org/x/mod v0.12.0, golang.org/x/net v0.15.0, golang.org/x/sync v0.3.0, golang.org/x/sys 20200903-snapshot-eff7692f, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys v0.12.0, golang.org/x/sys v0.6.0, golang.org/x/term v0.12.0, golang.org/x/term v0.6.0, golang.org/x/time v0.3.0, golang.org/x/tools v0.12.0, golang/text v0.13.0, golang/text v0.6.0, google/go-cmp v0.5.9, hybridgroup/ble 20220920-snapshot-9a45bebf, mattn-go-colorable 0.1.13)
+(bigfft 20200410-snapshot-eec4a21b, DATA-DOG-go-sqlmock v1.5.0, exp 20230905-snapshot-92128663, fatih-color 1.14.1, fatih-color 1.15.0, gitlab.com/cznic/cc v3.40.0, gitlab.com/cznic/ccgo v3.16.13, gitlab.com/cznic/ccorpus v1.11.6, gitlab.com/cznic/httpfs v1.0.6, gitlab.com/cznic/libc v1.22.2, gitlab.com/cznic/mathutil v1.5.0, gitlab.com/cznic/memory v1.4.0, gitlab.com/cznic/opt v0.1.3, gitlab.com/cznic/sqlite v1.20.3, gitlab.com/cznic/strutil v1.1.3, gitlab.com/cznic/tcl v1.15.0, gitlab.com/cznic/token v1.0.1, gitlab.com/cznic/z v1.7.0, Golang Protobuf v1.31.0, golang.org/x/crypto 20221011-snapshot-56aed061, golang.org/x/crypto v0.13.0, golang.org/x/crypto v0.7.0, golang.org/x/image v0.12.0, golang.org/x/mod v0.12.0, golang.org/x/net v0.15.0, golang.org/x/sync v0.3.0, golang.org/x/sys 20200903-snapshot-eff7692f, golang.org/x/sys 20210614-snapshot-665e8c73, golang.org/x/sys v0.12.0, golang.org/x/sys v0.6.0, golang.org/x/term v0.12.0, golang.org/x/term v0.6.0, golang.org/x/time v0.3.0, golang.org/x/tools v0.12.0, golang/text v0.13.0, golang/text v0.6.0, google/go-cmp v0.5.9, google/uuid v1.4.0, hybridgroup/ble 20220920-snapshot-9a45bebf, mattn-go-colorable 0.1.13, sigs.k8s.io/json 20221116-snapshot-bc3834ca)
 
 Copyright (c) <YEAR>, <OWNER>
 All rights reserved.
@@ -7830,7 +8021,7 @@ THE SOFTWARE
 ---
 
 MIT License
-(alecthomas/repr 20180818-snapshot-117648cd, dave/goqu v9.18.0, fatih-color 1.14.1, fatih-color 1.15.0, github.com/gobuffalo/logger v1.0.6, github.com/gobuffalo/packd 1.0.1, go humanize 1.0.1, Go Testify v1.8.2, go-playground-universal-translator v0.18.1, go-playground/assert v2.2.0, go-playground/locales v0.14.1, go-test/deep v1.1.0, goconvey v1.8.1, holoplot/go-avahi v1.0.1, kyokomi/emoji v2.2.12, leodido/go-urn v1.2.2, lukechampine/uint128 v1.2.0, mapstructure v1.5.0, mattn-go-colorable 0.1.13, mattn-go-isatty v0.0.17, mattn-go-runewidth v0.0.14, mattn-go-sqlite3 v1.14.15, MichaelMure/go-term-markdown v0.1.4, MichaelMure/go-term-text v0.3.1, Microsoft-go-winio v0.6.1, PerformLine/go-stockutil v1.9.3, schollz/progressbar v3.13.1, sergi/go-diff 1.3.1, smartystreets-assertions v1.15.1, sql-migrate v1.3.0, sqlx v1.3.5, stretchr/objx v0.5.0, tevino/abool v2.1.0, yaml for Go v3.0.1, yuin-gopher-lua v1.1.0)
+(alecthomas/repr 20180818-snapshot-117648cd, dave/goqu v9.18.0, fatih-color 1.14.1, fatih-color 1.15.0, github.com/gobuffalo/logger v1.0.6, github.com/gobuffalo/packd 1.0.1, go humanize 1.0.1, Go Testify v1.8.2, go-playground-universal-translator v0.18.1, go-playground/assert v2.2.0, go-playground/locales v0.14.1, go-test/deep v1.1.0, goconvey v1.8.1, holoplot/go-avahi v1.0.1, kyokomi/emoji v2.2.12, leodido/go-urn v1.2.2, leodido/go-urn v1.2.4, lukechampine/uint128 v1.2.0, mapstructure v1.5.0, mattn-go-colorable 0.1.13, mattn-go-isatty v0.0.17, mattn-go-runewidth v0.0.14, mattn-go-sqlite3 v1.14.15, MichaelMure/go-term-markdown v0.1.4, MichaelMure/go-term-text v0.3.1, Microsoft-go-winio v0.6.1, PerformLine/go-stockutil v1.9.3, PerformLine/go-stockutil v1.9.5, schollz/progressbar v3.13.1, sergi/go-diff 1.3.1, smartystreets-assertions v1.15.1, sql-migrate v1.3.0, sqlx v1.3.5, stretchr/objx v0.5.0, tevino/abool v2.1.0, yaml for Go v3.0.1, yuin-gopher-lua v1.1.0)
 
 The MIT License
 ===============
@@ -8315,7 +8506,7 @@ SOFTWARE
 ---
 
 MIT License
-(neurosnap/sentences v1.0.6)
+(neurosnap/sentences v1.0.6, neurosnap/sentences v1.0.7)
 
 The MIT License (MIT)
 =====================
