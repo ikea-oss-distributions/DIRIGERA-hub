@@ -1132,9 +1132,9 @@ Copyright 2023
 
 Components:
 Amazon FreeRTOS POSIX V1.1.0 : (MIT License)
-CMSIS Core V5.1 : (BSD 3-clause "New" or "Revised" License AND Apache License 2.0)
+CMSIS Core V5.1 : (Apache License 2.0 AND BSD 3-clause "New" or "Revised" License)
 FreeRTOS Real Time Kernel V10.2.0 : (BSD 3-clause "New" or "Revised" License AND MIT License)
-open-amp 2020.10.0 : (BSD 3-clause "New" or "Revised" License AND BSD 2-clause "Simplified" License)
+open-amp 2020.10.0 : (BSD 2-clause "Simplified" License AND BSD 3-clause "New" or "Revised" License)
 STM32MP1xx HAL Driver V1.2.0 : BSD 3-clause "New" or "Revised" License
 
 Licenses: 
