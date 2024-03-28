@@ -1,6 +1,6 @@
-To Download the LFS files for version 2.556.101 please follow the instructions
+To Download the LFS files for version 2.560.000 please follow the instructions
 
-1. Clone the repository by running following command on terminal `git clone https://github.com/ikea-oss-distributions/DIRIGERA-hub-v2.556.101`
-2. Change directory `cd DIRIGERA-hub-v2.556.101`
+1. Clone the repository by running following command on terminal `git clone https://github.com/ikea-oss-distributions/DIRIGERA-hub-v2.560.000`
+2. Change directory `cd DIRIGERA-hub-v2.560.000`
 3. Initialize LFS: `git lfs install`
 4. Download the LFS files: `git lfs fetch --all`
