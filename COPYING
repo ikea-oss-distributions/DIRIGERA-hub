@@ -1,12 +1,12 @@
 ﻿Copyright 2024
 
-[HomeSmart/Bootchain : master]
+[HomeSmart/Bootchain : 2.615]
 
 
 Components:
-arm-trusted-firmware 2.4 : (zlib License AND (GNU General Public License v2.0 only OR BSD 3-clause "New" or "Revised" License) AND BSD 2-Clause FreeBSD License AND (GNU General Public License v2.0 or later OR BSD 3-clause "New" or "Revised" License) AND BSD 2-clause "Simplified" License AND MIT License AND ISC License AND BSD 3-clause "New" or "Revised" License AND (GNU General Public License v2.0 or later OR BSD 2-clause "Simplified" License))
+arm-trusted-firmware 2.4 : ((GNU General Public License v2.0 or later OR BSD 3-clause "New" or "Revised" License) AND (GNU General Public License v2.0 only OR BSD 3-clause "New" or "Revised" License) AND (GNU General Public License v2.0 or later OR BSD 2-clause "Simplified" License) AND BSD 2-clause "Simplified" License AND ISC License AND MIT License AND zlib License AND BSD 3-clause "New" or "Revised" License AND BSD 2-Clause FreeBSD License)
 mbed TLS 2.24.0 : (Apache License 2.0)
-optee_os 3.12.0 : (zlib License AND (GNU General Public License v2.0 only OR BSD 3-clause "New" or "Revised" License) AND GNU General Public License v2.0 only AND (BSD 3-clause "New" or "Revised" License OR GNU General Public License v2.0 or later) AND (GNU General Public License v2.0 or later OR BSD 3-clause "New" or "Revised" License) AND (GNU General Public License v2.0 only OR BSD 2-clause "Simplified" License) AND Boost Software License 1.0 AND BSD 2-clause "Simplified" License AND (BSD 2-clause "Simplified" License AND BSD 3-clause "New" or "Revised" License) AND ISC License AND (BSD 2-clause "Simplified" License AND CMU License) AND Apache License 2.0 AND BSD Source Code Attribution AND BSD 3-clause "New" or "Revised" License AND (GNU General Public License v2.0 or later OR BSD 2-clause "Simplified" License) AND (GNU General Public License v2.0 only OR MIT License))
+optee_os 3.12.0 : (GNU General Public License v2.0 only AND (GNU General Public License v2.0 or later OR BSD 3-clause "New" or "Revised" License) AND (BSD 2-clause "Simplified" License AND CMU License) AND (GNU General Public License v2.0 only OR BSD 3-clause "New" or "Revised" License) AND Apache License 2.0 AND BSD Source Code Attribution AND (GNU General Public License v2.0 or later OR BSD 2-clause "Simplified" License) AND Boost Software License 1.0 AND BSD 2-clause "Simplified" License AND ISC License AND (BSD 2-clause "Simplified" License AND BSD 3-clause "New" or "Revised" License) AND (GNU General Public License v2.0 only OR MIT License) AND zlib License AND (BSD 3-clause "New" or "Revised" License OR GNU General Public License v2.0 or later) AND BSD 3-clause "New" or "Revised" License AND (GNU General Public License v2.0 only OR BSD 2-clause "Simplified" License))
 U-Boot 2020.10 : GNU General Public License v2.0 or later
 
 Licenses: 
@@ -14,7 +14,7 @@ Licenses:
 -------------------------------------------
 
 Apache License 2.0
-(mbed TLS 2.24.0, optee_os 3.12.0)
+(optee_os 3.12.0, mbed TLS 2.24.0)
 
 
 
@@ -5834,7 +5834,7 @@ rights to redistribute these changes.
 ---
 
 BSD 2-clause "Simplified" License
-(arm-trusted-firmware 2.4, optee_os 3.12.0)
+(optee_os 3.12.0, arm-trusted-firmware 2.4)
 
 Copyright (C) 2014 David Gibson <david@gibson.dropbear.id.au>
 Copyright (C) 2018 embedded brains GmbH
@@ -5864,7 +5864,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 2-clause "Simplified" License
-(arm-trusted-firmware 2.4, optee_os 3.12.0)
+(optee_os 3.12.0, arm-trusted-firmware 2.4)
 
 Copyright (C) 2006 David Gibson, IBM Corporation.
 
@@ -5893,7 +5893,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 2-clause "Simplified" License
-(arm-trusted-firmware 2.4, optee_os 3.12.0)
+(optee_os 3.12.0, arm-trusted-firmware 2.4)
 
 Copyright (C) 2012 David Gibson, IBM Corporation.
 
@@ -5922,7 +5922,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 2-clause "Simplified" License
-(arm-trusted-firmware 2.4, optee_os 3.12.0)
+(optee_os 3.12.0, arm-trusted-firmware 2.4)
 
 Copyright (C) 2006 David Gibson, IBM Corporation.
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
@@ -5952,7 +5952,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 2-clause "Simplified" License
-(arm-trusted-firmware 2.4, optee_os 3.12.0)
+(optee_os 3.12.0, arm-trusted-firmware 2.4)
 
 Copyright (C) 2016 Free Electrons
 Copyright (C) 2016 NextThing Co.
@@ -6188,7 +6188,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(arm-trusted-firmware 2.4, optee_os 3.12.0)
+(optee_os 3.12.0, arm-trusted-firmware 2.4)
 
 Copyright (c) 2020, ARM Limited. All rights reserved.
 
@@ -6354,7 +6354,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(arm-trusted-firmware 2.4, optee_os 3.12.0)
+(optee_os 3.12.0, arm-trusted-firmware 2.4)
 
 Copyright (c) 2017-2020, STMicroelectronics - All Rights Reserved
 
@@ -6387,7 +6387,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(arm-trusted-firmware 2.4, optee_os 3.12.0)
+(optee_os 3.12.0, arm-trusted-firmware 2.4)
 
 Copyright (c) 2018-2020, STMicroelectronics - All Rights Reserved
 
@@ -6453,7 +6453,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(arm-trusted-firmware 2.4, optee_os 3.12.0)
+(optee_os 3.12.0, arm-trusted-firmware 2.4)
 
 Copyright (c) 2015-2019, Arm Limited and Contributors. All rights reserved.
 Copyright (c) 2019, Linaro Limited
@@ -6622,7 +6622,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(arm-trusted-firmware 2.4, optee_os 3.12.0)
+(optee_os 3.12.0, arm-trusted-firmware 2.4)
 
 Copyright (c) 2017-2018, ARM Limited and Contributors. All rights reserved.
 
@@ -6722,7 +6722,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(arm-trusted-firmware 2.4, optee_os 3.12.0)
+(optee_os 3.12.0, arm-trusted-firmware 2.4)
 
 Copyright (c) 2018, ARM Limited and Contributors. All rights reserved.
 
@@ -6789,7 +6789,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(arm-trusted-firmware 2.4, optee_os 3.12.0)
+(optee_os 3.12.0, arm-trusted-firmware 2.4)
 
 Copyright (c) 2018, STMicroelectronics - All Rights Reserved
 
@@ -7189,7 +7189,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(arm-trusted-firmware 2.4, optee_os 3.12.0)
+(optee_os 3.12.0, arm-trusted-firmware 2.4)
 
 Copyright (c) 2018-2019, STMicroelectronics - All Rights Reserved
 
@@ -7222,7 +7222,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(arm-trusted-firmware 2.4, optee_os 3.12.0)
+(optee_os 3.12.0, arm-trusted-firmware 2.4)
 
 Copyright (c) 2015-2019, Arm Limited and Contributors. All rights reserved.
 
@@ -14760,7 +14760,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(arm-trusted-firmware 2.4, optee_os 3.12.0)
+(optee_os 3.12.0, arm-trusted-firmware 2.4)
 
 Copyright (C) 2017, STMicroelectronics - All Rights Reserved
 
@@ -14793,7 +14793,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(arm-trusted-firmware 2.4, optee_os 3.12.0)
+(optee_os 3.12.0, arm-trusted-firmware 2.4)
 
 Copyright (C) STMicroelectronics 2017 - All Rights Reserved
 Author: Torgue Alexandre <alexandre.torgue@st.com> for STMicroelectronics.
@@ -15050,7 +15050,7 @@ rights to redistribute these changes.
 -------------------------------------------
 
 GNU General Public License v2.0 only
-(arm-trusted-firmware 2.4, optee_os 3.12.0)
+(optee_os 3.12.0, arm-trusted-firmware 2.4)
 
                     GNU GENERAL PUBLIC LICENSE
                        Version 2, June 1991
@@ -15396,7 +15396,7 @@ Public License instead of this License.
 -------------------------------------------
 
 GNU General Public License v2.0 or later
-(arm-trusted-firmware 2.4, optee_os 3.12.0, U-Boot 2020.10)
+(optee_os 3.12.0, U-Boot 2020.10, arm-trusted-firmware 2.4)
 
                     GNU GENERAL PUBLIC LICENSE
                        Version 2, June 1991
@@ -15837,7 +15837,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 ---
 
 zlib License
-(arm-trusted-firmware 2.4, optee_os 3.12.0)
+(optee_os 3.12.0, arm-trusted-firmware 2.4)
 
 Copyright (C) 1995-2017 Jean-loup Gailly and Mark Adler
 
@@ -15867,7 +15867,7 @@ Comments) 1950 to 1952 in the files http://tools.ietf.org/html/rfc1950
 
 Copyright 2024
 
-[HomeSmart/Ikeix/runtime : master]
+[HomeSmart/Ikeix/runtime : 2.615]
 
 
 Components:
@@ -23401,14 +23401,14 @@ zlib License
 
 Copyright 2024
 
-[HomeSmart/M4-firmware : master]
+[HomeSmart/M4-firmware : 2.615]
 
 
 Components:
 Amazon FreeRTOS POSIX V1.1.0 : (MIT License)
 CMSIS Core V5.1 : (BSD 3-clause "New" or "Revised" License AND Apache License 2.0)
 FreeRTOS Real Time Kernel V10.2.0 : (MIT License AND BSD 3-clause "New" or "Revised" License)
-open-amp 2020.10.0 : (BSD 3-clause "New" or "Revised" License AND BSD 2-clause "Simplified" License)
+open-amp 2020.10.0 : (BSD 2-clause "Simplified" License AND BSD 3-clause "New" or "Revised" License)
 STM32MP1xx HAL Driver V1.2.0 : BSD 3-clause "New" or "Revised" License
 
 Licenses: 
@@ -23659,7 +23659,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(STM32MP1xx HAL Driver V1.2.0, CMSIS Core V5.1)
+(CMSIS Core V5.1, STM32MP1xx HAL Driver V1.2.0)
 
 Copyright (c) 2019 STMicroelectronics.
 All rights reserved.</center></h2>
@@ -24506,7 +24506,7 @@ http://aws.amazon.com/freertos
 http://www.FreeRTOS.org
 
 Copyright 2024
-[HomeSmart/Go : master ]
+[HomeSmart/Go : 2.615 ]
 
 github.com/creack/pty v1.1.13 : MIT
 github.com/fatih/color v1.12.0 : MIT
@@ -25148,7 +25148,7 @@ Apache-2.0
 
 Copyright 2023
 
-[HomeSmart/Node.js : master]
+[HomeSmart/Node.js : 2.615]
 
 
 Components:
