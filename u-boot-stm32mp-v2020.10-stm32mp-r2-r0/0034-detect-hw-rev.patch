@@ -41,7 +41,7 @@ index eb3ad99575..e7a9ea3b2b 100644
 +			"env set rtc_vendor 0x3028;"                      \
 +		"fi;"                                                     \
 +		"if i2c probe 0x10; then "                                \
-+			"env set hw_conf 2;"                              \
++			"env set hw_conf ${board_hwrev};"                 \
 +		"else "                                                   \
 +			"env set hw_conf 1;"                              \
 +		"fi;"                                                     \
