@@ -11,6 +11,7 @@
 -A INPUT -p udp -m udp --dport 5353 -m conntrack --ctstate NEW -j ACCEPT
 -A INPUT -p udp -m udp --dport 5540 -m conntrack --ctstate NEW -j ACCEPT
 -A INPUT -p udp -m udp --dport 5541 -m conntrack --ctstate  NEW -j ACCEPT
+-A INPUT -p udp -m udp --dport 10000 -m conntrack --ctstate NEW -j ACCEPT
 -A INPUT -p udp -m udp --dport 49154 -m conntrack --ctstate NEW -j ACCEPT
 -A INPUT -p udp -m udp --dport 61631 -m conntrack --ctstate NEW -j ACCEPT
 -A INPUT -p tcp -m tcp --dport 8000 --tcp-flags FIN,SYN,RST,ACK SYN -m conntrack --ctstate NEW -j ACCEPT
