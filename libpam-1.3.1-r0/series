@@ -1,0 +1,4 @@
+libpam-xtests.patch -p1
+pam-security-abstract-securetty-handling.patch -p1
+pam-unix-nullok-secure.patch -p1
+crypt_configure.patch -p1

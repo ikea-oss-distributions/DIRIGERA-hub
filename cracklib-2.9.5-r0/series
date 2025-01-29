@@ -1,0 +1,3 @@
+0001-packlib.c-support-dictionary-byte-order-dependent.patch -p1
+0001-Apply-patch-to-fix-CVE-2016-6318.patch -p1
+0002-craklib-fix-testnum-and-teststr-failed.patch -p1
