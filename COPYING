@@ -4,9 +4,9 @@
 
 
 Components:
-arm-trusted-firmware 2.4 : ((GNU General Public License v2.0 or later OR BSD 3-clause "New" or "Revised" License) AND MIT License AND BSD 3-clause "New" or "Revised" License AND ISC License AND zlib License AND BSD 2-Clause FreeBSD License AND BSD 2-clause "Simplified" License AND (GNU General Public License v2.0 or later OR BSD 2-clause "Simplified" License) AND (GNU General Public License v2.0 only OR BSD 3-clause "New" or "Revised" License))
+arm-trusted-firmware 2.4 : ((GNU General Public License v2.0 or later OR BSD 2-clause "Simplified" License) AND BSD 2-clause "Simplified" License AND (GNU General Public License v2.0 or later OR BSD 3-clause "New" or "Revised" License) AND (GNU General Public License v2.0 only OR BSD 3-clause "New" or "Revised" License) AND zlib License AND BSD 2-Clause FreeBSD License AND ISC License AND BSD 3-clause "New" or "Revised" License AND MIT License)
 mbed TLS 2.24.0 : (Apache License 2.0)
-optee_os 3.12.0 : ((BSD 3-clause "New" or "Revised" License OR GNU General Public License v2.0 or later) AND Boost Software License 1.0 AND (GNU General Public License v2.0 or later OR BSD 3-clause "New" or "Revised" License) AND Apache License 2.0 AND (BSD 2-clause "Simplified" License AND CMU License) AND BSD 3-clause "New" or "Revised" License AND BSD Source Code Attribution AND GNU General Public License v2.0 only AND ISC License AND zlib License AND (BSD 2-clause "Simplified" License AND BSD 3-clause "New" or "Revised" License) AND (GNU General Public License v2.0 only OR MIT License) AND (GNU General Public License v2.0 only OR BSD 2-clause "Simplified" License) AND BSD 2-clause "Simplified" License AND (GNU General Public License v2.0 or later OR BSD 2-clause "Simplified" License) AND (GNU General Public License v2.0 only OR BSD 3-clause "New" or "Revised" License))
+optee_os 3.12.0 : ((GNU General Public License v2.0 or later OR BSD 2-clause "Simplified" License) AND BSD 2-clause "Simplified" License AND GNU General Public License v2.0 only AND (GNU General Public License v2.0 or later OR BSD 3-clause "New" or "Revised" License) AND Boost Software License 1.0 AND (BSD 2-clause "Simplified" License AND BSD 3-clause "New" or "Revised" License) AND BSD 3-clause "New" or "Revised" License AND BSD Source Code Attribution AND (GNU General Public License v2.0 only OR BSD 3-clause "New" or "Revised" License) AND (GNU General Public License v2.0 only OR MIT License) AND Apache License 2.0 AND zlib License AND (GNU General Public License v2.0 only OR BSD 2-clause "Simplified" License) AND ISC License AND (BSD 3-clause "New" or "Revised" License OR GNU General Public License v2.0 or later) AND (BSD 2-clause "Simplified" License AND CMU License))
 U-Boot 2020.10 : GNU General Public License v2.0 or later
 
 Licenses: 
@@ -5801,7 +5801,7 @@ POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 2-clause "Simplified" License
-(optee_os 3.12.0, arm-trusted-firmware 2.4)
+(arm-trusted-firmware 2.4, optee_os 3.12.0)
 
 Copyright (C) 2006 David Gibson, IBM Corporation.
 
@@ -5830,7 +5830,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 2-clause "Simplified" License
-(optee_os 3.12.0, arm-trusted-firmware 2.4)
+(arm-trusted-firmware 2.4, optee_os 3.12.0)
 
 Copyright (C) 2014 David Gibson <david@gibson.dropbear.id.au>
 Copyright (C) 2018 embedded brains GmbH
@@ -5860,7 +5860,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 2-clause "Simplified" License
-(optee_os 3.12.0, arm-trusted-firmware 2.4)
+(arm-trusted-firmware 2.4, optee_os 3.12.0)
 
 Copyright (C) 2012 David Gibson, IBM Corporation.
 
@@ -5889,7 +5889,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 2-clause "Simplified" License
-(optee_os 3.12.0, arm-trusted-firmware 2.4)
+(arm-trusted-firmware 2.4, optee_os 3.12.0)
 
 Copyright (C) 2016 Free Electrons
 Copyright (C) 2016 NextThing Co.
@@ -5919,7 +5919,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 2-clause "Simplified" License
-(optee_os 3.12.0, arm-trusted-firmware 2.4)
+(arm-trusted-firmware 2.4, optee_os 3.12.0)
 
 Copyright (C) 2006 David Gibson, IBM Corporation.
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
@@ -6273,7 +6273,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(optee_os 3.12.0, arm-trusted-firmware 2.4)
+(arm-trusted-firmware 2.4, optee_os 3.12.0)
 
 Copyright (c) 2017-2020, STMicroelectronics - All Rights Reserved
 
@@ -6339,7 +6339,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(optee_os 3.12.0, arm-trusted-firmware 2.4)
+(arm-trusted-firmware 2.4, optee_os 3.12.0)
 
 Copyright (c) 2018, STMicroelectronics - All Rights Reserved
 
@@ -6639,7 +6639,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(optee_os 3.12.0, arm-trusted-firmware 2.4)
+(arm-trusted-firmware 2.4, optee_os 3.12.0)
 
 Copyright (c) 2018, ARM Limited and Contributors. All rights reserved.
 
@@ -6706,7 +6706,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(optee_os 3.12.0, arm-trusted-firmware 2.4)
+(arm-trusted-firmware 2.4, optee_os 3.12.0)
 
 Copyright (c) 2017-2018, ARM Limited and Contributors. All rights reserved.
 
@@ -6839,7 +6839,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(optee_os 3.12.0, arm-trusted-firmware 2.4)
+(arm-trusted-firmware 2.4, optee_os 3.12.0)
 
 Copyright (c) 2018-2020, STMicroelectronics - All Rights Reserved
 
@@ -6905,7 +6905,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(optee_os 3.12.0, arm-trusted-firmware 2.4)
+(arm-trusted-firmware 2.4, optee_os 3.12.0)
 
 Copyright (c) 2015-2019, Arm Limited and Contributors. All rights reserved.
 Copyright (c) 2019, Linaro Limited
@@ -7007,7 +7007,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(optee_os 3.12.0, arm-trusted-firmware 2.4)
+(arm-trusted-firmware 2.4, optee_os 3.12.0)
 
 Copyright (c) 2015-2019, Arm Limited and Contributors. All rights reserved.
 
@@ -7107,7 +7107,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(optee_os 3.12.0, arm-trusted-firmware 2.4)
+(arm-trusted-firmware 2.4, optee_os 3.12.0)
 
 Copyright (c) 2018-2019, STMicroelectronics - All Rights Reserved
 
@@ -7140,7 +7140,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(optee_os 3.12.0, arm-trusted-firmware 2.4)
+(arm-trusted-firmware 2.4, optee_os 3.12.0)
 
 Copyright (c) 2020, ARM Limited. All rights reserved.
 
@@ -14760,7 +14760,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(optee_os 3.12.0, arm-trusted-firmware 2.4)
+(arm-trusted-firmware 2.4, optee_os 3.12.0)
 
 Copyright (C) 2017, STMicroelectronics - All Rights Reserved
 
@@ -14793,7 +14793,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 BSD 3-clause "New" or "Revised" License
-(optee_os 3.12.0, arm-trusted-firmware 2.4)
+(arm-trusted-firmware 2.4, optee_os 3.12.0)
 
 Copyright (C) STMicroelectronics 2017 - All Rights Reserved
 Author: Torgue Alexandre <alexandre.torgue@st.com> for STMicroelectronics.
@@ -15050,7 +15050,7 @@ rights to redistribute these changes.
 -------------------------------------------
 
 GNU General Public License v2.0 only
-(optee_os 3.12.0, arm-trusted-firmware 2.4)
+(arm-trusted-firmware 2.4, optee_os 3.12.0)
 
                     GNU GENERAL PUBLIC LICENSE
                        Version 2, June 1991
@@ -15396,7 +15396,7 @@ Public License instead of this License.
 -------------------------------------------
 
 GNU General Public License v2.0 or later
-(optee_os 3.12.0, U-Boot 2020.10, arm-trusted-firmware 2.4)
+(U-Boot 2020.10, arm-trusted-firmware 2.4, optee_os 3.12.0)
 
                     GNU GENERAL PUBLIC LICENSE
                        Version 2, June 1991
@@ -15837,7 +15837,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 ---
 
 zlib License
-(optee_os 3.12.0, arm-trusted-firmware 2.4)
+(arm-trusted-firmware 2.4, optee_os 3.12.0)
 
 Copyright (C) 1995-2017 Jean-loup Gailly and Mark Adler
 
