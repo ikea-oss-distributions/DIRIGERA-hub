@@ -1,0 +1,6 @@
+ac_config_links.patch -p1
+m4-1.4.18-glibc-change-work-around.patch -p1
+0001-c-stack-stop-using-SIGSTKSZ.patch -p1
+0001-Unset-need_charset_alias-when-building-for-musl.patch -p1
+serial-tests-config.patch -p1
+0001-test-getopt-posix-fix.patch -p1
