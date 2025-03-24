@@ -1,0 +1,9 @@
+configure-sbindir.patch -p1
+ptest.patch -p1
+display_testname_for_subtest.patch -p1
+avoid_parallel_tests.patch -p1
+0001-hwclock-fix-for-glibc-2.31-settimeofday.patch -p1
+0001-libfdisk-script-accept-sector-size-ignore-unknown-he.patch -p1
+0001-kill-include-sys-types.h-before-checking-SYS_pidfd_s.patch -p1
+0001-include-cleanup-pidfd-inckudes.patch -p1
+CVE-2021-37600.patch -p1
