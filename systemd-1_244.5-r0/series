@@ -11,4 +11,3 @@ network-fix-Link-reference-counter-issue.patch -p1
 core-allow-overriding-the-system-hostname-with-systemd.hostname-on-the-cmdline.patch -p1
 0001-Let-datad-user-have-read-permissions-to-coredumps.patch -p1
 0002-Remove-checking-not-needed-rules-files-from-meson-sc.patch -p1
-0003-Adjust-meson.build-to-meson-higher-than.0.60.patch -p1
