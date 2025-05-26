@@ -7,3 +7,7 @@
 0001-meson.build-disable-tests-when-cross-compiling.patch -p1
 0001-Fix-build-reproducibility.patch -p1
 0001-gir-add-a-dependency-for-g-ir-compiler-for-building-.patch -p1
+0001-doctool-Add-templates_dir-CLI-argument.patch -p1
+0002-build-Avoid-the-doctemplates-hack.patch -p1
+0003-don-t-assume-Py_TYPE-being-a-macro.patch -p1
+0004-drop-deprecated-xml.etree.ElementTree.Element.getchi.patch -p1
