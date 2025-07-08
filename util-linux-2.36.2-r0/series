@@ -1,0 +1,6 @@
+configure-sbindir.patch -p1
+ptest.patch -p1
+display_testname_for_subtest.patch -p1
+avoid_parallel_tests.patch -p1
+Automake-use-EXTRA_LTLIBRARIES-instead-of-noinst_LTL.patch -p1
+CVE-2021-37600.patch -p1
