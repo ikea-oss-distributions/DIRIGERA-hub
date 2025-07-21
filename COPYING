@@ -4,9 +4,9 @@
 
 
 Components:
-arm-trusted-firmware 2.4 : ((GNU General Public License v2.0 only OR BSD 3-clause "New" or "Revised" License) AND MIT License AND zlib License AND ISC License AND (GNU General Public License v2.0 or later OR BSD 3-clause "New" or "Revised" License) AND (GNU General Public License v2.0 or later OR BSD 2-clause "Simplified" License) AND BSD 2-clause "Simplified" License AND BSD 3-clause "New" or "Revised" License AND BSD 2-Clause FreeBSD License)
+arm-trusted-firmware 2.4 : ((GNU General Public License v2.0 or later OR BSD 3-clause "New" or "Revised" License) AND BSD 3-clause "New" or "Revised" License AND MIT License AND zlib License AND BSD 2-Clause FreeBSD License AND (GNU General Public License v2.0 or later OR BSD 2-clause "Simplified" License) AND BSD 2-clause "Simplified" License AND (GNU General Public License v2.0 only OR BSD 3-clause "New" or "Revised" License) AND ISC License)
 mbed TLS 2.24.0 : (Apache License 2.0)
-optee_os 3.12.0 : (Apache License 2.0 AND (GNU General Public License v2.0 only OR BSD 2-clause "Simplified" License) AND Boost Software License 1.0 AND GNU General Public License v2.0 only AND (GNU General Public License v2.0 only OR BSD 3-clause "New" or "Revised" License) AND (BSD 2-clause "Simplified" License AND CMU License) AND (GNU General Public License v2.0 only OR MIT License) AND zlib License AND (BSD 2-clause "Simplified" License AND BSD 3-clause "New" or "Revised" License) AND ISC License AND (GNU General Public License v2.0 or later OR BSD 3-clause "New" or "Revised" License) AND (GNU General Public License v2.0 or later OR BSD 2-clause "Simplified" License) AND BSD 2-clause "Simplified" License AND BSD 3-clause "New" or "Revised" License AND BSD Source Code Attribution AND (BSD 3-clause "New" or "Revised" License OR GNU General Public License v2.0 or later))
+optee_os 3.12.0 : ((GNU General Public License v2.0 or later OR BSD 3-clause "New" or "Revised" License) AND (BSD 2-clause "Simplified" License AND CMU License) AND (GNU General Public License v2.0 only OR BSD 2-clause "Simplified" License) AND (GNU General Public License v2.0 only OR MIT License) AND BSD 3-clause "New" or "Revised" License AND (BSD 2-clause "Simplified" License AND BSD 3-clause "New" or "Revised" License) AND BSD Source Code Attribution AND Apache License 2.0 AND zlib License AND Boost Software License 1.0 AND GNU General Public License v2.0 only AND (GNU General Public License v2.0 or later OR BSD 2-clause "Simplified" License) AND BSD 2-clause "Simplified" License AND (GNU General Public License v2.0 only OR BSD 3-clause "New" or "Revised" License) AND (BSD 3-clause "New" or "Revised" License OR GNU General Public License v2.0 or later) AND ISC License)
 U-Boot 2020.10 : GNU General Public License v2.0 or later
 
 Licenses: 
@@ -15396,7 +15396,7 @@ Public License instead of this License.
 -------------------------------------------
 
 GNU General Public License v2.0 or later
-(arm-trusted-firmware 2.4, U-Boot 2020.10, optee_os 3.12.0)
+(U-Boot 2020.10, arm-trusted-firmware 2.4, optee_os 3.12.0)
 
                     GNU GENERAL PUBLIC LICENSE
                        Version 2, June 1991
