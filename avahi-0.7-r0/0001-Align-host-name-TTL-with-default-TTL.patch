@@ -1,0 +1,58 @@
+From 631893bdf40ab2cb7a8bc9a25216982e60e76211 Mon Sep 17 00:00:00 2001
+From: Daniel Karlsson <daniel.karlsson9@inter.ikea.com>
+Date: Fri, 12 Dec 2025 11:18:44 +0100
+Subject: [PATCH] Align host name TTL with default TTL
+
+The host name TTL was previously set to 120 seconds while all other
+records used 75 minutes. This inconsistency caused host records to expire
+much earlier than associated service records, resulting in frequent
+re-registrations that violated Apple HomeKit certification chattiness tests.
+
+This commit increases AVAHI_DEFAULT_TTL_HOST_NAME from 120 seconds to
+75 minutes (4500 seconds) to match AVAHI_DEFAULT_TTL. The host name TTL
+is now defined in terms of the default TTL to eliminate duplication and
+ensure both values remain synchronized.
+
+With this change, host records and service records have consistent
+lifetimes, reducing mDNS traffic to meet HomeKit certification requirements.
+
+CAVEAT: The increased TTL may cause stale host information in dynamic
+network environments:
+- Devices that change IP addresses will have stale entries cached for up
+  to 75 minutes, potentially causing connection failures
+- Devices that leave the network ungracefully (power loss, crash) will
+  appear reachable for up to 75 minutes
+- Network topology changes will be less responsive
+
+This change is appropriate for stable deployments where devices maintain
+consistent IP addresses and rarely disconnect, such as typical Apple
+HomeKit installations. For more dynamic environments, consider alternative
+TTL values.
+---
+ avahi-common/defs.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/avahi-common/defs.h b/avahi-common/defs.h
+index bb73a9d..9d00b19 100644
+--- a/avahi-common/defs.h
++++ b/avahi-common/defs.h
+@@ -345,12 +345,12 @@ enum {
+ 
+ /** @} */
+ 
+-/** The default TTL for RRs which contain a host name of some kind. */
+-#define AVAHI_DEFAULT_TTL_HOST_NAME (120)
+-
+-/** The default TTL for all other records. */
++/** The default TTL for all records. */
+ #define AVAHI_DEFAULT_TTL (75*60)
+ 
++/** The default TTL for RRs which contain a host name of some kind. */
++#define AVAHI_DEFAULT_TTL_HOST_NAME AVAHI_DEFAULT_TTL
++
+ AVAHI_C_DECL_END
+ 
+ #endif
+-- 
+2.43.0
+
