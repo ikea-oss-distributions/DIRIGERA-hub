@@ -19,13 +19,13 @@ index 4707e1c333..9a556772f6 100644
  	char cmdbuf[32];
 +	int i;
  
- 	snprintf(cmdbuf, sizeof(cmdbuf), "i2c dev 2");
+ 	snprintf(cmdbuf, sizeof(cmdbuf), "i2c dev 0");
  	if (run_command(cmdbuf, 0))
  		fastboot_fail("IO", response);
  
  	snprintf(cmdbuf, sizeof(cmdbuf), "i2c probe 0x10");
 +
-+	/* ST-Safe sometimes take a few probes to repsond */
++	/* MFI sometimes take a few probes to repsond */
 +	for (i = 0; i < 4; i++)
 +		if (!run_command(cmdbuf, 0))
 +			break;

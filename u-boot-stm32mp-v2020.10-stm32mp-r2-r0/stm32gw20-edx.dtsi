@@ -158,6 +158,23 @@
 		};
 	};
 
+	i2c6_pins_a: i2c6-0 {
+		pins {
+			pinmux = <STM32_PINMUX('A', 11, AF2)>, /* I2C6_SCL */
+				 <STM32_PINMUX('A', 12, AF2)>; /* I2C6_SDA */
+			bias-disable;
+			drive-open-drain;
+			slew-rate = <0>;
+		};
+	};
+
+	i2c6_sleep_pins_a: i2c6-1 {
+		pins {
+			pinmux = <STM32_PINMUX('A', 11, ANALOG)>, /* I2C6_SCL */
+				 <STM32_PINMUX('A', 12, ANALOG)>; /* I2C6_SDA */
+		};
+	};
+
 	sdmmc2_d47_pins_a: sdmmc2-d47-0 {
 		pins {
 			pinmux = <STM32_PINMUX('A', 8, AF9)>, /* SDMMC2_D4 */
@@ -336,6 +353,36 @@
 		};
 	};
 };
+
+&i2c6 {
+	pinctrl-names = "default", "sleep";
+	pinctrl-0 = <&i2c6_pins_a>;
+	pinctrl-1 = <&i2c6_sleep_pins_a>;
+	i2c-scl-rising-time-ns = <86>;
+	i2c-scl-falling-time-ns = <2>;
+	clock-frequency = <400000>;
+	status = "okay";
+	/* spare dmas for other usage */
+	/delete-property/dmas;
+	/delete-property/dma-names;
+};
+
+&i2c1 {
+	status = "disabled";
+};
+
+&i2c2 {
+	status = "disabled";
+};
+
+&i2c3 {
+	status = "disabled";
+};
+
+&i2c5 {
+	status = "disabled";
+};
+
 
 &ipcc {
 	status = "okay";
