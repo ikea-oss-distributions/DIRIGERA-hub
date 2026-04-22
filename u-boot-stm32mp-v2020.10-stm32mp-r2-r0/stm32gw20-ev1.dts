@@ -11,8 +11,8 @@
 #include "stm32mp15xxab-pinctrl.dtsi"
 #include "stm32mp15-m4-srm.dtsi"
 #include "stm32mp15-m4-srm-pinctrl.dtsi"
-#include "stm32mp15xx-evx.dtsi"
 #include "stm32gw20-edx.dtsi"
+#include "stm32mp15xx-evx.dtsi"
 #include <dt-bindings/input/input.h>
 #include <dt-bindings/soc/stm32-hdp.h>
 
@@ -32,4 +32,18 @@
 
 &cryp1 {
 	status="okay";
+};
+
+&i2c2 {
+	gt9147: goodix_ts@5d {
+		compatible = "goodix,gt9147";
+		reg = <0x5d>;
+		//panel = <&panel_dsi>;
+		pinctrl-0 = <&goodix_pins>;
+		pinctrl-names = "default";
+		status = "okay";
+
+		interrupts = <14 IRQ_TYPE_EDGE_RISING>;
+		interrupt-parent = <&stmfx_pinctrl>;
+	};
 };

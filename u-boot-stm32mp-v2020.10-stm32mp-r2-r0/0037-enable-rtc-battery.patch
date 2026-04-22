@@ -48,7 +48,7 @@ index 606da6cbcf..1c400639b0 100644
 +	char cmdbuf[64];
 +
 +	/* Set i2c bus */
-+	snprintf(cmdbuf, sizeof(cmdbuf), "i2c dev 0");
++	snprintf(cmdbuf, sizeof(cmdbuf), "i2c dev 2");
 +	printf("settime command \"%s\"\n", cmdbuf);
 +
 +	if (run_command(cmdbuf, 0)) {
@@ -124,7 +124,7 @@ index 914bd2f92a..c849858d5c 100644
 +{
 +	char cmdbuf[32];
 +
-+	snprintf(cmdbuf, sizeof(cmdbuf), "i2c dev 0");
++	snprintf(cmdbuf, sizeof(cmdbuf), "i2c dev 2");
 +	if (run_command(cmdbuf, 0))
 +		fastboot_fail("IO", response);
 +

@@ -32,7 +32,7 @@ index eb3ad99575..e7a9ea3b2b 100644
  	"rauc_slot=A\0"                                                   \
  	\
  	"set_bootargs="                                                   \
-+		"i2c dev 0;"                                              \
++		"i2c dev 2;"                                              \
 +		"env set rtc_vendor unknown;"                             \
 +		"if i2c probe 0x32; then "                                \
 +			"env set rtc_vendor 0x8130;"                      \
