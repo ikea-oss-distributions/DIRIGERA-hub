@@ -40,7 +40,7 @@ index c849858d5c..af00d5b055 100644
 +{
 +	char cmdbuf[32];
 +
-+	snprintf(cmdbuf, sizeof(cmdbuf), "i2c dev 2");
++	snprintf(cmdbuf, sizeof(cmdbuf), "i2c dev 0");
 +	if (run_command(cmdbuf, 0))
 +		fastboot_fail("IO", response);
 +
