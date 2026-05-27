@@ -59,4 +59,3 @@
 0044-write-config-to-eeprom.patch -p1
 0045-Re-enable-boot-count-in-TAMP-if-.bootcount_enable-ex.patch -p1
 0046-add-getvar-for-reading-mac-addresses.patch -p1
-0047-MFI-chip-detection.patch -p1
