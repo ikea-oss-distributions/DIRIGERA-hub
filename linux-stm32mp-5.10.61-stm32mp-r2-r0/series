@@ -43,6 +43,7 @@ CVE-2021-3743.patch -p1
 0017-crypto-authencesn-Fix-src-offset-when-decrypting-in-place.patch -p1
 0018-crypto-af-alg-Fix-page-reassignment-overflow-in-af_alg_pull_tsgl.patch -p1
 0019-crypto-algif-aead-Fix-minimum-RX-size-check-for-decryption.patch -p1
+0020-ptrace-slightly-saner-get_dumpable-logic.patch -p1
 0001-immutable-seed.patch -p1
 0002-Wifi-arp-snoop.patch -p1
 0001-non-upstream-add-sg-parameters-dts-parsing.patch -p1
