@@ -1,0 +1,118 @@
+From 9509ea8dd9ff3fb1bf2484c48238523d893822f1 Mon Sep 17 00:00:00 2001
+From: Michal Frynas <michal.frynas@inter.ikea.com>
+Date: Tue, 24 Mar 2026 23:12:05 +0100
+Subject: [PATCH] MFI chip in-code detection
+
+---
+ arch/arm/mach-stm32mp/cpu.c     | 63 ++++++++++++++++++++++++++++++++-
+ include/config_distro_bootcmd.h |  8 ++---
+ 2 files changed, 66 insertions(+), 5 deletions(-)
+
+diff --git a/arch/arm/mach-stm32mp/cpu.c b/arch/arm/mach-stm32mp/cpu.c
+index 6715f47338d..365844dab65 100644
+--- a/arch/arm/mach-stm32mp/cpu.c
++++ b/arch/arm/mach-stm32mp/cpu.c
+@@ -2,6 +2,7 @@
+ /*
+  * Copyright (C) 2018, STMicroelectronics - All Rights Reserved
+  */
++#include <command.h>
+ #include <common.h>
+ #include <clk.h>
+ #include <cpu_func.h>
+@@ -968,6 +969,60 @@ static int setup_rkh(void)
+ 	return 0;
+ }
+ 
++static int setup_nomfi_mode(void)
++{
++	int hwrev;
++
++	hwrev = env_get_hex("board_hwrev", 0x00);
++	if (hwrev >= 0x04) {
++		printf("Enabling no-mfi mode\n");
++		env_set("mfichip", "nomfi");
++	}
++
++	return 0;
++}
++
++static int detect_mfi_chip()
++{
++	int ret;
++	struct udevice *bus, *dev;
++	int found = 0;
++	int busnum;
++	int retries;
++	char envvar[8] = {0};
++	const int MIFI_ADDR = 0x10;
++	const int MAX_BUSNUM = 2;
++
++	for (busnum = 0; busnum < MAX_BUSNUM; busnum++) {
++		ret = uclass_get_device_by_seq(UCLASS_I2C, busnum, &bus);
++		if (ret) {
++			printf("Invalid bus %d: err=%d\n", busnum, ret);
++			return CMD_RET_FAILURE;
++		}
++
++		for (retries = 3; retries > 0; retries--) {
++			ret = dm_i2c_probe(bus, MIFI_ADDR, 0, &dev);
++			if (ret == 0) {
++				found++;
++				sprintf(envvar, "bus%d", busnum);
++				busnum = MAX_BUSNUM;
++				break;
++			}
++			udelay(10000);
++		}
++	}
++
++	if (found) {
++		printf("Detected MFI chip on %s\n", envvar);
++		env_set("mfichip", envvar);
++	} else {
++		pr_err("Failed to detect MFI chip on HWREV 0x%2d board\n",
++				env_get_hex("board_hwrev", 0x00));
++	}
++
++	return 0;
++}
++
+ int arch_misc_init(void)
+ {
+ 	setup_boot_mode();
+@@ -988,5 +1043,11 @@ int arch_misc_init(void)
+ 
+ int last_stage_init(void)
+ {
+-	return setup_nowifi_mode();
++	setup_nowifi_mode();
++	setup_nomfi_mode();
++	// HVREV >= 0x04 does not have MFI chip, earlier revisions
++	// should have MFI chip either on I2C4 or I2C6 busses.
++	if (env_get_hex("board_hwrev", 0x00) < 0x04)
++		detect_mfi_chip();
++	return 0;
+ }
+diff --git a/include/config_distro_bootcmd.h b/include/config_distro_bootcmd.h
+index cf672169034..ac8b40bf0f8 100644
+--- a/include/config_distro_bootcmd.h
++++ b/include/config_distro_bootcmd.h
+@@ -535,11 +535,11 @@
+ 		"if i2c probe 0x52; then "                                \
+ 			"env set rtc_vendor 0x3028;"                      \
+ 		"fi;"                                                     \
+-		"if i2c probe 0x10; then "                                \
+-			"env set hw_conf ${board_hwrev};"                 \
++		"if test ${mfichip} = bus1; then "                        \
++			"env set hw_conf 1;"                                  \
+ 		"else "                                                   \
+-			"env set hw_conf 1;"                              \
+-		"fi;"                                                     \
++			"env set hw_conf ${board_hwrev}; "                    \
++		"fi; "                                                    \
+ 		"env set bootargs "                                       \
+ 			"root=/dev/mmcblk${devnum}p${rootpart} "          \
+ 			"rootwait ro "                                    \
+-- 
+2.40.1
