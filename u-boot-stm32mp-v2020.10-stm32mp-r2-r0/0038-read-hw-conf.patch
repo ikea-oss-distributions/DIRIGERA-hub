@@ -6,15 +6,16 @@ Subject: [PATCH] [HSPP-7978] Read out hw-conf in fastboot
 Adds getvar hw-conf to get hardware configuration.
 1 is old variant with ST-Safe on i2c4
 2 is new variant with ST-Safe on i2c6
+
 ---
- drivers/fastboot/fb_getvar.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/fastboot/fb_getvar.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 diff --git a/drivers/fastboot/fb_getvar.c b/drivers/fastboot/fb_getvar.c
-index c849858d5c..af00d5b055 100644
+index bff5899cc27..0c5944115f0 100644
 --- a/drivers/fastboot/fb_getvar.c
 +++ b/drivers/fastboot/fb_getvar.c
-@@ -32,6 +32,7 @@ static void getvar_partition_size(char *part_name, char *response);
+@@ -33,6 +33,7 @@ static void getvar_partition_size(char *part_name, char *response);
  static void getvar_is_userspace(char *var_parameter, char *response);
  static void getvar_gateway_id(char *gateway_id, char *response);
  static void getvar_rtc(char *gateway_id, char *response);
@@ -22,7 +23,7 @@ index c849858d5c..af00d5b055 100644
  
  static const struct {
  	const char *variable;
-@@ -88,6 +89,9 @@ static const struct {
+@@ -89,6 +90,9 @@ static const struct {
  	}, {
  		.variable = "rtc",
  		.dispatch = getvar_rtc
@@ -32,20 +33,15 @@ index c849858d5c..af00d5b055 100644
  	}
  };
  
-@@ -302,6 +306,21 @@ static void getvar_rtc(char *rtc, char *response)
+@@ -303,6 +307,16 @@ static void getvar_rtc(char *rtc, char *response)
  		fastboot_response("OKAY", response, "%d", 2);
  }
  
 +static void getvar_hwconf(char *gateway_id, char *response)
 +{
-+	char cmdbuf[32];
++	int hwrev = env_get_hex("board_hwrev", 0x00);
 +
-+	snprintf(cmdbuf, sizeof(cmdbuf), "i2c dev 0");
-+	if (run_command(cmdbuf, 0))
-+		fastboot_fail("IO", response);
-+
-+	snprintf(cmdbuf, sizeof(cmdbuf), "i2c probe 0x10");
-+	if (run_command(cmdbuf, 0))
++	if (hwrev == 1)
 +		fastboot_response("OKAY", response, "%d", 1);
 +	else
 +		fastboot_response("OKAY", response, "%d", 2);
@@ -55,5 +51,4 @@ index c849858d5c..af00d5b055 100644
   * fastboot_getvar() - Writes variable indicated by cmd_parameter to response.
   *
 -- 
-2.17.1
-
+2.40.1
